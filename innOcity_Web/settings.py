@@ -28,6 +28,11 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+# STATICFILES_DIRS = [
+#     "register/templates/register",
+# ]
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,7 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'polls'
+    'polls',
+    'register'
 ]
 
 MIDDLEWARE = [

@@ -22,6 +22,7 @@ def index(request):
     return render(request,'polls/index.html',{'out':out})
 
 
+
 # def index(request):
 #     dsn_tns  = cx_Oracle.makedsn('localhost','1521',service_name='ORCL')
 #     conn = cx_Oracle.connect(user='hr',password='hr',dsn=dsn_tns)

@@ -1,0 +1,205 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags-->
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="Colorlib Templates" />
+    <meta name="author" content="Colorlib" />
+    <meta name="keywords" content="Colorlib Templates" />
+
+    <!-- Title Page-->
+    <title>Register</title>
+
+    <!-- Icons font CSS-->
+    <link
+      href="../../static/register/vendor/mdi-font/css/material-design-iconic-font.min.css"
+      rel="stylesheet"
+      media="all"
+    />
+    <link
+      href="../../static/register/vendor/font-awesome-4.7/css/font-awesome.min.css"
+      rel="stylesheet"
+      media="all"
+    />
+    <!-- Font special for pages-->
+    <link
+      href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i"
+      rel="stylesheet"
+    />
+
+    <!-- Vendor CSS-->
+    <link
+      href="../../static/register/vendor/select2/select2.min.css"
+      rel="stylesheet"
+      media="all"
+    />
+    <link
+      href="../../static/register/vendor/datepicker/daterangepicker.css"
+      rel="stylesheet"
+      media="all"
+    />
+
+    <!-- Main CSS-->
+    <link
+      href="../../static/register/css/main.css"
+      rel="stylesheet"
+      media="all"
+    />
+
+    <script>
+      function checkForBlank() {
+        if(document.getElementById('name').value ==''{
+            alert("Please enter your name")
+            return false;
+        }
+      }
+    </script>
+  </head>
+
+  <body>
+    <div class="page-wrapper bg-gra-01 p-t-180 p-b-100 font-poppins">
+      <div class="wrapper wrapper--w780">
+        <div class="card card-3">
+          <div class="card-heading"></div>
+          <div class="card-body">
+            <h2 class="title">Create Account</h2>
+            <form
+              action="{% url 'index' %}"
+              method="POST"
+              onsubmit="return checkForBlank()"
+            >
+              {% csrf_token %}
+              <div class="input-group">
+                <input
+                  class="input--style-3"
+                  type="text"
+                  placeholder="name"
+                  name="name"
+                  id="name"
+                />
+              </div>
+              <div class="input-group">
+                <input
+                  class="input--style-3"
+                  type="email"
+                  placeholder="email"
+                  name="email"
+                />
+              </div>
+              <div class="input-group">
+                <input
+                  class="input--style-3"
+                  type="text"
+                  placeholder="username"
+                  name="username"
+                />
+              </div>
+              <div class="input-group">
+                <div class="rs-select2 js-select-simple select--no-search">
+                  <select name="gender">
+                    <option disabled="disabled" selected="selected"
+                      >gender</option
+                    >
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Other</option>
+                  </select>
+                  <div class="select-dropdown"></div>
+                </div>
+              </div>
+              <div class="input-group">
+                <input
+                  class="input--style-3"
+                  type="text"
+                  placeholder="street"
+                  name="street"
+                />
+              </div>
+              <div class="input-group">
+                <input
+                  class="input--style-3"
+                  type="text"
+                  placeholder="zipcode"
+                  name="zipcode"
+                />
+              </div>
+              <div class="input-group">
+                <input
+                  class="input--style-3"
+                  type="text"
+                  placeholder="city"
+                  name="city"
+                />
+              </div>
+              <div class="input-group">
+                <input
+                  class="input--style-3"
+                  type="text"
+                  placeholder="country"
+                  name="country"
+                />
+              </div>
+              <div class="input-group">
+                <input
+                  class="input--style-3"
+                  type="text"
+                  placeholder="phone"
+                  name="phone"
+                />
+              </div>
+              <div class="input-group">
+                <input
+                  class="input--style-3"
+                  type="text"
+                  placeholder="password"
+                  name="password"
+                />
+              </div>
+              <div class="input-group">
+                <input
+                  class="input--style-3"
+                  type="text"
+                  placeholder="confirm password"
+                  name="confirm password"
+                />
+              </div>
+              <div class="p-t-10">
+                <button
+                  class="btn btn--pill btn--green"
+                  type="submit"
+                  id="submit"
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Jquery JS-->
+    <script src="../../static/register/vendor/jquery/jquery.min.js"></script>
+    <!-- Vendor JS-->
+    <script src="../../static/register/vendor/select2/select2.min.js"></script>
+    <script src="../../static/register/vendor/datepicker/moment.min.js"></script>
+    <script src="../../static/register/vendor/datepicker/daterangepicker.js"></script>
+
+    <!-- Main JS-->
+    <script src="../../static/register/js/global.js"></script>
+
+    {% if alert_flag %}
+    <script>
+      alert("Complete the form.");
+    </script>
+    {% endif %}
+  </body>
+  <!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>
+<!-- end document-->

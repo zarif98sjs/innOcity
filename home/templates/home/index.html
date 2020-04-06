@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Travello</title>
+<title>innOcity</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="Travello template project">
@@ -29,14 +29,14 @@
 							<div class="logo"><a href="index.html">innOcity</a></div>
 							<nav class="main_nav">
 								<ul class="d-flex flex-row align-items-start justify-content-start">
-									<li class="active"><a href="index.html">Home</a></li>
-									<li><a href="about.html">About us</a></li>
-									<li><a href="#">Services</a></li>
-									<li><a href="news.html">News</a></li>
-									<li><a href="contact.html">Contact</a></li>
+									<li class="active"><a href="{% url 'home:index' %}">Home</a></li>
+									<li><a href="{% url 'home:about' %}">About us</a></li>
+									<li><a href="{% url 'login:index' %}">Login</a></li>
+									<li><a href="news.html">Register</a></li>
+									<li><a href="contact.html">Dashboard</a></li>
 								</ul>
 							</nav>
-							<div class="header_phone ml-auto">Call us: 00-56 445 678 33</div>
+							<div class="header_phone ml-auto">Call us: +880-1915123445</div>
 
 							<!-- Hamburger -->
 
@@ -49,16 +49,6 @@
 				</div>
 			</div>
 		</div>
-		<div class="header_social d-flex flex-row align-items-center justify-content-start">
-			<ul class="d-flex flex-row align-items-start justify-content-start">
-				<li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-				<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-				<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-				<li><a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
-				<li><a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a></li>
-				<li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-			</ul>
-		</div>
 	</header>
 
 	<!-- Menu -->
@@ -70,23 +60,15 @@
 		</div>
 		<div class="menu_content">
 			<ul>
-				<li><a href="inex.html">Home</a></li>
-				<li><a href="about.html">About us</a></li>
-				<li><a href="#">Services</a></li>
-				<li><a href="news.html">News</a></li>
-				<li><a href="contact.html">Contact</a></li>
+				<li><a href="">Home</a></li>
+				<li><a href="about">About us</a></li>
+				<li><a href="#">Login</a></li>
+                <li><a href="news.html">Register</a></li>
+                <li><a href="contact.html">Dashboard</a></li>
 			</ul>
 		</div>
 		<div class="menu_social">
-			<div class="menu_phone ml-auto">Call us: 00-56 445 678 33</div>
-			<ul class="d-flex flex-row align-items-start justify-content-start">
-				<li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
-				<li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-				<li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
-				<li><a href="#"><i class="fa fa-dribbble" aria-hidden="true"></i></a></li>
-				<li><a href="#"><i class="fa fa-behance" aria-hidden="true"></i></a></li>
-				<li><a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-			</ul>
+			<div class="menu_phone ml-auto">Call us: +880-1915123445</div>
 		</div>
 	</div>
 	
@@ -100,13 +82,13 @@
 				
 				<!-- Slide -->
 				<div class="owl-item">
-					<div class="background_image" style="background-image:url(../../static/home/images/home_slider.jpg)"></div>
+					<div class="background_image" style="background-image:url(../../static/home/images/test1.png)"></div>
 					<div class="home_slider_content_container">
 						<div class="container">
 							<div class="row">
 								<div class="col">
 									<div class="home_slider_content">
-										<div class="home_title"><h2>Let us take you away</h2></div>
+										<div class="home_title"><h2>Live Love Laugh</h2></div>
 									</div>
 								</div>
 							</div>
@@ -116,13 +98,13 @@
 
 				<!-- Slide -->
 				<div class="owl-item">
-					<div class="background_image" style="background-image:url(../../static/home/images/home_slider.jpg)"></div>
+					<div class="background_image" style="background-image:url(../../static/home/images/test12.jpg)"></div>
 					<div class="home_slider_content_container">
 						<div class="container">
 							<div class="row">
 								<div class="col">
 									<div class="home_slider_content">
-										<div class="home_title"><h2>Let us take you away</h2></div>
+										<div class="home_title"><h2>Moments</h2></div>
 									</div>
 								</div>
 							</div>
@@ -132,13 +114,13 @@
 
 				<!-- Slide -->
 				<div class="owl-item">
-					<div class="background_image" style="background-image:url(../../static/home/images/home_slider.jpg)"></div>
+					<div class="background_image" style="background-image:url(../../static/home/images/test13.jpg)"></div>
 					<div class="home_slider_content_container">
 						<div class="container">
 							<div class="row">
 								<div class="col">
 									<div class="home_slider_content">
-										<div class="home_title"><h2>Let us take you away</h2></div>
+										<div class="home_title"><h2>And I think to myself , What a wonderful world</h2></div>
 									</div>
 								</div>
 							</div>

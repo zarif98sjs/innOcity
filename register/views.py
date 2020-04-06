@@ -5,6 +5,8 @@ import cx_Oracle
 from django.http import HttpResponse
 from django.template import loader
 
+app_name = 'register'
+
 def index(request):
     print(request.method)
     if request.method=='POST':

@@ -1,6 +1,7 @@
-* [Execute SQL in Django ] https://cx-oracle.readthedocs.io/en/latest/user_guide/sql_execution.html
-* [Render a Static HTML ] https://youtu.be/xp_N4JnxHIk
-* [Render a Dynamic HTML ] https://www.youtube.com/watch?v=Huk9tIRD_rQ 
-* [Create & Handle form ] https://youtu.be/A-6OlcXgaYA?list=PLhTjy8cBISEpXc-yjjSW90NgNyPYe7c9_
-* [Add CSS & Static Files ] https://youtu.be/u1FR1nZ6Ng4
-* [Bind Variables for SQL Execution ] https://cx-oracle.readthedocs.io/en/latest/user_guide/bind.html#bind
+* [Execute SQL in Django ] (https://cx-oracle.readthedocs.io/en/latest/user_guide/sql_execution.html)
+* [Bind Variables for SQL Execution ] (https://cx-oracle.readthedocs.io/en/latest/user_guide/bind.html#bind)
+* [Render a Static HTML ] (https://youtu.be/xp_N4JnxHIk)
+* [Render a Dynamic HTML ] (https://www.youtube.com/watch?v=Huk9tIRD_rQ )
+* [Create & Handle form ] (https://youtu.be/A-6OlcXgaYA?list=PLhTjy8cBISEpXc-yjjSW90NgNyPYe7c9_)
+* [Add CSS & Static Files ] (https://youtu.be/u1FR1nZ6Ng4)
+* [Alert Box / Popup Box](https://stackoverflow.com/questions/44551791/how-to-add-alert-popup-boxes-in-django)

@@ -1,0 +1,501 @@
+hotelId,name,street,zipcode,city,country,rating
+1,1906 Lodge At Coronado Beach,Luster,0211,Oslo,Norway,2
+2,Staybridge Suites Omaha 80th And Dodge,Eliot,,Pandansari,Indonesia,2
+3,Microtel Inn Suites by Wyndham Marietta,Ludington,,Angao,China,5
+4,Quality Inn & Suites Nj State Capital Area,Utah,,Ziketan,China,2
+5,Mattituck Motel,Pleasure,102753,Ivanovka,Russia,2
+6,Chariot Inn,New Castle,,Chujiang,China,1
+7,Autograph Collection,Milwaukee,,Rača,Serbia,3
+8,Holiday Inn Express & Suites Lake Placid,Hovde,,Bojongsarung,Indonesia,4
+9,Four Points By Sheraton Chicago O'hare Airport,Marquette,,Prómachoi,Greece,3
+10,National Trail Motel,Mallard,,Sémé,Senegal,2
+11,Hilton Baltimore BWI Airport,Trailsway,675 02,Studenec,Czech Republic,2
+12,Comfort Inn-lehigh Valley West,Eliot,3505-318,Santos Evos,Portugal,3
+13,Best Western Plus Encina Inn & Suites,Mayer,,Qarah Bāgh,Afghanistan,2
+14,Quality Inn & Suites Anaheim Maingate,Westend,11205,Santo Domingo Oeste,Dominican Republic,5
+15,Mark Twain Hotel,Fieldstone,,Fatufaun,Indonesia,1
+16,Arizona Mountain Inn & Cabins,Bayside,,Shanhaiguan,China,3
+17,BEST WESTERN Garden Inn,Knutson,,Sayapullo,Peru,2
+18,Embassy Suites by Hilton Baltimore at BWI Airport,Darwin,,Ogwashi-Uku,Nigeria,5
+19,A Rosewood Hotel,Butternut,2710-151,Barrunchal,Portugal,3
+20,Courtyard Las Vegas Henderson/Green Valley,Sycamore,,Youkounkoun,Guinea,5
+21,The Boxer,Monument,,Salas,Peru,3
+22,Red Roof Inn Fresno - Yosemite Gateway,Russell,,Zaoshi,China,4
+23,Aloft Durham Downtown,Straubel,19500-000,Martinópolis,Brazil,3
+24,Wildflower Inn,Myrtle,8501,San Francisco,Philippines,2
+25,Drury Inn St Louis Collinsville,Stephen,181 31,Lidingö,Sweden,2
+26,Plantation Inn & Suites,Colorado,92974 CEDEX,Paris La Défense,France,4
+27,Days Inn Columbus East,Almo,,Pendembu,Sierra Leone,5
+28,Indigo Inn,Randy,35409 CEDEX,Saint-Malo,France,2
+29,Indigo Inn,Prentice,77240,Houston,United States,4
+30,Fairfield Inn and Suites by Marriott Virginia Beach Oceanfront,Dunning,3534,Machagai,Argentina,5
+31,Microtel Inn Suites by Wyndham Marietta,Corry,,Novi Pazar,Serbia,4
+32,Rodeway Inn Oceanview,Prairie Rose,2419,Balingueo,Philippines,1
+33,Red Roof Plus+ Long Island-garden City,Stephen,,Verkhovyna,Ukraine,1
+34,Heritage Suites,Sage,,Lefkoniko,Cyprus,3
+35,Island Country Inn,Crescent Oaks,,Lame,Nigeria,4
+36,Island View Motel,Warner,184358,Murmashi,Russia,5
+37,Aloft Jacksonville Tapestry Park,Schiller,,Klatakan,Indonesia,2
+38,Holiday Inn Express Suites Clinton,Ryan,,Dalar,Armenia,3
+39,EconoLodge,Stang,37487,Miguel Hidalgo,Mexico,3
+40,Pakalana Inn,Mosinee,,Lijiang,China,4
+41,Holiday Inn Express & Suites Port Richey,Badeau,33000,Virovitica,Croatia,3
+42,Admiral Hotel,Farmco,,Damietta,Egypt,2
+43,A Waldorf Astoria Hotel,Old Shore,506 40,Borås,Sweden,5
+44,NOPSI Hotel New Orleans,Stone Corner,,Lizhuangzi,China,1
+45,Best Western Riverview Inn & Suites,Menomonie,2715-364,Sabugo,Portugal,5
+46,Rodeway Inn Boardwalk,Oak,,Chao,Peru,4
+47,Best Western Plus Hotel At The Convention Center,Novick,07000-000,Guarulhos,Brazil,5
+48,Hotel Prince Spafford,Holmberg,,Mahendranagar,Nepal,5
+49,Howard Johnson Marina at Monterey Bay,Pepper Wood,91501,Muhos,Finland,3
+50,Auburn Travelodge Inn & Suites,Towne,4029,Quisao,Philippines,5
+51,A Thompson Hotel,Susan,37500-000,Itajubá,Brazil,3
+52,Hampton Inn Suites National HarborAlexandria Area,Shelley,,Liuge,China,5
+53,Pier 5 Hotel Baltimore,Briar Crest,,Sukamahi Satu,Indonesia,2
+54,A Thompson Hotel,Everett,,Dawung,Indonesia,1
+55,Courtyard Las Vegas Henderson/Green Valley,High Crossing,,Pakisaji,Indonesia,1
+56,Century Hotel,Milwaukee,50933,Kuala Lumpur,Malaysia,5
+57,Copperleaf Hotel,American,,Ar Riqāb,Tunisia,5
+58,Drury Inn St Louis Collinsville,Golf,,Hongtang,China,2
+59,Central Loop Hotel,Doe Crossing,06403 CEDEX,Cannes,France,4
+60,Best Western Plus Arroyo Roble Hotel & Creekside Villas,Grover,,Rikitgaib,Indonesia,3
+61,Best Western Plus Heritage Inn Rancho Cucamonga/Ontario,Bartillon,,Magang,China,2
+62,Pike Motel,Gina,,Cisagu,Indonesia,1
+63,Motel 6 Jaiden & Jiya LLC,Schurz,63610-000,Mombaça,Brazil,4
+64,Staybridge Suites Omaha 80th And Dodge,Armistice,,Höshööt,Mongolia,5
+65,Roscoe Motor Inn,Hudson,,Handan,China,3
+66,Orlando Continental Plaza Hotel,Di Loreto,925-0215,Izumo,Japan,5
+67,Desert Inn Motel,Hoepker,,Gaide,China,5
+68,Holiday Inn Express & Suites Port Richey,Fordem,187052,Lyuban’,Russia,1
+69,Bougainvillea On The Beach,Vera,57-215,Stoszowice,Poland,5
+70,Home2 Suites By Hilton Philadelphia-Convention Center,Kipling,09-135,Siemiątkowo,Poland,2
+71,The Westin San Diego Gaslamp Quarter,5th,,Huangyang,China,5
+72,Baymont Inn & Suites Bowling Green,Towne,412184,Vostochnoe Degunino,Russia,5
+73,Hotel Warner,Warrior,2240-340,Ferreira do Zêzere,Portugal,5
+74,MacRae's Of Homosassa Inc,Dexter,36770-000,Cataguases,Brazil,3
+75,Dolphin Key Resort,Monterey,,Caicun,China,4
+76,Aqua Soleil Hotel And Mineral Water Spa,Hanover,,Yehud,Israel,2
+77,Hampton Inn Suites Conroe I45 North,Darwin,88504 CEDEX,Mirecourt,France,4
+78,America's Best Value Inn,Comanche,3001,Santa Fe de la Vera Cruz,Argentina,5
+79,The Hotel of South Beach,Luster,,Salfīt,Palestinian Territory,5
+80,American Inn,Laurel,431 41,Údlice,Czech Republic,2
+81,Hampton Inn Orlando-Maingate South,Stoughton,,Morazán,Honduras,3
+82,Historic Hotel Bethlehem,Hovde,45000,Roi Et,Thailand,1
+83,The INN at Europa Village,Arizona,343-0801,Saitama,Japan,2
+84,Ace Hotel New Orleans,Westerfield,617000,Nytva,Russia,5
+85,Hilton Baltimore BWI Airport,Dwight,14012,Joyabaj,Guatemala,5
+86,The Pecos Trail Inn,Mitchell,4775-224,Silveiros,Portugal,1
+87,Hampton Inn Middletown,Dahle,,Fengcheng,China,3
+88,Holiday Inn Express & Suites Eureka,Pankratz,3904,Sabtang,Philippines,1
+89,Pakalana Inn,Farwell,,Jibu Hulangtu,China,3
+90,Red Roof Inn & Suites Dekalb,Novick,,Dogarmo,China,3
+91,The Carlyle,Duke,504 75,Borås,Sweden,2
+92,Hotel Zelos,Hintze,682400,Bogorodskoye,Russia,1
+93,hotel le bleu,Service,149 43,Nynäshamn,Sweden,3
+94,The College Club of Boston,Johnson,37-470,Zaklików,Poland,5
+95,Americas Best Value Inn-corpus Christi North/airport,Spaight,,Jiupu,China,5
+96,Fairfield Inn Tracy,David,1480,Gevgelija,Macedonia,2
+97,Royal Resort,Rutledge,250 91,Zeleneč,Czech Republic,5
+98,Hyatt House Seattle/Downtown,Gerald,8657,Mosjøen,Norway,2
+99,Campus Inn Motel,Lerdahl,7100-150,Monte da Boavista,Portugal,2
+100,Portland Harbor Hotel,Melrose,,Nandasmo,Nicaragua,2
+101,La Cuesta Inn,Calypso,,Wuqishan,China,1
+102,Best Western Plus Chalmette Hotel,Ryan,75701,Valtimo,Finland,1
+103,The Redbury New York,Stang,,Cibolek Kidul,Indonesia,2
+104,Fairfield Inn Philadelphia Airport,Spaight,83-005,Pruszcz Gdański,Poland,1
+105,Holiday Inn Express & Suites Denver Northeast - Brighton,Old Gate,112 83,Stockholm,Sweden,2
+106,Best Western Inn At Palm Springs,Dapin,59407 CEDEX,Cambrai,France,2
+107,Fairway Inn,Brown,,Bozhou,China,1
+108,Hampton Inn and Suites Williamsburg-Central,Bunker Hill,7024,San Pedro Apartado,Philippines,5
+109,ARIA Resort Casino,Morrow,71120,Tha Maka,Thailand,2
+110,Plaza Motel,Quincy,5039,San Rafael,Philippines,4
+111,Hampton Inn-elkhorn,Columbus,,Dasiping,China,1
+112,The Academy Hotel Colorado Springs,Cody,,Baisangguan,China,3
+113,Econo Lodge,Monument,1130,Sydney,Australia,3
+114,ARIA Resort Casino,Rusk,24118,Kiel,Germany,5
+115,Sleep inn,Charing Cross,,Tambakrejo,Indonesia,4
+116,Quality Inn,Crownhardt,50700,Toba Tek Singh,Pakistan,4
+117,Bienville House,Crowley,,Dabu,China,1
+118,Residence Inn Springfield South,Corry,901993,Presnenskiy,Russia,5
+119,Alpine Motel,Lakewood Gardens,,Swedru,Ghana,3
+120,Cooper Hill Inn,Boyd,,Hexiangqiao,China,2
+121,Best Western Plus Heritage Inn Rancho Cucamonga/Ontario,Dahle,13880-000,Vargem Grande do Sul,Brazil,5
+122,Courtyard Austin South,Sheridan,,Zhuozishan,China,1
+123,Best Western Springfield West Inn,Burning Wood,7312,Moorreesburg,South Africa,1
+124,Inn at El Gaucho,Algoma,35500-000,Divinópolis,Brazil,5
+125,Holiday Inn Express & Suites Bethlehem,Sycamore,,Longnawang,Indonesia,3
+126,Hilton Garden Inn Napa,Gina,181019,El Doncello,Colombia,4
+127,Home2 Suites By Hilton Philadelphia-Convention Center,Green,,Tuanjie,China,3
+128,The Inn at Solvang,Amoth,,Krojo,Indonesia,1
+129,Candlewood Suites Somerset,Londonderry,,Kalengwa,Zambia,1
+130,Staybridge Suites Chantilly Dulles Airport,Crownhardt,,Arjasari,Indonesia,4
+131,Soniat House,Manufacturers,,Bungereng,Indonesia,3
+132,Super 8-el Centro,Acker,173069,Pensilvania,Colombia,2
+133,Hyatt Place Atlanta Airport-South,South,4324,Pagsañgahan,Philippines,1
+134,Hyatt Regency-valencia,Bay,06705,Waterbury,United States,2
+135,Holiday Inn Express Harrisburg East,Hauk,,Berbérati,Central African Republic,5
+136,The Resort at Longboat Key Club,Morningstar,,Solina,Bosnia and Herzegovina,4
+137,Red Roof Plus+& Suites Guilford,Sullivan,71150,Ban Na Muang,Thailand,5
+138,Red Roof Inn Detroit - Southfield,Mockingbird,253 00,Helsingborg,Sweden,2
+139,Tawas Bay Beach Resort,Northridge,24011,Bhalwāl,Pakistan,5
+140,Hampton Inn and Suites Baltimore Inner Harbor,Mockingbird,,Danan,China,1
+141,Auburn Travelodge Inn & Suites,Linden,,Badrah,Mongolia,3
+142,Aviator Hotel Anchorage,Monterey,4612,Tulay na Lupa,Philippines,5
+143,Stonebrook Lodge,Cordelia,,Anáfi,Greece,1
+144,Hampton Inn & Suites Brookings,Farmco,,Curahpacul Satu,Indonesia,1
+145,Best Western Mulberry Hotel,Tony,,Xubao,China,4
+146,Beverly Garden Suites,Laurel,,Heshan,China,1
+147,Holiday Inn Express San Diego Sea World - Beach Area,American Ash,,Jianshan,China,3
+148,Best Western Harker Heights,Warbler,,Soa,Indonesia,4
+149,Loews Portofino Bay Hotel at Universal Orlando,Marquette,,Bangluo,China,5
+150,Hotel 502,Sachtjen,6500,Svilengrad,Bulgaria,5
+151,BEST WESTERN PLUS Walla Walla Suites Inn,Milwaukee,,Bayt Ūmmar,Palestinian Territory,4
+152,Room Mate Lord Balfour,Buhler,,Voskehask,Armenia,2
+153,Aloft Greenville Downtown,Cascade,,Ngala,Nigeria,2
+154,Americas Best Value Inn & Suites-eureka,Hagan,3430-505,Beijós,Portugal,2
+155,Flamingo Inn Rosemead,Stuart,5204,'s-Hertogenbosch,Netherlands,5
+156,Rodeway Inn Oceanview,Victoria,,Dongla,China,5
+157,Desert Lodge,Ryan,,Mitzpe Ramon,Israel,5
+158,La Quinta Inn & Suites Corsicana,Fair Oaks,L-5408,Bous,Luxembourg,1
+159,Inn At San Luis Obispo,Logan,37160-000,Campos Gerais,Brazil,2
+160,Central Loop Hotel,Portage,356 01,Sokolov,Czech Republic,4
+161,Aloft Arundel Mills,Hansons,,Glamoč,Bosnia and Herzegovina,5
+162,America's Best Inn Suites,Hanson,,Zhangpu,China,1
+163,Schleichers Landing,Summit,,Jalupang Dua,Indonesia,3
+164,Holiday Inn Express & Suites Eureka,Maryland,,Agalteca,Honduras,3
+165,Red Roof Plus+ Washington,Fremont,37-741,Krasiczyn,Poland,5
+166,Aviator Hotel Anchorage,Bunker Hill,,Zongzhai,China,5
+167,Hollywood Motel,Kensington,,Watuagung,Indonesia,4
+168,DC - Alexandria,Paget,,Bayanbaogede,China,5
+169,Best Western Pasadena Royale,Iowa,,Tumpang,Indonesia,1
+170,Fremont Hotel & Casino,Butternut,07-110,Grębków,Poland,4
+171,InterContinental San Francisco,Garrison,64222-000,Brodósqui,Brazil,5
+172,Hotel Rose,Scoville,2615-284,Bom Sucesso,Portugal,4
+173,Homewood Suites By Hilton Lancaster,Dryden,,Kilju,North Korea,4
+174,Holiday Inn Express & Suites Lake Placid,Bayside,1231,Sedlarevo,Macedonia,3
+175,Courtyard Las Vegas Henderson/Green Valley,Fieldstone,29952,Guadalupe,Mexico,2
+176,Aloft Philadelphia Downtown,Brown,,Orosh,Albania,1
+177,McMenamins Kennedy School,Summit,4903,Bagong Sikat,Philippines,1
+178,AC Hotel by Marriott Boston Downtown,Riverside,5505,Odiongan,Philippines,1
+179,Best Western Inn At Palm Springs,Thackeray,562 06,Ústí nad Orlicí,Czech Republic,5
+180,Chelsea Savoy Hotel,Green Ridge,14600-000,São Joaquim da Barra,Brazil,2
+181,Pine Barn Inn,Gerald,,Shiziling,China,4
+182,Ace Hotel New Orleans,Moland,69300-000,Boa Vista,Brazil,1
+183,Courtyard Charlottesville North,Old Shore,,Waenenda,Indonesia,5
+184,Holiday Inn Express & Suites Florence I-95 & I-20 Civic Ctr,Helena,,Xiaomian,China,5
+185,The Boxer,Havey,2411,Dasol,Philippines,3
+186,Comfort Suites-regency Park,Mariners Cove,632851,Nizhnyaya Tura,Russia,3
+187,Hotel Warner,Commercial,93154 CEDEX,Le Blanc-Mesnil,France,1
+188,DoubleTree by Hilton Hotel Washington DC - Silver Spring,Meadow Valley,,Dongji,China,4
+189,Riverside Inn,Namekagon,16534,Erie,United States,5
+190,Budget Inn of America,Morningstar,622012,Gornyye Klyuchi,Russia,2
+191,Holiday Inn Express Baltimore-Bwi Airport West,Bunker Hill,,Gunung Sugih,Indonesia,4
+192,Best Western Mulberry Hotel,Meadow Valley,7040-524,São Pedro Gafanhoeira,Portugal,5
+193,Residence Inn Seattle Downtown/Lake Union,2nd,,Putinci,Serbia,2
+194,McMenamins Kennedy School,Kings,,Yeliguan,China,2
+195,Travelodge-lax South,Ryan,,Hanjia,China,5
+196,Aloft Greenville Downtown,Steensland,142390,L’vovskiy,Russia,1
+197,Holiday Inn Express & Suites Butte,Lunder,26907 CEDEX 9,Valence,France,5
+198,Wingate by Wyndham Frisco,Glacier Hill,414-0055,Itō,Japan,1
+199,The Troubadour Hotel New Orleans,Lawn,783 91,Uničov,Czech Republic,4
+200,Holiday Inn Express & Suites Sioux Falls Southwest,Bartelt,3600-584,Casal,Portugal,4
+201,W Austin,Meadow Ridge,,Nanding,China,3
+202,Courtyard Phoenix North/Happy Valley,Monica,95940-000,Arroio do Meio,Brazil,3
+203,Sea-Aire Motel,Del Mar,4755-046,Estrada,Portugal,2
+204,Tradewinds Restaurant,Saint Paul,396456,Pavlovsk,Russia,3
+205,Mark Twain Hotel,Veith,,Mount Darwin,Zimbabwe,3
+206,Holiday Inn Express & Suites Denver Northeast - Brighton,Banding,,Songnim,North Korea,5
+207,Staybridge Suites Lincoln Northeast,Packers,,Nioro,Mali,2
+208,Best Western Superstition Springs Inn,Ronald Regan,,Houjie,China,3
+209,Residence Inn By Marriott Waldorf,3rd,,Hougang,China,1
+210,Loews Portofino Bay Hotel at Universal Orlando,Rowland,,Huangshi,China,4
+211,Sense Beach House,Brown,11660-000,Caraguatatuba,Brazil,2
+212,Rodeway Inn,Londonderry,,Luzhi,China,3
+213,Hotel Storyville,Bartelt,,Cachachi,Peru,5
+214,Residence Inn By Marriott Waldorf,Kedzie,,Hexi,China,3
+215,Liberty Inn,Old Shore,,Yŏnmu,South Korea,4
+216,Best Western-valencia Inn,Leroy,,Baiba,China,3
+217,Vagabond Inn Sunnyvale,Briar Crest,,Achanizo,Peru,5
+218,SpringHill Suites by Marriott Virginia Beach Oceanfront,Merrick,,Nhà Bè,Vietnam,4
+219,Holiday Inn Express & Suites Butte,Namekagon,,Chishui,China,5
+220,hampton inn Springfield southeast,Bultman,29160-000,Serra,Brazil,1
+221,Best Western Plus Glenview-Chicagoland Inn Suites,Bultman,,Bulakgebang,Indonesia,5
+222,Aloft Cleveland Downtown,Jay,779-0312,Tokushima-shi,Japan,2
+223,The Parkside Inn,Sunfield,10109,La Julia,Dominican Republic,5
+224,Park Vue Inn,Northridge,55564,Young America,United States,1
+225,Aloft New Orleans Downtown,Bashford,230559,Cereté,Colombia,2
+226,Hotel Red,Kropf,78379 CEDEX,Plaisir,France,2
+227,Motel 6,Stoughton,,Poli,Indonesia,5
+228,Courtyard Seattle Downtown/Lake Union,Haas,,Puerto Cumarebo,Venezuela,4
+229,Homewood Suites By Hilton Lancaster,Jenifer,,Srunikrajan,Indonesia,2
+230,Homewood Suites by Hilton Orlando-Nearest to Univ Studios,Carpenter,3400,Cabarroguis,Philippines,3
+231,Holiday Inn Express and Suites,Maywood,,Quangang,China,5
+232,Motel 6 Jaiden & Jiya LLC,Everett,4031,Tubli,Philippines,3
+233,Hampton Inn & Suites Brookings,Pleasure,6090-608,Salvador,Portugal,4
+234,Embassy Suites by Hilton Baltimore at BWI Airport,Bartillon,,Youxikou,China,4
+235,La Quinta Inn & Suites Corsicana,Fieldstone,,Zhongcun,China,5
+236,Howard Johnson Marina at Monterey Bay,Vidon,,Illushi,Nigeria,5
+237,Park City Peaks Hotel,Boyd,5355,Villa Castelli,Argentina,1
+238,Aloft Bolingbrook,Kingsford,,Hwasun,South Korea,5
+239,The Beekman,Coleman,22840,Vårdö,Aland Islands,3
+240,Stonebrook Lodge,Kensington,34110,Phibun Mangsahan,Thailand,3
+241,Drury Plaza Hotel Indianapolis Carmel,Merchant,12006,Concepción Tutuapa,Guatemala,5
+242,The Resort at Longboat Key Club,Fuller,33699 CEDEX,Mérignac,France,2
+243,Garrison Inn,Cody,959-1855,Niitsu-honchō,Japan,5
+244,Schweich's Hotel Bar & Restaurant,Norway Maple,4640-324,Cruzeiro,Portugal,4
+245,Economy Inn Suites,Fuller,,Saparua,Indonesia,5
+246,Seven Gables Inn,Goodland,85950-000,Palotina,Brazil,5
+247,Holiday Inn Express & Suites Baton Rouge East,Vidon,,Áno Sýros,Greece,2
+248,Admiral Hotel,Banding,27260,Khlong Hat,Thailand,1
+249,Residence Inn Chicago Bloomingdale,Carberry,682038,Chegdomyn,Russia,2
+250,Comfort Inn I-10 West at 51st Ave,Mccormick,,Vavoua,Ivory Coast,2
+251,Hotel Aiken,Hollow Ridge,618541,Mitrofanovka,Russia,2
+252,Staybridge Suites Rockford,Basil,,Getengan,Indonesia,2
+253,Hyatt House Seattle/Downtown,Ridgeway,4313,San Narciso,Philippines,4
+254,Hampton Inn & Suites Brookings,Dexter,243126,Zaymishche,Russia,2
+255,Aztec Hotel,Meadow Vale,13350-000,Elias Fausto,Brazil,1
+256,M -37 Motel,Delladonna,41029 CEDEX,Blois,France,5
+257,Table Mountain Inn,Buena Vista,26834,Roma,Mexico,3
+258,Staybridge Suites Omaha 80th And Dodge,Kropf,5210,Deskle,Slovenia,4
+259,Behind The Fence Bed & Breakfast Inn,Heffernan,673020,Balyaga,Russia,4
+260,La Quinta Inn & Suites Corsicana,Heath,,Hukeng,China,2
+261,Hollywood Motel,Walton,,Pnikut,Ukraine,3
+262,Best Western-valencia Inn,Jackson,9204,Šalovci,Slovenia,4
+263,Best Western Plus Clearfield,Dorton,1370,København,Denmark,1
+264,Hampton Inn & Suites Jackson,Bultman,69350,Samaro,Pakistan,3
+265,Best Western Tomah Hotel,Reindahl,548 32,Hova,Sweden,4
+266,Fairfield Inn Suites Tyler,Heath,PLA,Paola,Malta,2
+267,Longwood Inn,Tomscot,31180,Buriram,Thailand,5
+268,Hampton Inn & Suites Philadelphia Montgomeryville,Brickson Park,2264,Leidschendam,Netherlands,2
+269,Aloft Philadelphia Downtown,Hudson,,Tokonou,Guinea,5
+270,Extended Stay America - Atlanta - Perimeter - Hammond Drive,Bultman,724 68,Västerås,Sweden,3
+271,Holiday Inn Express San Diego Sea World - Beach Area,Lunder,,Prokuplje,Serbia,3
+272,Top's Motel,Heath,55720-000,João Alfredo,Brazil,5
+273,AC Hotel Miami Beach,Little Fleur,,Hairag,China,4
+274,La Quinta Inn Suites San Antonio Northwest,Drewry,,Haolaishan,China,4
+275,Motel 6 Atlanta Downtown,Macpherson,88-324,Jeziora Wielkie,Poland,2
+276,Lodge At Lake Tahoe,Texas,,Sadabe,Madagascar,4
+277,The Academy Hotel Colorado Springs,Sunnyside,15220,Pittsburgh,United States,4
+278,XV Beacon,Barby,,Xixiang,China,1
+279,Courtyard Seattle Downtown/Lake Union,Jenifer,4755-393,Pedra Furada,Portugal,1
+280,Motel 6,Cherokee,42150,Pak Chom,Thailand,5
+281,The Pearl Hotel,Stuart,,Sangiang,Indonesia,4
+282,Ramada Louisville Expo Center,Portage,,Wangdain,China,4
+283,Coconut Waikiki Hotel,Jenna,3017,Bulacan,Philippines,5
+284,Hotel Rose,Harper,,Huangjinjing,China,3
+285,Hilton Garden Inn Napa,Golf View,,Yulin,China,2
+286,The Gables Inn Sausalito,Ruskin,,Mahanoro,Madagascar,4
+287,Hotel Sutter,Everett,852 36,Sundsvall,Sweden,1
+288,The Villa Toscana,Welch,22-410,Zamość,Poland,2
+289,The Redbury New York,Westend,,San José,Honduras,1
+290,America's Best Inn Suites,Hoffman,,Tobatí,Paraguay,1
+291,Hyatt Place Charlottesville,Hansons,61825,Champaign,United States,5
+292,Flamingo Inn Rosemead,Ryan,96-206,Sadkowice,Poland,5
+293,Best Western Plus Lockport Hotel,Hoard,6420-696,Vila Franca das Naves,Portugal,3
+294,Red Roof Plus+ Washington,Reinke,,Riangblolong,Indonesia,4
+295,Fairfield Inn and Suites by Marriott Virginia Beach Oceanfront,Marcy,77346,Humble,United States,4
+296,Hilton Garden Inn Napa,Starling,3720-085,Macinhata da Seixa,Portugal,2
+297,Pasea Hotel & Spa,Forest,N2M,Matagami,Canada,4
+298,Vagabond Inn Sunnyvale,Sunfield,175310,Demyansk,Russia,4
+299,Blue Sky Lodge,Karstens,,Egbe,Nigeria,4
+300,Best Western Inn & Suites At Discovery Kingdom,Milwaukee,,Bohou,China,5
+301,Comfort Suites Outlet Center,Myrtle,87000-000,Maringá,Brazil,2
+302,Best Western Tomah Hotel,Anhalt,,Ash Shuyūkh,Palestinian Territory,1
+303,Ramada-ankeny,East,,Tipitapa,Nicaragua,5
+304,Loews Portofino Bay Hotel at Universal Orlando,Sunbrook,18220,Wang Muang,Thailand,5
+305,Basecamp Hotel,Morning,8201,Veinticinco de Mayo,Argentina,4
+306,The Pecos Trail Inn,Arizona,,Batuna Satu,Indonesia,3
+307,Whispering Woods Resort,Longview,A84,Ashbourne,Ireland,4
+308,Wingate by Wyndham San Marcos,Caliangt,,Cigadog Hilir,Indonesia,3
+309,Oak Tree Inn,Scofield,289-3182,Yōkaichiba,Japan,1
+310,Holiday Inn Express San Diego Sea World - Beach Area,Hoffman,52420,Buzet,Croatia,2
+311,Aztec Hotel,Hoffman,L-6693,Mertert,Luxembourg,3
+312,Best Western Springfield West Inn,Fulton,301723,Kimovsk,Russia,4
+313,The Charlesmark Hotel,Nancy,,Cikai,China,4
+314,Hotel Rose,Troy,727-0203,Shōbara,Japan,2
+315,Hampton Inn-elkhorn,Amoth,,Ailibugai,China,4
+316,Inn at El Gaucho,Hoard,57045 CEDEX 01,Metz,France,3
+317,Motel 6,Helena,242750,Dubrovka,Russia,2
+318,Park Vue Inn,Lukken,9545-214,Fenais da Luz,Portugal,5
+319,The INN at Europa Village,Continental,,Tandaltī,Sudan,1
+320,Hampton Inn & Suites St. Louis/South I-55,Londonderry,50320,Des Moines,United States,3
+321,Freehand Chicago,Express,9790,Thaba Nchu,South Africa,2
+322,Oak Tree Inn,Scott,433396,Silikatnyy,Russia,5
+323,Hampton Inn-janesville,Homewood,,Pakembangan,Indonesia,2
+324,Travelodge-beckley,Meadow Vale,,Wa’erma,China,5
+325,MOXY New Orleans Downtown/French Quarter Area,Green Ridge,446368,Mirnyy,Russia,2
+326,Arizona Mountain Inn & Cabins,Arapahoe,,Kokembang,Indonesia,3
+327,La Quinta Inn Suites Warner Robins - Robins AFB,John Wall,,Bakau,Gambia,2
+328,DC - Alexandria,Marcy,613648,Stulovo,Russia,4
+329,Aloft Greenville Downtown,Kennedy,,Wangdun,China,4
+330,Silver Cloud Inn - Seattle Lake Union,International,671 24,Vrbovec,Czech Republic,1
+331,M -37 Motel,Mallard,,Shādegān,Iran,3
+332,Hampton Inn Middletown,Eastlawn,,Sake,Democratic Republic of the Congo,5
+333,Comfort Suites Outlet Center,Prairieview,,Zhendu,China,3
+334,InterContinental San Francisco,Hudson,462 22,Vänersborg,Sweden,4
+335,Ascend Resort Collection,Nelson,40270,Ban Fang,Thailand,4
+336,Hampton Inn & Suites Bend,Corry,,Jianshe,China,3
+337,French Quarter Suites Hotel,Shelley,,Néa Éfesos,Greece,5
+338,Holiday Inn North Phoenix,Charing Cross,,Zhumadian,China,5
+339,The INN at Europa Village,Comanche,70567,Stuttgart,Germany,2
+340,Ramada-kingman,Hallows,,Tonglin,China,2
+341,The Saga Motor Hotel,4th,679 71,Lysice,Czech Republic,5
+342,Aloft Arundel Mills,Mifflin,4770-565,Vale de São Cosme,Portugal,3
+343,Aloft Arundel Mills,Donald,,Qianyou,China,4
+344,Hilton Garden Inn Winchester,Arizona,,La Libertad,Ecuador,3
+345,La Quinta Inn & Suites Dallas Grand Prairie South,Birchwood,,Longxing,China,3
+346,Pa,Lindbergh,68264 CEDEX,Kingersheim,France,4
+347,Bay Pointe Inn Restaurant,Parkside,,Cocachacra,Peru,3
+348,DC - Alexandria,Chive,,Victoria,Chile,3
+349,InterContinental San Francisco,Elka,1964,Heemskerk,Netherlands,2
+350,Martinique Motel,Buhler,,Chongwen,China,2
+351,Ascend Resort Collection,Bowman,,Sidokumpul,Indonesia,1
+352,Hilton Garden Inn Napa,David,,Pingyi,China,3
+353,Hyatt House Seattle/Downtown,North,690880,Vladivostok,Russia,3
+354,Elmwood Motor Court,Ilene,,Qincheng,China,5
+355,Rodeway Inn Boardwalk,Daystar,,Koesan,South Korea,4
+356,Main Street Station Casino Brewery Hotel,Thierer,140732,Roshal’,Russia,5
+357,Best Western Inn Florence,Bobwhite,,Duishan,China,1
+358,Rodeway Inn,Kropf,90-510,Grabów nad Prosną,Poland,2
+359,Area,Hayes,N4N,Hanover,Canada,4
+360,Whispering Woods Resort,Northfield,352403,Temirgoyevskaya,Russia,5
+361,DoubleTree by Hilton Hotel Metropolitan - New York City,Dwight,,Nyinqug,China,1
+362,Americas Best Value Inn & Suites Canon City,Killdeer,,Xinghua,China,4
+363,Fairfield Inn and Suites by Marriott Virginia Beach Oceanfront,Pond,142806,Stupino,Russia,2
+364,Holiday Inn Express Albuquerque (I-40 Eubank),Helena,81679,München,Germany,1
+365,Hampton Inn Middletown,Grover,57120-000,Satuba,Brazil,2
+366,BEST WESTERN PLUS Walla Walla Suites Inn,Esch,,Zhishan,China,2
+367,Basecamp Hotel,Dovetail,,Ambohitrolomahitsy,Madagascar,3
+368,Holiday Inn Express & Suites Baton Rouge East,Grayhawk,,Xiaoxi,China,5
+369,Hyatt House Seattle/Downtown,Clemons,363704,Troitskoye,Russia,3
+370,Hotel Red,Waubesa,188489,Kingisepp,Russia,3
+371,Orange Motel,Arapahoe,,Dongkeng,China,4
+372,Fairfield Inn & Suites by Marriott Key West at The Keys Collection,Kings,,Đức Phong,Vietnam,2
+373,Harborside Inn,Nova,3885-395,Esmoriz,Portugal,1
+374,Hilton Garden Inn Williamsburg,Hanover,1300,Kumanovo,Macedonia,3
+375,Hyatt House Seattle/Downtown,Glacier Hill,4424,Maagnas,Philippines,2
+376,Ramada Hialeah Miami Airport,Doe Crossing,357247,Grecheskoye,Russia,3
+377,Eden Roc Inn & Suites,Bobwhite,,Babakankadu,Indonesia,3
+378,Hotel Storyville,Acker,,Xinwan,China,2
+379,Admiral Hotel,Beilfuss,54120,Song,Thailand,2
+380,Hampton Inn & Suites Brookings,Rieder,98687,Vancouver,United States,5
+381,Best Western Plus Newark/christiana Inn,Magdeline,,Yovon,Tajikistan,4
+382,Loews Portofino Bay Hotel at Universal Orlando,Prairie Rose,7904,Mādārīpur,Bangladesh,1
+383,SpringHill Suites Las Vegas Convention Center,Continental,,Gaoqiu,China,4
+384,Best Western Plus Encina Inn & Suites,Arkansas,611 24,Nyköping,Sweden,2
+385,The Old No. 77 Hotel & Chandlery,Bartelt,44-189,Wilcza,Poland,2
+386,Ramada Plaza Hawthorne/LAX,Knutson,,Dubti,Ethiopia,1
+387,Snowshoe Motel,Cherokee,,Ambovombe,Madagascar,1
+388,Red Roof Inn Hampton Coliseum Convention Center,Hanover,20088,Washington,United States,2
+389,Best Western Plus Encina Inn & Suites,Burrows,,Drakhtik,Armenia,5
+390,The INN at Europa Village,Stone Corner,,Samho-rodongjagu,North Korea,4
+391,Lyttleton Inn,Prairieview,88847,Kota Kinabalu,Malaysia,5
+392,Days Inn St. Louis - Lindbergh Boulevard,Bartelt,76240-000,Aragarças,Brazil,5
+393,Hampton Inn Las Vegas North Speedway,Twin Pines,870-0106,Tsurusaki,Japan,3
+394,Best Western Mulberry Hotel,Miller,,Monkey Hill,Saint Kitts and Nevis,2
+395,The Saga Motor Hotel,Eliot,594 51,Ostrov,Czech Republic,4
+396,Holiday Inn Express Suites Clinton,Portage,,Monjarás,Honduras,5
+397,Holiday Inn Express & Suites Baton Rouge East,Bellgrove,,Tangkilsari,Indonesia,3
+398,Park Vue Inn,Union,36200,La Purisima,Mexico,1
+399,Motel Del Rogue,Dakota,63409 CEDEX,Chamalières,France,2
+400,Staybridge Suites Rockford,Elmside,,Wenshang,China,1
+401,Four Points by Sheraton Plainview Long Island,Granby,,Abovyan,Armenia,3
+402,La Quinta Inn & Suites Dallas Grand Prairie South,Fuller,,Xinghua,China,4
+403,Holiday Inn Express Harrisburg East,Walton,,Dongmazar,China,2
+404,Econolodge,Starling,32209,Jacksonville,United States,5
+405,Riverside Inn,Surrey,102213,Gazimurskiy Zavod,Russia,4
+406,Suncoast Hotel and Casino,Muir,L8P,Sainte-Anne-des-Monts,Canada,1
+407,Innkeeper Danville West,Declaration,,Rāmsar,Iran,2
+408,Fremont Hotel & Casino,Porter,103 16,Stockholm,Sweden,1
+409,Lincoln Plaza Hotel,Fuller,17270-000,Boracéia,Brazil,3
+410,The L.A. Hotel Downtown,Claremont,,Bilajari,Azerbaijan,2
+411,Imperial Waters,Valley Edge,,Salor,Uzbekistan,3
+412,SpringHill Suites by Marriott Virginia Beach Oceanfront,Schmedeman,,Al Ma‘allā’,Yemen,3
+413,Hampton Inn Suites PortlandVancouver,Bellgrove,4910-302,Aldeia,Portugal,5
+414,Holiday Inn Express & Suites Denver Northeast - Brighton,Burning Wood,691 63,Velké Němčice,Czech Republic,1
+415,Holiday Inn Express & Suites Port Richey,Monument,,Dukou,China,2
+416,Desert Inn Motel,Maple Wood,399445,Petrovskiy,Russia,2
+417,Comfort Inn & Suites West,Buell,,Lahoysk,Belarus,5
+418,The Gables Inn Sausalito,Vera,33-260,Gręboszów,Poland,2
+419,hotel le bleu,Dahle,L4P,Keswick,Canada,4
+420,The Chocolate Turtle Bed & Breakfast,Nevada,547079,El Carmen,Colombia,4
+421,The Boxer,Hauk,3310,Žalec,Slovenia,5
+422,Appletree Inn,Lawn,,Fusheng,China,3
+423,Hotel Red,Dahle,,Mwene-Ditu,Democratic Republic of the Congo,2
+424,Golden North Motel,Crowley,,Growong Kidul,Indonesia,1
+425,Schleichers Landing,Hazelcrest,,Santiago de Cuba,Cuba,4
+426,Echo Sails Motel,Becker,44420-000,Maragogipe,Brazil,1
+427,Chelsea Savoy Hotel,Mayfield,834 33,Brunflo,Sweden,3
+428,Aloft Bolingbrook,Eastlawn,7030,Maayong Tubig,Philippines,1
+429,Holiday Inn Express & Suites Florence I-95 & I-20 Civic Ctr,Sloan,648581,Krasnaya Gorka,Russia,2
+430,Embassy Suites by Hilton Boston at Logan Airport,Sutteridge,01054,Palencia,Guatemala,5
+431,Bluegreen Parkside Williamsburg,Rutledge,503 03,Smiřice,Czech Republic,4
+432,Hampton Inn Atlanta-Perimeter Center,Fuller,4620-297,Capela,Portugal,1
+433,Residence Inn By Marriott Waldorf,Kenwood,,Alakak,China,5
+434,Hilton Garden Inn Myrtle Beach/Coastal Grand Mall,Fuller,,Sinjil,Palestinian Territory,4
+435,Beavers Bend Lodging,Arapahoe,,Karangtengah Lor,Indonesia,2
+436,Sonesta ES Suites Flagstaff,Upham,,Shilu,China,2
+437,La Quinta Inn & Suites Corsicana,Scott,461509,Sol’-Iletsk,Russia,3
+438,Colony Hotel,Iowa,,Sanjian,China,1
+439,Beacon Hill Hotel and Bistro,Stuart,75694,Guadalupe Victoria,Mexico,5
+440,Orange City Motel,Northview,3865-004,Canelas,Portugal,3
+441,Loews Portofino Bay Hotel at Universal Orlando,Schlimgen,,Huashan,China,1
+442,Best Western-valencia Inn,Milwaukee,69485-000,Uarini,Brazil,5
+443,Quality Inn Suites Medical Park,Sommers,,Pancalan,Indonesia,2
+444,Cloverleaf Residence Suites,Prairie Rose,,Kang,Botswana,5
+445,Econo Lodge,Bluestem,662007,La Virginia,Colombia,2
+446,Colony Hotel,Caliangt,5196,Arroyo Seco,Argentina,4
+447,The Lodge At Russell,Pennsylvania,3800-854,Carregal,Portugal,4
+448,Pike Motel,Clyde Gallagher,475-0803,Hekinan,Japan,1
+449,Red Roof Inn Hampton Coliseum Convention Center,Jana,11704,Constanza,Dominican Republic,5
+450,Radisson Hotel Valley Forge,Harper,,Kudang,Indonesia,1
+451,Four Points by Sheraton Plainview Long Island,Grim,,Suicheng,China,5
+452,Park Vue Inn,Butternut,83-047,Przywidz,Poland,4
+453,Hotel Maya - a DoubleTree by Hilton Hotel,Cardinal,,El Ángel,Ecuador,5
+454,La Quinta Inn & Suites Corsicana,Green Ridge,,Dhromolaxia,Cyprus,2
+455,Hampton Inn-seattle/everett,Arrowood,,Kose,Estonia,4
+456,Rancho Valencia Resort Spa,Briar Crest,13940-000,Águas de Lindóia,Brazil,2
+457,Residence Inn San Diego Central,Bluestem,,Pasarbaru,Indonesia,4
+458,Hampton Inn & Suites St. Louis/South I-55,Crownhardt,87490-000,Nova Olímpia,Brazil,5
+459,Beverly Garden Suites,Tony,692 24,Kumla,Sweden,1
+460,Best Western Inn & Suites At Discovery Kingdom,Hanover,,Mengxi,China,5
+461,Best Western Lake Conroe Inn,Kim,19201,Alpūrai,Pakistan,5
+462,Hampton Inn Suites Conroe I45 North,Merry,,Huicheng,China,2
+463,Candlewood Suites Somerset,Badeau,,Jianping,China,2
+464,Quality Inn & Suites Anaheim Maingate,Union,,Široki Brijeg,Bosnia and Herzegovina,2
+465,Sleep Inn,Fuller,,As Sayyānī,Yemen,3
+466,Best Western Suites Near Opryland,Westport,,Dangjiaxian,China,3
+467,Best Western Plus Clearfield,Prentice,,Bandar-e Ganāveh,Iran,3
+468,Extended Stay America - Atlanta - Perimeter - Hammond Drive,Johnson,28890-000,Rio das Ostras,Brazil,3
+469,Hilton Garden Inn BWI Airport,Vidon,,Saraqinishtë,Albania,5
+470,Holiday Inn Express & Suites Baton Rouge East,Pawling,5903,Villa Nueva,Argentina,4
+471,Best Western Plus Inn At The Vines,Lighthouse Bay,83600-000,Campo Largo,Brazil,5
+472,Schleichers Landing,Arapahoe,,Mengcheng Chengguanzhen,China,1
+473,Orange Motel,Acker,4690-300,Portela,Portugal,4
+474,Hyatt Regency Sacramento,Butternut,,Huancheng,China,4
+475,Main Street Station Casino Brewery Hotel,Mallard,,Kalloní,Greece,4
+476,McMenamins Kennedy School,Oakridge,,Stylída,Greece,2
+477,Holiday Inn Express Albuquerque (I-40 Eubank),Mccormick,T5C,Kugluktuk,Canada,5
+478,Seacrest Oceanfront Hotel,Glacier Hill,4620-472,Venda,Portugal,2
+479,Holiday Inn Anaheim-Resort Area,Manley,1381,Rakek,Slovenia,3
+480,Holiday Inn Express Alpharetta - Roswell,Muir,3709,Zeist,Netherlands,2
+481,The Inn at Solvang,Memorial,,Babasakhib,Afghanistan,2
+482,Behind The Fence Bed & Breakfast Inn,Schurz,10081 CEDEX,Troyes,France,1
+483,Best Western Plus Inn At The Vines,Kings,,Kumanis,Indonesia,3
+484,National Trail Motel,Transport,V2X,Maple Ridge,Canada,4
+485,Hilton Garden Inn,Daystar,,Moengo,Suriname,1
+486,Residence Inn Chicago Bloomingdale,Swallow,71326,Valvedditturai,Sri Lanka,4
+487,The Troubadour Hotel New Orleans,Clyde Gallagher,,Ciomas,Indonesia,3
+488,Days Inn Apple Valley Sevierville,Kennedy,95300-000,Lagoa Vermelha,Brazil,5
+489,Cloverleaf Residence Suites,Hoepker,,Gongfang,China,3
+490,Martinique Motel,Lyons,,Yintang,China,3
+491,Aqua Soleil Hotel And Mineral Water Spa,Prairieview,8508,La Paz,Philippines,5
+492,Hampton Inn Suites Conroe I45 North,Ramsey,1590,Nigel,South Africa,2
+493,Best Western Inn & Suites At Discovery Kingdom,Arapahoe,35970-000,Barão de Cocais,Brazil,2
+494,America's Best Value Inn,Bluestem,,Palmitas,Uruguay,1
+495,BEST WESTERN PLUS Walla Walla Suites Inn,Schmedeman,687 22,Ostrožská Nová Ves,Czech Republic,3
+496,Fairfield Inn and Suites by Marriott Virginia Beach Oceanfront,Brickson Park,60230,Kao Liao,Thailand,5
+497,The Varden Hotel,Melody,462422,Kuznechnoye,Russia,4
+498,Holiday Inn Express Alpharetta - Roswell,Ludington,97-221,Rokiciny,Poland,1
+499,Holiday Inn Express & Suites Atlanta East - Lithonia,Lillian,R7N,Dauphin,Canada,4
+500,Aloft New Orleans Downtown,Russell,,Kaum,Indonesia,4

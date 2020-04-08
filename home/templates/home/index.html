@@ -39,11 +39,11 @@
 									<li class="active"><a href="{% url 'home:index' %}">Home</a></li>
 									<li><a href="{% url 'home:about' %}">About us</a></li>
 									<li><a href="{% url 'login:index' %}">Login</a></li>
-									<li><a href="news.html">Register</a></li>
+									<li><a href="{% url 'register:index' %}">Register</a></li>
 									<li><a href="contact.html">Dashboard</a></li>
 								</ul>
 							</nav>
-							<div class="header_phone ml-auto">Call us: +880-1915123445</div>
+{#							<div class="header_phone ml-auto">Call us: +880-1915123445</div>#}
 
 							<!-- Hamburger -->
 
@@ -67,10 +67,10 @@
 		</div>
 		<div class="menu_content">
 			<ul>
-				<li><a href="">Home</a></li>
-				<li><a href="about">About us</a></li>
-				<li><a href="#">Login</a></li>
-                <li><a href="news.html">Register</a></li>
+				<li><a href="{% url 'home:index' %}">Home</a></li>
+                <li><a href="{% url 'home:about' %}">About us</a></li>
+                <li><a href="{% url 'login:index' %}">Login</a></li>
+                <li><a href="{% url 'register:index' %}">Register</a></li>
                 <li><a href="contact.html">Dashboard</a></li>
 			</ul>
 		</div>
@@ -127,7 +127,7 @@
 							<div class="row">
 								<div class="col">
 									<div class="home_slider_content">
-										<div class="home_title"><h2>And I think to myself , What a wonderful world</h2></div>
+										<div class="home_title"><h2>And I think to myself   What a wonderful world</h2></div>
 									</div>
 								</div>
 							</div>
@@ -139,8 +139,8 @@
 
 			<div class="home_page_nav">
 				<ul class="d-flex flex-column align-items-end justify-content-end">
-					<li><a href="#" data-scroll-to="#destinations">Offers<span>01</span></a></li>
-					<li><a href="#" data-scroll-to="#testimonials">Testimonials<span>02</span></a></li>
+					<li><a href="#" data-scroll-to="#bestrated">Best Rated<span>01</span></a></li>
+					<li><a href="#" data-scroll-to="#topdiscount">Top Discount<span>02</span></a></li>
 					<li><a href="#" data-scroll-to="#news">Latest<span>03</span></a></li>
 				</ul>
 			</div>
@@ -156,12 +156,13 @@
 					<div class="home_search_container">
 						<div class="home_search_title">Search for your trip</div>
 						<div class="home_search_content">
-                            <form style="background-color:rgba(0,0,0,0);">
+                         <form style="background-color:rgba(0,0,0,0);">
                                 <div class="form-row">
+                                    <div class="col"><input class="form-control form-control-lg" type="search" placeholder="Destination" required=""></div>
+                                    <div class="col"><input class="form-control form-control-lg" type="date" placeholder = "Check in" required=""></div>
                                     <div class="col"><input class="form-control form-control-lg" type="date" required=""></div>
-                                    <div class="col"><input class="form-control form-control-lg" type="date"></div>
                                     <div class="col"><input class="form-control form-control-lg" type="number" placeholder="Rooms"></div>
-                                    <div class="col"><button class="btn btn-primary btn-lg" type="submit" style="background-color:rgb(131,53,143);">Submit</button></div>
+                                    <div class="col"><button class="btn btn-primary btn-lg" type="submit" style="background-color:rgb(131,53,143);margin-left:65px;">Search</button></div>
                                 </div>
                             </form>
 {#							<form action="#" class="home_search_form" id="home_search_form">#}
@@ -230,14 +231,14 @@
 		</div>
 	</div>
 
-	<!-- Destinations -->
+	<!-- Best Rated -->
 
-	<div class="destinations" id="destinations">
+	<div class="destinations" id="bestrated">
 		<div class="container">
 			<div class="row">
 				<div class="col text-center">
 					<div class="section_subtitle">simply amazing places</div>
-					<div class="section_title"><h2>Popular Destinations</h2></div>
+					<div class="section_title"><h2>Best Rated</h2></div>
 				</div>
 			</div>
 			<div class="row destinations_row">
@@ -245,77 +246,121 @@
 					<div class="destinations_container item_grid">
 
 						<!-- Destination -->
+
+                        {% for hotel in hotel_ara_best %}
+
 						<div class="destination item">
 							<div class="destination_image">
 								<img src="../../static/home/images/destination_1.jpg" alt="">
-								<div class="spec_offer text-center"><a href="#">Special Offer</a></div>
+								<div class="spec_offer text-center"><a href="#">Best</a></div>
 							</div>
 							<div class="destination_content">
-								<div class="destination_title"><a href="destinations.html">Bali</a></div>
-								<div class="destination_subtitle"><p>Nulla pretium tincidunt felis, nec.</p></div>
-								<div class="destination_price">From $679</div>
+								<div class="destination_title"><a href="destinations.html">{{ hotel.name}}</a></div>
+								<div class="destination_subtitle"><p>{{ hotel.city }} , {{ hotel.country }}</p></div>
+								<div class="destination_price">Rating {{ hotel.rating }}</div>
 							</div>
 						</div>
 
+                        {% endfor %}
+
+{#						<!-- Destination -->#}
+{#						<div class="destination item">#}
+{#							<div class="destination_image">#}
+{#								<img src="../../static/home/images/destination_2.jpg" alt="">#}
+{#							</div>#}
+{#							<div class="destination_content">#}
+{#								<div class="destination_title"><a href="destinations.html">Indonesia</a></div>#}
+{#								<div class="destination_subtitle"><p>Nulla pretium tincidunt felis, nec.</p></div>#}
+{#								<div class="destination_price">From $679</div>#}
+{#							</div>#}
+{#						</div>#}
+{##}
+{#						<!-- Destination -->#}
+{#						<div class="destination item">#}
+{#							<div class="destination_image">#}
+{#								<img src="../../static/home/images/destination_3.jpg" alt="">#}
+{#							</div>#}
+{#							<div class="destination_content">#}
+{#								<div class="destination_title"><a href="destinations.html">San Francisco</a></div>#}
+{#								<div class="destination_subtitle"><p>Nulla pretium tincidunt felis, nec.</p></div>#}
+{#								<div class="destination_price">From $679</div>#}
+{#							</div>#}
+{#						</div>#}
+{##}
+{#						<!-- Destination -->#}
+{#						<div class="destination item">#}
+{#							<div class="destination_image">#}
+{#								<img src="../../static/home/images/destination_4.jpg" alt="">#}
+{#							</div>#}
+{#							<div class="destination_content">#}
+{#								<div class="destination_title"><a href="destinations.html">Paris</a></div>#}
+{#								<div class="destination_subtitle"><p>Nulla pretium tincidunt felis, nec.</p></div>#}
+{#								<div class="destination_price">From $679</div>#}
+{#							</div>#}
+{#						</div>#}
+{##}
+{#						<!-- Destination -->#}
+{#						<div class="destination item">#}
+{#							<div class="destination_image">#}
+{#								<img src="../../static/home/images/destination_5.jpg" alt="">#}
+{#							</div>#}
+{#							<div class="destination_content">#}
+{#								<div class="destination_title"><a href="destinations.html">Phi Phi Island</a></div>#}
+{#								<div class="destination_subtitle"><p>Nulla pretium tincidunt felis, nec.</p></div>#}
+{#								<div class="destination_price">From $679</div>#}
+{#							</div>#}
+{#						</div>#}
+{##}
+{#						<!-- Destination -->#}
+{#						<div class="destination item">#}
+{#							<div class="destination_image">#}
+{#								<img src="../../static/home/images/destination_6.jpg" alt="">#}
+{#							</div>#}
+{#							<div class="destination_content">#}
+{#								<div class="destination_title"><a href="destinations.html">Mykonos</a></div>#}
+{#								<div class="destination_subtitle"><p>Nulla pretium tincidunt felis, nec.</p></div>#}
+{#								<div class="destination_price">From $679</div>#}
+{#							</div>#}
+{#						</div>#}
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Top Discount -->
+
+	<div class="destinations" id="topdiscount">
+		<div class="container">
+			<div class="row">
+				<div class="col text-center">
+					<div class="section_subtitle">simply amazing places</div>
+					<div class="section_title"><h2>Top Discount</h2></div>
+				</div>
+			</div>
+			<div class="row destinations_row">
+				<div class="col">
+					<div class="destinations_container item_grid">
+
 						<!-- Destination -->
+
+                        {% for hotel in hotel_ara_top_disc %}
+
 						<div class="destination item">
 							<div class="destination_image">
 								<img src="../../static/home/images/destination_2.jpg" alt="">
+								<div class="spec_offer text-center"><a href="#">Special Offer</a></div>
 							</div>
 							<div class="destination_content">
-								<div class="destination_title"><a href="destinations.html">Indonesia</a></div>
-								<div class="destination_subtitle"><p>Nulla pretium tincidunt felis, nec.</p></div>
-								<div class="destination_price">From $679</div>
+								<div class="destination_title"><a href="destinations.html">{{ hotel.name}}</a></div>
+								<div class="destination_subtitle"><p>{{ hotel.city }} , {{ hotel.country }}</p></div>
+								<div class="destination_subtitle"><p>{{ hotel.top_disc_roomtype }} type room</p></div>
+								<div class="destination_price">{{ hotel.top_disc_roomtype_disc }}% off!</div>
 							</div>
 						</div>
 
-						<!-- Destination -->
-						<div class="destination item">
-							<div class="destination_image">
-								<img src="../../static/home/images/destination_3.jpg" alt="">
-							</div>
-							<div class="destination_content">
-								<div class="destination_title"><a href="destinations.html">San Francisco</a></div>
-								<div class="destination_subtitle"><p>Nulla pretium tincidunt felis, nec.</p></div>
-								<div class="destination_price">From $679</div>
-							</div>
-						</div>
-
-						<!-- Destination -->
-						<div class="destination item">
-							<div class="destination_image">
-								<img src="../../static/home/images/destination_4.jpg" alt="">
-							</div>
-							<div class="destination_content">
-								<div class="destination_title"><a href="destinations.html">Paris</a></div>
-								<div class="destination_subtitle"><p>Nulla pretium tincidunt felis, nec.</p></div>
-								<div class="destination_price">From $679</div>
-							</div>
-						</div>
-
-						<!-- Destination -->
-						<div class="destination item">
-							<div class="destination_image">
-								<img src="../../static/home/images/destination_5.jpg" alt="">
-							</div>
-							<div class="destination_content">
-								<div class="destination_title"><a href="destinations.html">Phi Phi Island</a></div>
-								<div class="destination_subtitle"><p>Nulla pretium tincidunt felis, nec.</p></div>
-								<div class="destination_price">From $679</div>
-							</div>
-						</div>
-
-						<!-- Destination -->
-						<div class="destination item">
-							<div class="destination_image">
-								<img src="../../static/home/images/destination_6.jpg" alt="">
-							</div>
-							<div class="destination_content">
-								<div class="destination_title"><a href="destinations.html">Mykonos</a></div>
-								<div class="destination_subtitle"><p>Nulla pretium tincidunt felis, nec.</p></div>
-								<div class="destination_price">From $679</div>
-							</div>
-						</div>
+                        {% endfor %}
 
 					</div>
 				</div>
@@ -325,68 +370,68 @@
 
 	<!-- Testimonials -->
 
-	<div class="testimonials" id="testimonials">
-		<div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="images/testimonials.jpg" data-speed="0.8"></div>
-		<div class="container">
-			<div class="row">
-				<div class="col text-center">
-					<div class="section_subtitle">simply amazing places</div>
-					<div class="section_title"><h2>Testimonials</h2></div>
-				</div>
-			</div>
-			<div class="row testimonials_row">
-				<div class="col">
-
-					<!-- Testimonials Slider -->
-					<div class="testimonials_slider_container">
-						<div class="owl-carousel owl-theme testimonials_slider">
-							
-							<!-- Slide -->
-							<div class="owl-item text-center">
-								<div class="testimonial">Lorem ipsum dolor sit amet, consectetur adipiscing elit. lobortis dolor. Cras placerat lectus a posuere aliquet. Curabitur quis vehicula odio.</div>
-								<div class="testimonial_author">
-									<div class="testimonial_author_content d-flex flex-row align-items-end justify-content-start">
-										<div>john turner,</div>
-										<div>client</div>
-									</div>
-								</div>
-							</div>
-
-							<!-- Slide -->
-							<div class="owl-item text-center">
-								<div class="testimonial">Lorem ipsum dolor sit amet, consectetur adipiscing elit. lobortis dolor. Cras placerat lectus a posuere aliquet. Curabitur quis vehicula odio.</div>
-								<div class="testimonial_author">
-									<div class="testimonial_author_content d-flex flex-row align-items-end justify-content-start">
-										<div>john turner,</div>
-										<div>client</div>
-									</div>
-								</div>
-							</div>
-
-							<!-- Slide -->
-							<div class="owl-item text-center">
-								<div class="testimonial">Lorem ipsum dolor sit amet, consectetur adipiscing elit. lobortis dolor. Cras placerat lectus a posuere aliquet. Curabitur quis vehicula odio.</div>
-								<div class="testimonial_author">
-									<div class="testimonial_author_content d-flex flex-row align-items-end justify-content-start">
-										<div>john turner,</div>
-										<div>client</div>
-									</div>
-								</div>
-							</div>
-
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="test_nav">
-			<ul class="d-flex flex-column align-items-end justify-content-end">
-				<li><a href="#">City Breaks Clients<span>01</span></a></li>
-				<li><a href="#">Cruises Clients<span>02</span></a></li>
-				<li><a href="#">All Inclusive Clients<span>03</span></a></li>
-			</ul>
-		</div>
-	</div>
+{#	<div class="testimonials" id="testimonials">#}
+{#		<div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="images/testimonials.jpg" data-speed="0.8"></div>#}
+{#		<div class="container">#}
+{#			<div class="row">#}
+{#				<div class="col text-center">#}
+{#					<div class="section_subtitle">simply amazing places</div>#}
+{#					<div class="section_title"><h2>Testimonials</h2></div>#}
+{#				</div>#}
+{#			</div>#}
+{#			<div class="row testimonials_row">#}
+{#				<div class="col">#}
+{##}
+{#					<!-- Testimonials Slider -->#}
+{#					<div class="testimonials_slider_container">#}
+{#						<div class="owl-carousel owl-theme testimonials_slider">#}
+{#							#}
+{#							<!-- Slide -->#}
+{#							<div class="owl-item text-center">#}
+{#								<div class="testimonial">Lorem ipsum dolor sit amet, consectetur adipiscing elit. lobortis dolor. Cras placerat lectus a posuere aliquet. Curabitur quis vehicula odio.</div>#}
+{#								<div class="testimonial_author">#}
+{#									<div class="testimonial_author_content d-flex flex-row align-items-end justify-content-start">#}
+{#										<div>john turner,</div>#}
+{#										<div>client</div>#}
+{#									</div>#}
+{#								</div>#}
+{#							</div>#}
+{##}
+{#							<!-- Slide -->#}
+{#							<div class="owl-item text-center">#}
+{#								<div class="testimonial">Lorem ipsum dolor sit amet, consectetur adipiscing elit. lobortis dolor. Cras placerat lectus a posuere aliquet. Curabitur quis vehicula odio.</div>#}
+{#								<div class="testimonial_author">#}
+{#									<div class="testimonial_author_content d-flex flex-row align-items-end justify-content-start">#}
+{#										<div>john turner,</div>#}
+{#										<div>client</div>#}
+{#									</div>#}
+{#								</div>#}
+{#							</div>#}
+{##}
+{#							<!-- Slide -->#}
+{#							<div class="owl-item text-center">#}
+{#								<div class="testimonial">Lorem ipsum dolor sit amet, consectetur adipiscing elit. lobortis dolor. Cras placerat lectus a posuere aliquet. Curabitur quis vehicula odio.</div>#}
+{#								<div class="testimonial_author">#}
+{#									<div class="testimonial_author_content d-flex flex-row align-items-end justify-content-start">#}
+{#										<div>john turner,</div>#}
+{#										<div>client</div>#}
+{#									</div>#}
+{#								</div>#}
+{#							</div>#}
+{##}
+{#						</div>#}
+{#					</div>#}
+{#				</div>#}
+{#			</div>#}
+{#		</div>#}
+{#		<div class="test_nav">#}
+{#			<ul class="d-flex flex-column align-items-end justify-content-end">#}
+{#				<li><a href="#">City Breaks Clients<span>01</span></a></li>#}
+{#				<li><a href="#">Cruises Clients<span>02</span></a></li>#}
+{#				<li><a href="#">All Inclusive Clients<span>03</span></a></li>#}
+{#			</ul>#}
+{#		</div>#}
+{#	</div>#}
 
 	<!-- News -->
 
@@ -556,9 +601,6 @@
 				</div>
 			</div>
 		</div>
-		<div class="col text-center"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --> </div>
 	</footer>
 </div>
 

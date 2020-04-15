@@ -4,6 +4,7 @@ from .models import Hotel
 
 app_name = 'home'
 
+
 def index(request):
 
     dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='ORCL')
@@ -11,16 +12,17 @@ def index(request):
 
     hotel_ara_best = best_rated(conn)
     hotel_ara_top_disc = top_discount(conn)
+    return render(request, 'home/index.html',
+                  {'hotel_ara_best': hotel_ara_best, 'hotel_ara_top_disc': hotel_ara_top_disc})
 
-
-    return render(request, 'home/index.html' , {'hotel_ara_best':hotel_ara_best , 'hotel_ara_top_disc':hotel_ara_top_disc} )
 
 def about(request):
     return render(request, 'home/about.html')
 
+
 def best_rated(conn):
     cur = conn.cursor()
-    cur.execute("SELECT name,city,country,rating FROM HOTEL ORDER BY rating DESC ")
+    cur.execute("SELECT name,city,country,rating,hotelId FROM HOTEL ORDER BY rating DESC ")
     cnt = 1
     hotel_ara = []
 
@@ -28,6 +30,7 @@ def best_rated(conn):
         row = cur.fetchone()
         print(row)
         hotel = Hotel()
+        hotel.hotelid = row[4]
         hotel.name = row[0]
         hotel.city = row[1]
         hotel.country = row[2]
@@ -36,6 +39,7 @@ def best_rated(conn):
         cnt += 1
 
     return hotel_ara
+
 
 def top_discount(conn):
     cur = conn.cursor()
@@ -56,6 +60,7 @@ def top_discount(conn):
 
         print(row2)
         hotel = Hotel()
+        hotel.hotelid = row1[1]
         hotel.name = row2[0]
         hotel.city = row2[1]
         hotel.country = row2[2]
@@ -66,5 +71,22 @@ def top_discount(conn):
         cnt += 1
 
     return hotel_ara
+
+
+def about(request):
+    return render(request, 'home/about.html')
+
+
+def contacts(request):
+    return render(request, 'home/contact.html')
+
+
+def destinations(request):
+    return render(request, 'home/destinations.html')
+
+
+def news(request):
+    return render(request, 'home/news.html')
+
 
 

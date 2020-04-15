@@ -21,8 +21,10 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('polls/', include(('polls.urls','polls'),namespace='polls')),
-    path('register/', include(('register.urls' , 'register') , namespace='register')),
-    path('login/', include(('login.urls' , 'login') , namespace='login')),
-    path('home/', include(('home.urls' , 'home') , namespace='home'))
+    path('polls/', include(('polls.urls', 'polls'), namespace='polls')),
+    path('register/', include(('register.urls', 'register'), namespace='register')),
+    path('login/', include(('login.urls', 'login'), namespace='login')),
+    path('home/', include(('home.urls', 'home'), namespace='home')),
+    path('hotel/', include(('hotel.urls', 'hotel'), namespace='hotel')),
+
 ]

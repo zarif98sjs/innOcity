@@ -55,6 +55,9 @@ $(document).ready(function()
 	initTestimonialsSlider();
 	initScrolling();
 	initInput();
+	setcheckinDate();
+	setcheckoutDate();
+
 
 	/* 
 
@@ -271,4 +274,19 @@ $(document).ready(function()
 			});
 		}
 	}
+
+	function setcheckinDate()
+	{
+		var today = new Date().toISOString().split('T')[0];
+		document.getElementsByName("checkin")[0].setAttribute('min', today);
+	}
+	function setcheckoutDate()
+	{
+		var today = new Date().toISOString().split('T')[0];
+		document.getElementsByName("checkout")[0].setAttribute('min', today);
+
+
+	}
+
+
 });

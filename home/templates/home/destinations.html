@@ -26,14 +26,14 @@
 				<div class="col">
 					<div class="header_content d-flex flex-row align-items-center justify-content-start">
 						<div class="header_content_inner d-flex flex-row align-items-end justify-content-start">
-							<div class="logo"><a href="index.html">Travello</a></div>
+							<div class="logo"><a href="{% url 'home:index' %}">innOcity</a></div>
 							<nav class="main_nav">
 								<ul class="d-flex flex-row align-items-start justify-content-start">
-									<li><a href="index.html">Home</a></li>
-									<li><a href="about.html">About us</a></li>
+									<li class="active"><a href="{% url 'home:index' %}">Home</a></li>
+									<li><a href="{% url 'home:about' %}">About us</a></li>
 									<li><a href="#">Services</a></li>
-									<li><a href="news.html">News</a></li>
-									<li><a href="contact.html">Contact</a></li>
+									<li><a href="{% url 'home:news' %}">News</a></li>
+									<li><a href="{% url 'home:contacts' %}">Contact</a></li>
 								</ul>
 							</nav>
 							<div class="header_phone ml-auto">Call us: 00-56 445 678 33</div>
@@ -65,16 +65,16 @@
 
 	<div class="menu">
 		<div class="menu_header d-flex flex-row align-items-center justify-content-start">
-			<div class="menu_logo"><a href="index.html">Travello</a></div>
+			<div class="menu_logo"><a href="{% url 'home:index' %}">innOcity</a></div>
 			<div class="menu_close_container ml-auto"><div class="menu_close"><div></div><div></div></div></div>
 		</div>
 		<div class="menu_content">
 			<ul>
-				<li><a href="inex.html">Home</a></li>
-				<li><a href="about.html">About us</a></li>
-				<li><a href="#">Services</a></li>
-				<li><a href="news.html">News</a></li>
-				<li><a href="contact.html">Contact</a></li>
+				<li><a href="{% url 'home:index' %}">Home</a></li>
+                <li><a href="{% url 'home:about' %}">About us</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="{% url 'home:news' %}">News</a></li>
+                <li><a href="{% url 'home:contacts' %}">Contact</a></li>
 			</ul>
 		</div>
 		<div class="menu_social">

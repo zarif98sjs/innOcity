@@ -45,7 +45,9 @@ INSTALLED_APPS = [
     'polls',
     'register',
     'login',
-    'home'
+    'home',
+    'hotel',
+
 ]
 
 MIDDLEWARE = [

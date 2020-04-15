@@ -7,6 +7,7 @@ from django.template import loader
 
 app_name = 'login'
 
+
 def index(request):
     print(request.method)
     if request.method == 'POST':
@@ -15,6 +16,7 @@ def index(request):
         return login(request)
     else:
         return render(request, 'login/index.html', {'alert_flag': False})
+
 
 def login(request):
     v1 = request.POST.get('username')
@@ -27,7 +29,8 @@ def login(request):
     print('Success')
 
     sql_auth = "SELECT * FROM CUSTOMER WHERE USERNAME = :vv1 and PASSWORD = :vv2"
-    cur.execute(sql_auth,[v1,v2])
+    cur.execute(sql_auth, [v1, v2])
+
 
     hoise = cur.fetchone()
 

@@ -33,14 +33,14 @@
 				<div class="col">
 					<div class="header_content d-flex flex-row align-items-center justify-content-start">
 						<div class="header_content_inner d-flex flex-row align-items-end justify-content-start">
-							<div class="logo"><a href="index.html">innOcity</a></div>
+							<div class="logo"><a href="{% url 'home:index' %}">innOcity</a></div>
 							<nav class="main_nav">
 								<ul class="d-flex flex-row align-items-start justify-content-start">
 									<li class="active"><a href="{% url 'home:index' %}">Home</a></li>
 									<li><a href="{% url 'home:about' %}">About us</a></li>
 									<li><a href="{% url 'login:index' %}">Login</a></li>
 									<li><a href="{% url 'register:index' %}">Register</a></li>
-									<li><a href="contact.html">Dashboard</a></li>
+									<li><a href="{% url 'home:contact' %}">Dashboard</a></li>
 								</ul>
 							</nav>
 {#							<div class="header_phone ml-auto">Call us: +880-1915123445</div>#}
@@ -62,7 +62,7 @@
 
 	<div class="menu">
 		<div class="menu_header d-flex flex-row align-items-center justify-content-start">
-			<div class="menu_logo"><a href="index.html">Travello</a></div>
+			<div class="menu_logo"><a href="{% url 'home:index' %}">innOcity</a></div>
 			<div class="menu_close_container ml-auto"><div class="menu_close"><div></div><div></div></div></div>
 		</div>
 		<div class="menu_content">
@@ -71,7 +71,7 @@
                 <li><a href="{% url 'home:about' %}">About us</a></li>
                 <li><a href="{% url 'login:index' %}">Login</a></li>
                 <li><a href="{% url 'register:index' %}">Register</a></li>
-                <li><a href="contact.html">Dashboard</a></li>
+                <li><a href="{% url 'home:contact' %}">Dashboard</a></li>
 			</ul>
 		</div>
 		<div class="menu_social">
@@ -156,12 +156,12 @@
 					<div class="home_search_container">
 						<div class="home_search_title">Search for your trip</div>
 						<div class="home_search_content">
-                         <form style="background-color:rgba(0,0,0,0);">
+                         <form style="background-color:rgba(0,0,0,0);" action="{% url 'hotel:available' %}" method="post">
                                 <div class="form-row">
-                                    <div class="col"><input class="form-control form-control-lg" type="search" placeholder="Destination" required=""></div>
-                                    <div class="col"><input class="form-control form-control-lg" type="date" placeholder = "Check in" required=""></div>
-                                    <div class="col"><input class="form-control form-control-lg" type="date" required=""></div>
-                                    <div class="col"><input class="form-control form-control-lg" type="number" placeholder="Rooms"></div>
+                                    <div class="col"><input class="form-control form-control-lg" name="destination" type="search" placeholder="Destination" required=""></div>
+                                    <div class="col"><input class="form-control form-control-lg" name="checkin" type="date" placeholder = "Check in" required="" ></div>
+                                    <div class="col"><input class="form-control form-control-lg" name="checkout" type="date" placeholder = "Check out" required="" onclick="updatecheckoutDate()"></div>
+                                    <div class="col"><input class="form-control form-control-lg" name="rooms" type="number" placeholder="Rooms" min="1"></div>
                                     <div class="col"><button class="btn btn-primary btn-lg" type="submit" style="background-color:rgb(131,53,143);margin-left:65px;">Search</button></div>
                                 </div>
                             </form>
@@ -255,7 +255,7 @@
 								<div class="spec_offer text-center"><a href="#">Best</a></div>
 							</div>
 							<div class="destination_content">
-								<div class="destination_title"><a href="destinations.html">{{ hotel.name}}</a></div>
+								<div class="destination_title"><a href="{% url 'hotel:index' hotel.hotelid %}">{{ hotel.name}}</a></div>
 								<div class="destination_subtitle"><p>{{ hotel.city }} , {{ hotel.country }}</p></div>
 								<div class="destination_price">Rating {{ hotel.rating }}</div>
 							</div>
@@ -353,7 +353,7 @@
 								<div class="spec_offer text-center"><a href="#">Special Offer</a></div>
 							</div>
 							<div class="destination_content">
-								<div class="destination_title"><a href="destinations.html">{{ hotel.name}}</a></div>
+								<div class="destination_title"><a href="{% url 'hotel:index' hotel.hotelid %}">{{ hotel.name}}</a></div>
 								<div class="destination_subtitle"><p>{{ hotel.city }} , {{ hotel.country }}</p></div>
 								<div class="destination_subtitle"><p>{{ hotel.top_disc_roomtype }} type room</p></div>
 								<div class="destination_price">{{ hotel.top_disc_roomtype_disc }}% off!</div>
@@ -613,6 +613,15 @@
 <script src="../../static/home/plugins/easing/easing.js"></script>
 <script src="../../static/home/plugins/parallax-js-master/parallax.min.js"></script>
 <script src="../../static/home/js/custom.js"></script>
+<script>
+    function updatecheckoutDate()
+	{
+		var checkin = document.getElementsByName("checkin")[0].value;
+
+		if(checkin) document.getElementsByName("checkout")[0].setAttribute('min', checkin);
+
+	}
+</script>
 
 {#<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>#}
 {#<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/js/bootstrap.bundle.min.js"></script>#}

@@ -1,7 +1,9 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Bright Hotel - Free Bootstrap 4 Template by Colorlib</title>
+    <title>{{ hotel.name }}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
@@ -20,7 +22,7 @@
     <link rel="stylesheet" href="../../static/hotel/css/style.css">
   </head>
   <body>
-  
+
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
       <a class="navbar-brand" href="{% url 'hotel:index' hotel.hotelId %}">{{ hotel.name }}</a>

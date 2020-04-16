@@ -13,8 +13,11 @@ def available(request):
 
     destination = request.POST.get('destination').upper()
     checkin = request.POST.get('checkin')
+    print(checkin)
     checkin_date = datetime.strptime(checkin, "%Y-%m-%d").date()
+    print(checkin_date)
     checkin_date = checkin_date.strftime('%d %b,%Y')
+    print(checkin_date)
     checkout = request.POST.get('checkout')
     checkout_date = datetime.strptime(checkout, "%Y-%m-%d").date()
     checkout_date = checkout_date.strftime('%d %b,%Y')
@@ -53,11 +56,14 @@ def available(request):
 
 
 def index(request, hotel_id):
+    context = get_context(hotel_id)
+    return render(request, 'hotel/index.html', context)
 
+def get_context(hotel_id):
     dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='ORCL')
     conn = cx_Oracle.connect(user='INNOCITY', password='2108', dsn=dsn_tns)
     cur = conn.cursor()
-    sql = "SELECT * FROM HOTEL WHERE hotelId="+str(hotel_id)
+    sql = "SELECT * FROM HOTEL WHERE hotelId=" + str(hotel_id)
     cur.execute(sql)
     result = cur.fetchone()
 
@@ -73,7 +79,7 @@ def index(request, hotel_id):
         if len(room_types):
             context['room_types'] = room_types
 
-        return render(request, 'hotel/index.html', context)
+    return context
 
 
 def get_facilities(hotel_id, conn):
@@ -120,11 +126,13 @@ def get_room_facilities(room_id, conn):
 
 
 def rooms(request, hotel_id):
-    return render(request, 'hotel/rooms.html')
+    context = get_context(hotel_id)
+    return render(request, 'hotel/rooms.html', context)
 
 
 def services(request, hotel_id):
-    return render(request, 'hotel/services.html')
+    context = get_context(hotel_id)
+    return render(request, 'hotel/services.html', context)
 
 
 def about(request, hotel_id):

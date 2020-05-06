@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Bright Hotel - Free Bootstrap 4 Template by Colorlib</title>
+    <title>{{ hotel.name }} Services</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     
@@ -62,72 +62,41 @@
 
   	<div class="row site-section">
   		<div class="col-lg-7 mb-5">
-  			<img src="{% static 'hotel/images/img_7.jpg'%}" alt="Image placeholder" class="img-fluid img-shadow">
-  		</div>
-  		<div class="col-lg-5 pl-md-5">
-  			
-  			<div class="media block-6">
-          <div class="icon"><span class="ion-ios-checkmark"></span></div>
-          <div class="media-body">
-            <h3 class="heading">Luxury Rooms</h3>
-            <p>Even the all-powerful Pointing has no control about the blind texts.</p>
-          </div>
-	      </div>     
-
-	      <div class="media block-6">
-          <div class="icon"><span class="ion-ios-checkmark"></span></div>
-          <div class="media-body">
-            <h3 class="heading">Fast &amp; Free Wifi</h3>
-            <p>Even the all-powerful Pointing has no control about the blind texts.</p>
-          </div>
-	      </div>   
-
-	      <div class="media block-6">
-          <div class="icon"><span class="ion-ios-checkmark"></span></div>
-          <div class="media-body">
-            <h3 class="heading">Travel Accomodation</h3>
-            <p>Even the all-powerful Pointing has no control about the blind texts.</p>
-          </div>
-	      </div>   
-
-
-  		</div>
-  	</div>
-
-
-  	<div class="row site-section pt-0">
-  		<div class="col-lg-7 mb-5 order-lg-2">
   			<img src="{% static 'hotel/images/img_2.jpg'%}" alt="Image placeholder" class="img-fluid img-shadow">
   		</div>
-  		<div class="col-lg-5 pr-md-5 order-lg-1">
-  			
+  		<div class="col-lg-5 pl-md-5">
+
+            {% for facility in hotel_facilities %}
   			<div class="media block-6">
           <div class="icon"><span class="ion-ios-checkmark"></span></div>
           <div class="media-body">
-            <h3 class="heading">Luxury Rooms</h3>
+            <h3 class="heading">{{ facility }}</h3>
             <p>Even the all-powerful Pointing has no control about the blind texts.</p>
           </div>
-	      </div>     
-
-	      <div class="media block-6">
-          <div class="icon"><span class="ion-ios-checkmark"></span></div>
-          <div class="media-body">
-            <h3 class="heading">Fast &amp; Free Wifi</h3>
-            <p>Even the all-powerful Pointing has no control about the blind texts.</p>
-          </div>
-	      </div>   
-
-	      <div class="media block-6">
-          <div class="icon"><span class="ion-ios-checkmark"></span></div>
-          <div class="media-body">
-            <h3 class="heading">Travel Accomodation</h3>
-            <p>Even the all-powerful Pointing has no control about the blind texts.</p>
-          </div>
-	      </div>   
-
+	      </div>
+            {% endfor %}
 
   		</div>
   	</div>
+
+
+{#  	<div class="row site-section pt-0">#}
+{#  		<div class="col-lg-7 mb-5 order-lg-2">#}
+{#  			<img src="{% static 'hotel/images/img_2.jpg'%}" alt="Image placeholder" class="img-fluid img-shadow">#}
+{#  		</div>#}
+{#  		<div class="col-lg-5 pr-md-5 order-lg-1">#}
+{##}
+{#            {% for service in hotel_services %}#}
+{#  			<div class="media block-6">#}
+{#          <div class="icon"><span class="ion-ios-checkmark"></span></div>#}
+{#          <div class="media-body">#}
+{#            <h3 class="heading">{{ service }}</h3>#}
+{#            <p>Even the all-powerful Pointing has no control about the blind texts.</p>#}
+{#          </div>#}
+{#	      </div>#}
+{#            {% endfor %}#}
+{#  		</div>#}
+{#  	</div>#}
   	
     
     </div>
@@ -144,6 +113,18 @@
           </div>
 
     		<div class="row ">
+
+        {% for service in hotel_services %}
+          <div class="col-md-6 col-lg-4">
+            <div class="media block-6">
+              <div class="media-body">
+                <h3 class="heading">{{ service }}</h3>
+                <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+
       <div class="col-md-6 col-lg-4">
         <div class="media block-6">
           <div class="icon"><span class="flaticon-double-bed"></span></div>
@@ -358,18 +339,8 @@
               </ul>
             </div>
         </div>
-        
-        
       </div>
-      <div class="row pt-5">
-        <div class="col-md-12 text-left">
-          <p>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-            Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank" class="text-primary">Colorlib</a>
-            <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-          </p>
-        </div>
-      </div>
+
     </div>
   </footer>
 

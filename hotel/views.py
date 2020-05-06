@@ -73,8 +73,9 @@ def get_context(hotel_id):
         hotel = Hotel(hotelId=result[0], name=result[1], street=result[2], zipcode=result[3],
                       city=result[4], country=result[5], rating=result[6], rating_count=result[7])
         hotel_facilities = get_facilities(hotel_id, conn)
+        hotel_services = get_services(hotel_id, conn)
         room_types = get_rooms(hotel_id, conn)
-        context = {'hotel': hotel, 'hotel_facilities': hotel_facilities}
+        context = {'hotel': hotel, 'hotel_facilities': hotel_facilities , 'hotel_services': hotel_services}
 
         if len(room_types):
             context['room_types'] = room_types
@@ -92,6 +93,17 @@ def get_facilities(hotel_id, conn):
     for row in result:
         hotel_facilities.append(row[0])
     return hotel_facilities
+
+def get_services(hotel_id, conn):
+
+    cur = conn.cursor()
+    sql = "SELECT SERVICE_TYPE FROM SERVICE WHERE hotelId=" + str(hotel_id)
+    cur.execute(sql)
+    result = cur.fetchall()
+    hotel_services = set()
+    for row in result:
+        hotel_services.add(row[0])
+    return hotel_services
 
 
 def get_rooms(hotel_id, conn):

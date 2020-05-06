@@ -215,12 +215,12 @@
                             <h2 class="heading">{{ room.room_type }}</h2>
                             <div class="price"><sup>$</sup><span class="number">{{room.cost}}</span><sub>/per night</sub></div>
                             <ul class="specs">
-                              <li><strong>Discount:</strong> {{ room.discount }} % off!</li>
+                              <li><strong>Discount: </strong> {{ room.discount }} % off!</li>
                               {% if room.special_offer is not null %}
-                              <li><strong>Special offers:</strong> {{ room.special_offer }}</li>
+                              <li><strong>Special offers: </strong> {{ room.special_offer }}</li>
                               {% endif %}
-                              <li><strong>Facilities:</strong>{{ room.facilities }}</li>
-                              <li><strong>Bed Type:</strong> {{ room.bed_type }}</li>
+                              <li><strong>Facilities: </strong>{{ room.facilities }}</li>
+                              <li><strong>Bed Type: </strong> {{ room.bed_type }}</li>
                             </ul>
                           </div>
                         </div>

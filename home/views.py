@@ -26,7 +26,6 @@ def get_destination(conn):
     cur.execute("SELECT city,country FROM HOTEL")
     result = cur.fetchall()
     dest = []
-
     for row in result:
         dest.append(row[0])
         dest.append(row[1])

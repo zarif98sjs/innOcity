@@ -3,6 +3,13 @@ from django.db import models
 # Create your models here.
 
 
+class Session:
+
+    def __init__(self,id,checkin_date,checkout_date):
+        self.id = id
+        self.checkin_date = checkin_date
+        self.checkout_date = checkout_date
+
 class Hotel:
 
     def __init__(self, hotelId, name, street, zipcode, city, country, rating, rating_count):

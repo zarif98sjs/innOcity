@@ -1,13 +1,17 @@
 from django.shortcuts import render
 from django.http import Http404
-from .models import Hotel, Room
+from .models import Hotel, Room , Session
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
 import cx_Oracle
+from random import seed
+from random import randint
 # Create your views here.
 
 app_name = 'hotel'
 
+session_id = 0
+sessions = {}
 @csrf_exempt
 def available(request):
 
@@ -21,6 +25,13 @@ def available(request):
     checkout = request.POST.get('checkout')
     checkout_date = datetime.strptime(checkout, "%Y-%m-%d").date()
     checkout_date = checkout_date.strftime('%d %b,%Y')
+
+    seed(1)
+    global session_id
+    global sessions
+    session_id = randint(10,10000)
+    print("1-->"+str(session_id))
+    sessions[session_id] = Session(session_id,checkin_date,checkout_date)
 
     available_hotels = []
 
@@ -41,7 +52,7 @@ def available(request):
         total_count = cur2.fetchone()[0]
 
         sql3 = "SELECT COUNT(*) FROM RESERVATION WHERE HOTELID="+str(hotelId)+"AND (DATE_OF_ARRIVAL<='"+str(checkout_date)\
-               +"' OR DATE_OF_DEPARTURE>='"+str(checkin_date)+"')"
+               +"' AND DATE_OF_DEPARTURE>='"+str(checkin_date)+"')"
 
         cur3.execute(sql3)
 
@@ -53,7 +64,6 @@ def available(request):
             hotel.add_facilities(get_facilities(hotelId, conn))
             available_hotels.append(hotel)
     return render(request, 'hotel/available.html', {'available_hotels': available_hotels})
-
 
 def index(request, hotel_id):
     context = get_context(hotel_id)
@@ -108,20 +118,49 @@ def get_services(hotel_id, conn):
 
 def get_rooms(hotel_id, conn):
 
-    cur = conn.cursor()
-    sql = "SELECT roomId, room_type, bed_type, cost_per_day, discount, special_offer FROM ROOM WHERE hotelId="\
-          + str(hotel_id)
-    cur.execute(sql)
-    result = cur.fetchall()
+    global session_id
+    global sessions
+
+    print("2-->"+str(session_id))
+
+    checkin_date = sessions[session_id].checkin_date
+    checkout_date = sessions[session_id].checkout_date
+
+    sql0 = "SELECT ROOMID FROM RESERVATION WHERE HOTELID=" + str(hotel_id) + "AND (DATE_OF_ARRIVAL<='" + str(checkout_date) \
+           + "' AND DATE_OF_DEPARTURE>='" + str(checkin_date) + "')"
+
+    cur0 = conn.cursor()
+    cur0.execute(sql0)
+    result0 = cur0.fetchall()
+
+    room_ids_cancel = []
+    for row in result0:
+        room_ids_cancel.append(row[0])
+
+    sql1 = "SELECT ROOMID FROM ROOM WHERE hotelId=" + str(hotel_id)
+    cur1 = conn.cursor()
+    cur1.execute(sql1)
+    result1 = cur1.fetchall()
+
+    room_ids_ok = []
+    for row in result1:
+        if row[0] not in room_ids_cancel:
+            room_ids_ok.append(row[0])
+
     type_map = []
     room_type_set = []
-    for row in result:
+
+    for r_id in room_ids_ok:
+        cur = conn.cursor()
+        sql = "SELECT roomId, room_type, bed_type, cost_per_day, discount, special_offer FROM ROOM WHERE hotelId="\
+              + str(hotel_id) + "AND ROOMID = "+str(r_id)
+        cur.execute(sql)
+        row = cur.fetchone()
         room = Room(row[0], row[1], row[2], row[3], row[4], row[5])
         if room.room_type not in type_map:
             room.add_facilities(get_room_facilities(room.roomId, conn))
             room_type_set.append(room)
             type_map.append(room.room_type)
-
     return room_type_set
 
 

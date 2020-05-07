@@ -117,6 +117,15 @@
         {% for service in hotel_services %}
           <div class="col-md-6 col-lg-4">
             <div class="media block-6">
+                {% if service == "Transport" %}
+                <div class="icon"><span class="flaticon-taxi"></span></div>
+                {% endif %}
+                {% if service == "Business Meeting" %}
+                <div class="icon"><span class="flaticon-wifi"></span></div>
+                {% endif %}
+                {% if service == "Food" %}
+                <div class="icon"><span class="flaticon-dinner"></span></div>
+                {% endif %}
               <div class="media-body">
                 <h3 class="heading">{{ service }}</h3>
                 <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
@@ -125,61 +134,61 @@
           </div>
         {% endfor %}
 
-      <div class="col-md-6 col-lg-4">
-        <div class="media block-6">
-          <div class="icon"><span class="flaticon-double-bed"></span></div>
-          <div class="media-body">
-            <h3 class="heading">Luxury Rooms</h3>
-            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
-          </div>
-        </div>      
-      </div>
-      <div class="col-md-6 col-lg-4">
-        <div class="media block-6">
-          <div class="icon"><span class="flaticon-wifi"></span></div>
-          <div class="media-body">
-            <h3 class="heading">Fast &amp; Free Wifi</h3>
-            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-4">
-        <div class="media block-6">
-          <div class="icon"><span class="flaticon-customer-service"></span></div>
-          <div class="media-body">
-            <h3 class="heading">Call Us 24/7</h3>
-            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-6 col-lg-4">
-        <div class="media block-6">
-          <div class="icon"><span class="flaticon-taxi"></span></div>
-          <div class="media-body">
-            <h3 class="heading">Travel Accomodation</h3>
-            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
-          </div>
-        </div>      
-      </div>
-      <div class="col-md-6 col-lg-4">
-        <div class="media block-6">
-          <div class="icon"><span class="flaticon-credit-card"></span></div>
-          <div class="media-body">
-            <h3 class="heading">Accepts Credit Card</h3>
-            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6 col-lg-4">
-        <div class="media block-6">
-          <div class="icon"><span class="flaticon-dinner"></span></div>
-          <div class="media-body">
-            <h3 class="heading">Restaurant</h3>
-            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
-          </div>
-        </div>
-      </div>
+{#      <div class="col-md-6 col-lg-4">#}
+{#        <div class="media block-6">#}
+{#          <div class="icon"><span class="flaticon-double-bed"></span></div>#}
+{#          <div class="media-body">#}
+{#            <h3 class="heading">Luxury Rooms</h3>#}
+{#            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>#}
+{#          </div>#}
+{#        </div>      #}
+{#      </div>#}
+{#      <div class="col-md-6 col-lg-4">#}
+{#        <div class="media block-6">#}
+{#          <div class="icon"><span class="flaticon-wifi"></span></div>#}
+{#          <div class="media-body">#}
+{#            <h3 class="heading">Fast &amp; Free Wifi</h3>#}
+{#            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>#}
+{#          </div>#}
+{#        </div>#}
+{#      </div>#}
+{#      <div class="col-md-6 col-lg-4">#}
+{#        <div class="media block-6">#}
+{#          <div class="icon"><span class="flaticon-customer-service"></span></div>#}
+{#          <div class="media-body">#}
+{#            <h3 class="heading">Call Us 24/7</h3>#}
+{#            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>#}
+{#          </div>#}
+{#        </div>#}
+{#      </div>#}
+{##}
+{#      <div class="col-md-6 col-lg-4">#}
+{#        <div class="media block-6">#}
+{#          <div class="icon"><span class="flaticon-taxi"></span></div>#}
+{#          <div class="media-body">#}
+{#            <h3 class="heading">Travel Accomodation</h3>#}
+{#            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>#}
+{#          </div>#}
+{#        </div>      #}
+{#      </div>#}
+{#      <div class="col-md-6 col-lg-4">#}
+{#        <div class="media block-6">#}
+{#          <div class="icon"><span class="flaticon-credit-card"></span></div>#}
+{#          <div class="media-body">#}
+{#            <h3 class="heading">Accepts Credit Card</h3>#}
+{#            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>#}
+{#          </div>#}
+{#        </div>#}
+{#      </div>#}
+{#      <div class="col-md-6 col-lg-4">#}
+{#        <div class="media block-6">#}
+{#          <div class="icon"><span class="flaticon-dinner"></span></div>#}
+{#          <div class="media-body">#}
+{#            <h3 class="heading">Restaurant</h3>#}
+{#            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>#}
+{#          </div>#}
+{#        </div>#}
+{#      </div>#}
 
     </div>
     	</div>

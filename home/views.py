@@ -12,13 +12,25 @@ def index(request):
 
     hotel_ara_best = best_rated(conn)
     hotel_ara_top_disc = top_discount(conn)
+    destination = get_destination(conn)
+    print(destination)
     return render(request, 'home/index.html',
-                  {'hotel_ara_best': hotel_ara_best, 'hotel_ara_top_disc': hotel_ara_top_disc})
+                  {'hotel_ara_best': hotel_ara_best, 'hotel_ara_top_disc': hotel_ara_top_disc , 'destination': destination})
 
 
 def about(request):
     return render(request, 'home/about.html')
 
+def get_destination(conn):
+    cur = conn.cursor()
+    cur.execute("SELECT city,country FROM HOTEL")
+    result = cur.fetchall()
+    dest = []
+
+    for row in result:
+        dest.append(row[0])
+        dest.append(row[1])
+    return dest
 
 def best_rated(conn):
     cur = conn.cursor()
@@ -28,7 +40,7 @@ def best_rated(conn):
 
     while cnt <= 6:
         row = cur.fetchone()
-        print(row)
+        # print(row)
         hotel = Hotel()
         hotel.hotelid = row[4]
         hotel.name = row[0]

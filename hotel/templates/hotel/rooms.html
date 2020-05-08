@@ -61,33 +61,37 @@
     <div class="site-section bg-light">
       <div class="container">
         <div class="row mb-5">
-          <div class="col-md-12 mb-5">
 
+            {% if room_types %}
+            {% for room in room_types %}
+          <div class="col-md-12 mb-5">
             <div class="block-3 d-md-flex">
               <div class="image" style="background-image: url({% static 'hotel/images/img_1.jpg'%}); "></div>
               <div class="text">
 
-                <h2 class="heading">Bachelor Room</h2>
-                <div class="price"><sup>$</sup><span class="number">150</span><sub>/per night</sub></div>
-                <ul class="specs mb-5">
-                  <li><strong>Adults:</strong> 1</li>
-                  <li><strong>Categories:</strong> Single</li>
-                  <li><strong>Facilities:</strong> Closet with hangers, HD flat-screen TV, Telephone</li>
-                  <li><strong>Size:</strong> 20m<sup>2</sup></li>
-                  <li><strong>Bed Type:</strong> One bed</li>
-                </ul>
+                <h2 class="heading">{{ room.room_type }}</h2>
+                            <div class="price"><sup>$</sup><span class="number">{{room.cost}}</span><sub>/per night</sub></div>
+                            <ul class="specs">
+                              <li><strong>Discount: </strong> {{ room.discount }} % off!</li>
+                              {% if room.special_offer is not null %}
+                              <li><strong>Special offers: </strong> {{ room.special_offer }}</li>
+                              {% endif %}
+                              <li><strong>Facilities: </strong>{{ room.facilities }}</li>
+                              <li><strong>Bed Type: </strong> {{ room.bed_type }}</li>
+                            </ul>
 
                 <p><a href="#" class="btn btn-primary py-3 px-5">Read More</a></p>
 
               </div>
             </div>
-
-
           </div>
+            {% endfor %}
+            {% else %}
+                <h2 class="header">No rooms available</h2>
+            {% endif %}
 
 
           <div class="col-md-12 mb-5">
-
             <div class="block-3 d-md-flex">
               <div class="image order-2" style="background-image: url({% static 'hotel/images/img_2.jpg'%}); "></div>
               <div class="text order-1">
@@ -137,187 +141,185 @@
 
         </div>
 
-
-
-        <div class="row mb-5 pt-5 justify-content-center">
-            <div class="col-md-7 text-center section-heading">
-              <h2 class="heading">More Rooms</h2>
-              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit, iusto, omnis! Quidem, sint, impedit? Dicta eaque delectus tempora hic, corporis velit doloremque quod quam laborum, nobis iusto autem culpa quaerat!</p>
-            </div>
-          </div>
-
-        <div class="row">
-          <div class="col-lg-4 mb-5">
-            <div class="block-34">
-              <div class="image">
-                <a href="#"><img src="{% static 'hotel/images/img_1.jpg'%}" alt="Image placeholder"></a>
-              </div>
-              <div class="text">
-                <h2 class="heading">Bachelor Room</h2>
-                <div class="price"><sup>$</sup><span class="number">156</span><sub>/per night</sub></div>
-                <ul class="specs">
-                  <li><strong>Adults:</strong> 1</li>
-                  <li><strong>Categories:</strong> Single</li>
-                  <li><strong>Facilities:</strong> Closet with hangers, HD flat-screen TV, Telephone</li>
-                  <li><strong>Size:</strong> 20m<sup>2</sup></li>
-                  <li><strong>Bed Type:</strong> One bed</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 mb-5">
-            <div class="block-34">
-              <div class="image">
-                <a href="#"><img src="{% static 'hotel/images/img_2.jpg'%}" alt="Image placeholder"></a>
-              </div>
-              <div class="text">
-                <h2 class="heading">Family Room</h2>
-                <div class="price"><sup>$</sup><span class="number">245</span><sub>/per night</sub></div>
-                <ul class="specs">
-                  <li><strong>Adults:</strong> 1</li>
-                  <li><strong>Categories:</strong> Single</li>
-                  <li><strong>Facilities:</strong> Closet with hangers, HD flat-screen TV, Telephone</li>
-                  <li><strong>Size:</strong> 20m<sup>2</sup></li>
-                  <li><strong>Bed Type:</strong> One bed</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 mb-5">
-            <div class="block-34">
-              <div class="image">
-                <a href="#"><img src="{% static 'hotel/images/img_3.jpg'%}" alt="Image placeholder"></a>
-              </div>
-              <div class="text">
-                <h2 class="heading">Presidential Room</h2>
-                <div class="price"><sup>$</sup><span class="number">375</span><sub>/per night</sub></div>
-                <ul class="specs">
-                  <li><strong>Adults:</strong> 1</li>
-                  <li><strong>Categories:</strong> Single</li>
-                  <li><strong>Facilities:</strong> Closet with hangers, HD flat-screen TV, Telephone</li>
-                  <li><strong>Size:</strong> 20m<sup>2</sup></li>
-                  <li><strong>Bed Type:</strong> One bed</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 mb-5">
-            <div class="block-34">
-              <div class="image">
-                <a href="#"><img src="{% static 'hotel/images/img_1.jpg'%}" alt="Image placeholder"></a>
-              </div>
-              <div class="text">
-                <h2 class="heading">Bachelor Room</h2>
-                <div class="price"><sup>$</sup><span class="number">156</span><sub>/per night</sub></div>
-                <ul class="specs">
-                  <li><strong>Adults:</strong> 1</li>
-                  <li><strong>Categories:</strong> Single</li>
-                  <li><strong>Facilities:</strong> Closet with hangers, HD flat-screen TV, Telephone</li>
-                  <li><strong>Size:</strong> 20m<sup>2</sup></li>
-                  <li><strong>Bed Type:</strong> One bed</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 mb-5">
-            <div class="block-34">
-              <div class="image">
-                <a href="#"><img src="{% static 'hotel/images/img_2.jpg'%}" alt="Image placeholder"></a>
-              </div>
-              <div class="text">
-                <h2 class="heading">Family Room</h2>
-                <div class="price"><sup>$</sup><span class="number">245</span><sub>/per night</sub></div>
-                <ul class="specs">
-                  <li><strong>Adults:</strong> 1</li>
-                  <li><strong>Categories:</strong> Single</li>
-                  <li><strong>Facilities:</strong> Closet with hangers, HD flat-screen TV, Telephone</li>
-                  <li><strong>Size:</strong> 20m<sup>2</sup></li>
-                  <li><strong>Bed Type:</strong> One bed</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 mb-5">
-            <div class="block-34">
-              <div class="image">
-                <a href="#"><img src="{% static 'hotel/images/img_3.jpg'%}" alt="Image placeholder"></a>
-              </div>
-              <div class="text">
-                <h2 class="heading">Presidential Room</h2>
-                <div class="price"><sup>$</sup><span class="number">375</span><sub>/per night</sub></div>
-                <ul class="specs">
-                  <li><strong>Adults:</strong> 1</li>
-                  <li><strong>Categories:</strong> Single</li>
-                  <li><strong>Facilities:</strong> Closet with hangers, HD flat-screen TV, Telephone</li>
-                  <li><strong>Size:</strong> 20m<sup>2</sup></li>
-                  <li><strong>Bed Type:</strong> One bed</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 mb-5">
-            <div class="block-34">
-              <div class="image">
-                <a href="#"><img src="{% static 'hotel/images/img_1.jpg'%}" alt="Image placeholder"></a>
-              </div>
-              <div class="text">
-                <h2 class="heading">Bachelor Room</h2>
-                <div class="price"><sup>$</sup><span class="number">156</span><sub>/per night</sub></div>
-                <ul class="specs">
-                  <li><strong>Adults:</strong> 1</li>
-                  <li><strong>Categories:</strong> Single</li>
-                  <li><strong>Facilities:</strong> Closet with hangers, HD flat-screen TV, Telephone</li>
-                  <li><strong>Size:</strong> 20m<sup>2</sup></li>
-                  <li><strong>Bed Type:</strong> One bed</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 mb-5">
-            <div class="block-34">
-              <div class="image">
-                <a href="#"><img src="{% static 'hotel/images/img_2.jpg'%}" alt="Image placeholder"></a>
-              </div>
-              <div class="text">
-                <h2 class="heading">Family Room</h2>
-                <div class="price"><sup>$</sup><span class="number">245</span><sub>/per night</sub></div>
-                <ul class="specs">
-                  <li><strong>Adults:</strong> 1</li>
-                  <li><strong>Categories:</strong> Single</li>
-                  <li><strong>Facilities:</strong> Closet with hangers, HD flat-screen TV, Telephone</li>
-                  <li><strong>Size:</strong> 20m<sup>2</sup></li>
-                  <li><strong>Bed Type:</strong> One bed</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 mb-5">
-            <div class="block-34">
-              <div class="image">
-                <a href="#"><img src="{% static 'hotel/images/img_3.jpg'%}" alt="Image placeholder"></a>
-              </div>
-              <div class="text">
-                <h2 class="heading">Presidential Room</h2>
-                <div class="price"><sup>$</sup><span class="number">375</span><sub>/per night</sub></div>
-                <ul class="specs">
-                  <li><strong>Adults:</strong> 1</li>
-                  <li><strong>Categories:</strong> Single</li>
-                  <li><strong>Facilities:</strong> Closet with hangers, HD flat-screen TV, Telephone</li>
-                  <li><strong>Size:</strong> 20m<sup>2</sup></li>
-                  <li><strong>Bed Type:</strong> One bed</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
+{#        <div class="row mb-5 pt-5 justify-content-center">#}
+{#            <div class="col-md-7 text-center section-heading">#}
+{#              <h2 class="heading">More Rooms</h2>#}
+{#              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit, iusto, omnis! Quidem, sint, impedit? Dicta eaque delectus tempora hic, corporis velit doloremque quod quam laborum, nobis iusto autem culpa quaerat!</p>#}
+{#            </div>#}
+{#          </div>#}
+{##}
+{#        <div class="row">#}
+{#          <div class="col-lg-4 mb-5">#}
+{#            <div class="block-34">#}
+{#              <div class="image">#}
+{#                <a href="#"><img src="{% static 'hotel/images/img_1.jpg'%}" alt="Image placeholder"></a>#}
+{#              </div>#}
+{#              <div class="text">#}
+{#                <h2 class="heading">Bachelor Room</h2>#}
+{#                <div class="price"><sup>$</sup><span class="number">156</span><sub>/per night</sub></div>#}
+{#                <ul class="specs">#}
+{#                  <li><strong>Adults:</strong> 1</li>#}
+{#                  <li><strong>Categories:</strong> Single</li>#}
+{#                  <li><strong>Facilities:</strong> Closet with hangers, HD flat-screen TV, Telephone</li>#}
+{#                  <li><strong>Size:</strong> 20m<sup>2</sup></li>#}
+{#                  <li><strong>Bed Type:</strong> One bed</li>#}
+{#                </ul>#}
+{#              </div>#}
+{#            </div>#}
+{#          </div>#}
+{##}
+{#          <div class="col-lg-4 mb-5">#}
+{#            <div class="block-34">#}
+{#              <div class="image">#}
+{#                <a href="#"><img src="{% static 'hotel/images/img_2.jpg'%}" alt="Image placeholder"></a>#}
+{#              </div>#}
+{#              <div class="text">#}
+{#                <h2 class="heading">Family Room</h2>#}
+{#                <div class="price"><sup>$</sup><span class="number">245</span><sub>/per night</sub></div>#}
+{#                <ul class="specs">#}
+{#                  <li><strong>Adults:</strong> 1</li>#}
+{#                  <li><strong>Categories:</strong> Single</li>#}
+{#                  <li><strong>Facilities:</strong> Closet with hangers, HD flat-screen TV, Telephone</li>#}
+{#                  <li><strong>Size:</strong> 20m<sup>2</sup></li>#}
+{#                  <li><strong>Bed Type:</strong> One bed</li>#}
+{#                </ul>#}
+{#              </div>#}
+{#            </div>#}
+{#          </div>#}
+{##}
+{#          <div class="col-lg-4 mb-5">#}
+{#            <div class="block-34">#}
+{#              <div class="image">#}
+{#                <a href="#"><img src="{% static 'hotel/images/img_3.jpg'%}" alt="Image placeholder"></a>#}
+{#              </div>#}
+{#              <div class="text">#}
+{#                <h2 class="heading">Presidential Room</h2>#}
+{#                <div class="price"><sup>$</sup><span class="number">375</span><sub>/per night</sub></div>#}
+{#                <ul class="specs">#}
+{#                  <li><strong>Adults:</strong> 1</li>#}
+{#                  <li><strong>Categories:</strong> Single</li>#}
+{#                  <li><strong>Facilities:</strong> Closet with hangers, HD flat-screen TV, Telephone</li>#}
+{#                  <li><strong>Size:</strong> 20m<sup>2</sup></li>#}
+{#                  <li><strong>Bed Type:</strong> One bed</li>#}
+{#                </ul>#}
+{#              </div>#}
+{#            </div>#}
+{#          </div>#}
+{##}
+{#          <div class="col-lg-4 mb-5">#}
+{#            <div class="block-34">#}
+{#              <div class="image">#}
+{#                <a href="#"><img src="{% static 'hotel/images/img_1.jpg'%}" alt="Image placeholder"></a>#}
+{#              </div>#}
+{#              <div class="text">#}
+{#                <h2 class="heading">Bachelor Room</h2>#}
+{#                <div class="price"><sup>$</sup><span class="number">156</span><sub>/per night</sub></div>#}
+{#                <ul class="specs">#}
+{#                  <li><strong>Adults:</strong> 1</li>#}
+{#                  <li><strong>Categories:</strong> Single</li>#}
+{#                  <li><strong>Facilities:</strong> Closet with hangers, HD flat-screen TV, Telephone</li>#}
+{#                  <li><strong>Size:</strong> 20m<sup>2</sup></li>#}
+{#                  <li><strong>Bed Type:</strong> One bed</li>#}
+{#                </ul>#}
+{#              </div>#}
+{#            </div>#}
+{#          </div>#}
+{##}
+{#          <div class="col-lg-4 mb-5">#}
+{#            <div class="block-34">#}
+{#              <div class="image">#}
+{#                <a href="#"><img src="{% static 'hotel/images/img_2.jpg'%}" alt="Image placeholder"></a>#}
+{#              </div>#}
+{#              <div class="text">#}
+{#                <h2 class="heading">Family Room</h2>#}
+{#                <div class="price"><sup>$</sup><span class="number">245</span><sub>/per night</sub></div>#}
+{#                <ul class="specs">#}
+{#                  <li><strong>Adults:</strong> 1</li>#}
+{#                  <li><strong>Categories:</strong> Single</li>#}
+{#                  <li><strong>Facilities:</strong> Closet with hangers, HD flat-screen TV, Telephone</li>#}
+{#                  <li><strong>Size:</strong> 20m<sup>2</sup></li>#}
+{#                  <li><strong>Bed Type:</strong> One bed</li>#}
+{#                </ul>#}
+{#              </div>#}
+{#            </div>#}
+{#          </div>#}
+{##}
+{#          <div class="col-lg-4 mb-5">#}
+{#            <div class="block-34">#}
+{#              <div class="image">#}
+{#                <a href="#"><img src="{% static 'hotel/images/img_3.jpg'%}" alt="Image placeholder"></a>#}
+{#              </div>#}
+{#              <div class="text">#}
+{#                <h2 class="heading">Presidential Room</h2>#}
+{#                <div class="price"><sup>$</sup><span class="number">375</span><sub>/per night</sub></div>#}
+{#                <ul class="specs">#}
+{#                  <li><strong>Adults:</strong> 1</li>#}
+{#                  <li><strong>Categories:</strong> Single</li>#}
+{#                  <li><strong>Facilities:</strong> Closet with hangers, HD flat-screen TV, Telephone</li>#}
+{#                  <li><strong>Size:</strong> 20m<sup>2</sup></li>#}
+{#                  <li><strong>Bed Type:</strong> One bed</li>#}
+{#                </ul>#}
+{#              </div>#}
+{#            </div>#}
+{#          </div>#}
+{##}
+{#          <div class="col-lg-4 mb-5">#}
+{#            <div class="block-34">#}
+{#              <div class="image">#}
+{#                <a href="#"><img src="{% static 'hotel/images/img_1.jpg'%}" alt="Image placeholder"></a>#}
+{#              </div>#}
+{#              <div class="text">#}
+{#                <h2 class="heading">Bachelor Room</h2>#}
+{#                <div class="price"><sup>$</sup><span class="number">156</span><sub>/per night</sub></div>#}
+{#                <ul class="specs">#}
+{#                  <li><strong>Adults:</strong> 1</li>#}
+{#                  <li><strong>Categories:</strong> Single</li>#}
+{#                  <li><strong>Facilities:</strong> Closet with hangers, HD flat-screen TV, Telephone</li>#}
+{#                  <li><strong>Size:</strong> 20m<sup>2</sup></li>#}
+{#                  <li><strong>Bed Type:</strong> One bed</li>#}
+{#                </ul>#}
+{#              </div>#}
+{#            </div>#}
+{#          </div>#}
+{##}
+{#          <div class="col-lg-4 mb-5">#}
+{#            <div class="block-34">#}
+{#              <div class="image">#}
+{#                <a href="#"><img src="{% static 'hotel/images/img_2.jpg'%}" alt="Image placeholder"></a>#}
+{#              </div>#}
+{#              <div class="text">#}
+{#                <h2 class="heading">Family Room</h2>#}
+{#                <div class="price"><sup>$</sup><span class="number">245</span><sub>/per night</sub></div>#}
+{#                <ul class="specs">#}
+{#                  <li><strong>Adults:</strong> 1</li>#}
+{#                  <li><strong>Categories:</strong> Single</li>#}
+{#                  <li><strong>Facilities:</strong> Closet with hangers, HD flat-screen TV, Telephone</li>#}
+{#                  <li><strong>Size:</strong> 20m<sup>2</sup></li>#}
+{#                  <li><strong>Bed Type:</strong> One bed</li>#}
+{#                </ul>#}
+{#              </div>#}
+{#            </div>#}
+{#          </div>#}
+{##}
+{#          <div class="col-lg-4 mb-5">#}
+{#            <div class="block-34">#}
+{#              <div class="image">#}
+{#                <a href="#"><img src="{% static 'hotel/images/img_3.jpg'%}" alt="Image placeholder"></a>#}
+{#              </div>#}
+{#              <div class="text">#}
+{#                <h2 class="heading">Presidential Room</h2>#}
+{#                <div class="price"><sup>$</sup><span class="number">375</span><sub>/per night</sub></div>#}
+{#                <ul class="specs">#}
+{#                  <li><strong>Adults:</strong> 1</li>#}
+{#                  <li><strong>Categories:</strong> Single</li>#}
+{#                  <li><strong>Facilities:</strong> Closet with hangers, HD flat-screen TV, Telephone</li>#}
+{#                  <li><strong>Size:</strong> 20m<sup>2</sup></li>#}
+{#                  <li><strong>Bed Type:</strong> One bed</li>#}
+{#                </ul>#}
+{#              </div>#}
+{#            </div>#}
+{#          </div>#}
+{#        </div>#}
       </div>
     </div>
 

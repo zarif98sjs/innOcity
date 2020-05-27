@@ -15,13 +15,15 @@ def index(request):
     destination = get_destination(conn)
     print(destination)
     return render(request, 'home/index.html',
-                  {'hotel_ara_best': hotel_ara_best, 'hotel_ara_top_disc': hotel_ara_top_disc , 'destination': destination})
+                  {'hotel_ara_best': hotel_ara_best, 'hotel_ara_top_disc': hotel_ara_top_disc, 'destination': destination})
 
 
 def about(request):
     return render(request, 'home/about.html')
 
+
 def get_destination(conn):
+
     cur = conn.cursor()
     cur.execute("SELECT city,country FROM HOTEL")
     result = cur.fetchall()
@@ -31,7 +33,9 @@ def get_destination(conn):
         dest.append(row[1])
     return dest
 
+
 def best_rated(conn):
+
     cur = conn.cursor()
     cur.execute("SELECT name,city,country,rating,hotelId FROM HOTEL ORDER BY rating DESC ")
     cnt = 1

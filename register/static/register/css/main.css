@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Oswald:400,500,600,700');
 
 /* ==========================================================================
    #FONT
@@ -9,40 +10,235 @@
 .font-poppins {
   font-family: "Poppins", "Arial", "Helvetica Neue", sans-serif;
 }
+div
+{
+	display: block;
+	position: relative;
+
+	-webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+ul
+{
+	list-style: none;
+	margin-bottom: 0px;
+    align-content: center;
+    align-self: center;
+}
+li
+{
+  display: inline;
+  align-content: center;
+
+}
+nav
+{
+    display: inline;
+    position:fixed;
+    width:100%;
+    top:0;
+    height:80px;
+    align-items: center;
+    transition: 0.5s;
+}
 
 /* ==========================================================================
    #GRID
    ========================================================================== */
-.row {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: wrap;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
+.super_container
+{
+	width: 100%;
+	overflow: hidden;
+
+}
+.home_slider_container
+{
+	width: 100%;
+	height: 100%;
+}
+.home_slider_content_container
+{
+	position: absolute;
+	top: 31.5%;
+	left: 0;
+	width: 100%;
+	z-index: 1;
+	text-align: center;
 }
 
-.row-space {
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -moz-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
+.header
+{
+
+  	position: fixed;
+    padding: 0px;
+	top: 0;
+	left: 100px;
+	width: 100%;
+    height: 100px;
+	z-index: 100;
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-ms-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+	transition: all 200ms ease;
+
+}
+.nav-up
+{
+    top: -100px;
+}
+.header_content
+{
+    position: fixed;
+	width: 100%;
+	height: 148px;
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-ms-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+	transition: all 200ms ease;
 }
 
-.col-2 {
-  width: -webkit-calc((100% - 60px) / 2);
-  width: -moz-calc((100% - 60px) / 2);
-  width: calc((100% - 60px) / 2);
+.header_content_inner
+{
+    position:fixed;
+	width: 100%;
+}
+.logo a
+{
+    position: relative;
+	font-family: 'Oswald', sans-serif;
+	font-size: 30px;
+	font-weight: 500;
+	color: #FFFFFF;
+	line-height: 0.75;
+}
+.main_nav
+{
+    position: fixed;
+    padding: 0px;
+	top: 60px;
+	left: 300px;
+	width: 100%;
+    height: 100px;
+	margin-left: 242px;
+    transition: top 0.3s;
+}
+.header ul li
+{
+    display: inline;
+	position: relative;
+    left: 300px;
+}
+.header ul li::after
+{
+
+	position: absolute;
+	left: 50%;
+	-webkit-transform: translateX(-50%);
+	-moz-transform: translateX(-50%);
+	-ms-transform: translateX(-50%);
+	-o-transform: translateX(-50%);
+	transform: translateX(-50%);
+	top: -104px;
+	width: 2px;
+	height: 0px;
+	background: #FFFFFF;
+	content: '';
+	visibility: hidden;
+	opacity: 0;
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-ms-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+	transition: all 200ms ease;
+}
+.header ul li.active::after,
+.header ul li:hover::after
+{
+	height: 100px;
+	visibility: visible;
+	opacity: 1;
+}
+.header ul li:not(:last-child)
+{
+	margin-right: 54px;
+}
+.header ul li a
+{
+	font-family: 'Oswald', sans-serif;
+	font-size: 16px;
+	font-weight: 400;
+	color: #FFFFFF;
+	white-space: nowrap;
+}
+.header_phone
+{
+	margin-right: 60px;
+	font-family: 'Oswald', sans-serif;
+	font-size: 18px;
+	font-weight: 500;
+	color: #FFFFFF;
+}
+.header_social
+{
+	position: absolute;
+	top: 0;
+	right: 119px;
+	height: 148px;
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-ms-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+	transition: all 200ms ease;
 }
 
-@media (max-width: 767px) {
-  .col-2 {
-    width: 100%;
-  }
+.header_social ul
+{
+	margin-top: 6px;
 }
+.header_social ul li:not(:last-child)
+{
+	margin-right: 32px;
+}
+.header_social ul li a i
+{
+	font-size: 14px;
+	color: rgba(255,255,255,1);
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-ms-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+	transition: all 200ms ease;
+}
+.header_social ul li a i:hover
+{
+	color: rgba(255,255,255,0.5);
+}
+.hamburger
+{
+	display: none;
+}
+.hamburger i
+{
+	font-size: 20px;
+	color: rgba(255,255,255,0.5);
+	cursor: pointer;
+	-webkit-transition: all 200ms ease;
+	-moz-transition: all 200ms ease;
+	-ms-transition: all 200ms ease;
+	-o-transition: all 200ms ease;
+	transition: all 200ms ease;
+}
+.hamburger:hover i
+{
+	color: rgba(255,255,255,1);
+}
+
+
+
+
 
 /* ==========================================================================
    #BOX-SIZING
@@ -91,6 +287,7 @@ fieldset, legend {
 li > ol,
 li > ul {
   margin-bottom: 0;
+  display: inline;
 }
 
 /**

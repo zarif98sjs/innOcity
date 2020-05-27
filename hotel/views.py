@@ -29,9 +29,9 @@ def available(request):
     seed(1)
     global session_id
     global sessions
-    session_id = randint(10,10000)
+    session_id = randint(10, 10000)
     print("1-->"+str(session_id))
-    sessions[session_id] = Session(session_id,checkin_date,checkout_date)
+    sessions[session_id] = Session(session_id, checkin_date, checkout_date)
 
     available_hotels = []
 
@@ -55,21 +55,26 @@ def available(request):
                +"' AND DATE_OF_DEPARTURE>='"+str(checkin_date)+"')"
 
         cur3.execute(sql3)
-
         total_count -= cur3.fetchone()[0]
-        if total_count> 0:
+
+        if total_count > 0:
             hotel = Hotel(hotelId=row[0], name=row[1], street=row[2], zipcode=row[3], city=row[4],
                           country=row[5], rating=row[6], rating_count=row[7])
             hotel.set_rooms(total_count)
             hotel.add_facilities(get_facilities(hotelId, conn))
             available_hotels.append(hotel)
+
     return render(request, 'hotel/available.html', {'available_hotels': available_hotels})
 
+
 def index(request, hotel_id):
+
     context = get_context(hotel_id)
     return render(request, 'hotel/index.html', context)
 
+
 def get_context(hotel_id):
+
     dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='ORCL')
     conn = cx_Oracle.connect(user='INNOCITY', password='2108', dsn=dsn_tns)
     cur = conn.cursor()
@@ -85,7 +90,7 @@ def get_context(hotel_id):
         hotel_facilities = get_facilities(hotel_id, conn)
         hotel_services = get_services(hotel_id, conn)
         room_types = get_rooms(hotel_id, conn)
-        context = {'hotel': hotel, 'hotel_facilities': hotel_facilities , 'hotel_services': hotel_services}
+        context = {'hotel': hotel, 'hotel_facilities': hotel_facilities, 'hotel_services': hotel_services}
 
         if len(room_types):
             context['room_types'] = room_types
@@ -103,6 +108,7 @@ def get_facilities(hotel_id, conn):
     for row in result:
         hotel_facilities.append(row[0])
     return hotel_facilities
+
 
 def get_services(hotel_id, conn):
 

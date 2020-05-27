@@ -5,10 +5,12 @@ from django.db import models
 
 class Session:
 
-    def __init__(self,id,checkin_date,checkout_date):
+    def __init__(self, id, checkin_date, checkout_date):
+
         self.id = id
         self.checkin_date = checkin_date
         self.checkout_date = checkout_date
+
 
 class Hotel:
 
@@ -50,8 +52,6 @@ class Room:
         self.discount = discount
         self.special_offer = special_offer
         self.facilities = ""
-
-
 
     def add_facilities(self, facility_list):
 

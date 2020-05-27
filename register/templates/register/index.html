@@ -44,6 +44,8 @@
       rel="stylesheet"
       media="all"
     />
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+
 
     <!-- Main CSS-->
     <link
@@ -51,6 +53,9 @@
       rel="stylesheet"
       media="all"
     />
+
+
+
 
     <script>
       function checkForBlank() {
@@ -63,6 +68,37 @@
   </head>
 
   <body>
+  <header class="header">
+		<div class="container">
+			<div class="row">
+				<div class="col">
+					<div class="header_content d-flex flex-row align-items-center justify-content-start">
+						<div class="header_content_inner d-flex flex-row align-items-end justify-content-start">
+							<div class="logo"><a href="{% url 'home:index' %}">innOcity</a></div>
+
+								<ul>
+									<li ><a href="{% url 'home:index' %}">Home</a></li>
+									<li><a href="{% url 'home:about' %}">About us</a></li>
+									<li><a href="{% url 'login:index' %}">Login</a></li>
+									<li class="active"><a href="{% url 'register:index' %}">Register</a></li>
+									<li><a href="{% url 'home:contact' %}">Dashboard</a></li>
+								</ul>
+
+{#							<div class="header_phone ml-auto">Call us: +880-1915123445</div>#}
+
+							<!-- Hamburger -->
+
+							<div class="hamburger ml-auto">
+								<i class="fa fa-bars" aria-hidden="true"></i>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+
     <div class="page-wrapper bg-gra-01 p-t-180 p-b-100 font-poppins">
       <div class="wrapper wrapper--w780">
         <div class="card card-3">
@@ -193,6 +229,46 @@
 
     <!-- Main JS-->
     <script src="../../static/register/js/global.js"></script>
+
+  <script>
+        var didScroll;
+        var lastScrollTop = 0;
+        var delta = 5;
+        var navbarHeight = $('header').outerHeight();
+
+        $(window).scroll(function(event){
+            didScroll = true;
+        });
+
+        setInterval(function() {
+            if (didScroll) {
+                hasScrolled();
+                didScroll = false;
+            }
+        }, 250);
+
+        function hasScrolled() {
+            var st = $(this).scrollTop();
+
+            // Make sure they scroll more than delta
+            if(Math.abs(lastScrollTop - st) <= delta)
+                return;
+
+            // If they scrolled down and are past the navbar, add class .nav-up.
+            // This is necessary so you never see what is "behind" the navbar.
+            if (st > lastScrollTop && st > navbarHeight){
+                // Scroll Down
+                $('header').removeClass('nav-down').addClass('nav-up');
+            } else {
+                // Scroll Up
+                if(st + $(window).height() < $(document).height()) {
+                    $('header').removeClass('nav-up').addClass('nav-down');
+                }
+            }
+
+            lastScrollTop = st;
+        }
+    </script>
 
     {% if alert_flag %}
     <script>

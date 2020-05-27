@@ -1,5 +1,6 @@
 from django.shortcuts import render
 import cx_Oracle
+import hashlib
 # Create your views here.
 
 from django.http import HttpResponse
@@ -9,6 +10,7 @@ app_name = 'register'
 
 
 def index(request):
+
     print(request.method)
     if request.method == 'POST':
         print(request.POST.get('name'))
@@ -25,6 +27,7 @@ def sign_up(request):
     v2 = request.POST.get('email')
     v3 = request.POST.get('username')
     v4 = request.POST.get('password')
+    v4 = hashlib.md5(v4.encode()).hexdigest()
     v5 = request.POST.get('gender')
     v6 = request.POST.get('street')
     v7 = request.POST.get('zipcode')
@@ -67,12 +70,7 @@ def sign_up(request):
         sql_add_user = "INSERT INTO CUSTOMER (customerId, name, email, username, password, gender, street, zipcode, city, country) VALUES ( :vv0 ,:vv1 , :vv2 , :vv3 , :vv4 , :vv5 , :vv6 , :vv7 , :vv8 , :vv9 )"
 
         v0 = customer_num
-
         cur.execute(sql_add_user, [v0, v1, v2, v3, v4, v5, v6, v7, v8, v9])
-        conn.commit()
-
-        print("HOISEEEEEEEEE")
-
         conn.commit()
         cur.close()
         conn.close()

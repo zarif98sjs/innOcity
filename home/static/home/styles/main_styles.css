@@ -266,6 +266,7 @@ section
 	-ms-transition: all 200ms ease;
 	-o-transition: all 200ms ease;
 	transition: all 200ms ease;
+	background: rgba(24,24,24,0.6);
 }
 .header_content
 {
@@ -299,7 +300,7 @@ section
 }
 .main_nav
 {
-	margin-left: 242px;
+	margin-left: 500px;
 }
 .main_nav ul li
 {
@@ -581,7 +582,7 @@ section
 	font-size: 100px;
 	line-height: 1.1;
 	font-weight: 400;
-	color: #FFFFFF;
+	color: black;
 }
 .home_page_nav
 {
@@ -598,7 +599,7 @@ section
 {
 	font-family: 'Oswald', sans-serif;
 	font-size: 16px;
-	color: rgba(255,255,255,0.63);
+	color: black;
 	-webkit-transition: all 400ms ease;
 	-moz-transition: all 400ms ease;
 	-ms-transition: all 400ms ease;

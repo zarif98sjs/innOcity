@@ -1,6 +1,7 @@
 from django.shortcuts import render
 import cx_Oracle
 import hashlib
+
 # Create your views here.
 
 from django.http import HttpResponse
@@ -11,7 +12,6 @@ app_name = 'register'
 
 def index(request):
 
-    print(request.method)
     if request.method == 'POST':
         print(request.POST.get('name'))
         # print(request.POST.get('email'))
@@ -53,11 +53,19 @@ def sign_up(request):
     elif v9 == "":
         print("No country")
     else:
+
         dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='ORCL')
         conn = cx_Oracle.connect(user='INNOCITY', password='2108', dsn=dsn_tns)
         cur = conn.cursor()
-        print(cur)
-        print('Success')
+        cur2 = conn.cursor()
+
+        sql_find = "SELECT COUNT(*) FROM CUSTOMER WHERE username = '" + v3 + "'"
+        cur2.execute(sql_find)
+        if cur2.fetchone()[0] > 0:
+            cur2.close()
+            cur.close()
+            conn.close()
+            return render(request, 'register/index.html', {'invalid_username': True})
 
         sql_customer_num = "SELECT COUNT(*) FROM CUSTOMER"
         cur.execute(sql_customer_num)
@@ -72,6 +80,7 @@ def sign_up(request):
         v0 = customer_num
         cur.execute(sql_add_user, [v0, v1, v2, v3, v4, v5, v6, v7, v8, v9])
         conn.commit()
+        cur2.close()
         cur.close()
         conn.close()
         return HttpResponse("<h1>CONGRATS</h1>")

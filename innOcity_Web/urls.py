@@ -26,5 +26,6 @@ urlpatterns = [
     path('login/', include(('login.urls', 'login'), namespace='login')),
     path('home/', include(('home.urls', 'home'), namespace='home')),
     path('hotel/', include(('hotel.urls', 'hotel'), namespace='hotel')),
+    path('dashboard/', include(('dashboard.urls', 'dashboard'), namespace='dashboard')),
 
 ]

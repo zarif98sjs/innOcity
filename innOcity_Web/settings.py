@@ -47,6 +47,9 @@ INSTALLED_APPS = [
     'login',
     'home',
     'hotel',
+    'dashboard',
+
+
 
 ]
 

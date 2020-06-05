@@ -31,7 +31,7 @@ $(document).ready(function($) {
 		$('.carousel').owlCarousel({
 			loop: true,
 			margin: 10,
-			nav: true,
+
 			stagePadding: 5,
 			nav: false,
 			navText: ['<span class="icon-chevron-left">', '<span class="icon-chevron-right">'],
@@ -79,7 +79,7 @@ $(document).ready(function($) {
 			items: 1,
 			autoplay: true,
 			stagePadding: 0,
-			nav: true,
+
 			navText: ['<span class="icon-arrow_back">', '<span class="icon-arrow_forward">'],
 			animateOut: 'fadeOut',
     	animateIn: 'fadeIn',

@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,25 +7,25 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="Travello template project">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="../../static/home/styles/bootstrap4/bootstrap.min.css">
-<link href="../../static/home/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="../../static/home/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
-<link rel="stylesheet" type="text/css" href="../../static/home/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
-<link rel="stylesheet" type="text/css" href="../../static/home/plugins/OwlCarousel2-2.2.1/animate.css">
-<link rel="stylesheet" type="text/css" href="../../static/home/styles/main_styles.css">
-<link rel="stylesheet" type="text/css" href="../../static/home/styles/responsive.css">
+<link rel="stylesheet" type="text/css" href="{% static 'home/styles/bootstrap4/bootstrap.min.css' %}">
+<link href="{% static 'home/plugins/font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="{% static 'home/plugins/OwlCarousel2-2.2.1/owl.carousel.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'home/plugins/OwlCarousel2-2.2.1/owl.theme.default.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'home/plugins/OwlCarousel2-2.2.1/animate.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'home/styles/main_styles.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'home/styles/responsive.css' %}">
 
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Acme">
-    <link rel="stylesheet" href="../../static/home/assets/css/styles.min.css">
+    <link rel="stylesheet" href="{% static 'home/assets/css/styles.min.css' %}">
 </head>
 <body>
 
 <div class="super_container">
-	
+
 	<!-- Header -->
 
 	<header class="header">
@@ -38,13 +39,16 @@
 								<ul class="d-flex flex-row align-items-start justify-content-start" >
 									<li class="active"><a href="{% url 'home:index' %}">Home</a></li>
 									<li><a href="{% url 'home:about' %}">About us</a></li>
-									<li><a href="{% url 'login:index' %}">Login</a></li>
-									<li><a href="{% url 'register:index' %}">Register</a></li>
-									<li><a href="{% url 'home:contact' %}">Dashboard</a></li>
+                                    {% if logged_in %}
+                                        <li><a href="{% url 'dashboard:index' %}">Dashboard</a></li>
+                                        <li><a href="{% url 'login:index' %}">Log out</a></li>
+                                    {% else %}
+                                        <li><a href="{% url 'login:index' %}">Login</a></li>
+									    <li><a href="{% url 'register:index' %}">Register</a></li>
+                                    {% endif %}
+
 								</ul>
 							</nav>
-{#							<div class="header_phone ml-auto">Call us: +880-1915123445</div>#}
-
 							<!-- Hamburger -->
 
 							<div class="hamburger ml-auto">
@@ -71,25 +75,25 @@
                 <li><a href="{% url 'home:about' %}">About us</a></li>
                 <li><a href="{% url 'login:index' %}">Login</a></li>
                 <li><a href="{% url 'register:index' %}">Register</a></li>
-                <li><a href="{% url 'home:contact' %}">Dashboard</a></li>
+                <li><a href="{% url 'dashboard:index' %}">Dashboard</a></li>
 			</ul>
 		</div>
 		<div class="menu_social">
 			<div class="menu_phone ml-auto">Call us: +880-1915123445</div>
 		</div>
 	</div>
-	
+
 	<!-- Home -->
 
 	<div class="home">
-		
+
 		<!-- Home Slider -->
 		<div class="home_slider_container">
 			<div class="owl-carousel owl-theme home_slider">
-				
+
 				<!-- Slide -->
 				<div class="owl-item">
-					<div class="background_image" style="background-image:url(../../static/home/images/test1.png)"></div>
+					<div class="background_image" style="background-image:url({% static 'home/images/test1.png' %})"></div>
 					<div class="home_slider_content_container">
 						<div class="container">
 							<div class="row">
@@ -105,7 +109,7 @@
 
 				<!-- Slide -->
 				<div class="owl-item">
-					<div class="background_image" style="background-image:url(../../static/home/images/test12.jpg)"></div>
+					<div class="background_image" style="background-image:url({% static 'home/images/test12.jpg' %})"></div>
 					<div class="home_slider_content_container">
 						<div class="container">
 							<div class="row">
@@ -121,7 +125,7 @@
 
 				<!-- Slide -->
 				<div class="owl-item">
-					<div class="background_image" style="background-image:url(../../static/home/images/test13.jpg)"></div>
+					<div class="background_image" style="background-image:url({% static 'home/images/test13.jpg' %})"></div>
 					<div class="home_slider_content_container">
 						<div class="container">
 							<div class="row">
@@ -156,36 +160,18 @@
 					<div class="home_search_container">
 						<div class="home_search_title">Search for your trip</div>
 						<div class="home_search_content">
-{#                            <form autocomplete="off" action="">#}
-{#                              <div class="autocomplete" style="width:300px;">#}
-{#                                <input id="myInput" type="text" name="myCountry" placeholder="Country">#}
-{#                              </div>#}
-{#                              <input type="submit">#}
-{#                            </form>#}
+
 
 
                          <form autocomplete="off" style="background-color:rgba(0,0,0,0);" action="{% url 'hotel:available' %}" method="post">
                                 <div class="form-row">
                                     <div class="col"><div class="autocomplete" style="width:300px;"><input id="myInput" type="text" name="destination" placeholder="Destination" required=""></div></div>
-{#                                    <div class="col"><input class="form-control form-control-lg" name="destination" type="search" placeholder="Destination" required=""></div>#}
                                     <div class="col"><input class="form-control form-control-lg" name="checkin" type="date" placeholder = "Check in" required="" ></div>
                                     <div class="col"><input class="form-control form-control-lg" name="checkout" type="date" placeholder = "Check out" required="" onclick="updatecheckoutDate()"></div>
                                     <div class="col"><input class="form-control form-control-lg" name="rooms" type="number" placeholder="Rooms" min="1"></div>
                                     <div class="col"><button class="btn btn-primary btn-lg" type="submit" style="background-color:rgb(131,53,143);margin-left:65px;">Search</button></div>
                                 </div>
                             </form>
-
-
-{#							<form action="#" class="home_search_form" id="home_search_form">#}
-{#								<div class="d-flex flex-lg-row flex-column align-items-start justify-content-lg-between justify-content-start">#}
-{#									<input type="text" class="search_input search_input_1" placeholder="City" required="required">#}
-{#									<input type="text" class="search_input search_input_2" placeholder="Departure" required="required">#}
-{#									<input type="text" class="search_input search_input_3" placeholder="Arrival" required="required">#}
-{#									<input type="text" class="search_input search_input_4" placeholder="Budget" required="required">#}
-{#									<button class="home_search_button">search</button>#}
-{#								</div>#}
-{#							</form>#}
-
 
 						</div>
 					</div>
@@ -197,7 +183,7 @@
 	<!-- Intro -->
 
 	<div class="intro">
-		<div class="intro_background" style="background-image:url(../../static/home/images/intro.png)"></div>
+		<div class="intro_background" style="background-image:url({% static 'home/images/intro.png' %})"></div>
 		<div class="container">
 			<div class="row">
 				<div class="col">
@@ -207,7 +193,7 @@
 							<!-- Intro Item -->
 							<div class="col-lg-4 intro_col">
 								<div class="intro_item d-flex flex-row align-items-end justify-content-start">
-									<div class="intro_icon"><img src="../../static/home/images/beach.svg" alt=""></div>
+									<div class="intro_icon"><img src="{% static 'home/images/beach.svg' %}" alt=""></div>
 									<div class="intro_content">
 										<div class="intro_title">Top Destinations</div>
 										<div class="intro_subtitle"><p>Nulla pretium tincidunt felis, nec.</p></div>
@@ -218,7 +204,7 @@
 							<!-- Intro Item -->
 							<div class="col-lg-4 intro_col">
 								<div class="intro_item d-flex flex-row align-items-end justify-content-start">
-									<div class="intro_icon"><img src="../../static/home/images/wallet.svg" alt=""></div>
+									<div class="intro_icon"><img src="{% static 'home/images/wallet.svg' %}" alt=""></div>
 									<div class="intro_content">
 										<div class="intro_title">The Best Prices</div>
 										<div class="intro_subtitle"><p>Sollicitudin mauris lobortis in.</p></div>
@@ -229,7 +215,7 @@
 							<!-- Intro Item -->
 							<div class="col-lg-4 intro_col">
 								<div class="intro_item d-flex flex-row align-items-end justify-content-start">
-									<div class="intro_icon"><img src="../../static/home/images/suitcase.svg" alt=""></div>
+									<div class="intro_icon"><img src="{% static 'home/images/suitcase.svg' %}" alt=""></div>
 									<div class="intro_content">
 										<div class="intro_title">Amazing Services</div>
 										<div class="intro_subtitle"><p>Nulla pretium tincidunt felis, nec.</p></div>
@@ -239,7 +225,7 @@
 
 						</div>
 					</div>
-				</div>		
+				</div>
 			</div>
 		</div>
 	</div>
@@ -264,7 +250,7 @@
 
 						<div class="destination item">
 							<div class="destination_image">
-								<img src="../../static/home/images/destination_1.jpg" alt="">
+								<img src="{% static 'home/images/destination_1.jpg' %}" alt="">
 								<div class="spec_offer text-center"><a href="#">Best</a></div>
 							</div>
 							<div class="destination_content">
@@ -275,66 +261,6 @@
 						</div>
 
                         {% endfor %}
-
-{#						<!-- Destination -->#}
-{#						<div class="destination item">#}
-{#							<div class="destination_image">#}
-{#								<img src="../../static/home/images/destination_2.jpg" alt="">#}
-{#							</div>#}
-{#							<div class="destination_content">#}
-{#								<div class="destination_title"><a href="destinations.html">Indonesia</a></div>#}
-{#								<div class="destination_subtitle"><p>Nulla pretium tincidunt felis, nec.</p></div>#}
-{#								<div class="destination_price">From $679</div>#}
-{#							</div>#}
-{#						</div>#}
-{##}
-{#						<!-- Destination -->#}
-{#						<div class="destination item">#}
-{#							<div class="destination_image">#}
-{#								<img src="../../static/home/images/destination_3.jpg" alt="">#}
-{#							</div>#}
-{#							<div class="destination_content">#}
-{#								<div class="destination_title"><a href="destinations.html">San Francisco</a></div>#}
-{#								<div class="destination_subtitle"><p>Nulla pretium tincidunt felis, nec.</p></div>#}
-{#								<div class="destination_price">From $679</div>#}
-{#							</div>#}
-{#						</div>#}
-{##}
-{#						<!-- Destination -->#}
-{#						<div class="destination item">#}
-{#							<div class="destination_image">#}
-{#								<img src="../../static/home/images/destination_4.jpg" alt="">#}
-{#							</div>#}
-{#							<div class="destination_content">#}
-{#								<div class="destination_title"><a href="destinations.html">Paris</a></div>#}
-{#								<div class="destination_subtitle"><p>Nulla pretium tincidunt felis, nec.</p></div>#}
-{#								<div class="destination_price">From $679</div>#}
-{#							</div>#}
-{#						</div>#}
-{##}
-{#						<!-- Destination -->#}
-{#						<div class="destination item">#}
-{#							<div class="destination_image">#}
-{#								<img src="../../static/home/images/destination_5.jpg" alt="">#}
-{#							</div>#}
-{#							<div class="destination_content">#}
-{#								<div class="destination_title"><a href="destinations.html">Phi Phi Island</a></div>#}
-{#								<div class="destination_subtitle"><p>Nulla pretium tincidunt felis, nec.</p></div>#}
-{#								<div class="destination_price">From $679</div>#}
-{#							</div>#}
-{#						</div>#}
-{##}
-{#						<!-- Destination -->#}
-{#						<div class="destination item">#}
-{#							<div class="destination_image">#}
-{#								<img src="../../static/home/images/destination_6.jpg" alt="">#}
-{#							</div>#}
-{#							<div class="destination_content">#}
-{#								<div class="destination_title"><a href="destinations.html">Mykonos</a></div>#}
-{#								<div class="destination_subtitle"><p>Nulla pretium tincidunt felis, nec.</p></div>#}
-{#								<div class="destination_price">From $679</div>#}
-{#							</div>#}
-{#						</div>#}
 
 					</div>
 				</div>
@@ -362,7 +288,7 @@
 
 						<div class="destination item">
 							<div class="destination_image">
-								<img src="../../static/home/images/destination_2.jpg" alt="">
+								<img src="{% static 'home/images/destination_2.jpg' %}" alt="">
 								<div class="spec_offer text-center"><a href="#">Special Offer</a></div>
 							</div>
 							<div class="destination_content">
@@ -381,70 +307,6 @@
 		</div>
 	</div>
 
-	<!-- Testimonials -->
-
-{#	<div class="testimonials" id="testimonials">#}
-{#		<div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="images/testimonials.jpg" data-speed="0.8"></div>#}
-{#		<div class="container">#}
-{#			<div class="row">#}
-{#				<div class="col text-center">#}
-{#					<div class="section_subtitle">simply amazing places</div>#}
-{#					<div class="section_title"><h2>Testimonials</h2></div>#}
-{#				</div>#}
-{#			</div>#}
-{#			<div class="row testimonials_row">#}
-{#				<div class="col">#}
-{##}
-{#					<!-- Testimonials Slider -->#}
-{#					<div class="testimonials_slider_container">#}
-{#						<div class="owl-carousel owl-theme testimonials_slider">#}
-{#							#}
-{#							<!-- Slide -->#}
-{#							<div class="owl-item text-center">#}
-{#								<div class="testimonial">Lorem ipsum dolor sit amet, consectetur adipiscing elit. lobortis dolor. Cras placerat lectus a posuere aliquet. Curabitur quis vehicula odio.</div>#}
-{#								<div class="testimonial_author">#}
-{#									<div class="testimonial_author_content d-flex flex-row align-items-end justify-content-start">#}
-{#										<div>john turner,</div>#}
-{#										<div>client</div>#}
-{#									</div>#}
-{#								</div>#}
-{#							</div>#}
-{##}
-{#							<!-- Slide -->#}
-{#							<div class="owl-item text-center">#}
-{#								<div class="testimonial">Lorem ipsum dolor sit amet, consectetur adipiscing elit. lobortis dolor. Cras placerat lectus a posuere aliquet. Curabitur quis vehicula odio.</div>#}
-{#								<div class="testimonial_author">#}
-{#									<div class="testimonial_author_content d-flex flex-row align-items-end justify-content-start">#}
-{#										<div>john turner,</div>#}
-{#										<div>client</div>#}
-{#									</div>#}
-{#								</div>#}
-{#							</div>#}
-{##}
-{#							<!-- Slide -->#}
-{#							<div class="owl-item text-center">#}
-{#								<div class="testimonial">Lorem ipsum dolor sit amet, consectetur adipiscing elit. lobortis dolor. Cras placerat lectus a posuere aliquet. Curabitur quis vehicula odio.</div>#}
-{#								<div class="testimonial_author">#}
-{#									<div class="testimonial_author_content d-flex flex-row align-items-end justify-content-start">#}
-{#										<div>john turner,</div>#}
-{#										<div>client</div>#}
-{#									</div>#}
-{#								</div>#}
-{#							</div>#}
-{##}
-{#						</div>#}
-{#					</div>#}
-{#				</div>#}
-{#			</div>#}
-{#		</div>#}
-{#		<div class="test_nav">#}
-{#			<ul class="d-flex flex-column align-items-end justify-content-end">#}
-{#				<li><a href="#">City Breaks Clients<span>01</span></a></li>#}
-{#				<li><a href="#">Cruises Clients<span>02</span></a></li>#}
-{#				<li><a href="#">All Inclusive Clients<span>03</span></a></li>#}
-{#			</ul>#}
-{#		</div>#}
-{#	</div>#}
 
 	<!-- News -->
 
@@ -453,10 +315,10 @@
 			<div class="row">
 				<div class="col-xl-8">
 					<div class="news_container">
-						
+
 						<!-- News Post -->
 						<div class="news_post d-flex flex-md-row flex-column align-items-start justify-content-start">
-							<div class="news_post_image"><img src="../../static/home/images/news_1.jpg" alt=""></div>
+							<div class="news_post_image"><img src="{% static 'home/images/news_1.jpg' %}" alt=""></div>
 							<div class="news_post_content">
 								<div class="news_post_date d-flex flex-row align-items-end justify-content-start">
 									<div>02</div>
@@ -476,7 +338,7 @@
 
 						<!-- News Post -->
 						<div class="news_post d-flex flex-md-row flex-column align-items-start justify-content-start">
-							<div class="news_post_image"><img src="../../static/home/images/news_2.jpg" alt=""></div>
+							<div class="news_post_image"><img src="{% static 'home/images/news_2.jpg' %}" alt=""></div>
 							<div class="news_post_content">
 								<div class="news_post_date d-flex flex-row align-items-end justify-content-start">
 									<div>01</div>
@@ -496,7 +358,7 @@
 
 						<!-- News Post -->
 						<div class="news_post d-flex flex-md-row flex-column align-items-start justify-content-start">
-							<div class="news_post_image"><img src="../../static/home/images/news_3.jpg" alt=""></div>
+							<div class="news_post_image"><img src="{% static 'home/images/news_3.jpg' %}" alt=""></div>
 							<div class="news_post_content">
 								<div class="news_post_date d-flex flex-row align-items-end justify-content-start">
 									<div>29</div>
@@ -520,7 +382,7 @@
 				<!-- News Sidebar -->
 				<div class="col-xl-4">
 					<div class="travello">
-						<div class="background_image" style="background-image:url(../../static/home/images/travello.jpg)"></div>
+						<div class="background_image" style="background-image:url({% static 'home/images/travello.jpg' %})"></div>
 						<div class="travello_content">
 							<div class="travello_content_inner">
 								<div></div>
@@ -544,7 +406,7 @@
 	<!-- Footer -->
 
 	<footer class="footer">
-		<div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="images/footer_1.jpg" data-speed="0.8"></div>
+		<div class="parallax_background parallax-window" data-parallax="scroll" data-image-src="{% static 'home/images/footer_1.jpg' %}" data-speed="0.8"></div>
 		<div class="container">
 			<div class="row">
 				<div class="col">
@@ -572,7 +434,7 @@
 						<!-- Footer Contact Item -->
 						<div class="col-xl-4 footer_contact_col">
 							<div class="footer_contact_item d-flex flex-column align-items-center justify-content-start text-center">
-								<div class="footer_contact_icon"><img src="../../static/home/images/sign.svg" alt=""></div>
+								<div class="footer_contact_icon"><img src="{% static 'home/images/sign.svg' %}" alt=""></div>
 								<div class="footer_contact_title">give us a call</div>
 								<div class="footer_contact_list">
 									<ul>
@@ -586,7 +448,7 @@
 						<!-- Footer Contact Item -->
 						<div class="col-xl-4 footer_contact_col">
 							<div class="footer_contact_item d-flex flex-column align-items-center justify-content-start text-center">
-								<div class="footer_contact_icon"><img src="../../static/home/images/trekking.svg" alt=""></div>
+								<div class="footer_contact_icon"><img src="{% static 'home/images/trekking.svg' %}" alt=""></div>
 								<div class="footer_contact_title">come & drop by</div>
 								<div class="footer_contact_list">
 									<ul style="max-width:190px">
@@ -599,7 +461,7 @@
 						<!-- Footer Contact Item -->
 						<div class="col-xl-4 footer_contact_col">
 							<div class="footer_contact_item d-flex flex-column align-items-center justify-content-start text-center">
-								<div class="footer_contact_icon"><img src="../../static/home/images/around.svg" alt=""></div>
+								<div class="footer_contact_icon"><img src="{% static 'home/images/around.svg' %}" alt=""></div>
 								<div class="footer_contact_title">send us a message</div>
 								<div class="footer_contact_list">
 									<ul>
@@ -617,15 +479,15 @@
 	</footer>
 </div>
 
-<script src="../../static/home/js/jquery-3.2.1.min.js"></script>
-<script src="../../static/home/styles/bootstrap4/popper.js"></script>
-<script src="../../static/home/styles/bootstrap4/bootstrap.min.js"></script>
-<script src="../../static/home/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-<script src="../../static/home/plugins/Isotope/isotope.pkgd.min.js"></script>
-<script src="../../static/home/plugins/scrollTo/jquery.scrollTo.min.js"></script>
-<script src="../../static/home/plugins/easing/easing.js"></script>
-<script src="../../static/home/plugins/parallax-js-master/parallax.min.js"></script>
-<script src="../../static/home/js/custom.js"></script>
+<script src="{% static 'home/js/jquery-3.2.1.min.js'%}"></script>
+<script src="{% static 'home/styles/bootstrap4/popper.js'%}"></script>
+<script src="{% static 'home/styles/bootstrap4/bootstrap.min.js'%}"></script>
+<script src="{% static 'home/plugins/OwlCarousel2-2.2.1/owl.carousel.js'%}"></script>
+<script src="{% static 'home/plugins/Isotope/isotope.pkgd.min.js'%}"></script>
+<script src="{% static 'home/plugins/scrollTo/jquery.scrollTo.min.js'%}"></script>
+<script src="{% static 'home/plugins/easing/easing.js'%}"></script>
+<script src="{% static 'home/plugins/parallax-js-master/parallax.min.js'%}"></script>
+<script src="{% static 'home/js/custom.js'%}"></script>
 <script>
     function updatecheckoutDate()
 	{
@@ -759,7 +621,7 @@ autocomplete(document.getElementById("myInput"), destination);
 
 
 
-{#<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>#}
-{#<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/js/bootstrap.bundle.min.js"></script>#}
+{#<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'%}"></script>#}
+{#<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/js/bootstrap.bundle.min.js'%}"></script>#}
 </body>
 </html>

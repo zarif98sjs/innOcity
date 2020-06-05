@@ -270,6 +270,7 @@ legend {
   color: inherit;
   white-space: normal; }
 
+
 progress {
   vertical-align: baseline; }
 
@@ -3172,6 +3173,7 @@ input[type="button"].btn-block {
     border-radius: 1rem; }
 
 .nav {
+
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -3300,6 +3302,7 @@ input[type="button"].btn-block {
 
 .navbar-text {
   display: inline-block;
+
   padding-top: 0.5rem;
   padding-bottom: 0.5rem; }
 
@@ -8592,6 +8595,9 @@ textarea.form-control {
   .block-30.block-30-sm, .block-30.block-30-sm .row {
     min-height: 700px;
     height: 70vh; }
+  .block-30.block-30-sm2, .block-30.block-30-sm2 .row {
+    min-height: 100px;
+    height: 70px; }
   .block-30.block-30-sm .heading {
     font-size: 70px;
     margin-bottom: 20px; }

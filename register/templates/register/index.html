@@ -59,8 +59,8 @@
 
     <script>
       function checkForBlank() {
-        if(document.getElementById('name').value ==''{
-            alert("Please enter your name")
+        if(document.getElementById('name').value ==''){
+            alert("Please enter your name");
             return false;
         }
       }
@@ -81,10 +81,9 @@
 									<li><a href="{% url 'home:about' %}">About us</a></li>
 									<li><a href="{% url 'login:index' %}">Login</a></li>
 									<li class="active"><a href="{% url 'register:index' %}">Register</a></li>
-									<li><a href="{% url 'home:contact' %}">Dashboard</a></li>
+
 								</ul>
 
-{#							<div class="header_phone ml-auto">Call us: +880-1915123445</div>#}
 
 							<!-- Hamburger -->
 
@@ -108,6 +107,8 @@
             <form
               action="{% url 'register:index' %}"
               method="POST"
+              id="registration_form"
+              name="registration_form"
               onsubmit="return checkForBlank()"
             >
               {% csrf_token %}
@@ -118,6 +119,7 @@
                   placeholder="name"
                   name="name"
                   id="name"
+                  required = "required"
                 />
               </div>
               <div class="input-group">
@@ -126,6 +128,7 @@
                   type="email"
                   placeholder="email"
                   name="email"
+                  required = "required"
                 />
               </div>
               <div class="input-group">
@@ -134,11 +137,12 @@
                   type="text"
                   placeholder="username"
                   name="username"
+                  required = "required"
                 />
               </div>
               <div class="input-group">
                 <div class="rs-select2 js-select-simple select--no-search">
-                  <select name="gender">
+                  <select name="gender" required = "required">
                     <option disabled="disabled" selected="selected"
                       >gender</option
                     >
@@ -155,6 +159,7 @@
                   type="text"
                   placeholder="street"
                   name="street"
+                  required = "required"
                 />
               </div>
               <div class="input-group">
@@ -163,6 +168,7 @@
                   type="text"
                   placeholder="zipcode"
                   name="zipcode"
+                  required = "required"
                 />
               </div>
               <div class="input-group">
@@ -171,6 +177,7 @@
                   type="text"
                   placeholder="city"
                   name="city"
+                  required = "required"
                 />
               </div>
               <div class="input-group">
@@ -179,6 +186,7 @@
                   type="text"
                   placeholder="country"
                   name="country"
+                  required = "required"
                 />
               </div>
               <div class="input-group">
@@ -187,6 +195,7 @@
                   type="text"
                   placeholder="phone"
                   name="phone"
+                  required = "required"
                 />
               </div>
               <div class="input-group">
@@ -195,6 +204,8 @@
                   type="password"
                   placeholder="password"
                   name="password"
+                  id="pass1"
+                  required = "required"
                 />
               </div>
               <div class="input-group">
@@ -203,6 +214,8 @@
                   type="password"
                   placeholder="confirm password"
                   name="confirm password"
+                  id="pass2"
+                  required = "required"
                 />
               </div>
               <div class="p-t-10">
@@ -210,11 +223,35 @@
                   class="btn btn--pill btn--green"
                   type="submit"
                   id="submit"
+                  onclick="validatePassword()"
                 >
                   Submit
                 </button>
               </div>
             </form>
+              <script>
+
+                        function validatePassword(){
+
+                            var new_pass = document.getElementById("pass1");
+                            var confirm_password = document.getElementById("pass2");
+                            confirm_password.setCustomValidity("");
+                            new_pass.setCustomValidity("");
+
+                            if(new_pass.value !== confirm_password.value) {
+
+                                confirm_password.setCustomValidity("Password doesn't match");
+                                confirm_password.value = "";
+
+                            }
+
+                            else {
+
+                                document.forms['registration_form'].submit();
+
+                            }
+                        }
+                    </script>
           </div>
         </div>
       </div>
@@ -274,6 +311,10 @@
     <script>
       alert("Complete the form.");
     </script>
+    {% elif invalid_username %}
+        <script>
+            alert("This username is already taken")
+        </script>
     {% endif %}
   </body>
 </html>

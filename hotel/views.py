@@ -6,6 +6,8 @@ from datetime import datetime
 import cx_Oracle
 from random import seed
 from random import randint
+import login.views
+
 # Create your views here.
 
 app_name = 'hotel'
@@ -16,22 +18,23 @@ sessions = {}
 def available(request):
 
     destination = request.POST.get('destination').upper()
-    checkin = request.POST.get('checkin')
-    print(checkin)
-    checkin_date = datetime.strptime(checkin, "%Y-%m-%d").date()
-    print(checkin_date)
-    checkin_date = checkin_date.strftime('%d %b,%Y')
-    print(checkin_date)
-    checkout = request.POST.get('checkout')
-    checkout_date = datetime.strptime(checkout, "%Y-%m-%d").date()
-    checkout_date = checkout_date.strftime('%d %b,%Y')
+    checkin_input = request.POST.get('checkin')
+    checkin_date_ymd = datetime.strptime(checkin_input, "%Y-%m-%d").date()
+    checkin_date = checkin_date_ymd.strftime('%d %b,%Y')
+
+    checkout_input = request.POST.get('checkout')
+    checkout_date_ymd = datetime.strptime(checkout_input, "%Y-%m-%d").date()
+    checkout_date = checkout_date_ymd.strftime('%d %b,%Y')
+
+
 
     seed(1)
     global session_id
     global sessions
+
     session_id = randint(10, 10000)
-    print("1-->"+str(session_id))
     sessions[session_id] = Session(session_id, checkin_date, checkout_date)
+    logged_in = (login.views.customer_id != 0)
 
     available_hotels = []
 
@@ -64,7 +67,8 @@ def available(request):
             hotel.add_facilities(get_facilities(hotelId, conn))
             available_hotels.append(hotel)
 
-    return render(request, 'hotel/available.html', {'available_hotels': available_hotels})
+    return render(request, 'hotel/available.html', {'available_hotels': available_hotels,
+                                                    'destination': destination, 'logged_in': logged_in})
 
 
 def index(request, hotel_id):

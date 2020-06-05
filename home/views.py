@@ -1,21 +1,24 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 import cx_Oracle
 from .models import Hotel
-
+import login.views
 app_name = 'home'
 
 
 def index(request):
+    print('in home ', login.views.customer_id)
 
+    logged_in = (login.views.customer_id != 0)
     dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='ORCL')
     conn = cx_Oracle.connect(user='INNOCITY', password='2108', dsn=dsn_tns)
 
     hotel_ara_best = best_rated(conn)
     hotel_ara_top_disc = top_discount(conn)
     destination = get_destination(conn)
-    print(destination)
+
     return render(request, 'home/index.html',
-                  {'hotel_ara_best': hotel_ara_best, 'hotel_ara_top_disc': hotel_ara_top_disc, 'destination': destination})
+                  {'hotel_ara_best': hotel_ara_best, 'hotel_ara_top_disc': hotel_ara_top_disc,
+                   'destination': destination, 'logged_in': logged_in})
 
 
 def about(request):
@@ -43,7 +46,6 @@ def best_rated(conn):
 
     while cnt <= 6:
         row = cur.fetchone()
-        # print(row)
         hotel = Hotel()
         hotel.hotelid = row[4]
         hotel.name = row[0]
@@ -73,7 +75,6 @@ def top_discount(conn):
         cur2.execute(sql)
         row2 = cur2.fetchone()
 
-        print(row2)
         hotel = Hotel()
         hotel.hotelid = row1[1]
         hotel.name = row2[0]
@@ -96,12 +97,8 @@ def contacts(request):
     return render(request, 'home/contact.html')
 
 
-def destinations(request):
-    return render(request, 'home/destinations.html')
 
 
-def news(request):
-    return render(request, 'home/news.html')
 
 
 

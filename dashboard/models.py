@@ -15,3 +15,24 @@ class Customer:
         self.city = city
         self.country = country
 
+
+class Reservation:
+
+    def __init__(self, reservation_id, date_of_arrival, date_of_departure, hotel_id):
+
+        self.reservation_id = reservation_id
+        self.date_of_arrival = date_of_arrival.date()
+        self.date_of_departure = date_of_departure.date()
+        self.stay = (self.date_of_departure - self.date_of_arrival).days
+        self.hotel_id = hotel_id
+        self.hotel_name = None
+        self.city = None
+        self.country = None
+        self.room_type = None
+        self.services = []
+        self.cost = 0
+
+
+
+
+

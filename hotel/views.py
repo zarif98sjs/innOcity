@@ -26,8 +26,6 @@ def available(request):
     checkout_date_ymd = datetime.strptime(checkout_input, "%Y-%m-%d").date()
     checkout_date = checkout_date_ymd.strftime('%d %b,%Y')
 
-
-
     seed(1)
     global session_id
     global sessions
@@ -133,19 +131,22 @@ def get_rooms(hotel_id, conn):
 
     print("2-->"+str(session_id))
 
-    checkin_date = sessions[session_id].checkin_date
-    checkout_date = sessions[session_id].checkout_date
+    room_ids_cancel = []
 
-    sql0 = "SELECT ROOMID FROM RESERVATION WHERE HOTELID=" + str(hotel_id) + "AND (DATE_OF_ARRIVAL<='" + str(checkout_date) \
+    if session_id != 0:
+
+        checkin_date = sessions[session_id].checkin_date
+        checkout_date = sessions[session_id].checkout_date
+
+        sql0 = "SELECT ROOMID FROM RESERVATION WHERE HOTELID=" + str(hotel_id) + "AND (DATE_OF_ARRIVAL<='" + str(checkout_date) \
            + "' AND DATE_OF_DEPARTURE>='" + str(checkin_date) + "')"
 
-    cur0 = conn.cursor()
-    cur0.execute(sql0)
-    result0 = cur0.fetchall()
+        cur0 = conn.cursor()
+        cur0.execute(sql0)
+        result0 = cur0.fetchall()
 
-    room_ids_cancel = []
-    for row in result0:
-        room_ids_cancel.append(row[0])
+        for row in result0:
+            room_ids_cancel.append(row[0])
 
     sql1 = "SELECT ROOMID FROM ROOM WHERE hotelId=" + str(hotel_id)
     cur1 = conn.cursor()

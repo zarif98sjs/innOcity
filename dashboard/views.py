@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 import cx_Oracle
 import hashlib
-from .models import Customer
+from .models import Customer, Reservation
 import login.views
+from datetime import datetime
 app_name = 'dashboard'
 
 customer = Customer(0)
@@ -35,7 +36,53 @@ def maps(request):
     global customer
     if customer.customer_id == 0:
         return redirect('home:index')
-    return render(request, 'dashboard/maps.html', {'customer': customer})
+
+    else:
+
+        dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='ORCL')
+        conn = cx_Oracle.connect(user='INNOCITY', password='2108', dsn=dsn_tns)
+        cur = conn.cursor()
+        cur2 = conn.cursor()
+        cur3 = conn.cursor()
+
+        sql = "SELECT reservationId, date_of_arrival, date_of_departure, hotelId, roomId FROM " \
+              "RESERVATION WHERE customerId = :cid ORDER BY date_of_arrival DESC"
+        cur.execute(sql, [customer.customer_id])
+        rows = cur.fetchall()
+        reservation_list = []
+
+        for row in rows:
+            reservation = Reservation(reservation_id=row[0], date_of_arrival=row[1],
+                                      date_of_departure=row[2], hotel_id=row[3])
+
+            hotel_id = row[3]
+            room_id = row[4]
+
+            cur2.execute("SELECT name, city, country FROM HOTEL WHERE hotelId = :hid", [hotel_id])
+            reservation.hotel_name, reservation.city, reservation.country = cur2.fetchone()
+
+            cur2.execute("SELECT room_type, cost_per_day  FROM ROOM WHERE roomId = :rid", [room_id])
+            reservation.room_type, reservation.cost = cur2.fetchone()
+            reservation.cost *= int(reservation.stay)
+
+            cur2.execute("SELECT serviceID, quantity FROM RESERVATION_SERVICE WHERE reservationID = :rsid", [row[0]])
+            all_services = cur2.fetchall()
+
+            for service in all_services:
+
+                cur3.execute("SELECT service_type, cost FROM SERVICE WHERE serviceId = :srid AND hotelId = :hid",
+                             [service[0], hotel_id])
+                sr_name, sr_cost = cur3.fetchone()
+                reservation.services.append(sr_name)
+                reservation.cost += (sr_cost*service[1])
+
+            reservation_list.append(reservation)
+
+        cur3.close()
+        cur2.close()
+        cur.close()
+        conn.close()
+        return render(request, 'dashboard/maps.html', {'customer': customer, 'reservation_list': reservation_list})
 
 
 def user(request):

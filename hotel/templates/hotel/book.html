@@ -102,7 +102,7 @@
     <div class="row mb-5">
         <div class="col-md-12">
             <div class="block-32">
-                <form>
+                <form action="{% url 'home:payment' %}" method="post">
                     <div class="form-row"
                          style="box-shadow: 0px 0px;margin: 0px;padding: 15px;font-family: Actor, sans-serif;">
                         <div class="col">
@@ -110,7 +110,7 @@
                                 CHECK IN</p>
                         </div>
                         <div class="col"><input class="form-control" type="date"
-                                                style="text-align: center;font-family: Oswald, sans-serif;" required="">
+                                                style="text-align: center;font-family: Oswald, sans-serif;" name="checkin" required="">
                         </div>
                     </div>
                     <div class="form-row" style="padding: 15px;margin: 0px;">
@@ -120,7 +120,7 @@
                         </div>
                         <div class="col"><input class="form-control" type="date"
                                                 style="text-align: center;font-family: Oswald , sans-serif;"
-                                                required=""></div>
+                                                name="checkout" onclick="updatecheckoutDate()" required=""></div>
                     </div>
                     <div class="form-row">
                         <div class="col">
@@ -155,7 +155,7 @@
 {#                    </div>#}
                     <div class="form-row" style="text-align: center;margin: 0px;">
                         <div class="col" style="padding: 15px;margin: 0px;">
-                            <button class="btn btn-primary" type="button"
+                            <button class="btn btn-primary" type="submit"
                                     style="background-color: rgb(28,28,28);width: 114px;font-family: Oswald, sans-serif;font-size: 20px;">
                                 Book
                             </button>
@@ -168,7 +168,6 @@
         </div>
     </div>
 </div>
-
 <div class="block-30 block-30-sm item" style="background-image: url({% static 'hotel/images/bg_2.jpg' %});"
      data-stellar-background-ratio="0.5">
     <div class="container">
@@ -341,7 +340,14 @@
     </svg>
 </div>
 
+<script>
+    function updatecheckoutDate() {
+        var checkin = document.getElementsByName("checkin")[0].value;
 
+        if (checkin) document.getElementsByName("checkout")[0].setAttribute('min', checkin);
+
+    }
+</script>
 <script src="{% static 'hotel/js/jquery.min.js' %}"></script>
 <script src="{% static 'hotel/js/jquery-migrate-3.0.1.min.js' %}"></script>
 <script src="{% static 'hotel/js/popper.min.js' %}"></script>

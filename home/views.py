@@ -1,6 +1,9 @@
-from django.shortcuts import render, redirect
-from django.db import connection
 from .models import Hotel
+from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+from datetime import datetime
+from django.db import connection
+
 import login.views
 app_name = 'home'
 
@@ -17,6 +20,15 @@ def index(request):
                   {'hotel_ara_best': hotel_ara_best, 'hotel_ara_top_disc': hotel_ara_top_disc,
                    'destination': destination, 'logged_in': logged_in})
 
+
+@csrf_exempt
+def payment(request):
+    # checkin_input = request.POST.get('checkin')
+    # checkin_date_ymd = datetime.strptime(checkin_input, "%Y-%m-%d").date()
+    # checkin_date = checkin_date_ymd.strftime('%d %b,%Y')
+    # print(checkin_date)
+
+    return render(request, 'home/payment.html')
 
 def about(request):
     return render(request, 'home/about.html')

@@ -74,7 +74,6 @@ def book(request, hotel_id):
     context = get_context(hotel_id)
     return render(request, 'hotel/book.html', context)
 
-
 def get_context(hotel_id):
 
     with connection.cursor() as cur:

@@ -1,0 +1,484 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>innOcity</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Travello template project">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{% static 'home/styles/bootstrap4/bootstrap.min.css' %}">
+    <link href="{% static 'home/plugins/font-awesome-4.7.0/css/font-awesome.min.css' %}" rel="stylesheet"
+          type="text/css">
+    <link rel="stylesheet" type="text/css" href="{% static 'home/plugins/OwlCarousel2-2.2.1/owl.carousel.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'home/plugins/OwlCarousel2-2.2.1/owl.theme.default.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'home/plugins/OwlCarousel2-2.2.1/animate.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'home/styles/main_styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'home/styles/responsive.css' %}">
+
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=ABeeZee">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Abril+Fatface">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Acme">
+    <link rel="stylesheet" href="{% static 'home/assets/css/styles.min.css' %}">
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Untitled</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald">
+</head>
+<body>
+
+<div class="super_container">
+
+    <!-- Header -->
+
+    <header class="header">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="header_content d-flex flex-row align-items-center justify-content-start">
+                        <div class="header_content_inner d-flex flex-row align-items-end justify-content-start">
+                            <div class="logo"><a href="{% url 'home:index' %}">innOcity</a></div>
+                            <nav class="main_nav">
+                                <ul class="d-flex flex-row align-items-start justify-content-start">
+                                    <li class="active"><a href="{% url 'home:index' %}">Home</a></li>
+                                    <li><a href="{% url 'home:about' %}">About us</a></li>
+                                    {% if logged_in %}
+                                        <li><a href="{% url 'dashboard:index' %}">Dashboard</a></li>
+                                        <li><a href="{% url 'login:index' %}">Log out</a></li>
+                                    {% else %}
+                                        <li><a href="{% url 'login:index' %}">Login</a></li>
+                                        <li><a href="{% url 'register:index' %}">Register</a></li>
+                                    {% endif %}
+
+                                </ul>
+                            </nav>
+                            <!-- Hamburger -->
+
+                            <div class="hamburger ml-auto">
+                                <i class="fa fa-bars" aria-hidden="true"></i>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Menu -->
+
+    <div class="menu">
+        <div class="menu_header d-flex flex-row align-items-center justify-content-start">
+            <div class="menu_logo"><a href="{% url 'home:index' %}">innOcity</a></div>
+            <div class="menu_close_container ml-auto">
+                <div class="menu_close">
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+        <div class="menu_content">
+            <ul>
+                <li><a href="{% url 'home:index' %}">Home</a></li>
+                <li><a href="{% url 'home:about' %}">About us</a></li>
+                {% if logged_in %}
+                    <li><a href="{% url 'dashboard:index' %}">Dashboard</a></li>
+                    <li><a href="{% url 'login:index' %}">Log out</a></li>
+                {% else %}
+                    <li><a href="{% url 'login:index' %}">Login</a></li>
+                    <li><a href="{% url 'register:index' %}">Register</a></li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="menu_social">
+            <div class="menu_phone ml-auto">Call us: +880-1915123445</div>
+        </div>
+    </div>
+
+    <!-- Home -->
+
+    <div class="home">
+
+        <!-- Home Slider -->
+        <div class="home_slider_container">
+            <div class="owl-carousel owl-theme home_slider">
+
+                <!-- Slide -->
+                <div class="owl-item">
+                    <div class="background_image"
+                         style="background-image:url({% static 'home/images/test11.jpg' %})"></div>
+                    <div class="home_slider_content_container">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    {#                                    <div class="home_slider_content">#}
+                                    {#                                        <div class="home_title"><h2>Live Love Laugh</h2></div>#}
+                                    {#                                    </div>#}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search -->
+
+    <div class="home_search">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="home_search_container">
+                        <div class="home_search_title">Payment</div>
+                        <div class="home_search_content">
+
+                            <form>
+                                <div class="form-row">
+                                    <div class="col d-xl-flex justify-content-xl-center">
+                                        <p class="text-uppercase text-center d-xl-flex align-items-xl-center"
+                                           style="font-family: Oswald, sans-serif;font-size: 24px;">Choose Payment
+                                            Method</p>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-check"><input class="form-check-input" type="radio"
+                                                                       id="formCheck-1"><label class="form-check-label"
+                                                                                               for="formCheck-1"
+                                                                                               style="font-family: Oswald, sans-serif;">Credit
+                                            Card</label></div>
+                                        <div class="form-check"><input class="form-check-input" type="radio"
+                                                                       id="formCheck-2"><label class="form-check-label"
+                                                                                               for="formCheck-2"
+                                                                                               style="font-family: Oswald, sans-serif;">Mobile
+                                            Banking</label></div>
+                                    </div>
+                                </div>
+                                <div class="card-details">
+                                    <h3 class="title" style="font-family: Oswald, sans-serif;height: 17px;">&nbsp;
+                                        &nbsp;</h3>
+                                </div>
+                                <div class="card-details">
+                                    <h3 class="title" style="font-family: Oswald, sans-serif;">Credit Card Details</h3>
+                                    <div class="form-row">
+                                        <div class="col-sm-7">
+                                            <div class="form-group" style="font-family: Oswald, sans-serif;"><label
+                                                    for="card-holder">Card Holder</label><input class="form-control"
+                                                                                                type="text"
+                                                                                                placeholder="Card Holder"
+                                                                                                style="font-family: Oswald, sans-serif;">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <div class="form-group"><label style="font-family: Oswald, sans-serif;">Expiration
+                                                date</label>
+                                                <div class="input-group expiration-date"><input class="form-control"
+                                                                                                type="text"
+                                                                                                placeholder="MM"
+                                                                                                style="font-family: Oswald, sans-serif;"><input
+                                                        class="form-control" type="text" placeholder="YY"
+                                                        style="font-family: Oswald, sans-serif;"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <div class="form-group" style="font-family: Oswald, sans-serif;"><label
+                                                    for="card-number">Card Number</label><input class="form-control"
+                                                                                                type="text"
+                                                                                                id="card-number"
+                                                                                                placeholder="Card Number">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group" style="font-family: Oswald, sans-serif;"><label
+                                                    for="cvc">CVC</label><input class="form-control" type="text"
+                                                                                id="cvc" placeholder="CVC"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-details">
+                                    <h3 class="title" style="font-family: Oswald, sans-serif;">&nbsp; &nbsp;</h3>
+                                </div>
+                                <div class="card-details">
+                                    <h3 class="title" style="font-family: Oswald, sans-serif;">Mobile Banking
+                                        Details</h3>
+                                    <div class="form-row">
+                                        <div class="col-sm-8">
+                                            <div class="form-group" style="font-family: Oswald, sans-serif;"><label
+                                                    for="card-number">Phone Number</label><input class="form-control"
+                                                                                                 type="text"
+                                                                                                 id="card-number-1"
+                                                                                                 placeholder="Phone Number">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <div class="form-group" style="font-family: Oswald, sans-serif;"><label
+                                                    for="cvc">TXN ID</label><input class="form-control" type="text"
+                                                                                   id="cvc-1" placeholder="TXNID"></div>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <button class="btn btn-primary btn-block" type="submit"
+                                                        style="background-color: rgb(0,0,0);font-family: Oswald, sans-serif;">
+                                                    Proceed
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                            <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+
+    <footer class="footer">
+        <div class="parallax_background parallax-window" data-parallax="scroll"
+             data-image-src="{% static 'home/images/test111.jpg' %}" data-speed="0.8">
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <div class="newsletter">
+                        <div class="newsletter_title_container text-center">
+                            <div class="newsletter_title">
+                            </div>
+                            <div class="newsletter_subtitle"></div>
+                        </div>
+                        <div class="newsletter_form_container">
+                            <form action="#"
+                                  class="newsletter_form d-flex flex-md-row flex-column align-items-start justify-content-between"
+                                  id="newsletter_form">
+                                <div class="d-flex flex-md-row flex-column align-items-start justify-content-between">
+                                    <div><input type="text" class="newsletter_input newsletter_input_name"
+                                                id="newsletter_input_name" placeholder="Name" required="required">
+                                        <div class="input_border"></div>
+                                    </div>
+                                    <div><input type="email" class="newsletter_input newsletter_input_email"
+                                                id="newsletter_input_email" placeholder="Your e-mail"
+                                                required="required">
+                                        <div class="input_border"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button class="newsletter_button">subscribe</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row footer_contact_row">
+                <div class="col-xl-10 offset-xl-1">
+                    <div class="row">
+
+                        <!-- Footer Contact Item -->
+                        <div class="col-xl-4 footer_contact_col">
+                            <div class="footer_contact_item d-flex flex-column align-items-center justify-content-start text-center">
+                                <div class="footer_contact_icon"><img src="{% static 'home/images/sign.svg' %}" alt="">
+                                </div>
+                                <div class="footer_contact_title">give us a call</div>
+                                <div class="footer_contact_list">
+                                    <ul>
+                                        <li>Office Landline: +44 5567 32 664 567</li>
+                                        <li>Mobile: +44 5567 89 3322 332</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Footer Contact Item -->
+                        <div class="col-xl-4 footer_contact_col">
+                            <div class="footer_contact_item d-flex flex-column align-items-center justify-content-start text-center">
+                                <div class="footer_contact_icon"><img src="{% static 'home/images/trekking.svg' %}"
+                                                                      alt=""></div>
+                                <div class="footer_contact_title">come & drop by</div>
+                                <div class="footer_contact_list">
+                                    <ul style="max-width:190px">
+                                        <li>4124 Barnes Street, Sanford, FL 32771</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Footer Contact Item -->
+                        <div class="col-xl-4 footer_contact_col">
+                            <div class="footer_contact_item d-flex flex-column align-items-center justify-content-start text-center">
+                                <div class="footer_contact_icon"><img src="{% static 'home/images/trekking.svg' %}"
+                                                                      alt=""></div>
+                                <div class="footer_contact_title">send us a message</div>
+                                <div class="footer_contact_list">
+                                    <ul>
+                                        <li>youremail@gmail.com</li>
+                                        <li>Office@yourbusinessname.com</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<script src="{% static 'home/js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'home/styles/bootstrap4/popper.js' %}"></script>
+<script src="{% static 'home/styles/bootstrap4/bootstrap.min.js' %}"></script>
+<script src="{% static 'home/plugins/OwlCarousel2-2.2.1/owl.carousel.js' %}"></script>
+<script src="{% static 'home/plugins/Isotope/isotope.pkgd.min.js' %}"></script>
+<script src="{% static 'home/plugins/scrollTo/jquery.scrollTo.min.js' %}"></script>
+<script src="{% static 'home/plugins/easing/easing.js' %}"></script>
+<script src="{% static 'home/plugins/parallax-js-master/parallax.min.js' %}"></script>
+<script src="{% static 'home/js/custom.js' %}"></script>
+<script>
+    function updatecheckoutDate() {
+        var checkin = document.getElementsByName("checkin")[0].value;
+
+        if (checkin) document.getElementsByName("checkout")[0].setAttribute('min', checkin);
+
+    }
+</script>
+
+<script>
+    var countries = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Anguilla", "Antigua &amp; Barbuda", "Argentina", "Armenia", "Aruba", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bermuda", "Bhutan", "Bolivia", "Bosnia &amp; Herzegovina", "Botswana", "Brazil", "British Virgin Islands", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon", "Canada", "Cape Verde", "Cayman Islands", "Central Arfrican Republic", "Chad", "Chile", "China", "Colombia", "Congo", "Cook Islands", "Costa Rica", "Cote D Ivoire", "Croatia", "Cuba", "Curacao", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Ethiopia", "Falkland Islands", "Faroe Islands", "Fiji", "Finland", "France", "French Polynesia", "French West Indies", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Gibraltar", "Greece", "Greenland", "Grenada", "Guam", "Guatemala", "Guernsey", "Guinea", "Guinea Bissau", "Guyana", "Haiti", "Honduras", "Hong Kong", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Isle of Man", "Israel", "Italy", "Jamaica", "Japan", "Jersey", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kosovo", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macau", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Montserrat", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauro", "Nepal", "Netherlands", "Netherlands Antilles", "New Caledonia", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "Norway", "Oman", "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Puerto Rico", "Qatar", "Reunion", "Romania", "Russia", "Rwanda", "Saint Pierre &amp; Miquelon", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "St Kitts &amp; Nevis", "St Lucia", "St Vincent", "Sudan", "Suriname", "Swaziland", "Sweden", "Switzerland", "Syria", "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Timor L'Este", "Togo", "Tonga", "Trinidad &amp; Tobago", "Tunisia", "Turkey", "Turkmenistan", "Turks &amp; Caicos", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States of America", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City", "Venezuela", "Vietnam", "Virgin Islands (US)", "Yemen", "Zambia", "Zimbabwe"];
+</script>
+
+<script>
+    function autocomplete(inp, arr) {
+        /*the autocomplete function takes two arguments,
+        the text field element and an array of possible autocompleted values:*/
+        var currentFocus;
+        /*execute a function when someone writes in the text field:*/
+        inp.addEventListener("input", function (e) {
+            var a, b, i, val = this.value;
+            /*close any already open lists of autocompleted values*/
+            closeAllLists();
+            if (!val) {
+                return false;
+            }
+            currentFocus = -1;
+            /*create a DIV element that will contain the items (values):*/
+            a = document.createElement("DIV");
+            a.setAttribute("id", this.id + "autocomplete-list");
+            a.setAttribute("class", "autocomplete-items");
+            /*append the DIV element as a child of the autocomplete container:*/
+            this.parentNode.appendChild(a);
+            /*for each item in the array...*/
+            for (i = 0; i < arr.length; i++) {
+                /*check if the item starts with the same letters as the text field value:*/
+                if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                    /*create a DIV element for each matching element:*/
+                    b = document.createElement("DIV");
+                    /*make the matching letters bold:*/
+                    b.innerHTML = "<strong>" + arr[i].substr(0, val.length) + "</strong>";
+                    b.innerHTML += arr[i].substr(val.length);
+                    /*insert a input field that will hold the current array item's value:*/
+                    b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                    /*execute a function when someone clicks on the item value (DIV element):*/
+                    b.addEventListener("click", function (e) {
+                        /*insert the value for the autocomplete text field:*/
+                        inp.value = this.getElementsByTagName("input")[0].value;
+                        /*close the list of autocompleted values,
+                        (or any other open lists of autocompleted values:*/
+                        closeAllLists();
+                    });
+                    a.appendChild(b);
+                }
+            }
+        });
+        /*execute a function presses a key on the keyboard:*/
+        inp.addEventListener("keydown", function (e) {
+            var x = document.getElementById(this.id + "autocomplete-list");
+            if (x) x = x.getElementsByTagName("div");
+            if (e.keyCode == 40) {
+                /*If the arrow DOWN key is pressed,
+                increase the currentFocus variable:*/
+                currentFocus++;
+                /*and and make the current item more visible:*/
+                addActive(x);
+            } else if (e.keyCode == 38) { //up
+                /*If the arrow UP key is pressed,
+                decrease the currentFocus variable:*/
+                currentFocus--;
+                /*and and make the current item more visible:*/
+                addActive(x);
+            } else if (e.keyCode == 13) {
+                /*If the ENTER key is pressed, prevent the form from being submitted,*/
+                e.preventDefault();
+                if (currentFocus > -1) {
+                    /*and simulate a click on the "active" item:*/
+                    if (x) x[currentFocus].click();
+                }
+            }
+        });
+
+        function addActive(x) {
+            /*a function to classify an item as "active":*/
+            if (!x) return false;
+            /*start by removing the "active" class on all items:*/
+            removeActive(x);
+            if (currentFocus >= x.length) currentFocus = 0;
+            if (currentFocus < 0) currentFocus = (x.length - 1);
+            /*add class "autocomplete-active":*/
+            x[currentFocus].classList.add("autocomplete-active");
+        }
+
+        function removeActive(x) {
+            /*a function to remove the "active" class from all autocomplete items:*/
+            for (var i = 0; i < x.length; i++) {
+                x[i].classList.remove("autocomplete-active");
+            }
+        }
+
+        function closeAllLists(elmnt) {
+            /*close all autocomplete lists in the document,
+            except the one passed as an argument:*/
+            var x = document.getElementsByClassName("autocomplete-items");
+            for (var i = 0; i < x.length; i++) {
+                if (elmnt != x[i] && elmnt != inp) {
+                    x[i].parentNode.removeChild(x[i]);
+                }
+            }
+        }
+
+        /*execute a function when someone clicks in the document:*/
+        document.addEventListener("click", function (e) {
+            closeAllLists(e.target);
+        });
+    }
+</script>
+
+<script type="text/javascript">
+
+    var destinationSet = new Set();
+
+    {% for el in destination %}
+        var jel = '{{ el }}';
+        destinationSet.add(jel);
+    {% endfor %}
+
+    let destination = [...destinationSet];
+    console.log(destination);
+
+</script>
+
+<script>
+    autocomplete(document.getElementById("myInput"), destination);
+</script>
+
+
+{#<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'%}"></script>#}
+{#<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/js/bootstrap.bundle.min.js'%}"></script>#}
+</body>
+</html>

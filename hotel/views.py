@@ -41,21 +41,21 @@ def available(request):
     cur = conn.cursor()
     cur2 = conn.cursor()
     cur3 = conn.cursor()
-    sql = "SELECT * FROM HOTEL WHERE UPPER(CITY)='"+destination+"' OR UPPER(COUNTRY)='"+destination+"'"
-    cur.execute(sql)
+    sql = "SELECT * FROM HOTEL WHERE UPPER(CITY) = :d OR UPPER(COUNTRY)=:d"
+    cur.execute(sql, [destination, destination])
     result = cur.fetchall()
 
     for row in result:
 
         hotelId = row[0]
-        sql2 = "SELECT COUNT(*) FROM ROOM WHERE HOTELID="+str(hotelId)
-        cur2.execute(sql2)
+        sql2 = "SELECT COUNT(*) FROM ROOM WHERE HOTELID= :id"
+        cur2.execute(sql2, [hotelId])
         total_count = cur2.fetchone()[0]
 
-        sql3 = "SELECT COUNT(*) FROM RESERVATION WHERE HOTELID="+str(hotelId)+"AND (DATE_OF_ARRIVAL<='"+str(checkout_date)\
-               +"' AND DATE_OF_DEPARTURE>='"+str(checkin_date)+"')"
+        sql3 = "SELECT COUNT(*) FROM RESERVATION WHERE HOTELID= :hid AND (DATE_OF_ARRIVAL <= :doa " \
+               "AND DATE_OF_DEPARTURE >= :dod)"
 
-        cur3.execute(sql3)
+        cur3.execute(sql3, [hotelId, checkout_date, checkin_date])
         total_count -= cur3.fetchone()[0]
 
         if total_count > 0:
@@ -80,8 +80,8 @@ def get_context(hotel_id):
     dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='ORCL')
     conn = cx_Oracle.connect(user='INNOCITY', password='2108', dsn=dsn_tns)
     cur = conn.cursor()
-    sql = "SELECT * FROM HOTEL WHERE hotelId=" + str(hotel_id)
-    cur.execute(sql)
+    sql = "SELECT * FROM HOTEL WHERE hotelId= :id"
+    cur.execute(sql, [hotel_id])
     result = cur.fetchone()
 
     if result is None:
@@ -103,8 +103,8 @@ def get_context(hotel_id):
 def get_facilities(hotel_id, conn):
 
     cur = conn.cursor()
-    sql = "SELECT facilities FROM HOTEL_FACILITY WHERE hotelId=" + str(hotel_id)
-    cur.execute(sql)
+    sql = "SELECT facilities FROM HOTEL_FACILITY WHERE hotelId= :id"
+    cur.execute(sql, [hotel_id])
     result = cur.fetchall()
     hotel_facilities = []
     for row in result:
@@ -115,8 +115,8 @@ def get_facilities(hotel_id, conn):
 def get_services(hotel_id, conn):
 
     cur = conn.cursor()
-    sql = "SELECT SERVICE_TYPE FROM SERVICE WHERE hotelId=" + str(hotel_id)
-    cur.execute(sql)
+    sql = "SELECT SERVICE_TYPE FROM SERVICE WHERE hotelId= :id"
+    cur.execute(sql, [hotel_id])
     result = cur.fetchall()
     hotel_services = set()
     for row in result:
@@ -129,8 +129,6 @@ def get_rooms(hotel_id, conn):
     global session_id
     global sessions
 
-    print("2-->"+str(session_id))
-
     room_ids_cancel = []
 
     if session_id != 0:
@@ -138,19 +136,19 @@ def get_rooms(hotel_id, conn):
         checkin_date = sessions[session_id].checkin_date
         checkout_date = sessions[session_id].checkout_date
 
-        sql0 = "SELECT ROOMID FROM RESERVATION WHERE HOTELID=" + str(hotel_id) + "AND (DATE_OF_ARRIVAL<='" + str(checkout_date) \
-           + "' AND DATE_OF_DEPARTURE>='" + str(checkin_date) + "')"
+        sql0 = "SELECT ROOMID FROM RESERVATION WHERE HOTELID= :hid AND (DATE_OF_ARRIVAL <= :doa " \
+               "AND DATE_OF_DEPARTURE >= :dod)"
 
         cur0 = conn.cursor()
-        cur0.execute(sql0)
+        cur0.execute(sql0, [hotel_id, checkout_date, checkin_date])
         result0 = cur0.fetchall()
 
         for row in result0:
             room_ids_cancel.append(row[0])
 
-    sql1 = "SELECT ROOMID FROM ROOM WHERE hotelId=" + str(hotel_id)
+    sql1 = "SELECT ROOMID FROM ROOM WHERE hotelId= :id"
     cur1 = conn.cursor()
-    cur1.execute(sql1)
+    cur1.execute(sql1, [hotel_id])
     result1 = cur1.fetchall()
 
     room_ids_ok = []
@@ -163,9 +161,9 @@ def get_rooms(hotel_id, conn):
 
     for r_id in room_ids_ok:
         cur = conn.cursor()
-        sql = "SELECT roomId, room_type, bed_type, cost_per_day, discount, special_offer FROM ROOM WHERE hotelId="\
-              + str(hotel_id) + "AND ROOMID = "+str(r_id)
-        cur.execute(sql)
+        sql = "SELECT roomId, room_type, bed_type, cost_per_day, discount, special_offer FROM ROOM WHERE hotelId= :hid " \
+              "AND ROOMID = :rid"
+        cur.execute(sql, [hotel_id, r_id])
         row = cur.fetchone()
         room = Room(row[0], row[1], row[2], row[3], row[4], row[5])
         if room.room_type not in type_map:
@@ -178,8 +176,8 @@ def get_rooms(hotel_id, conn):
 def get_room_facilities(room_id, conn):
 
     cur = conn.cursor()
-    sql = "SELECT facilities FROM ROOM_FACILITY WHERE roomId=" + str(room_id)
-    cur.execute(sql)
+    sql = "SELECT facilities FROM ROOM_FACILITY WHERE roomId= :id"
+    cur.execute(sql, [room_id])
     result = cur.fetchall()
     room_facilities = []
     for row in result:

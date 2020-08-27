@@ -3,11 +3,6 @@ from django.shortcuts import redirect
 import cx_Oracle
 import hashlib
 
-# Create your views here.
-
-from django.http import HttpResponse
-from django.template import loader
-
 app_name = 'login'
 customer_id = 0
 
@@ -25,7 +20,6 @@ def index(request):
 
 
 def login(request):
-
 
     global customer_id
     v1 = request.POST.get('username')

@@ -3,7 +3,7 @@ import cx_Oracle
 import hashlib
 from .models import Customer, Reservation
 import login.views
-from datetime import datetime
+
 app_name = 'dashboard'
 
 customer = Customer(0)
@@ -15,13 +15,16 @@ def index(request):
     dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='ORCL')
     conn = cx_Oracle.connect(user='INNOCITY', password='2108', dsn=dsn_tns)
     cur = conn.cursor()
-    cur.execute("SELECT * FROM CUSTOMER WHERE customerId = " + str(customer_id))
+
+    cur.execute("SELECT * FROM CUSTOMER WHERE customerId = :cid", [customer_id])
     result = cur.fetchone()
+
     if result is None:
         cur.close()
         conn.close()
         return redirect('home:index')
     else:
+
         global customer
         customer = Customer(customer_id=customer_id, name=result[1], email=result[2], username=result[3],
                             gender=result[5], street=result[6], zipcode=result[7], city=result[8], country=result[9])
@@ -120,8 +123,7 @@ def user(request):
 
             elif request.POST.get("submit_password"):
 
-                sql = "SELECT password FROM CUSTOMER WHERE customerId = " + str(customer.customer_id)
-                cur.execute(sql)
+                cur.execute("SELECT password FROM CUSTOMER WHERE customerId = :id", [customer.customer_id])
                 old_pass_hash = cur.fetchone()[0]
                 input_old_pass = request.POST.get("old_password")
                 input_old_pass_hash = hashlib.md5(input_old_pass.encode()).hexdigest()

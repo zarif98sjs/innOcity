@@ -6,7 +6,6 @@ app_name = 'home'
 
 
 def index(request):
-    print('in home ', login.views.customer_id)
 
     logged_in = (login.views.customer_id != 0)
     dsn_tns = cx_Oracle.makedsn('localhost', '1521', service_name='ORCL')
@@ -69,10 +68,8 @@ def top_discount(conn):
     while cnt <= 6:
         row1 = cur.fetchone()
 
-        v1 = "SELECT name,city,country,rating FROM HOTEL WHERE hotelId = "
-        v2 = row1[1]
-        sql = v1+str(v2)
-        cur2.execute(sql)
+        sql = "SELECT name,city,country,rating FROM HOTEL WHERE hotelId = :id"
+        cur2.execute(sql, [row1[1]])
         row2 = cur2.fetchone()
 
         hotel = Hotel()

@@ -5,7 +5,6 @@ import hashlib
 # Create your views here.
 
 from django.http import HttpResponse
-from django.template import loader
 
 app_name = 'register'
 
@@ -13,9 +12,6 @@ app_name = 'register'
 def index(request):
 
     if request.method == 'POST':
-        print(request.POST.get('name'))
-        # print(request.POST.get('email'))
-        # print(request.POST.get('username'))
         return sign_up(request)
     else:
         return render(request, 'register/index.html', {'alert_flag': False})
@@ -59,8 +55,8 @@ def sign_up(request):
         cur = conn.cursor()
         cur2 = conn.cursor()
 
-        sql_find = "SELECT COUNT(*) FROM CUSTOMER WHERE username = '" + v3 + "'"
-        cur2.execute(sql_find)
+        sql_find = "SELECT COUNT(*) FROM CUSTOMER WHERE username = :u"
+        cur2.execute(sql_find, [v3])
         if cur2.fetchone()[0] > 0:
             cur2.close()
             cur.close()
@@ -71,6 +67,7 @@ def sign_up(request):
         cur.execute(sql_customer_num)
         customer_num = cur.fetchone()[0]
         customer_num += 1
+
         print(customer_num)
         print(v1)
         print(v2)
@@ -78,6 +75,7 @@ def sign_up(request):
         sql_add_user = "INSERT INTO CUSTOMER (customerId, name, email, username, password, gender, street, zipcode, city, country) VALUES ( :vv0 ,:vv1 , :vv2 , :vv3 , :vv4 , :vv5 , :vv6 , :vv7 , :vv8 , :vv9 )"
 
         v0 = customer_num
+
         cur.execute(sql_add_user, [v0, v1, v2, v3, v4, v5, v6, v7, v8, v9])
         conn.commit()
         cur2.close()

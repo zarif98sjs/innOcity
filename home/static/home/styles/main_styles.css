@@ -582,7 +582,7 @@ section
 	font-size: 100px;
 	line-height: 1.1;
 	font-weight: 400;
-	color: black;
+	color: #FFFFFF;
 }
 .home_page_nav
 {
@@ -599,7 +599,7 @@ section
 {
 	font-family: 'Oswald', sans-serif;
 	font-size: 16px;
-	color: black;
+	color: rgba(255,255,255,0.63);
 	-webkit-transition: all 400ms ease;
 	-moz-transition: all 400ms ease;
 	-ms-transition: all 400ms ease;

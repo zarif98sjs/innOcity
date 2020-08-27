@@ -73,9 +73,13 @@
 			<ul>
 				<li><a href="{% url 'home:index' %}">Home</a></li>
                 <li><a href="{% url 'home:about' %}">About us</a></li>
-                <li><a href="{% url 'login:index' %}">Login</a></li>
-                <li><a href="{% url 'register:index' %}">Register</a></li>
-                <li><a href="{% url 'dashboard:index' %}">Dashboard</a></li>
+               {% if logged_in %}
+                   <li><a href="{% url 'dashboard:index' %}">Dashboard</a></li>
+                   <li><a href="{% url 'login:index' %}">Log out</a></li>
+               {% else %}
+                   <li><a href="{% url 'login:index' %}">Login</a></li>
+                   <li><a href="{% url 'register:index' %}">Register</a></li>
+               {% endif %}
 			</ul>
 		</div>
 		<div class="menu_social">

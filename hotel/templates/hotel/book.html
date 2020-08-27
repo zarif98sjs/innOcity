@@ -1,31 +1,40 @@
-{% load static %}
-
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <title>{{ hotel.name }}</title>
+    <title>Book {{ hotel.name }}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    {% load static %}
     <link href="https://fonts.googleapis.com/css?family=Rubik:300,400,500" rel="stylesheet">
-    <link rel="stylesheet" href="../../static/hotel/css/open-iconic-bootstrap.min.css">
-    <link rel="stylesheet" href="../../static/hotel/css/animate.css">
-    <link rel="stylesheet" href="../../static/hotel/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="../../static/hotel/css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="../../static/hotel/css/magnific-popup.css">
-    <link rel="stylesheet" href="../../static/hotel/css/aos.css">
-    <link rel="stylesheet" href="../../static/hotel/css/ionicons.min.css">
-    <link rel="stylesheet" href="../../static/hotel/css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="../../static/hotel/css/jquery.timepicker.css">
-    <link rel="stylesheet" href="../../static/hotel/css/flaticon.css">
-    <link rel="stylesheet" href="../../static/hotel/css/icomoon.css">
-    <link rel="stylesheet" href="../../static/hotel/css/style.css">
+    <link rel="stylesheet" href="{% static 'hotel/css/open-iconic-bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'hotel/css/animate.css' %}">
+    <link rel="stylesheet" href="{% static 'hotel/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'hotel/css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'hotel/css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static 'hotel/css/aos.css' %}">
+    <link rel="stylesheet" href="{% static 'hotel/css/ionicons.min.css' %}">
+    <link rel="stylesheet" href="{% static 'hotel/css/bootstrap-datepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'hotel/css/jquery.timepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'hotel/css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'hotel/css/icomoon.css' %}">
+    <link rel="stylesheet" href="{% static 'hotel/css/style.css' %}">
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Booking</title>
+    {#    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">#}
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Acme">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Actor">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Autour+One">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Average+Sans">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald:200,400">
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
-        <a class="navbar-brand" href="{% url 'home:index' %}">Innocity</a>
+        <a class="navbar-brand" href="{% url 'home:index' %}">innOcity</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
                 aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="oi oi-menu"></span> Menu
@@ -33,13 +42,14 @@
 
         <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active"><a href="{% url 'hotel:index' hotel.hotelId %}"
-                                               class="nav-link">{{ hotel.name }}</a></li>
+                <li class="nav-item"><a href="{% url 'hotel:index' hotel.hotelId %}"
+                                        class="nav-link">{{ hotel.name }}</a></li>
                 <li class="nav-item"><a href="{% url 'hotel:rooms' hotel.hotelId %}" class="nav-link">Rooms</a></li>
                 <li class="nav-item"><a href="{% url 'hotel:services' hotel.hotelId %}" class="nav-link">Services</a>
                 </li>
                 <li class="nav-item"><a href="{% url 'hotel:about' hotel.hotelId %}" class="nav-link">About Us</a></li>
-                <li class="nav-item"><a href="{% url 'hotel:book' hotel.hotelId %}" class="nav-link">Book</a></li>
+                <li class="nav-item active"><a href="{% url 'hotel:book' hotel.hotelId %}" class="nav-link">Book</a>
+                </li>
                 <li class="nav-item"><a href="{% url 'hotel:contact' hotel.hotelId %}" class="nav-link">Contact</a></li>
             </ul>
         </div>
@@ -49,7 +59,7 @@
 
 <div class="block-31" style="position: relative;">
     <div class="owl-carousel loop-block-31 ">
-        <div class="block-30 item" style="background-image: url('../../static/hotel/images/bg_2.jpg');"
+        <div class="block-30 item" style="background-image: url({% static 'hotel/images/bg_2.jpg' %} );"
              data-stellar-background-ratio="0.5">
             <div class="container">
                 <div class="row align-items-center">
@@ -61,7 +71,7 @@
                 </div>
             </div>
         </div>
-        <div class="block-30 item" style="background-image: url('../../static/hotel/images/bg_1.jpg');"
+        <div class="block-30 item" style="background-image: url({% static 'hotel/images/bg_1.jpg' %});"
              data-stellar-background-ratio="0.5">
             <div class="container">
                 <div class="row align-items-center">
@@ -73,7 +83,7 @@
                 </div>
             </div>
         </div>
-        <div class="block-30 item" style="background-image: url('../../static/hotel/images/bg_3.jpg');"
+        <div class="block-30 item" style="background-image: url({% static 'hotel/images/bg_3.jpg' %});"
              data-stellar-background-ratio="0.5">
             <div class="container">
                 <div class="row align-items-center">
@@ -88,168 +98,78 @@
     </div>
 </div>
 
-
 <div class="container">
     <div class="row mb-5">
         <div class="col-md-12">
             <div class="block-32">
-                <form action="#">
-                    <div class="row">
-                        <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
-                            <label for="checkin">Check In</label>
-                            <div class="field-icon-wrap">
-                                <div class="icon"><span class="icon-calendar"></span></div>
-                                <input type="text" id="checkin_date" class="form-control">
-                            </div>
+                <form>
+                    <div class="form-row"
+                         style="box-shadow: 0px 0px;margin: 0px;padding: 15px;font-family: Actor, sans-serif;">
+                        <div class="col">
+                            <p style="text-align: center;font-weight: normal;font-style: normal;font-size: 20px;font-family: Oswald, sans-serif;">
+                                CHECK IN</p>
                         </div>
-                        <div class="col-md-6 mb-3 mb-lg-0 col-lg-3">
-                            <label for="checkin">Check Out</label>
-                            <div class="field-icon-wrap">
-                                <div class="icon"><span class="icon-calendar"></span></div>
-                                <input type="text" id="checkout_date" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-6 mb-3 mb-md-0 col-lg-3">
-                            <div class="row">
-                                <div class="col-md-6 mb-3 mb-md-0">
-                                    <label for="checkin">Adults</label>
-                                    <div class="field-icon-wrap">
-                                        <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                        <select name="" id="" class="form-control">
-                                            <option value="">1</option>
-                                            <option value="">2</option>
-                                            <option value="">3</option>
-                                            <option value="">4+</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 mb-3 mb-md-0">
-                                    <label for="checkin">Children</label>
-                                    <div class="field-icon-wrap">
-                                        <div class="icon"><span class="ion-ios-arrow-down"></span></div>
-                                        <select name="" id="" class="form-control">
-                                            <option value="">1</option>
-                                            <option value="">2</option>
-                                            <option value="">3</option>
-                                            <option value="">4+</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-3 align-self-end">
-                            <button class="btn btn-primary btn-block">Check Availabilty</button>
+                        <div class="col"><input class="form-control" type="date"
+                                                style="text-align: center;font-family: Oswald, sans-serif;" required="">
                         </div>
                     </div>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    <div class="row site-section">
-        <div class="col-md-12">
-            <div class="row mb-5">
-                <div class="col-md-7 section-heading">
-                    <span class="subheading-sm">Services</span>
-                    <h2 class="heading">Facilities &amp; Services</h2>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-            <div class="media block-6">
-                <div class="icon"><span class="flaticon-double-bed"></span></div>
-                <div class="media-body">
-                    <h3 class="heading">Luxury Rooms</h3>
-                    <p>Even the all-powerful Pointing has no control about the blind texts it is an almost
-                        unorthographic.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-            <div class="media block-6">
-                <div class="icon"><span class="flaticon-dinner"></span></div>
-                <div class="media-body">
-                    <h3 class="heading">Restaurant</h3>
-                    <p>Even the all-powerful Pointing has no control about the blind texts it is an almost
-                        unorthographic.</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-4">
-            <div class="media block-6">
-                <div class="icon"><span class="flaticon-taxi"></span></div>
-                <div class="media-body">
-                    <h3 class="heading">Travel Accomodation</h3>
-                    <p>Even the all-powerful Pointing has no control about the blind texts it is an almost
-                        unorthographic.</p>
-                </div>
-            </div>
-        </div>
-        {% for facility in hotel_facilities %}
-            <div class="col-md-6 col-lg-4">
-                <div class="media block-6">
-                    <div class="media-body">
-                        <h3 class="heading">{{ facility }}</h3>
-                        <p>Even the all-powerful Pointing has no control about the blind texts it is an almost
-                            unorthographic.</p>
+                    <div class="form-row" style="padding: 15px;margin: 0px;">
+                        <div class="col" style="text-align: center;">
+                            <p style="font-weight: normal;font-style: normal;font-family: Oswald, sans-serif;font-size: 20px;">
+                                CHECK OUT</p>
+                        </div>
+                        <div class="col"><input class="form-control" type="date"
+                                                style="text-align: center;font-family: Oswald , sans-serif;"
+                                                required=""></div>
                     </div>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
-</div>
+                    <div class="form-row">
+                        <div class="col">
+                            <p style="text-align: center;margin: 22px;font-size: 26px;font-family: Oswald, sans-serif;color: rgb(117,119,111);font-weight: normal;">
+                                SELECT YOUR ROOMS</p>
+                        </div>
+                    </div>
 
-<div class="site-section block-13 bg-light">
-    <div class="container">
-        <div class="row mb-5">
-            <div class="col-md-7 section-heading">
-                <span class="subheading-sm">Featured Rooms</span>
-                <h2 class="heading">Rooms &amp; Suites</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit, iusto, omnis! Quidem, sint,
-                    impedit? Dicta eaque delectus tempora hic, corporis velit doloremque quod quam laborum, nobis iusto
-                    autem culpa quaerat!</p>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12">
-                <div class="nonloop-block-13 owl-carousel">
                     {% if room_types %}
                         {% for room in room_types %}
-                            <div class="item">
-                                <div class="block-34">
-                                    <div class="image">
-                                        <a href="#"><img src="../../static/hotel/images/img_1.jpg"
-                                                         alt="Image placeholder"></a>
-                                    </div>
-                                    <div class="text">
-                                        <h2 class="heading">{{ room.room_type }}</h2>
-                                        <div class="price"><sup>$</sup><span class="number">{{ room.cost }}</span><sub>/per
-                                            night</sub></div>
-                                        <ul class="specs">
-                                            <li><strong>Discount: </strong> {{ room.discount }} % off!</li>
-                                            {% if room.special_offer is not null %}
-                                                <li><strong>Special offers: </strong> {{ room.special_offer }}</li>
-                                            {% endif %}
-                                            <li><strong>Facilities: </strong>{{ room.facilities }}</li>
-                                            <li><strong>Bed Type: </strong> {{ room.bed_type }}</li>
-                                        </ul>
-                                    </div>
+                            <div class="form-row" style="padding: 15px;margin: 0px;">
+                                <div class="col">
+                                    <p style="margin: 0px;text-align: center;font-style: normal;font-weight: normal;font-family: Oswald, sans-serif;font-size: 20px;">
+                                        {{ room.room_type }}</p>
                                 </div>
+                                <div class="col"><input class="form-control" type="number" min="0" placeholder="Count"
+                                                        style="font-family: Actor, sans-serif;"></div>
                             </div>
                         {% endfor %}
                     {% else %}
                         <h2 class="header">No rooms available</h2>
                     {% endif %}
 
-                </div>
-
-            </div> <!-- .col-md-12 -->
+{#                    <div class="form-row" style="padding: 15px;margin: 0px;">#}
+{#                        <div class="col">#}
+{#                            <p style="margin: 0px;text-align: center;font-style: normal;font-weight: normal;font-family: Oswald, sans-serif;font-size: 20px;">#}
+{#                                TOTAL AMOUNT</p>#}
+{#                        </div>#}
+{#                        <div class="col">#}
+{#                            <p>&nbsp; &nbsp;$</p>#}
+{#                        </div>#}
+{#                    </div>#}
+                    <div class="form-row" style="text-align: center;margin: 0px;">
+                        <div class="col" style="padding: 15px;margin: 0px;">
+                            <button class="btn btn-primary" type="button"
+                                    style="background-color: rgb(28,28,28);width: 114px;font-family: Oswald, sans-serif;font-size: 20px;">
+                                Book
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="block-30 block-30-sm item" style="background-image: url('../../static/hotel/images/bg_2.jpg');"
+<div class="block-30 block-30-sm item" style="background-image: url({% static 'hotel/images/bg_2.jpg' %});"
      data-stellar-background-ratio="0.5">
     <div class="container">
         <div class="row align-items-center">
@@ -422,22 +342,27 @@
 </div>
 
 
-<script src="../../static/hotel/js/jquery.min.js"></script>
-<script src="../../static/hotel/js/jquery-migrate-3.0.1.min.js"></script>
-<script src="../../static/hotel/js/popper.min.js"></script>
-<script src="../../static/hotel/js/bootstrap.min.js"></script>
-<script src="../../static/hotel/js/jquery.easing.1.3.js"></script>
-<script src="../../static/hotel/js/jquery.waypoints.min.js"></script>
-<script src="../../static/hotel/js/jquery.stellar.min.js"></script>
-<script src="../../static/hotel/js/owl.carousel.min.js"></script>
-<script src="../../static/hotel/js/jquery.magnific-popup.min.js"></script>
-<script src="../../static/hotel/js/bootstrap-datepicker.js"></script>
+<script src="{% static 'hotel/js/jquery.min.js' %}"></script>
+<script src="{% static 'hotel/js/jquery-migrate-3.0.1.min.js' %}"></script>
+<script src="{% static 'hotel/js/popper.min.js' %}"></script>
+<script src="{% static 'hotel/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'hotel/js/jquery.easing.1.3.js' %}"></script>
+<script src="{% static 'hotel/js/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'hotel/js/jquery.stellar.min.js' %}"></script>
+<script src="{% static 'hotel/js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'hotel/js/jquery.magnific-popup.min.js' %}"></script>
+<script src="{% static 'hotel/js/bootstrap-datepicker.js' %}"></script>
 
-<script src="../../static/hotel/js/aos.js"></script>
-<script src="../../static/hotel/js/jquery.animateNumber.min.js"></script>
+<script src="{% static 'hotel/js/aos.js' %}"></script>
+<script src="{% static 'hotel/js/jquery.animateNumber.min.js' %}"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
-<script src="../../static/hotel/js/google-map.js"></script>
-<script src="../../static/hotel/js/main.js"></script>
+<script src="{% static 'hotel/js/google-map.js' %}"></script>
+<script src="{% static 'hotel/js/main.js' %}"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/baguettebox.js/1.10.0/baguetteBox.min.js"></script>
+<script src="{% static 'payment/assets/js/script.min.js' %}"></script>
 
 </body>
 </html>

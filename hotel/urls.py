@@ -11,5 +11,5 @@ urlpatterns = [
     path('<int:hotel_id>/blog/', views.blog, name='blog'),
     path('<int:hotel_id>/blog-single/', views.blog_single, name='blog_single'),
     path('<int:hotel_id>/services/', views.services, name='services'),
-
+    path('<int:hotel_id>/book/', views.book, name='book'),
 ]

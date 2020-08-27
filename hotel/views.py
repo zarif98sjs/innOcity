@@ -70,9 +70,12 @@ def available(request):
 
 
 def index(request, hotel_id):
-
     context = get_context(hotel_id)
     return render(request, 'hotel/index.html', context)
+
+def book(request, hotel_id):
+    context = get_context(hotel_id)
+    return render(request, 'hotel/book.html', context)
 
 
 def get_context(hotel_id):
@@ -210,7 +213,8 @@ def blog_single(request, hotel_id):
 
 
 def contact(request, hotel_id):
-    return render(request, 'hotel/contact.html')
+    context = get_context(hotel_id)
+    return render(request, 'hotel/contact.html', context)
 
 
 

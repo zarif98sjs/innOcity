@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime
 from django.db import connection
+import hotel
 
 import login.views
 app_name = 'home'
@@ -27,6 +28,8 @@ def payment(request):
     # checkin_date_ymd = datetime.strptime(checkin_input, "%Y-%m-%d").date()
     # checkin_date = checkin_date_ymd.strftime('%d %b,%Y')
     # print(checkin_date)
+    # room_types = hotel.views.get_rooms(107)
+    # print(room_types)
 
     return render(request, 'home/payment.html')
 
@@ -103,7 +106,7 @@ def about(request):
 
 
 def contacts(request):
-    return render(request, 'home/contact.html')
+    return render(request, 'home/payment.html')
 
 
 

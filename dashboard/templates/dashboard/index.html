@@ -1,4 +1,18 @@
 {% load static %}
+<!--
+=========================================================
+* Paper Dashboard 2 - v2.0.1
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/paper-dashboard-2
+* Copyright 2020 Creative Tim (https://www.creative-tim.com)
+
+Coded by www.creative-tim.com
+
+ =========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+-->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,10 +22,12 @@
   <link rel="icon" type="image/png" href="{% static 'dashboard/img/favicon.png' %}">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    Dashboard
+    Map
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css' %}" rel="stylesheet">
   <!-- CSS Files -->
@@ -31,22 +47,25 @@
           </div>
           <!-- <p>CT</p> -->
         </a>
-        <div class="simple-text logo-normal">
+        <a href="https://www.creative-tim.com" class="simple-text logo-normal">
           {{ customer.name }}
-        </div>
+          <!-- <div class="logo-image-big">
+            <img src="{% static 'dashboard/img/logo-small.png' %}">
+          </div> -->
+        </a>
       </div>
       <div class="sidebar-wrapper">
         <ul class="nav">
           <li class="active ">
             <a href="{% url 'dashboard:index' %}">
-              <i class="nc-icon nc-bank"></i>
-              <p>Dashboard</p>
+              <i class="nc-icon nc-pin-3"></i>
+              <p>Map</p>
             </a>
           </li>
 
           <li>
             <a href="{% url 'dashboard:maps' %}">
-              <i class="nc-icon nc-pin-3"></i>
+              <i class="nc-icon nc-bank"></i>
               <p>Your bookings</p>
             </a>
           </li>
@@ -60,14 +79,15 @@
 
         </ul>
       </div>
+
     </div>
-    <div class="main-panel">
+    <div class="main-panel" >
       <!-- Navbar -->
-      <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
-        <div class="container-fluid">
-          <div class="navbar-wrapper">
-            <div class="navbar-toggle">
-              <button type="button" class="navbar-toggler">
+      <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent" >
+        <div class="container-fluid" >
+          <div class="navbar-wrapper" >
+            <div class="navbar-toggle" >
+              <button type="button" class="navbar-toggler" >
                 <span class="navbar-toggler-bar bar1"></span>
                 <span class="navbar-toggler-bar bar2"></span>
                 <span class="navbar-toggler-bar bar3"></span>
@@ -104,16 +124,79 @@
         </div>
       </nav>
       <!-- End Navbar -->
-      <div class="content">
-        </div>
+      <div class="content" style="padding-left: 50px;">
+          <div id="map" style="width:1050px; height:600px; position: relative"></div>
+          <script src="https://unpkg.com/es6-promise@4.2.4/dist/es6-promise.auto.min.js"></script>
+          <script src="https://unpkg.com/@mapbox/mapbox-sdk/umd/mapbox-sdk.min.js"></script>
+          <script>
+
+            mapboxgl.accessToken = 'pk.eyJ1IjoicmFtaXNhMjEwOCIsImEiOiJja2VvOGowemIwYTA4MndwNzllcmhpcDk5In0.hVgsEPAgea4C4wbwHOTtuw';
+            var mapboxClient = mapboxSdk({ accessToken: mapboxgl.accessToken });
+            var map = new mapboxgl.Map({
+                            container: 'map',
+                            style: 'mapbox://styles/mapbox/streets-v11',
+                            center: [0,0],
+                            zoom: 1
+                        });
+            var locations = {{ locations | safe }};
+            var hotels = {{ hotels | safe }};
+
+            for(var i=0;i<locations.length;i++) {
+                const hotelname = hotels[i];
+                mapboxClient.geocoding
+                    .forwardGeocode({
+                        query: locations[i],
+                        autocomplete: false,
+                        limit: 1
+                    })
+                    .send()
+                    .then(function (response) {
+
+                        if (
+                            response &&
+                            response.body &&
+                            response.body.features &&
+                            response.body.features.length
+                        ) {
+
+                            var feature = response.body.features[0];
+
+                            new mapboxgl.Marker({color:'red'}).
+                            setLngLat(feature.center).
+                            setPopup(new mapboxgl.Popup({ offset: 25 }).
+                            setHTML('<h3>' + hotelname )).
+                            addTo(map);
+                        }
+                    });
+            }
+
+          </script>
+
       </div>
+
+      <footer class="footer footer-black  footer-white ">
+        <div class="container-fluid">
+          <div class="row">
+
+            <div class="credits ml-auto">
+              <span class="copyright">
+                © <script>
+                  document.write(new Date().getFullYear())
+                </script>, made with <i class="fa fa-heart heart"></i> by Creative Tim
+              </span>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   </div>
   <!--   Core JS Files   -->
+
   <script src="{% static 'dashboard/js/core/jquery.min.js' %}"></script>
   <script src="{% static 'dashboard/js/core/popper.min.js' %}"></script>
   <script src="{% static 'dashboard/js/core/bootstrap.min.js' %}"></script>
   <script src="{% static 'dashboard/js/plugins/perfect-scrollbar.jquery.min.js' %}"></script>
+
   <!--  Google Maps Plugin    -->
   <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
   <!-- Chart JS -->
@@ -123,12 +206,8 @@
   <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="{% static 'dashboard/js/paper-dashboard.min.js' %}?v=2.0.1" type="text/javascript"></script><!-- Paper Dashboard DEMO methods, don't include it in your project! -->
   <script src="{% static 'dashboard/demo/demo.js' %}"></script>
-  <script>
-    $(document).ready(function() {
-      // Javascript method's body can be found in assets/assets-for-demo/js/demo.js' %}
-      demo.initChartsPages();
-    });
-  </script>
+
+
 </body>
 
 </html>

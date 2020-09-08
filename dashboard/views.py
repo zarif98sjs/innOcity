@@ -3,6 +3,7 @@ from django.db import connection
 import hashlib
 from .models import Customer, Reservation
 import login.views
+import json
 
 app_name = 'dashboard'
 
@@ -24,9 +25,20 @@ def index(request):
             global customer
             customer = Customer(customer_id=customer_id, name=result[1], email=result[2], username=result[3],
                                 gender=result[5], street=result[6], zipcode=result[7], city=result[8], country=result[9])
-            print(customer_id, customer.name, customer.email, customer.username, customer.gender, customer.street, customer.zipcode, customer.city, customer.country)
+            locations = []
+            hotels = []
+            with connection.cursor() as cur:
+                sql = "SELECT hotelId FROM RESERVATION WHERE customerId = %s"
+                cur.execute(sql, [customer.customer_id])
+                rows = cur.fetchall()
 
-            return render(request, 'dashboard/index.html', {'customer': customer})
+                for row in rows:
+                    cur.execute("SELECT name, city, country FROM HOTEL WHERE hotelId = %s", [row[0]])
+                    name, city, country = cur.fetchone()
+                    hotels.append(name)
+                    locations.append(city+", "+country)
+            return render(request, 'dashboard/index.html', {'customer': customer, "locations": json.dumps(locations),
+                                                            "hotels": json.dumps(hotels)})
 
 
 def maps(request):

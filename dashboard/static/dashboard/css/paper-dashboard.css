@@ -4214,5 +4214,15 @@ License - nucleoapp.com/license/
   .card-timeline .timeline .timeline-panel {
     width: 38%;
     padding: 15px; } }
+.mapboxgl-popup {
+  max-width: 200px;
 
+}
+
+.mapboxgl-popup-content {
+  text-align: center;
+  font-family: 'Open Sans', sans-serif;
+}
+
+#mapid { height: 180px; }
 /*# sourceMappingURL=paper-dashboard.css.map */

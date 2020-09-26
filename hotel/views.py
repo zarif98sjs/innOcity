@@ -18,6 +18,7 @@ sessions = {}
 def available(request):
 
     destination = request.POST.get('destination').upper()
+    room_no = request.POST.get('rooms')
     checkin_input = request.POST.get('checkin')
     checkin_date_ymd = datetime.strptime(checkin_input, "%Y-%m-%d").date()
     checkin_date = checkin_date_ymd.strftime('%d %b,%Y')
@@ -49,13 +50,13 @@ def available(request):
             cur.execute(sql2, [hotelId])
             total_count = cur.fetchone()[0]
 
-            sql3 = "SELECT COUNT(*) FROM RESERVATION WHERE HOTELID= %s AND (DATE_OF_ARRIVAL <= %s " \
+            sql3 = "SELECT COUNT(DISTINCT ROOMID) FROM RESERVATION WHERE HOTELID= %s AND (DATE_OF_ARRIVAL <= %s " \
                    "AND DATE_OF_DEPARTURE >= %s)"
 
             cur.execute(sql3, [hotelId, checkout_date, checkin_date])
             total_count -= cur.fetchone()[0]
 
-            if total_count > 0:
+            if total_count >= room_no:
                 hotel = Hotel(hotelId=row[0], name=row[1], street=row[2], zipcode=row[3], city=row[4],
                               country=row[5], rating=row[6], rating_count=row[7])
                 hotel.set_rooms(total_count)
@@ -70,9 +71,11 @@ def index(request, hotel_id):
     context = get_context(hotel_id)
     return render(request, 'hotel/index.html', context)
 
+
 def book(request, hotel_id):
     context = get_context(hotel_id)
     return render(request, 'hotel/book.html', context)
+
 
 def get_context(hotel_id):
 

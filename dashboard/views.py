@@ -35,7 +35,7 @@ def index(request):
                 for row in rows:
                     cur.execute("SELECT name, city, country FROM HOTEL WHERE hotelId = %s", [row[0]])
                     name, city, country = cur.fetchone()
-                    hotels.append(name)
+                    hotels.append(name+" "+city+", "+country)
                     locations.append(city+", "+country)
             return render(request, 'dashboard/index.html', {'customer': customer, "locations": json.dumps(locations),
                                                             "hotels": json.dumps(hotels)})

@@ -122,7 +122,7 @@
                       </div>
                       <div class="col-md-5">
                           <div class="row">
-                                <a href="{% url 'hotel:index' reservation.hotel_id %}"><h3>{{ reservation.hotel_name }}</h3></a>
+                                <a href="{% url 'hotel:index' reservation.hotelId %}"><h3>{{ reservation.hotel_name }}</h3></a>
 
                           </div>
                             <div class="row" style="font-size: 20px;">
@@ -141,7 +141,7 @@
                           <div class="row" style="font-size: 15px; ">
                               <p><b>Services included:  </b>
                               {% for ser in reservation.services %}
-                                  {{ser}}
+                                  <br>{{ser}}
                                {% endfor %}
                               </p>
                           </div>
@@ -151,7 +151,7 @@
                           </div>
 
                           <div class="row">
-                                <a href="{% url 'hotel:index' reservation.hotel_id %}">
+                                <a href="{% url 'hotel:index' reservation.hotelId %}">
                               <button type="submit" name="book_again" value="book_again" class="btn btn-primary btn-round" >Book Again </button>
                                 </a>
                           </div>

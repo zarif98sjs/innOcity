@@ -27,16 +27,17 @@ def index(request):
                                 gender=result[5], street=result[6], zipcode=result[7], city=result[8], country=result[9])
             locations = []
             hotels = []
-            with connection.cursor() as cur:
-                sql = "SELECT hotelId FROM RESERVATION WHERE customerId = %s"
-                cur.execute(sql, [customer.customer_id])
-                rows = cur.fetchall()
+            with connection.cursor() as cur2:
+
+                sql = "SELECT H.name, H.city, H.country FROM HOTEL H, RESERVATION R WHERE R.customerId = %s " \
+                      "AND H.hotelId = R.hotelId"
+                cur2.execute(sql, [customer.customer_id])
+                rows = cur2.fetchall()
 
                 for row in rows:
-                    cur.execute("SELECT name, city, country FROM HOTEL WHERE hotelId = %s", [row[0]])
-                    name, city, country = cur.fetchone()
-                    hotels.append(name+" "+city+", "+country)
-                    locations.append(city+", "+country)
+                    hotels.append(row[0] + " " + row[1] + ", " + row[2])
+                    locations.append(row[1] + ", " + row[2])
+
             return render(request, 'dashboard/index.html', {'customer': customer, "locations": json.dumps(locations),
                                                             "hotels": json.dumps(hotels)})
 
@@ -50,36 +51,31 @@ def maps(request):
     else:
         with connection.cursor() as cur:
 
-            sql = "SELECT reservationId, date_of_arrival, date_of_departure, hotelId, roomId FROM " \
-                  "RESERVATION WHERE customerId = %s ORDER BY date_of_arrival DESC"
+            sql = "SELECT R.RESERVATIONID, R.DATE_OF_ARRIVAL, R.DATE_OF_DEPARTURE, " \
+                  "H.HOTELID, H.NAME, H.CITY, H.COUNTRY, RM.ROOM_TYPE, RM.COST_PER_DAY " \
+                  "FROM RESERVATION R, HOTEL H, ROOM RM " \
+                  "WHERE R.CUSTOMERID = %s AND R.HOTELID = H.HOTELID AND R.ROOMID = RM.ROOMID " \
+                  "ORDER BY R.DATE_OF_ARRIVAL DESC"
+
             cur.execute(sql, [customer.customer_id])
-            rows = cur.fetchall()
+            result = cur.fetchall()
             reservation_list = []
 
-            for row in rows:
+            for row in result:
                 reservation = Reservation(reservation_id=row[0], date_of_arrival=row[1],
-                                          date_of_departure=row[2], hotel_id=row[3])
+                                          date_of_departure=row[2], hotelId=row[3], hotel_name=row[4], city=row[5],
+                                          country=row[6], room_type=row[7], cost=row[8])
 
-                hotel_id = row[3]
-                room_id = row[4]
-
-                cur.execute("SELECT name, city, country FROM HOTEL WHERE hotelId = %s", [hotel_id])
-                reservation.hotel_name, reservation.city, reservation.country = cur.fetchone()
-
-                cur.execute("SELECT room_type, cost_per_day  FROM ROOM WHERE roomId = %s", [room_id])
-                reservation.room_type, reservation.cost = cur.fetchone()
-                reservation.cost *= int(reservation.stay)
-
-                cur.execute("SELECT serviceID, quantity FROM RESERVATION_SERVICE WHERE reservationID = %s", [row[0]])
+                sql = "SELECT S.SERVICE_TYPE, S.COST, RS.QUANTITY " \
+                      "FROM SERVICE S, RESERVATION_SERVICE RS " \
+                      "WHERE S.SERVICEID = RS.SERVICEID AND RS.RESERVATIONID = %s"
+                cur.execute(sql, [row[0]])
                 all_services = cur.fetchall()
 
                 for service in all_services:
 
-                    cur.execute("SELECT service_type, cost FROM SERVICE WHERE serviceId = %s AND hotelId = %s",
-                                 [service[0], hotel_id])
-                    sr_name, sr_cost = cur.fetchone()
-                    reservation.services.append(sr_name)
-                    reservation.cost += (sr_cost*service[1])
+                    reservation.services.append(service[0])
+                    reservation.cost += (service[1] * service[2])
 
                 reservation_list.append(reservation)
 

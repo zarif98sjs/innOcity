@@ -1,9 +1,7 @@
-from .models import Hotel
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from datetime import datetime
 from django.db import connection
-import hotel
+from hotel.models import Hotel
 
 import login.views
 app_name = 'home'
@@ -14,11 +12,11 @@ def index(request):
     logged_in = (login.views.customer_id != 0)
 
     hotel_ara_best = best_rated()
-    hotel_ara_top_disc = top_discount()
+    top_discount_ara = top_discount()
     destination = get_destination()
 
     return render(request, 'home/index.html',
-                  {'hotel_ara_best': hotel_ara_best, 'hotel_ara_top_disc': hotel_ara_top_disc,
+                  {'hotel_ara_best': hotel_ara_best, 'hotel_ara_top_disc': top_discount_ara,
                    'destination': destination, 'logged_in': logged_in})
 
 
@@ -39,30 +37,26 @@ def get_destination():
     with connection.cursor() as cur:
         cur.execute("SELECT city,country FROM HOTEL")
         result = cur.fetchall()
-        dest = []
-        for row in result:
-            dest.append(row[0])
-            dest.append(row[1])
+        dest = [row[0] for row in result] + [row[1] for row in result]
         return dest
 
 
 def best_rated():
 
     with connection.cursor() as cur:
-        cur.execute("SELECT name,city,country,rating,hotelId FROM HOTEL ORDER BY rating DESC ")
-        cnt = 1
+
+        sql = "SELECT * FROM " \
+              "(SELECT * FROM HOTEL ORDER BY RATING DESC) " \
+              "WHERE ROWNUM <= 6"
+        cur.execute(sql)
+        result = cur.fetchall()
         hotel_ara = []
 
-        while cnt <= 6:
-            row = cur.fetchone()
-            hotel = Hotel()
-            hotel.hotelid = row[4]
-            hotel.name = row[0]
-            hotel.city = row[1]
-            hotel.country = row[2]
-            hotel.rating = row[3]
-            hotel_ara.append(hotel)
-            cnt += 1
+        for row in result:
+
+            h = Hotel(hotelId=row[0], name=row[1], street=row[2], zipcode=row[3], city=row[4],
+                                   country=row[5], rating=row[6], rating_count=row[7])
+            hotel_ara.append(h)
 
         return hotel_ara
 
@@ -71,29 +65,20 @@ def top_discount():
 
     with connection.cursor() as cur:
 
-        cur.execute("SELECT room_type, hotelId, discount FROM ROOM ORDER BY discount DESC")
-        rows = cur.fetchall()
-        cnt = 1
+        sql = "SELECT * FROM " \
+              "(SELECT H.*, R.ROOM_TYPE, R.DISCOUNT FROM HOTEL H, ROOM R " \
+              "WHERE R.HOTELID = H.HOTELID " \
+              "ORDER BY R.DISCOUNT DESC) " \
+              "WHERE ROWNUM <= 6"
+        cur.execute(sql)
+        result = cur.fetchall()
+
         hotel_ara = []
 
-        for row in rows:
-            if cnt > 6:
-                break
-
-            sql = "SELECT name,city,country,rating FROM HOTEL WHERE hotelId = %s"
-            cur.execute(sql, [row[1]])
-            row2 = cur.fetchone()
-
-            hotel = Hotel()
-            hotel.hotelid = row[1]
-            hotel.name = row2[0]
-            hotel.city = row2[1]
-            hotel.country = row2[2]
-            hotel.rating = row2[3]
-            hotel.top_disc_roomtype = row[0]
-            hotel.top_disc_roomtype_disc = row[2]
-            hotel_ara.append(hotel)
-            cnt += 1
+        for row in result:
+            h = Hotel(hotelId=row[0], name=row[1], street=row[2], zipcode=row[3],
+                      city=row[4], country=row[5], rating=row[6], rating_count=row[7])
+            hotel_ara.append((h, row[8], row[9]))
 
         return hotel_ara
 
@@ -104,10 +89,3 @@ def about(request):
 
 def contacts(request):
     return render(request, 'home/payment.html')
-
-
-
-
-
-
-

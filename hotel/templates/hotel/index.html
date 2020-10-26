@@ -205,9 +205,7 @@
             <div class="col-md-7 section-heading">
                 <span class="subheading-sm">Featured Rooms</span>
                 <h2 class="heading">Rooms &amp; Suites</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit, iusto, omnis! Quidem, sint,
-                    impedit? Dicta eaque delectus tempora hic, corporis velit doloremque quod quam laborum, nobis iusto
-                    autem culpa quaerat!</p>
+
             </div>
         </div>
 
@@ -231,7 +229,9 @@
                                             {% if room.special_offer is not null %}
                                                 <li><strong>Special offers: </strong> {{ room.special_offer }}</li>
                                             {% endif %}
-                                            <li><strong>Facilities: </strong>{{ room.facilities }}</li>
+                                            {% if room.facilities %}
+                                                <li><strong>Facilities: </strong>{{ room.facilities }}</li>
+                                            {% endif %}
                                             <li><strong>Bed Type: </strong> {{ room.bed_type }}</li>
                                         </ul>
                                     </div>

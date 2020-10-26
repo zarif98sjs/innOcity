@@ -285,7 +285,7 @@
                                 </div>
                                 <div class="destination_content">
                                     <div class="destination_title"><a
-                                            href="{% url 'hotel:index' hotel.hotelid %}">{{ hotel.name }}</a></div>
+                                            href="{% url 'hotel:index' hotel.hotelId %}">{{ hotel.name }}</a></div>
                                     <div class="destination_subtitle"><p>{{ hotel.city }} , {{ hotel.country }}</p>
                                     </div>
                                     <div class="destination_price">Rating {{ hotel.rating }}</div>
@@ -316,7 +316,7 @@
 
                         <!-- Destination -->
 
-                        {% for hotel in hotel_ara_top_disc %}
+                        {% for hotel,room_type,disc in hotel_ara_top_disc %}
 
                             <div class="destination item">
                                 <div class="destination_image">
@@ -325,12 +325,10 @@
                                 </div>
                                 <div class="destination_content">
                                     <div class="destination_title"><a
-                                            href="{% url 'hotel:index' hotel.hotelid %}">{{ hotel.name }}</a></div>
-                                    <div class="destination_subtitle"><p>{{ hotel.city }} , {{ hotel.country }}</p>
-                                    </div>
-                                    <div class="destination_subtitle"><p>{{ hotel.top_disc_roomtype }} type room</p>
-                                    </div>
-                                    <div class="destination_price">{{ hotel.top_disc_roomtype_disc }}% off!</div>
+                                            href="{% url 'hotel:index' hotel.hotelId %}">{{ hotel.name }}</a></div>
+                                    <div class="destination_subtitle"><p>{{ hotel.city }} , {{ hotel.country }}</p></div>
+
+                                    <div class="destination_price">{{ disc }}% off! on {{ room_type }} Rooms</div>
                                 </div>
                             </div>
 

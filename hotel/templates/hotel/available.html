@@ -50,10 +50,15 @@
   <div class="block-30 block-30-sm2 "></div>
   
     <div class="site-section bg-light">
+    {% if available_hotels %}
         <h3 align="center"  class="heading" >AVAILABLE HOTELS IN {{ destination }}<br><br></h3>
+    {% else %}
+        <p><h3 align="center"  class="heading"> SORRY, NO HOTELS IN {{ destination }} ARE AVAILBALE RIGHT NOW. TRY AGAIN LATER.</h3></p>
+    {% endif %}
       <div class="container">
 
         <div class="row mb-5">
+
          {% for hotel in available_hotels %}
             <div class="col-md-12 mb-5">
 
@@ -80,6 +85,7 @@
 
               </div>
           {% endfor %}
+
 
         </div>
 
@@ -181,6 +187,7 @@
     </div>
   </footer>
       </div>
+
     </div>
 
   <!-- loader -->

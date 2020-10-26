@@ -27,16 +27,17 @@ def index(request):
                                 gender=result[5], street=result[6], zipcode=result[7], city=result[8], country=result[9])
             locations = []
             hotels = []
-            with connection.cursor() as cur:
-                sql = "SELECT hotelId FROM RESERVATION WHERE customerId = %s"
-                cur.execute(sql, [customer.customer_id])
-                rows = cur.fetchall()
+            with connection.cursor() as cur2:
+
+                sql = "SELECT H.name, H.city, H.country FROM HOTEL H, RESERVATION R WHERE R.customerId = %s " \
+                      "AND H.hotelId = R.hotelId"
+                cur2.execute(sql, [customer.customer_id])
+                rows = cur2.fetchall()
 
                 for row in rows:
-                    cur.execute("SELECT name, city, country FROM HOTEL WHERE hotelId = %s", [row[0]])
-                    name, city, country = cur.fetchone()
-                    hotels.append(name+" "+city+", "+country)
-                    locations.append(city+", "+country)
+                    hotels.append(row[0] + " " + row[1] + ", " + row[2])
+                    locations.append(row[1] + ", " + row[2])
+
             return render(request, 'dashboard/index.html', {'customer': customer, "locations": json.dumps(locations),
                                                             "hotels": json.dumps(hotels)})
 

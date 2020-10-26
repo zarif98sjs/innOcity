@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.http import Http404
 from .models import Hotel, Room , Session
 from django.views.decorators.csrf import csrf_exempt
-from datetime import datetime
 from django.db import connection
 from random import seed
 from random import randint

@@ -3,7 +3,6 @@ from django.db import connection
 import hashlib
 from random import randint
 
-# Create your views here.
 
 from django.http import HttpResponse
 

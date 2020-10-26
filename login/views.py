@@ -17,6 +17,9 @@ def index(request):
     # customer_id_change()
     # hotel_id_change()
     # room_id_change()
+    # payment_id_change()
+    # service_id_change()
+    # reservation_id_change()
 
     if request.method == 'POST':
         return login(request)
@@ -173,6 +176,114 @@ def room_id_change():
         cur.execute(sql)
 
 
+def payment_id_change():
+
+    with connection.cursor() as cur:
+        sql = "SELECT PAYMENTID FROM PAYMENT"
+        cur.execute(sql)
+        res = cur.fetchall()
+        current_ids = [row[0] for row in res]
+        size = len(current_ids)
+
+        random_ids = set()
+        while len(random_ids) < size:
+            x = randint(10000000, 99999999)
+            random_ids.add(x)
+
+        # dropping the foreign key constraint from table RESERVATION
+        sql = "SELECT CONSTRAINT_NAME FROM USER_CONS_COLUMNS WHERE TABLE_NAME='RESERVATION' " \
+              "AND COLUMN_NAME='PAYMENTID'"
+        cur.execute(sql)
+        constraint_name = cur.fetchone()[0]
+        sql = "ALTER TABLE RESERVATION DROP CONSTRAINT " + constraint_name
+        cur.execute(sql)
+
+        # replacing old customer ids with new ones in both tables
+        for current, rand in zip(current_ids, random_ids):
+            sql = "UPDATE RESERVATION SET PAYMENTID = %s WHERE PAYMENTID = %s"
+            cur.execute(sql, [rand, current])
+            connection.commit()
+            sql = "UPDATE PAYMENT SET PAYMENTID = %s WHERE PAYMENTID = %s"
+            cur.execute(sql, [rand, current])
+            connection.commit()
+
+        # adding the foreign key constraint to table RESERVATION again
+        sql = "ALTER TABLE RESERVATION ADD FOREIGN KEY(PAYMENTID) REFERENCES PAYMENT(PAYMENTID)"
+        cur.execute(sql)
+
+
+def service_id_change():
+
+    with connection.cursor() as cur:
+        sql = "SELECT SERVICEID FROM SERVICE"
+        cur.execute(sql)
+        res = cur.fetchall()
+        current_ids = [row[0] for row in res]
+        size = len(current_ids)
+
+        random_ids = set()
+        while len(random_ids) < size:
+            x = randint(10000000, 99999999)
+            random_ids.add(x)
+
+        # dropping the foreign key constraint from table RESERVATION
+        sql = "SELECT CONSTRAINT_NAME FROM USER_CONS_COLUMNS WHERE TABLE_NAME='RESERVATION_SERVICE' " \
+              "AND COLUMN_NAME='SERVICEID'"
+        cur.execute(sql)
+        constraint_name = cur.fetchone()[0]
+        sql = "ALTER TABLE RESERVATION_SERVICE DROP CONSTRAINT " + constraint_name
+        cur.execute(sql)
+
+        # replacing old customer ids with new ones in both tables
+        for current, rand in zip(current_ids, random_ids):
+            sql = "UPDATE RESERVATION_SERVICE SET SERVICEID = %s WHERE SERVICEID = %s"
+            cur.execute(sql, [rand, current])
+            connection.commit()
+            sql = "UPDATE SERVICE SET SERVICEID = %s WHERE SERVICEID = %s"
+            cur.execute(sql, [rand, current])
+            connection.commit()
+
+        # adding the foreign key constraint to table RESERVATION again
+        sql = "ALTER TABLE RESERVATION_SERVICE ADD FOREIGN KEY(SERVICEID) REFERENCES SERVICE(SERVICEID)"
+        cur.execute(sql)
+
+
+def reservation_id_change():
+
+    with connection.cursor() as cur:
+        sql = "SELECT RESERVATIONID FROM RESERVATION"
+        cur.execute(sql)
+        res = cur.fetchall()
+        current_ids = [row[0] for row in res]
+        size = len(current_ids)
+
+        random_ids = set()
+        while len(random_ids) < size:
+            x = randint(10000000, 99999999)
+            random_ids.add(x)
+
+        # dropping the foreign key constraint from table RESERVATION
+        sql = "SELECT CONSTRAINT_NAME FROM USER_CONS_COLUMNS WHERE TABLE_NAME='RESERVATION_SERVICE' " \
+              "AND COLUMN_NAME='RESERVATIONID'"
+        cur.execute(sql)
+        constraint_name = cur.fetchone()[0]
+        sql = "ALTER TABLE RESERVATION_SERVICE DROP CONSTRAINT " + constraint_name
+        cur.execute(sql)
+
+        # replacing old customer ids with new ones in both tables
+        for current, rand in zip(current_ids, random_ids):
+            sql = "UPDATE RESERVATION_SERVICE SET RESERVATIONID = %s WHERE RESERVATIONID = %s"
+            cur.execute(sql, [rand, current])
+            connection.commit()
+            sql = "UPDATE RESERVATION SET RESERVATIONID = %s WHERE RESERVATIONID = %s"
+            cur.execute(sql, [rand, current])
+            connection.commit()
+
+        # adding the foreign key constraint to table RESERVATION again
+        sql = "ALTER TABLE RESERVATION_SERVICE ADD FOREIGN KEY(RESERVATIONID) REFERENCES RESERVATION(RESERVATIONID)"
+        cur.execute(sql)
+
+
 def login(request):
 
     global customer_id
@@ -191,5 +302,4 @@ def login(request):
             return render(request, 'login/index.html', {'alert_flag': True})
         else:
             customer_id = customer[0]
-            print("Login successful. Customer id", customer_id, " Name:", v1)
             return redirect('home:index')

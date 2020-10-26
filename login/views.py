@@ -25,6 +25,7 @@ def login(request):
     v1 = request.POST.get('username')
     v2 = request.POST.get('password')
     v2 = hashlib.md5(v2.encode()).hexdigest()
+    print("Hash :",v2)
 
     with connection.cursor() as cur:
 

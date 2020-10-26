@@ -56,7 +56,7 @@ def available(request):
             cur.execute(sql3, [hotelId, checkout_date, checkin_date])
             total_count -= cur.fetchone()[0]
 
-            if total_count >= room_no:
+            if total_count >= int(room_no):
                 hotel = Hotel(hotelId=row[0], name=row[1], street=row[2], zipcode=row[3], city=row[4],
                               country=row[5], rating=row[6], rating_count=row[7])
                 hotel.set_rooms(total_count)

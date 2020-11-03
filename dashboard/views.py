@@ -45,9 +45,8 @@ def index(request):
 def maps(request):
 
     global customer
-    if customer.customer_id == 0:
+    if request.session.has_key('customer_id') == False:
         return redirect('home:index')
-
     else:
         with connection.cursor() as cur:
 
@@ -85,7 +84,7 @@ def maps(request):
 def user(request):
 
     global customer
-    if customer.customer_id == 0:
+    if request.session.has_key('customer_id') == False:
         return redirect('home:index')
     else:
         if request.method == 'POST':

@@ -9,7 +9,10 @@ app_name = 'home'
 
 def index(request):
 
-    logged_in = (login.views.customer_id != 0)
+    if request.session.has_key('customer_id'):
+        logged_in = True
+    else:
+        logged_in = False
 
     hotel_ara_best = best_rated()
     top_discount_ara = top_discount()

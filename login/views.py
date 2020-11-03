@@ -14,16 +14,21 @@ def index(request):
     customer_id = 0
 
     '''call the commented out functions only once'''
+    print("Called Once")
     # customer_id_change()
     # hotel_id_change()
-    # room_id_change()
+    # room_id_change() //
     # payment_id_change()
-    # service_id_change()
+    # service_id_change() //
     # reservation_id_change()
 
     if request.method == 'POST':
         return login(request)
     else:
+        try:
+            del request.session['customer_id']
+        except:
+            pass
         return render(request, 'login/index.html', {'alert_flag': False})
 
 
@@ -303,4 +308,5 @@ def login(request):
             return render(request, 'login/index.html', {'alert_flag': True})
         else:
             customer_id = customer[0]
+            request.session['customer_id'] = customer_id
             return redirect('home:index')

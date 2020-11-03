@@ -27,7 +27,15 @@ def available(request):
 
     session_id = randint(10, 10000)
     sessions[session_id] = Session(session_id, checkin_input, checkout_input)
-    logged_in = (login.views.customer_id != 0)
+    # logged_in = (login.views.customer_id != 0)
+    # # print(request.session['customer_id'])
+
+    if request.session.has_key('customer_id'):
+        logged_in = True
+    else:
+        logged_in = False
+
+    print("Logged In ",logged_in)
 
     available_hotels = []
 

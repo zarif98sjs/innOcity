@@ -49,8 +49,6 @@ INSTALLED_APPS = [
     'hotel',
     'dashboard',
 
-
-
 ]
 
 MIDDLEWARE = [
@@ -97,6 +95,10 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '1521',
         'CONN_MAX_AGE': None,
+    },
+    'test': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -138,3 +140,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+SESSION_ENGINE = "django.contrib.sessions.backends.file"
+SESSION_FILE_PATH = 'login\sessions'

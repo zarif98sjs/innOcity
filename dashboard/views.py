@@ -24,7 +24,9 @@ def index(request):
 
             global customer
             customer = Customer(customer_id=customer_id, name=result[1], email=result[2], username=result[3],
-                                gender=result[5], street=result[6], zipcode=result[7], city=result[8], country=result[9])
+                                gender=result[5], street=result[6], zipcode=result[7], city=result[8], country=result[9],
+                                card_username=result[11],card_type=result[12],card_number=result[13],mob_banking_phone_number=result[14],
+                                mob_banking_service_provider=result[15])
             locations = []
             hotels = []
             with connection.cursor() as cur2:
@@ -40,6 +42,57 @@ def index(request):
 
             return render(request, 'dashboard/index.html', {'customer': customer, "locations": json.dumps(locations),
                                                             "hotels": json.dumps(hotels)})
+
+def wallet(request):
+    global customer
+    if request.session.has_key('customer_id') == False:
+        return redirect('home:index')
+    else:
+        if request.method == 'POST':
+
+            with connection.cursor() as cur:
+
+                if request.POST.get("submit_credit_card"):
+
+                    customer_id = customer.customer_id
+                    card_username = request.POST.get("card_username")
+                    card_type = request.POST.get("card_type")
+                    card_number = request.POST.get("card_number")
+
+                    # mob_banking_phone_number = request.POST.get("mob_banking_phone_number")
+                    # mob_banking_service_provider = request.POST.get("mob_banking_service_provider")
+
+                    print(card_username)
+                    print(card_type)
+                    print(card_number)
+                    print(customer_id)
+
+                    sql = "UPDATE CUSTOMER SET card_username = %s, card_type = %s, card_number= %s WHERE customerId = %s"
+                    cur.execute(sql, [card_username, card_type, card_number, customer_id])
+                    connection.commit()
+
+                    customer.card_username = card_username
+                    customer.card_type = card_type
+                    customer.card_number = card_number
+
+                elif request.POST.get("submit_mobile_banking"):
+
+                    customer_id = customer.customer_id
+                    mob_banking_phone_number = request.POST.get("mob_banking_phone_number")
+                    mob_banking_service_provider = request.POST.get("mob_banking_service_provider")
+
+                    print(mob_banking_phone_number)
+                    print(mob_banking_service_provider)
+                    print(customer_id)
+
+                    sql = "UPDATE CUSTOMER SET mob_banking_phone_number = %s, mob_banking_service_provider = %s WHERE customerId = %s"
+                    cur.execute(sql, [mob_banking_phone_number, mob_banking_service_provider, customer_id])
+                    connection.commit()
+
+                    customer.mob_banking_phone_number = mob_banking_phone_number
+                    customer.mob_banking_service_provider = mob_banking_service_provider
+
+        return render(request, 'dashboard/wallet.html', {'customer': customer})
 
 
 def maps(request):

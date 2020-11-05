@@ -3,190 +3,197 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8" />
-  <link rel="apple-touch-icon" sizes="76x76" href="{% static 'dashboard/img/apple-icon.png' %}">
-  <link rel="icon" type="image/png" href="{% static 'dashboard/img/favicon.png' %}">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <title>
-    Dashboard
-  </title>
-  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
-  <!--     Fonts and icons     -->
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css' %}" rel="stylesheet">
-  <!-- CSS Files -->
-  <link href="{% static 'dashboard/css/bootstrap.min.css' %}" rel="stylesheet" />
-  <link href="{% static 'dashboard/css/paper-dashboard.css' %}?v=2.0.1" rel="stylesheet" />
-  <!-- CSS Just for demo purpose, don't include it in your project -->
-  <link href="{% static 'dashboard/demo/demo.css' %}" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'dashboard/img/apple-icon.png' %}">
+    <link rel="icon" type="image/png" href="{% static 'dashboard/img/favicon.png' %}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <title>
+        Dashboard
+    </title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+    <!--     Fonts and icons     -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css' %}" rel="stylesheet">
+    <!-- CSS Files -->
+    <link href="{% static 'dashboard/css/bootstrap.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'dashboard/css/paper-dashboard.css' %}?v=2.0.1" rel="stylesheet" />
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link href="{% static 'dashboard/demo/demo.css' %}" rel="stylesheet" />
 </head>
 
 <body class="">
-  <div class="wrapper ">
+<div class="wrapper ">
     <div class="sidebar" data-color="white" data-active-color="danger">
-      <div class="logo">
-        <a href="https://www.creative-tim.com" class="simple-text logo-mini">
-          <div class="logo-image-small">
-            <img src="{% static 'dashboard/img/logo-small.png' %}">
-          </div>
-          <!-- <p>CT</p> -->
-        </a>
-        <div class="simple-text logo-normal">
-          {{ customer.name }}
+        <div class="logo">
+            <a href="https://www.creative-tim.com" class="simple-text logo-mini">
+                <div class="logo-image-small">
+                    <img src="{% static 'dashboard/img/logo-small.png' %}">
+                </div>
+                <!-- <p>CT</p> -->
+            </a>
+            <div class="simple-text logo-normal">
+                {{ customer.name }}
+            </div>
         </div>
-      </div>
-      <div class="sidebar-wrapper">
-        <ul class="nav">
-          <li >
-            <a href="{% url 'dashboard:index' %}">
-              <i class="nc-icon nc-pin-3"></i>
-              <p>Map</p>
-            </a>
-          </li>
+        <div class="sidebar-wrapper">
+            <ul class="nav">
+                <li >
+                    <a href="{% url 'dashboard:index' %}">
+                        <i class="nc-icon nc-pin-3"></i>
+                        <p>Map</p>
+                    </a>
+                </li>
 
-          <li class="active ">
-            <a href="{% url 'dashboard:maps' %}">
-              <i class="nc-icon nc-bank"></i>
-              <p>Your bookings</p>
-            </a>
-          </li>
+                <li class="active ">
+                    <a href="{% url 'dashboard:maps' %}">
+                        <i class="nc-icon nc-bank"></i>
+                        <p>Your bookings</p>
+                    </a>
+                </li>
 
-          <li>
-            <a href="{% url 'dashboard:user' %}">
-              <i class="nc-icon nc-single-02"></i>
-              <p>Update Profile</p>
-            </a>
-          </li>
+                <li>
+                    <a href="{% url 'dashboard:user' %}">
+                        <i class="nc-icon nc-single-02"></i>
+                        <p>Update Profile</p>
+                    </a>
+                </li>
 
-        </ul>
-      </div>
+                <li>
+                    <a href="{% url 'dashboard:wallet' %}">
+                        <i class="nc-icon nc-single-02"></i>
+                        <p>Wallet</p>
+                    </a>
+                </li>
+
+            </ul>
+        </div>
     </div>
     <div class="main-panel">
-      <!-- Navbar -->
-      <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
-        <div class="container-fluid">
-          <div class="navbar-wrapper">
-            <div class="navbar-toggle">
-              <button type="button" class="navbar-toggler">
-                <span class="navbar-toggler-bar bar1"></span>
-                <span class="navbar-toggler-bar bar2"></span>
-                <span class="navbar-toggler-bar bar3"></span>
-              </button>
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+            <div class="container-fluid">
+                <div class="navbar-wrapper">
+                    <div class="navbar-toggle">
+                        <button type="button" class="navbar-toggler">
+                            <span class="navbar-toggler-bar bar1"></span>
+                            <span class="navbar-toggler-bar bar2"></span>
+                            <span class="navbar-toggler-bar bar3"></span>
+                        </button>
+                    </div>
+                    <a class="navbar-brand" href="{% url 'home:index' %}">Innocity</a>
+                </div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-bar navbar-kebab"></span>
+                    <span class="navbar-toggler-bar navbar-kebab"></span>
+                    <span class="navbar-toggler-bar navbar-kebab"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navigation">
+
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'home:index' %}">
+                                Home
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" href="{% url 'home:about' %}">
+                                About Us
+                            </a>
+
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login:index' %}">
+                                Log Out
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-            <a class="navbar-brand" href="{% url 'home:index' %}">Innocity</a>
-          </div>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-            <span class="navbar-toggler-bar navbar-kebab"></span>
-          </button>
-          <div class="collapse navbar-collapse justify-content-end" id="navigation">
+        </nav>
+        <!-- End Navbar -->
+        <div class="content">
+            <h5 class="card-title">Your bookings</h5>
+            <br>
+            {% for reservation in reservation_list %}
+                <div class="row" style="padding-bottom: 50px" >
 
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'home:index' %}">
-                  Home
-                </a>
-              </li>
-              <li class="nav-item ">
-                <a class="nav-link" href="{% url 'home:about' %}">
-                  About Us
-                </a>
+                    <div class="col-md-11" style="padding-left: 50px">
+                        <div class="card card-user">
+                            <div class="card-body">
+                                <div class="row" >
+                                    <div class="col-md-5">
+                                        <img src="{% static 'dashboard/img/img_1.jpg' %}">
+                                    </div>
+                                    <div class="col-md-1">
 
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'login:index' %}">
-                  Log Out
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-      <!-- End Navbar -->
-      <div class="content">
-          <h5 class="card-title">Your bookings</h5>
-          <br>
-        {% for reservation in reservation_list %}
-        <div class="row" style="padding-bottom: 50px" >
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="row">
+                                            <a href="{% url 'hotel:index' reservation.hotelId %}"><h3>{{ reservation.hotel_name }}</h3></a>
 
-          <div class="col-md-11" style="padding-left: 50px">
-            <div class="card card-user">
-              <div class="card-body">
-                  <div class="row" >
-                      <div class="col-md-5">
-                          <img src="{% static 'dashboard/img/img_1.jpg' %}">
-                      </div>
-                      <div class="col-md-1">
+                                        </div>
+                                        <div class="row" style="font-size: 20px;">
+                                            {{ reservation.city }}, {{ reservation.country }}
+                                        </div>
+                                        <div class="row" style="font-size: 15px; padding-top: 20px">
+                                            <p><b>Arrival:    </b>   {{ reservation.date_of_arrival }}</p>
+                                        </div>
+                                        <div class="row" style="font-size: 15px; ">
+                                            <p><b>Departure:  </b>   {{ reservation.date_of_departure }}</p>
+                                        </div>
+                                        <div class="row" style="font-size: 15px; ">
+                                            <p><b>Room type:  </b>   {{ reservation.room_type }} type room</p>
+                                        </div>
+                                        {% if reservation.services %}
+                                            <div class="row" style="font-size: 15px; ">
+                                                <p><b>Services included:  </b>
+                                                    {% for ser in reservation.services %}
+                                                        <br>{{ser}}
+                                                    {% endfor %}
+                                                </p>
+                                            </div>
+                                        {% endif %}
+                                        <div class="row" style="font-size: 15px; ">
+                                            <p><b>Cost:  </b>   {{ reservation.cost }}</p>
+                                        </div>
 
-                      </div>
-                      <div class="col-md-5">
-                          <div class="row">
-                                <a href="{% url 'hotel:index' reservation.hotelId %}"><h3>{{ reservation.hotel_name }}</h3></a>
+                                        <div class="row">
+                                            <a href="{% url 'hotel:index' reservation.hotelId %}">
+                                                <button type="submit" name="book_again" value="book_again" class="btn btn-primary btn-round" >Book Again </button>
+                                            </a>
+                                        </div>
 
-                          </div>
-                            <div class="row" style="font-size: 20px;">
-                                {{ reservation.city }}, {{ reservation.country }}
+                                    </div>
+                                </div>
+
                             </div>
-                          <div class="row" style="font-size: 15px; padding-top: 20px">
-                              <p><b>Arrival:    </b>   {{ reservation.date_of_arrival }}</p>
-                          </div>
-                          <div class="row" style="font-size: 15px; ">
-                              <p><b>Departure:  </b>   {{ reservation.date_of_departure }}</p>
-                          </div>
-                          <div class="row" style="font-size: 15px; ">
-                              <p><b>Room type:  </b>   {{ reservation.room_type }} type room</p>
-                          </div>
-                            {% if reservation.services %}
-                          <div class="row" style="font-size: 15px; ">
-                              <p><b>Services included:  </b>
-                              {% for ser in reservation.services %}
-                                  <br>{{ser}}
-                               {% endfor %}
-                              </p>
-                          </div>
-                            {% endif %}
-                          <div class="row" style="font-size: 15px; ">
-                              <p><b>Cost:  </b>   {{ reservation.cost }}</p>
-                          </div>
-
-                          <div class="row">
-                                <a href="{% url 'hotel:index' reservation.hotelId %}">
-                              <button type="submit" name="book_again" value="book_again" class="btn btn-primary btn-round" >Book Again </button>
-                                </a>
-                          </div>
-
-                      </div>
-                  </div>
-
-              </div>
-            </div>
-          </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
-        {% endfor %}
-      </div>
     </div>
-  </div>
-  <!--   Core JS Files   -->
-  <script src="{% static 'dashboard/js/core/jquery.min.js' %}"></script>
-  <script src="{% static 'dashboard/js/core/popper.min.js' %}"></script>
-  <script src="{% static 'dashboard/js/core/bootstrap.min.js' %}"></script>
-  <script src="{% static 'dashboard/js/plugins/perfect-scrollbar.jquery.min.js' %}"></script>
-  <!--  Google Maps Plugin    -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-  <!-- Chart JS -->
-  <script src="{% static 'dashboard/js/plugins/chartjs.min.js' %}"></script>
-  <!--  Notifications Plugin    -->
-  <script src="{% static 'dashboard/js/plugins/bootstrap-notify.js' %}"></script>
-  <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="{% static 'dashboard/js/paper-dashboard.min.js' %}?v=2.0.1" type="text/javascript"></script><!-- Paper Dashboard DEMO methods, don't include it in your project! -->
-  <script src="{% static 'dashboard/demo/demo.js' %}"></script>
-  <script>
+</div>
+<!--   Core JS Files   -->
+<script src="{% static 'dashboard/js/core/jquery.min.js' %}"></script>
+<script src="{% static 'dashboard/js/core/popper.min.js' %}"></script>
+<script src="{% static 'dashboard/js/core/bootstrap.min.js' %}"></script>
+<script src="{% static 'dashboard/js/plugins/perfect-scrollbar.jquery.min.js' %}"></script>
+<!--  Google Maps Plugin    -->
+<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+<!-- Chart JS -->
+<script src="{% static 'dashboard/js/plugins/chartjs.min.js' %}"></script>
+<!--  Notifications Plugin    -->
+<script src="{% static 'dashboard/js/plugins/bootstrap-notify.js' %}"></script>
+<!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
+<script src="{% static 'dashboard/js/paper-dashboard.min.js' %}?v=2.0.1" type="text/javascript"></script><!-- Paper Dashboard DEMO methods, don't include it in your project! -->
+<script src="{% static 'dashboard/demo/demo.js' %}"></script>
+<script>
     $(document).ready(function() {
-      // Javascript method's body can be found in assets/assets-for-demo/js/demo.js' %}
-      demo.initChartsPages();
+        // Javascript method's body can be found in assets/assets-for-demo/js/demo.js' %}
+        demo.initChartsPages();
     });
-  </script>
+</script>
 </body>
 
 </html>

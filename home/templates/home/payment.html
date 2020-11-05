@@ -35,7 +35,7 @@
                                     href="{% url 'home:index' %}">Innocity</a></div>
                             <nav class="main_nav" style="padding-left: 500px; padding-bottom: 40px">
                                 <ul class="d-flex flex-row align-items-start justify-content-start">
-                                   <li><a href="{% url 'home:index' %}">Home</a></li>
+                                    <li><a href="{% url 'home:index' %}">Home</a></li>
                                     <li><a href="{% url 'home:about' %}">About us</a></li>
                                     {% if logged_in %}
                                         <li><a href="{% url 'dashboard:index' %}">Dashboard</a></li>
@@ -107,14 +107,14 @@
                                                                                         style="font-family: Oswald, sans-serif;">
                                     </div>
                                 </div>
-                                <div class="col-sm-5">
-                                    <div class="form-group"><label style="font-family: Oswald, sans-serif;">Expiration
-                                        date</label>
-                                        <div class="input-group expiration-date"><input class="form-control" type="text"
-                                                                                        placeholder="MM"
-                                                                                        style="font-family: Oswald, sans-serif;"><input
-                                                class="form-control" type="text" placeholder="YY"
-                                                style="font-family: Oswald, sans-serif;"></div>
+                                <div class="col-md-5" >
+                                    <div class="form-group" >
+                                        <label >Card Type</label>
+                                        <select name="card_type" required="required" class="form-control" >
+                                            <option>Visa</option>
+                                            <option>MasterCard</option>
+                                        </select>
+                                        <div class="select-dropdown"></div>
                                     </div>
                                 </div>
                                 <div class="col-sm-8">
@@ -126,6 +126,16 @@
                                 <div class="col-sm-4">
                                     <div class="form-group" style="font-family: Oswald, sans-serif;"><label for="cvc">CVC</label><input
                                             class="form-control" type="text" id="cvc" placeholder="CVC"></div>
+                                </div>
+                                <div class="col-sm-5">
+                                    <div class="form-group"><label style="font-family: Oswald, sans-serif;">Expiration
+                                        date</label>
+                                        <div class="input-group expiration-date"><input class="form-control" type="text"
+                                                                                        placeholder="MM"
+                                                                                        style="font-family: Oswald, sans-serif;"><input
+                                                class="form-control" type="text" placeholder="YY"
+                                                style="font-family: Oswald, sans-serif;"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

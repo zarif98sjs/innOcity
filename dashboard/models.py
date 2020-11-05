@@ -3,7 +3,8 @@
 class Customer:
 
     def __init__(self, customer_id, name=None, email=None, username=None, gender=None,
-                 street=None, zipcode=None, city=None, country=None):
+                 street=None, zipcode=None, city=None, country=None , card_username = None , card_type = None ,
+                 card_number = None ,  mob_banking_phone_number= None , mob_banking_service_provider = None):
 
         self.customer_id = customer_id
         self.name = name
@@ -14,6 +15,11 @@ class Customer:
         self.zipcode = zipcode
         self.city = city
         self.country = country
+        self.card_username = card_username
+        self.card_type = card_type
+        self.card_number = card_number
+        self.mob_banking_phone_number = mob_banking_phone_number
+        self.mob_banking_service_provider = mob_banking_service_provider
 
 
 class Reservation:

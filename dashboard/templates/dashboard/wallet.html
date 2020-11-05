@@ -68,14 +68,14 @@ Coded by www.creative-tim.com
                     </a>
                 </li>
 
-                <li class="active ">
+                <li>
                     <a href="{% url 'dashboard:user' %}">
                         <i class="nc-icon nc-single-02"></i>
                         <p>Update Profile</p>
                     </a>
                 </li>
 
-                <li>
+                <li class="active ">
                     <a href="{% url 'dashboard:wallet' %}">
                         <i class="nc-icon nc-single-02"></i>
                         <p>Wallet</p>
@@ -135,86 +135,55 @@ Coded by www.creative-tim.com
                 <div class="col-md-11" style="padding-left: 50px">
                     <div class="card card-user">
                         <div class="card-header">
-                            <h5 class="card-title">Update Personal Information</h5>
+                            <h5 class="card-title">Update Credit Card Details</h5>
                         </div>
                         <div class="card-body">
-                            <form action="{% url 'dashboard:user' %}" method="POST" name="personal_form" id="personal_form">
+                            <form action="{% url 'dashboard:wallet' %}" method="POST" name="card_form" id="card_form">
                                 {% csrf_token %}
-                                <div class="row">
+                                <div class="form-row">
                                     <div class="col-md-5">
-                                        <div class="form-group">
-                                            <label>Name</label>
-                                            <input type="text" class="form-control"  placeholder="name" name="name" required="required" value={{ customer.name }}>
-
+                                        <div class="form-group" style="font-family: Oswald, sans-serif;"><label
+                                                for="card-holder">Card Holder</label><input class="form-control" type="text" name="card_username"
+                                                                                            placeholder="Card Holder"
+                                                                                            style="font-family: Oswald, sans-serif;">
                                         </div>
                                     </div>
-                                    <div class="col-md-5 " >
-                                        <div class="form-group">
-                                            <label>Email</label>
-                                            <input type="email" class="form-control" placeholder="email" name="email" required="required" value={{ customer.email }}>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
                                     <div class="col-md-5">
-                                        <div class="form-group">
-                                            <label>Username</label>
-                                            <input type="text" class="form-control" placeholder="username" name="username" required="required" value={{ customer.username }}>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-5">
-                                        <div class="form-group">
-                                            <label>Gender</label>
-                                            <select name="gender" required="required" class="form-control">
-                                                <option selected="selected">{{ customer.gender }}</option>
-                                                {% if customer.gender != "Male"%}
-                                                    <option>Male</option>
-                                                {% endif %}
-                                                {% if customer.gender != "Female"%}
-                                                    <option>Female</option>
-                                                {% endif %}
-                                                {% if customer.gender != "Other"%}
-                                                    <option>Other</option>
-                                                {% endif %}
-
+                                         <div class="form-group">
+                                            <label>Card Type</label>
+                                            <select name="card_type" required="required" class="form-control">
+                                                <option selected="selected">{{ customer.card_type }}</option>
+                                                    <option>Visa</option>
+                                                    <option>MasterCard</option>
                                             </select>
                                             <div class="select-dropdown"></div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
                                     <div class="col-md-5">
-                                        <div class="form-group">
-                                            <label>Street</label>
-                                            <input type="text" class="form-control" placeholder="street" name="street" required="required" value={{customer.street}}>
+                                        <div class="form-group"><label style="font-family: Oswald, sans-serif;">Expiration
+                                            date</label>
+                                            <div class="input-group expiration-date"><input class="form-control" type="text"
+                                                                                            placeholder="MM"
+                                                                                            style="font-family: Oswald, sans-serif;"><input
+                                                    class="form-control" type="text" placeholder="YY"
+                                                    style="font-family: Oswald, sans-serif;"></div>
                                         </div>
                                     </div>
                                     <div class="col-md-5">
-                                        <div class="form-group">
-                                            <label>Zipcode</label>
-                                            <input type="text" class="form-control" placeholder="zipcode" name="zipcode" required="required" value={{customer.zipcode}}>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-5">
-                                        <div class="form-group">
-                                            <label>City</label>
-                                            <input type="text" class="form-control" placeholder="city" name="city" required="required" value={{customer.city}}>
-                                        </div>
+                                        <div class="form-group" style="font-family: Oswald, sans-serif;"><label
+                                                for="card-number">Card Number</label><input class="form-control" type="text" name="card_number"
+                                                                                            id="card-number"
+                                                                                            placeholder="Card Number" style="font-family: Oswald, sans-serif;"></div>
                                     </div>
                                     <div class="col-md-5">
-                                        <div class="form-group">
-                                            <label>Country</label>
-                                            <input type="text" class="form-control" placeholder="country" name="country" required="required" value={{customer.country}}>
-                                        </div>
+                                        <div class="form-group" style="font-family: Oswald, sans-serif;"><label for="cvc">CVC</label><input
+                                                class="form-control" type="text" id="cvc" placeholder="CVC" style="font-family: Oswald, sans-serif;"></div>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="update ml-auto mr-auto">
-                                        <button type="submit" name="submit_personal" value="submit_personal" class="btn btn-primary btn-round">Update</button>
+                                        <button type="submit" name="submit_credit_card" value="submit_credit_card" class="btn btn-primary btn-round">Update</button>
                                     </div>
                                 </div>
                             </form>
@@ -228,77 +197,39 @@ Coded by www.creative-tim.com
                 <div class="col-md-11" style="padding-left: 50px">
                     <div class="card card-user">
                         <div class="card-header">
-                            <h5 class="card-title">Update Password</h5>
+                            <h5 class="card-title">Update Mobile Banking Details</h5>
                         </div>
                         <div class="card-body">
-                            <form action="{% url 'dashboard:user' %}" method="POST" id="password_form" name="password_form">
+                            <form action="{% url 'dashboard:wallet' %}" method="POST" name="mobile_banking_form" id="mobile_banking_form">
                                 {% csrf_token %}
-                                <div class="row">
+                                <div class="form-row">
                                     <div class="col-md-5">
-                                        <div class="form-group">
-                                            <label>Old Password</label>
-                                            <input type="password" class="form-control"  placeholder="old password" name="old_password" id="pass0" required="required">
+                                        <div class="form-group" style="font-family: Oswald, sans-serif;"><label
+                                            for="card-number">Phone Number</label><input class="form-control"
+                                                                                         type="text" id="card-number-1" name="mob_banking_phone_number"
+                                                                                         placeholder="Phone Number">
+                                    </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                         <div class="form-group">
+                                            <label>Service Provider</label>
+                                            <select name="mob_banking_service_provider" required="required" class="form-control">
+                                                <option selected="selected">{{ customer.mob_banking_service_provider }}</option>
+                                                    <option>Bkash</option>
+                                                    <option>Rocket</option>
+                                                    <option>Ukash</option>
+                                            </select>
+                                            <div class="select-dropdown"></div>
                                         </div>
                                     </div>
-
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-5">
-                                        <div class="form-group">
-                                            <label>New Password</label>
-                                            <input type="password" class="form-control" placeholder="new password" name="new_password" id="pass1" required="required">
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-5">
-                                        <div class="form-group">
-                                            <label>Confirm New Password</label>
-                                            <input type="password" class="form-control" placeholder="confirm new password" name="confirm_new_password" id="pass2" required="required" >
-                                        </div>
-                                    </div>
-
-                                </div>
-
-
-
 
                                 <div class="row">
                                     <div class="update ml-auto mr-auto">
-                                        <button type="submit" name="submit_password" value="submit_password" class="btn btn-primary btn-round" onclick="validatePassword()">Update</button>
+                                        <button type="submit" name="submit_mobile_banking" value="submit_mobile_banking" class="btn btn-primary btn-round">Update</button>
                                     </div>
                                 </div>
                             </form>
-                            <script>
-
-                                function validatePassword(){
-                                    var old_pass = document.getElementById("pass0");
-                                    var new_pass = document.getElementById("pass1");
-                                    var confirm_password = document.getElementById("pass2");
-                                    confirm_password.setCustomValidity("");
-                                    new_pass.setCustomValidity("");
-
-                                    if(new_pass.value !== confirm_password.value) {
-
-                                        confirm_password.setCustomValidity("Password doesn't match");
-                                        confirm_password.value = "";
-
-                                    }
-                                    else if(old_pass.value === new_pass.value)
-                                    {
-                                        new_pass.setCustomValidity("Your new password is the same as the old one");
-
-                                    }
-                                    else {
-
-                                        document.forms['password_form'].submit();
-
-                                    }
-                                }
-                            </script>
-
                         </div>
                     </div>
                 </div>

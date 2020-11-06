@@ -17,7 +17,7 @@
 -- ----------------------------
 -- Table structure for MOBILE_BANKING
 -- ----------------------------
-DROP TABLE "INNOCITY"."MOBILE_BANKING";
+-- DROP TABLE "INNOCITY"."MOBILE_BANKING";
 CREATE TABLE "INNOCITY"."MOBILE_BANKING" (
   "PAYMENTID" NUMBER NOT NULL,
   "TXNID" VARCHAR2(50 BYTE),

@@ -17,7 +17,7 @@
 -- ----------------------------
 -- Table structure for CUSTOMER
 -- ----------------------------
-DROP TABLE "INNOCITY"."CUSTOMER";
+-- DROP TABLE "INNOCITY"."CUSTOMER";
 CREATE TABLE "INNOCITY"."CUSTOMER" (
   "CUSTOMERID" NUMBER NOT NULL,
   "NAME" VARCHAR2(50 BYTE),

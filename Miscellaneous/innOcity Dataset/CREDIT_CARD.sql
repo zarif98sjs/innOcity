@@ -17,7 +17,7 @@
 -- ----------------------------
 -- Table structure for CREDIT_CARD
 -- ----------------------------
-DROP TABLE "INNOCITY"."CREDIT_CARD";
+-- DROP TABLE "INNOCITY"."CREDIT_CARD";
 CREATE TABLE "INNOCITY"."CREDIT_CARD" (
   "PAYMENTID" NUMBER NOT NULL,
   "CARD_USERNAME" VARCHAR2(50 BYTE),

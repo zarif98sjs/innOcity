@@ -17,7 +17,7 @@
 -- ----------------------------
 -- Table structure for PAYMENT
 -- ----------------------------
-DROP TABLE "INNOCITY"."PAYMENT";
+-- DROP TABLE "INNOCITY"."PAYMENT";
 CREATE TABLE "INNOCITY"."PAYMENT" (
   "PAYMENTID" NUMBER NOT NULL,
   "PAYMENT_DATE" DATE

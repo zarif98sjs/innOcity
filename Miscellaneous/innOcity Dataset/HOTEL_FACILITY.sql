@@ -17,7 +17,7 @@
 -- ----------------------------
 -- Table structure for HOTEL_FACILITY
 -- ----------------------------
-DROP TABLE "INNOCITY"."HOTEL_FACILITY";
+-- DROP TABLE "INNOCITY"."HOTEL_FACILITY";
 CREATE TABLE "INNOCITY"."HOTEL_FACILITY" (
   "HOTELID" NUMBER,
   "FACILITIES" VARCHAR2(30 BYTE)

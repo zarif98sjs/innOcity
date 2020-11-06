@@ -17,7 +17,7 @@
 -- ----------------------------
 -- Table structure for RESERVATION
 -- ----------------------------
-DROP TABLE "INNOCITY"."RESERVATION";
+-- DROP TABLE "INNOCITY"."RESERVATION";
 CREATE TABLE "INNOCITY"."RESERVATION" (
   "RESERVATIONID" NUMBER NOT NULL,
   "DATE_OF_ARRIVAL" DATE,

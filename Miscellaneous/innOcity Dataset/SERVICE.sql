@@ -17,7 +17,7 @@
 -- ----------------------------
 -- Table structure for SERVICE
 -- ----------------------------
-DROP TABLE "INNOCITY"."SERVICE";
+-- DROP TABLE "INNOCITY"."SERVICE";
 CREATE TABLE "INNOCITY"."SERVICE" (
   "SERVICEID" NUMBER NOT NULL,
   "SERVICE_TYPE" VARCHAR2(20 BYTE),

@@ -17,7 +17,7 @@
 -- ----------------------------
 -- Table structure for ROOM_FACILITY
 -- ----------------------------
-DROP TABLE "INNOCITY"."ROOM_FACILITY";
+-- DROP TABLE "INNOCITY"."ROOM_FACILITY";
 CREATE TABLE "INNOCITY"."ROOM_FACILITY" (
   "ROOMID" NUMBER,
   "FACILITIES" VARCHAR2(50 BYTE)

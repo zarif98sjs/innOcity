@@ -17,7 +17,7 @@
 -- ----------------------------
 -- Table structure for ROOM
 -- ----------------------------
-DROP TABLE "INNOCITY"."ROOM";
+-- DROP TABLE "INNOCITY"."ROOM";
 CREATE TABLE "INNOCITY"."ROOM" (
   "ROOMID" NUMBER NOT NULL,
   "ROOM_TYPE" VARCHAR2(30 BYTE),

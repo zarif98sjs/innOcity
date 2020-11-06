@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.db import connection
@@ -25,14 +27,38 @@ def index(request):
 
 @csrf_exempt
 def payment(request):
-    # checkin_input = request.POST.get('checkin')
-    # checkin_date_ymd = datetime.strptime(checkin_input, "%Y-%m-%d").date()
-    # checkin_date = checkin_date_ymd.strftime('%d %b,%Y')
-    # print(checkin_date)
+
+    if request.session.has_key('customer_id'):
+        logged_in = True
+    else:
+        logged_in = False
+
+    checkin_input = request.POST.get('checkin')
+    checkin_date_ymd = datetime.strptime(checkin_input, "%Y-%m-%d").date()
+    checkin_date = checkin_date_ymd.strftime('%d %b,%Y')
+    print(checkin_date)
+
+    checkout_input = request.POST.get('checkout')
+    checkout_date_ymd = datetime.strptime(checkout_input, "%Y-%m-%d").date()
+    checkout_date = checkout_date_ymd.strftime('%d %b,%Y')
+    print(checkout_date)
+
+    studio_room_cnt = request.POST.get('Studio')
+    regular_room_cnt = request.POST.get('Regular')
+    presidential_room_cnt = request.POST.get('Presidential Suite')
+    suite_room_cnt = request.POST.get('Suite')
+    villa_room_cnt = request.POST.get('Villa')
+
+    para = request.POST.get('para')
+    print(para)
+
+    print(studio_room_cnt)
+    print(regular_room_cnt)
+
     # room_types = hotel.views.get_rooms(107)
     # print(room_types)
 
-    return render(request, 'home/payment.html')
+    return render(request, 'hotel/payment.html',{'logged_in': logged_in})
 
 
 def get_destination():
@@ -81,7 +107,7 @@ def top_discount():
         for row in result:
             h = Hotel(hotelId=row[0], name=row[1], street=row[2], zipcode=row[3],
                       city=row[4], country=row[5], rating=row[6], rating_count=row[7])
-            hotel_ara.append((h, row[8], row[9]))
+            hotel_ara.append((h, row[9], row[10]))
 
         return hotel_ara
 

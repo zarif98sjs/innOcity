@@ -1,10 +1,13 @@
-from django.shortcuts import render
+from datetime import datetime
+
+from django.shortcuts import render, redirect
 from django.http import Http404
 from .models import Hotel, Room , Session
 from django.views.decorators.csrf import csrf_exempt
 from django.db import connection
 from random import seed
 from random import randint
+from dashboard.models import Customer
 import login.views
 
 # Create your views here.
@@ -13,6 +16,9 @@ app_name = 'hotel'
 
 session_id = 0
 sessions = {}
+
+customer = Customer(0)
+
 @csrf_exempt
 def available(request):
 
@@ -52,7 +58,7 @@ def available(request):
 
         for row in result:
 
-            total_count = row[8] - row[9]
+            total_count = row[9] - row[10]
 
             if total_count >= int(room_no):
                 hotel = Hotel(hotelId=row[0], name=row[1], street=row[2], zipcode=row[3], city=row[4],
@@ -69,6 +75,91 @@ def index(request, hotel_id):
     context = get_context(hotel_id)
     return render(request, 'hotel/index.html', context)
 
+@csrf_exempt
+def payment(request, hotel_id):
+
+    if request.session.has_key('customer_id'):
+        logged_in = True
+        customer_id = request.session['customer_id']
+    else:
+        logged_in = False
+
+    with connection.cursor() as cur:
+        cur.execute("SELECT * FROM CUSTOMER WHERE customerId = %s", [customer_id])
+        result = cur.fetchone()
+
+        if result is None:
+            return redirect('home:index')
+        else:
+            global customer
+            customer = Customer(customer_id=customer_id, name=result[1], email=result[2], username=result[3],
+                                gender=result[5], street=result[6], zipcode=result[7], city=result[8], country=result[9],
+                                card_username=result[11],card_type=result[12],card_number=result[13],mob_banking_phone_number=result[14],
+                                mob_banking_service_provider=result[15] , cvc=result[16])
+
+    context = get_context(hotel_id)
+    checkin_input = request.POST.get('checkin')
+    checkin_date_ymd = datetime.strptime(checkin_input, "%Y-%m-%d").date()
+    checkin_date = checkin_date_ymd.strftime('%d %b,%Y')
+    print(checkin_date)
+
+    checkout_input = request.POST.get('checkout')
+    checkout_date_ymd = datetime.strptime(checkout_input, "%Y-%m-%d").date()
+    checkout_date = checkout_date_ymd.strftime('%d %b,%Y')
+    print(checkout_date)
+
+    delta = checkout_date_ymd - checkin_date_ymd
+    stay = delta.days
+    print(delta.days)
+
+    room_cnt = {}
+
+    room_cnt[0] = request.POST.get('Studio')
+    room_cnt[1] = request.POST.get('Regular')
+    room_cnt[2] = request.POST.get('Presidential Suite')
+    room_cnt[3] = request.POST.get('Suite')
+    room_cnt[4] = request.POST.get('Villa')
+
+    for i in range(5):
+        if room_cnt[i]==None:
+            room_cnt[i] = 0
+        else:
+            room_cnt[i] = int(room_cnt[i])
+
+    print(room_cnt[0])
+    print(room_cnt[1])
+
+    with connection.cursor() as cur:
+        sql = "SELECT ROOM_TYPE , COST_PER_DAY , DISCOUNT FROM ROOM WHERE hotelId= %s"
+        cur.execute(sql, [hotel_id])
+        result = cur.fetchall()
+
+        if result is None:
+            raise Http404("Invalid hotel")
+        else:
+            for r in result:
+                context[r[0]] = r[1] * (r[2]/100)
+
+        total_cost = 0
+        total_cost += room_cnt[0]*context.get('Studio', 0)
+        total_cost += room_cnt[1]*context.get('Regular', 0)
+        total_cost += room_cnt[2]*context.get('Presidential Suite', 0)
+        total_cost += room_cnt[3]*context.get('Suite', 0)
+        total_cost += room_cnt[4]*context.get('Villa', 0)
+        total_cost = total_cost*stay
+
+        context['total_cost'] = total_cost
+
+        print(context['total_cost'])
+        context['logged_in'] = logged_in
+
+        context['customer'] = customer
+
+    return render(request, 'hotel/payment.html', context)
+
+@csrf_exempt
+def complete_payment(request,hotel_id):
+    return redirect('dashboard:index')
 
 def book(request, hotel_id):
     context = get_context(hotel_id)

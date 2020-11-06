@@ -102,7 +102,7 @@
     <div class="row mb-5">
         <div class="col-md-12">
             <div class="block-32">
-                <form action="{% url 'home:payment' %}" method="post">
+                <form action="{% url 'hotel:payment' hotel.hotelId %}" method="post">
                     <div class="form-row"
                          style="box-shadow: 0px 0px;margin: 0px;padding: 15px;font-family: Actor, sans-serif;">
                         <div class="col">
@@ -133,10 +133,10 @@
                         {% for room in room_types %}
                             <div class="form-row" style="padding: 15px;margin: 0px;">
                                 <div class="col">
-                                    <p style="margin: 0px;text-align: center;font-style: normal;font-weight: normal;font-family: Oswald, sans-serif;font-size: 20px;">
+                                    <p  style="margin: 0px;text-align: center;font-style: normal;font-weight: normal;font-family: Oswald, sans-serif;font-size: 20px;">
                                         {{ room.room_type }}</p>
                                 </div>
-                                <div class="col"><input class="form-control" type="number" min="0" placeholder="Count"
+                                <div class="col"><input class="form-control" name="{{ room.room_type }}" type="number" min="0" placeholder="Count"
                                                         style="font-family: Actor, sans-serif;"></div>
                             </div>
                         {% endfor %}
@@ -155,7 +155,7 @@
 {#                    </div>#}
                     <div class="form-row" style="text-align: center;margin: 0px;">
                         <div class="col" style="padding: 15px;margin: 0px;">
-                            <button class="btn btn-primary" type="submit"
+                            <button class="btn btn-primary" type="submit" name="submit_payment"
                                     style="background-color: rgb(28,28,28);width: 114px;font-family: Oswald, sans-serif;font-size: 20px;">
                                 Book
                             </button>

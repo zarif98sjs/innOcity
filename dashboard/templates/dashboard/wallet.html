@@ -143,18 +143,22 @@ Coded by www.creative-tim.com
                                 <div class="form-row">
                                     <div class="col-md-5">
                                         <div class="form-group" style="font-family: Oswald, sans-serif;"><label
-                                                for="card-holder">Card Holder</label><input class="form-control" type="text" name="card_username"
+                                                for="card-holder">Card Holder</label><input class="form-control" type="text" name="card_username" value= '{{ customer.card_username }}'
                                                                                             placeholder="Card Holder"
                                                                                             style="font-family: Oswald, sans-serif;">
                                         </div>
                                     </div>
                                     <div class="col-md-5">
-                                         <div class="form-group">
+                                        <div class="form-group">
                                             <label>Card Type</label>
                                             <select name="card_type" required="required" class="form-control">
                                                 <option selected="selected">{{ customer.card_type }}</option>
+                                                {% if customer.card_type != "Visa"%}
                                                     <option>Visa</option>
+                                                {% endif %}
+                                                {% if customer.card_type != "MasterCard"%}
                                                     <option>MasterCard</option>
+                                                {% endif %}
                                             </select>
                                             <div class="select-dropdown"></div>
                                         </div>
@@ -171,13 +175,13 @@ Coded by www.creative-tim.com
                                     </div>
                                     <div class="col-md-5">
                                         <div class="form-group" style="font-family: Oswald, sans-serif;"><label
-                                                for="card-number">Card Number</label><input class="form-control" type="text" name="card_number"
-                                                                                            id="card-number"
+                                                for="card-number">Card Number</label><input class="form-control" type="text" name="card_number" required="required"
+                                                                                            id="card-number" value="{{ customer.card_number }}"
                                                                                             placeholder="Card Number" style="font-family: Oswald, sans-serif;"></div>
                                     </div>
                                     <div class="col-md-5">
                                         <div class="form-group" style="font-family: Oswald, sans-serif;"><label for="cvc">CVC</label><input
-                                                class="form-control" type="text" id="cvc" placeholder="CVC" style="font-family: Oswald, sans-serif;"></div>
+                                                class="form-control" name="cvc" required="required" value="{{ customer.cvc }}" type="text" id="cvc" placeholder="CVC" style="font-family: Oswald, sans-serif;"></div>
                                     </div>
                                 </div>
 
@@ -205,19 +209,25 @@ Coded by www.creative-tim.com
                                 <div class="form-row">
                                     <div class="col-md-5">
                                         <div class="form-group" style="font-family: Oswald, sans-serif;"><label
-                                            for="card-number">Phone Number</label><input class="form-control"
-                                                                                         type="text" id="card-number-1" name="mob_banking_phone_number"
-                                                                                         placeholder="Phone Number">
-                                    </div>
+                                                for="card-number">Phone Number</label><input class="form-control" required="required" value="{{ customer.mob_banking_phone_number }}"
+                                                                                             type="text" id="card-number-1" name="mob_banking_phone_number"
+                                                                                             placeholder="Phone Number">
+                                        </div>
                                     </div>
                                     <div class="col-md-5">
-                                         <div class="form-group">
+                                        <div class="form-group">
                                             <label>Service Provider</label>
                                             <select name="mob_banking_service_provider" required="required" class="form-control">
                                                 <option selected="selected">{{ customer.mob_banking_service_provider }}</option>
+                                                {% if customer.mob_banking_service_provider != "Bkash"%}
                                                     <option>Bkash</option>
+                                                {% endif %}
+                                                {% if customer.mob_banking_service_provider != "Rocket"%}
                                                     <option>Rocket</option>
+                                                {% endif %}
+                                                {% if customer.mob_banking_service_provider != "Ukash"%}
                                                     <option>Ukash</option>
+                                                {% endif %}
                                             </select>
                                             <div class="select-dropdown"></div>
                                         </div>

@@ -4,7 +4,6 @@ from django.contrib import messages
 from django.db import connection
 from .models import Room, Reservation, Service
 from hotel.models import Hotel
-import login.views
 import random
 
 app_name = 'hotel_admin'
@@ -14,21 +13,18 @@ room_list = []
 
 def index(request):
 
-    hotel_id = login.views.admin_id
+    if not request.session.has_key('admin_id'):
+        return redirect('login:index')
+    else:
+        hotel_id = request.session['admin_id']
+
+    global hotel
+    get_hotel(hotel_id)
 
     with connection.cursor() as cur:
 
-        sql = "SELECT * FROM HOTEL WHERE HOTELID = %s"
-        cur.execute(sql, [hotel_id])
-        row = cur.fetchone()
-
-        if row is None:
-            return redirect('login:index')
-        global hotel
-        hotel = Hotel(hotelId=row[0], name=row[1], street=row[2], zipcode=row[3],
-                      city=row[4], country=row[5], rating=row[6], rating_count=row[7])
-
         if request.method == 'POST':
+
             if request.POST.get("submit_cost"):
 
                 room_type = request.POST.get("room_type")
@@ -74,6 +70,15 @@ def index(request):
             return HttpResponseRedirect(reverse('hotel_admin:index'))
 
         global room_list
+        get_room_list(hotel_id)
+
+        return render(request, 'hotel_admin/index.html', {'hotel': hotel, 'room_list': room_list})
+
+
+def get_room_list(hotel_id):
+
+    global room_list
+    with connection.cursor() as cur:
         sql = "SELECT ROOM_TYPE, BED_TYPE, COST_PER_DAY, DISCOUNT, COUNT(*) FROM ROOM " \
               "WHERE HOTELID = %s GROUP BY ROOM_TYPE, BED_TYPE, COST_PER_DAY, DISCOUNT " \
               "ORDER BY ROOM_TYPE, BED_TYPE"
@@ -87,7 +92,20 @@ def index(request):
             hotel.rooms += row[3]
             room_list.append(room)
 
-        return render(request, 'hotel_admin/index.html', {'hotel': hotel, 'room_list': room_list})
+
+def get_hotel(hotel_id):
+
+    with connection.cursor() as cur:
+
+        sql = "SELECT * FROM HOTEL WHERE HOTELID = %s"
+        cur.execute(sql, [hotel_id])
+        row = cur.fetchone()
+
+        if row is None:
+            return redirect('login:index')
+        global hotel
+        hotel = Hotel(hotelId=row[0], name=row[1], street=row[2], zipcode=row[3],
+                      city=row[4], country=row[5], rating=row[6], rating_count=row[7])
 
 
 def generate_new_id(sql):
@@ -108,8 +126,13 @@ def service(request):
 
     global hotel
 
-    if hotel.hotelId == 0:
+    if not request.session.has_key('admin_id'):
         return redirect('login:index')
+
+    if hotel.hotelId == 0:
+
+        hotel_id = request.session['admin_id']
+        get_hotel(hotel_id)
 
     with connection.cursor() as cur:
 
@@ -181,8 +204,13 @@ def reservation(request):
     global hotel
     global room_list
 
-    if login.views.admin_id == 0:
+    if not request.session.has_key('admin_id'):
         return redirect('login:index')
+
+    if hotel.hotelId == 0:
+        hotel_id = request.session['admin_id']
+        get_hotel(hotel_id)
+        get_room_list(hotel_id)
 
     with connection.cursor() as cur:
 

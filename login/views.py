@@ -14,9 +14,9 @@ def index(request):
     '''call the commented out functions only once'''
     # customer_id_change()
     # hotel_id_change()
-    # room_id_change()
+    # room_id_change() //
     # payment_id_change()
-    # service_id_change()
+    # service_id_change() //
     # reservation_id_change()
 
     '''add password to hotel table'''
@@ -37,6 +37,10 @@ def index(request):
         else:
             return admin_login(request)
     else:
+        try:
+            del request.session['customer_id']
+        except:
+            pass
         return render(request, 'login/index.html', {'alert_flag': False})
 
 
@@ -296,7 +300,6 @@ def reservation_id_change():
         # adding the foreign key constraint to table RESERVATION again
         sql = "ALTER TABLE RESERVATION_SERVICE ADD FOREIGN KEY(RESERVATIONID) REFERENCES RESERVATION(RESERVATIONID)"
         cur.execute(sql)
-'''
 
 
 def room_to_reservation():
@@ -374,6 +377,7 @@ def fix_room_price():
 
         cur.execute(sql)
         connection.commit()
+'''
 
 
 def user_login(request):
@@ -395,6 +399,7 @@ def user_login(request):
             return render(request, 'login/index.html', {'alert_flag': True})
         else:
             customer_id = customer[0]
+            request.session['customer_id'] = customer_id
             return redirect('home:index')
 
 
@@ -418,4 +423,6 @@ def admin_login(request):
             return render(request, 'login/index.html', {'alert_flag': True})
         else:
             admin_id = hotel[0]
+            request.session['admin_id'] = admin_id
             return redirect('hotel_admin:index')
+

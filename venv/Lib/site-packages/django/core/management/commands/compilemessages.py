@@ -101,7 +101,7 @@ class Command(BaseCommand):
         self.has_errors = False
         for basedir in basedirs:
             if locales:
-                dirs = [os.path.join(basedir, l, 'LC_MESSAGES') for l in locales]
+                dirs = [os.path.join(basedir, locale, 'LC_MESSAGES') for locale in locales]
             else:
                 dirs = [basedir]
             locations = []
@@ -122,7 +122,7 @@ class Command(BaseCommand):
             futures = []
             for i, (dirpath, f) in enumerate(locations):
                 if self.verbosity > 0:
-                    self.stdout.write('processing file %s in %s\n' % (f, dirpath))
+                    self.stdout.write('processing file %s in %s' % (f, dirpath))
                 po_path = os.path.join(dirpath, f)
                 if has_bom(po_path):
                     self.stderr.write(

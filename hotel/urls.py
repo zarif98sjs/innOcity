@@ -12,4 +12,6 @@ urlpatterns = [
     path('<int:hotel_id>/blog-single/', views.blog_single, name='blog_single'),
     path('<int:hotel_id>/services/', views.services, name='services'),
     path('<int:hotel_id>/book/', views.book, name='book'),
+    path('<int:hotel_id>/payment/', views.payment, name='payment'),
+    path('<int:hotel_id>/complete_payment/', views.complete_payment, name='complete_payment')
 ]

@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponseRedirect
 from django.contrib import messages
+from random import randint
+
+from django.shortcuts import render, redirect
 from django.db import connection
 import hashlib
 from .models import Customer, Reservation
 from hotel.models import Hotel
-import login.views
 import json
 import random
 
@@ -17,9 +19,34 @@ hotel = Hotel(0)
 
 def index(request):
 
-    customer_id = login.views.customer_id
-    with connection.cursor() as cur:
+    if request.session.has_key('customer_id'):
+        customer_id = request.session['customer_id']
 
+    else:
+        redirect('login:index')
+
+    global customer
+    get_customer(customer_id)
+    locations = []
+    hotels = []
+    with connection.cursor() as cur2:
+
+        sql = "SELECT H.name, H.city, H.country FROM HOTEL H, RESERVATION R WHERE R.customerId = %s " \
+                "AND H.hotelId = R.hotelId"
+        cur2.execute(sql, [customer.customer_id])
+        rows = cur2.fetchall()
+
+        for row in rows:
+            hotels.append(row[0] + " " + row[1] + ", " + row[2])
+            locations.append(row[1] + ", " + row[2])
+
+    return render(request, 'dashboard/index.html', {'customer': customer, "locations": json.dumps(locations),
+                                                    "hotels": json.dumps(hotels)})
+
+
+def get_customer(customer_id):
+
+    with connection.cursor() as cur:
         cur.execute("SELECT * FROM CUSTOMER WHERE customerId = %s", [customer_id])
         result = cur.fetchone()
 
@@ -29,32 +56,80 @@ def index(request):
 
             global customer
             customer = Customer(customer_id=customer_id, name=result[1], email=result[2], username=result[3],
-                                gender=result[5], street=result[6], zipcode=result[7], city=result[8], country=result[9],
-                                phone=result[10])
-            locations = []
-            hotels = []
-            with connection.cursor() as cur2:
+                                gender=result[5], street=result[6], zipcode=result[7], city=result[8],
+                                country=result[9],
+                                phone=result[10], card_username=result[11], card_type=result[12],
+                                card_number=result[13],
+                                mob_banking_phone_number=result[14], mob_banking_service_provider=result[15],
+                                cvc=result[16])
 
-                sql = "SELECT H.name, H.city, H.country FROM HOTEL H, RESERVATION R WHERE R.customerId = %s " \
-                      "AND H.hotelId = R.hotelId"
-                cur2.execute(sql, [customer.customer_id])
-                rows = cur2.fetchall()
 
-                for row in rows:
-                    hotels.append(row[0] + " " + row[1] + ", " + row[2])
-                    locations.append(row[1] + ", " + row[2])
+def wallet(request):
 
-            return render(request, 'dashboard/index.html', {'customer': customer, "locations": json.dumps(locations),
-                                                            "hotels": json.dumps(hotels)})
+    global customer
+    if not request.session.has_key('customer_id'):
+        return redirect('login:index')
+    else:
+        if customer.customer_id == 0:
+            get_customer(request.session['customer_id'])
+
+        if request.method == 'POST':
+
+            with connection.cursor() as cur:
+
+                if request.POST.get("submit_credit_card"):
+
+                    customer_id = request.session['customer_id']
+                    card_username = request.POST.get("card_username")
+                    card_type = request.POST.get("card_type")
+                    card_number = request.POST.get("card_number")
+                    cvc = request.POST.get("cvc")
+
+                    # mob_banking_phone_number = request.POST.get("mob_banking_phone_number")
+                    # mob_banking_service_provider = request.POST.get("mob_banking_service_provider")
+
+                    print(card_username)
+                    print(card_type)
+                    print(card_number)
+                    print(customer_id)
+
+                    sql = "UPDATE CUSTOMER SET card_username = %s, card_type = %s, card_number= %s , cvc = %s WHERE customerId = %s"
+                    cur.execute(sql, [card_username, card_type, card_number,cvc, customer_id])
+                    connection.commit()
+
+                    customer.card_username = card_username
+                    customer.card_type = card_type
+                    customer.card_number = card_number
+                    customer.cvc = cvc
+
+                elif request.POST.get("submit_mobile_banking"):
+
+                    customer_id = request.session['customer_id']
+                    mob_banking_phone_number = request.POST.get("mob_banking_phone_number")
+                    mob_banking_service_provider = request.POST.get("mob_banking_service_provider")
+
+                    print(mob_banking_phone_number)
+                    print(mob_banking_service_provider)
+                    print(customer_id)
+
+                    sql = "UPDATE CUSTOMER SET mob_banking_phone_number = %s, mob_banking_service_provider = %s WHERE customerId = %s"
+                    cur.execute(sql, [mob_banking_phone_number, mob_banking_service_provider, customer_id])
+                    connection.commit()
+
+                    customer.mob_banking_phone_number = mob_banking_phone_number
+                    customer.mob_banking_service_provider = mob_banking_service_provider
+
+        return render(request, 'dashboard/wallet.html', {'customer': customer})
 
 
 def maps(request):
 
     global customer
-    if customer.customer_id == 0:
+    if not request.session.has_key('customer_id'):
         return redirect('login:index')
-
     else:
+        if customer.customer_id == 0:
+            get_customer(request.session['customer_id'])
         with connection.cursor() as cur:
 
             sql = "SELECT R.RESERVATIONID, R.DATE_OF_ARRIVAL, R.DATE_OF_DEPARTURE, " \
@@ -91,16 +166,18 @@ def maps(request):
 def user(request):
 
     global customer
-    if customer.customer_id == 0:
+    if not request.session.has_key('customer_id'):
         return redirect('login:index')
     else:
+        if customer.customer_id == 0:
+            get_customer(request.session['customer_id'])
         if request.method == 'POST':
 
             with connection.cursor() as cur:
 
                 if request.POST.get("submit_personal"):
 
-                    customer_id = customer.customer_id
+                    customer_id = request.session['customer_id']
                     name = request.POST.get("name")
                     email = request.POST.get("email")
                     username = request.POST.get("username")

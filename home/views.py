@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.db import connection
@@ -9,7 +11,10 @@ app_name = 'home'
 
 def index(request):
 
-    logged_in = (login.views.customer_id != 0)
+    if request.session.has_key('customer_id'):
+        logged_in = True
+    else:
+        logged_in = False
 
     hotel_ara_best = best_rated()
     top_discount_ara = top_discount()
@@ -22,14 +27,38 @@ def index(request):
 
 @csrf_exempt
 def payment(request):
-    # checkin_input = request.POST.get('checkin')
-    # checkin_date_ymd = datetime.strptime(checkin_input, "%Y-%m-%d").date()
-    # checkin_date = checkin_date_ymd.strftime('%d %b,%Y')
-    # print(checkin_date)
+
+    if request.session.has_key('customer_id'):
+        logged_in = True
+    else:
+        logged_in = False
+
+    checkin_input = request.POST.get('checkin')
+    checkin_date_ymd = datetime.strptime(checkin_input, "%Y-%m-%d").date()
+    checkin_date = checkin_date_ymd.strftime('%d %b,%Y')
+    print(checkin_date)
+
+    checkout_input = request.POST.get('checkout')
+    checkout_date_ymd = datetime.strptime(checkout_input, "%Y-%m-%d").date()
+    checkout_date = checkout_date_ymd.strftime('%d %b,%Y')
+    print(checkout_date)
+
+    studio_room_cnt = request.POST.get('Studio')
+    regular_room_cnt = request.POST.get('Regular')
+    presidential_room_cnt = request.POST.get('Presidential Suite')
+    suite_room_cnt = request.POST.get('Suite')
+    villa_room_cnt = request.POST.get('Villa')
+
+    para = request.POST.get('para')
+    print(para)
+
+    print(studio_room_cnt)
+    print(regular_room_cnt)
+
     # room_types = hotel.views.get_rooms(107)
     # print(room_types)
 
-    return render(request, 'home/payment.html')
+    return render(request, 'hotel/payment.html', {'logged_in': logged_in})
 
 
 def get_destination():

@@ -25,7 +25,7 @@ SECRET_KEY = '*!zzwu_+p+++tc!v84p1c)^48h)d$*uwl%0pmq9!-_ii1b38%x'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # STATICFILES_DIRS = [
@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'home',
     'hotel',
     'dashboard',
+    'hotel_admin',
+
 
 
 

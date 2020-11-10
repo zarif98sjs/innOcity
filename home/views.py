@@ -78,7 +78,7 @@ def top_discount():
         for row in result:
             h = Hotel(hotelId=row[0], name=row[1], street=row[2], zipcode=row[3],
                       city=row[4], country=row[5], rating=row[6], rating_count=row[7])
-            hotel_ara.append((h, row[8], row[9]))
+            hotel_ara.append((h, row[9], row[10]))
 
         return hotel_ara
 

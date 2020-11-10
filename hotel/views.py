@@ -36,7 +36,8 @@ def available(request):
         sql = "SELECT H.*," \
               "(SELECT COUNT(R.ROOMID) FROM ROOM R WHERE R.HOTELID = H.HOTELID)," \
               "(SELECT COUNT(DISTINCT ROOMID) FROM RESERVATION RS WHERE RS.HOTELID = H.HOTELID AND " \
-              "(RS.DATE_OF_ARRIVAL <= TO_DATE(%s, 'YYYY-MM-DD') AND RS.DATE_OF_DEPARTURE >= TO_DATE(%s, 'YYYY-MM-DD'))) " \
+              "(RS.DATE_OF_ARRIVAL <= TO_DATE(%s, 'YYYY-MM-DD') " \
+              "AND RS.DATE_OF_DEPARTURE >= TO_DATE(%s, 'YYYY-MM-DD'))) " \
               "FROM HOTEL H " \
               "WHERE UPPER(CITY) = %s OR UPPER(COUNTRY) = %s"
         cur.execute(sql, [checkout_input, checkin_input, destination, destination])
@@ -44,7 +45,7 @@ def available(request):
 
         for row in result:
 
-            total_count = row[8] - row[9]
+            total_count = row[9] - row[10]
 
             if total_count >= int(room_no):
                 hotel = Hotel(hotelId=row[0], name=row[1], street=row[2], zipcode=row[3], city=row[4],

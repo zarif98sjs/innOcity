@@ -1,0 +1,306 @@
+{% load static %}
+<!--
+=========================================================
+* Paper hotel_admin 2 - v2.0.1
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/paper-hotel_admin-2
+* Copyright 2020 Creative Tim (https://www.creative-tim.com)
+
+Coded by www.creative-tim.com
+
+ =========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="{% static 'hotel_admin/img/apple-icon.png' %}">
+  <link rel="icon" type="image/png" href="{% static 'hotel_admin/img/favicon.png' %}">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    Reservations
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css' %}" rel="stylesheet">
+  <!-- CSS Files -->
+  <link href="{% static 'hotel_admin/css/bootstrap.min.css' %}" rel="stylesheet" />
+  <link href="{% static 'hotel_admin/css/paper-dashboard.css' %}?v=2.0.1" rel="stylesheet" />
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link href="{% static 'hotel_admin/demo/demo.css' %}" rel="stylesheet" />
+    <style>
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+            padding-top: 500px;
+
+        }
+
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: center;
+          padding: 8px;
+          font-family: "Montserrat", "Helvetica Neue", Arial, sans-serif;
+          font-size: 16px;
+        }
+
+        tr:nth-child(even) {
+          background-color: white;
+        }
+        </style>
+</head>
+
+<body class="">
+  <div class="wrapper ">
+    <div class="sidebar" data-color="white" data-active-color="danger" style="width: 350px; padding: 20px">
+      <div class="logo">
+        <a class="simple-text logo-mini">
+          <div class="logo-image-small">
+            <img src="{% static 'hotel_admin/img/logo-small.png' %}">
+          </div>
+          <!-- <p>CT</p> -->
+        </a>
+        <a  class="simple-text logo-normal">
+          hotel_admin
+          <!-- <div class="logo-image-big">
+            <img src="{% static 'hotel_admin/img/logo-small.png' %}">
+          </div> -->
+        </a>
+      </div>
+      <div class="sidebar-wrapper" style="width: 300px">
+        <ul class="nav" style="text-align: center; padding-bottom: 20px">
+            <li>
+                <div class="image">
+                    <img src="{% static 'hotel_admin/img/destination_6.jpg' %}">
+                </div>
+            </li>
+
+          <li style="text-align: center; padding-top: 15px">
+              <h3>{{ hotel.name }}</h3>
+
+          </li>
+
+          <li>
+
+              <p style="font-size: 18px">{{ hotel.street }}, {{ hotel.city }}, {{hotel.country}}</p>
+
+          </li>
+            <li>
+                <p style="font-size: 18px"> User Rating: {{ hotel.rating }}</p>
+            </li>
+        </ul>
+
+        <ul class="nav">
+          <li>
+            <a href="{% url 'hotel_admin:index' %}">
+
+              <p style="color:black;">Rooms</p>
+            </a>
+          </li>
+
+          <li>
+            <a href="{% url 'hotel_admin:service' %}">
+
+              <p style="color: black">Services</p>
+            </a>
+          </li>
+
+          <li class="active">
+            <a href="{% url 'hotel_admin:reservation' %}">
+
+              <p style="color: red">Reservation List</p>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+    <div class="main-panel" >
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent" >
+        <div class="container-fluid" >
+          <div class="navbar-wrapper" >
+            <div class="navbar-toggle" >
+              <button type="button" class="navbar-toggler" >
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
+              </button>
+            </div>
+            <a class="navbar-brand" href="{% url 'home:index' %}" style="padding-left: 100px">Innocity</a>
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end" id="navigation">
+
+            <ul class="navbar-nav">
+
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'login:index' %}">
+                  Log Out
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- End Navbar -->
+       <div class="content" style="padding-left: 100px; width: 1350px; min-height: 500px">
+        <div class="row">
+
+          <div class="col-md-11" style="padding-left: 50px; ">
+            <div class="card card-user" style="overflow-y: scroll; max-height: 1000px">
+              <div class="card-header">
+
+                <h5 class="card-title">List of Reservations</h5>
+
+              </div>
+
+
+              <div class="card-body" style="padding-bottom: 200px;">
+
+                <div class="row" style="padding-bottom: 50px">
+                    <form action="{% url 'hotel_admin:reservation' %}" method="POST" id="search_form" name="search_form">
+                {% csrf_token %}
+                    <div class="row" style="padding-left: 20px;">
+                    <div class="col">
+                      <div class="form-group">
+
+                        <input type="number" class="form-control"  placeholder="month" name="month" min="1" max="12">
+                      </div>
+                    </div>
+
+
+                    <div class="col">
+                      <div class="form-group">
+
+                        <input type="number" class="form-control" placeholder="year" name="year" min="0">
+                      </div>
+                    </div>
+                        <div class="col">
+                      <div class="form-group">
+                          <select name="room_bed" required="required" class="form-control">
+
+                          <option selected>all rooms</option>
+                              {% for room in room_list %}
+                                  <option> {{ room.room_type }} - {{ room.bed_type }}</option>
+                              {% endfor %}
+                          </select>
+
+
+                      </div>
+                    </div>
+                      <div class="col">
+                          <button type="submit" name="search" value="search" title="search" style="background-color: #1F93A6; color: white; width: 100px; height: 40px; border-radius: 20px;" ><b>Search</b></button>
+                      </div>
+                    </div>
+
+
+
+                </form>
+                    <form action="{% url 'hotel_admin:reservation' %}" method="POST" id="show_all_form" name="show_all_form">
+                        {% csrf_token %}
+                    <div class="col" style="">
+                          <button type="submit" name="show_all" value="show_all" title="show all" style="background-color: #a8554f; color: white; width: 150px; height: 40px; border-radius: 20px; " onsubmit="{% url 'hotel_admin:reservation' %}" ><b>Show All</b></button>
+                      </div>
+                    </form>
+              </div>
+                    <table >
+                      <tr>
+                          <th >  Arrival </th>
+                          <th>  Departure </th>
+                          <th>  Name </th>
+                          <th>  Room </th>
+                          <th>  Room Charge</th>
+                          <th>  Service Charge </th>
+                          <th>  Total </th>
+                      </tr>
+                        {% for reservation in reservation_list %}
+                            <tr>
+                                <td >  {{ reservation.date_of_arrival }} </td>
+                                <td>  {{ reservation.date_of_departure }} </td>
+                                <td>  {{ reservation.name }} </td>
+                                <td>  {{ reservation.room_type }} - {{ reservation.bed_type }} </td>
+                                <td>  {{ reservation.room_charge }} </td>
+                                <td>  {{ reservation.service_charge }} </td>
+                                <td>  {{ reservation.total }} </td>
+
+                            </tr>
+                        {% endfor %}
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+
+                        <td> Total </td>
+                        <td> {{ total }}</td>
+                    </tr>
+
+
+
+
+
+                        </table>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+      <footer class="footer footer-black  footer-white ">
+        <div class="container-fluid">
+          <div class="row">
+
+            <div class="credits ml-auto">
+              <span class="copyright">
+                © <script>
+                  document.write(new Date().getFullYear())
+                </script>, made with <i class="fa fa-heart heart"></i> by Creative Tim
+              </span>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+  <!--   Core JS Files   -->
+
+  <script src="{% static 'hotel_admin/js/core/jquery.min.js' %}"></script>
+  <script src="{% static 'hotel_admin/js/core/popper.min.js' %}"></script>
+  <script src="{% static 'hotel_admin/js/core/bootstrap.min.js' %}"></script>
+  <script src="{% static 'hotel_admin/js/plugins/perfect-scrollbar.jquery.min.js' %}"></script>
+
+  <!-- Chart JS -->
+  <script src="{% static 'hotel_admin/js/plugins/chartjs.min.js' %}"></script>
+  <!--  Notifications Plugin    -->
+  <script src="{% static 'hotel_admin/js/plugins/bootstrap-notify.js' %}"></script>
+  <!-- Control Center for Now Ui hotel_admin: parallax effects, scripts for the example pages etc -->
+  <script src="{% static 'hotel_admin/js/paper-dashboard.min.js' %}?v=2.0.1" type="text/javascript"></script><!-- Paper hotel_admin DEMO methods, don't include it in your project! -->
+  <script src="{% static 'hotel_admin/demo/demo.js' %}"></script>
+  <script>
+      i = 1;
+  </script>
+    {% for message in messages %}
+        <script>
+            alert({{ message }})
+        </script>
+    {% endfor %}
+</body>
+
+</html>

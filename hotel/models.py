@@ -14,7 +14,7 @@ class Session:
 
 class Hotel:
 
-    def __init__(self, hotelId, name, street, zipcode, city, country, rating, rating_count):
+    def __init__(self, hotelId, name=None, street=None, zipcode=None, city=None, country=None, rating=None, rating_count=None):
 
         self.hotelId = hotelId
         self.name = name

@@ -1,13 +1,18 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
+from django.http import HttpResponseRedirect
+from django.contrib import messages
 from django.db import connection
 import hashlib
 from .models import Customer, Reservation
+from hotel.models import Hotel
 import login.views
 import json
+import random
 
 app_name = 'dashboard'
 
 customer = Customer(0)
+hotel = Hotel(0)
 
 
 def index(request):
@@ -19,12 +24,13 @@ def index(request):
         result = cur.fetchone()
 
         if result is None:
-            return redirect('home:index')
+            return redirect('login:index')
         else:
 
             global customer
             customer = Customer(customer_id=customer_id, name=result[1], email=result[2], username=result[3],
-                                gender=result[5], street=result[6], zipcode=result[7], city=result[8], country=result[9])
+                                gender=result[5], street=result[6], zipcode=result[7], city=result[8], country=result[9],
+                                phone=result[10])
             locations = []
             hotels = []
             with connection.cursor() as cur2:
@@ -46,7 +52,7 @@ def maps(request):
 
     global customer
     if customer.customer_id == 0:
-        return redirect('home:index')
+        return redirect('login:index')
 
     else:
         with connection.cursor() as cur:
@@ -86,7 +92,7 @@ def user(request):
 
     global customer
     if customer.customer_id == 0:
-        return redirect('home:index')
+        return redirect('login:index')
     else:
         if request.method == 'POST':
 
@@ -98,20 +104,20 @@ def user(request):
                     name = request.POST.get("name")
                     email = request.POST.get("email")
                     username = request.POST.get("username")
-                    gender = request.POST.get("gender")
+                    phone = request.POST.get("phone")
                     street = request.POST.get("street")
                     zipcode = request.POST.get("zipcode")
                     city = request.POST.get("city")
                     country = request.POST.get("country")
 
-                    sql = "UPDATE CUSTOMER SET name = %s, email = %s, username= %s, gender = %s, street = %s," \
+                    sql = "UPDATE CUSTOMER SET name = %s, email = %s, username= %s, phone_num = %s, street = %s," \
                           "zipcode = %s, city = %s, country = %s WHERE customerId = %s"
-                    cur.execute(sql, [name, email, username, gender, street, zipcode, city, country, customer_id])
-                    connection.commit()
+                    cur.execute(sql, [name, email, username, phone, street, zipcode, city, country, customer_id])
+                    customer = Customer(customer_id=customer_id, name=name, email=email, username=username, gender=customer.gender,
+                                        street=street, zipcode=zipcode, city=city, country=country, phone=phone)
 
-                    customer = Customer(customer_id=customer_id, name=name, email=email, username=username,
-                                        gender=gender, street=street, zipcode=zipcode, city=city,
-                                        country=country)
+                    connection.commit()
+                    messages.success(request, "Information Updated")
 
                 elif request.POST.get("submit_password"):
 
@@ -130,9 +136,9 @@ def user(request):
                         sql = "UPDATE CUSTOMER SET password = %s WHERE customerId = %s"
                         cur.execute(sql, [input_new_pass_hash, customer.customer_id])
                         connection.commit()
+                        messages.success(request, "Password Changed")
 
-                        return render(request, 'dashboard/user.html', {'customer': customer,
-                                                                       'password_updated': True})
+            return HttpResponseRedirect(reverse('dashboard:user'))
 
         return render(request, 'dashboard/user.html', {'customer': customer})
 

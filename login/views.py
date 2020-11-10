@@ -1,17 +1,15 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.db import connection
-from random import randint
+from random import randint, uniform
 import hashlib
 
 app_name = 'login'
 customer_id = 0
+admin_id = 0
 
 
 def index(request):
-
-    global customer_id
-    customer_id = 0
 
     '''call the commented out functions only once'''
     # customer_id_change()
@@ -21,12 +19,28 @@ def index(request):
     # service_id_change()
     # reservation_id_change()
 
+    '''add password to hotel table'''
+    # set_hotel_pass()
+
+    '''make rating float'''
+    # fix_hotel_rating()
+
+    '''set same price for same roomtypes'''
+    # fix_room_price()
+
+    '''add room id to reservation'''
+    # room_to_reservation()
+
     if request.method == 'POST':
-        return login(request)
+        if request.POST.get('login_type') == 'Log in as User':
+            return user_login(request)
+        else:
+            return admin_login(request)
     else:
         return render(request, 'login/index.html', {'alert_flag': False})
 
 
+'''
 def customer_id_change():
 
     with connection.cursor() as cur:
@@ -282,11 +296,90 @@ def reservation_id_change():
         # adding the foreign key constraint to table RESERVATION again
         sql = "ALTER TABLE RESERVATION_SERVICE ADD FOREIGN KEY(RESERVATIONID) REFERENCES RESERVATION(RESERVATIONID)"
         cur.execute(sql)
+'''
 
 
-def login(request):
+def room_to_reservation():
+
+    with connection.cursor() as cur:
+
+        sql = "SELECT RESERVATIONID, HOTELID FROM RESERVATION"
+        cur.execute(sql)
+        result = cur.fetchall()
+
+        for row in result:
+            reservation_id = row[0]
+            hotel_id = row[1]
+
+            sql = "SELECT ROOMID FROM ROOM WHERE HOTELID = %s"
+            cur.execute(sql, [hotel_id])
+            rooms = cur.fetchall()
+            rand_id = randint(0, len(rooms)-1)
+            room_id = rooms[rand_id][0]
+
+            sql = "UPDATE RESERVATION SET ROOMID = %s WHERE RESERVATIONID = %s"
+            cur.execute(sql, [room_id, reservation_id])
+            connection.commit()
+
+
+def set_hotel_pass():
+
+    with connection.cursor() as cur:
+        sql_alter = "ALTER TABLE HOTEL ADD PASSWORD VARCHAR(50)"
+        cur.execute(sql_alter)
+        connection.commit()
+
+        sql = "SELECT HOTELID FROM HOTEL"
+        cur.execute(sql)
+        ids = cur.fetchall()
+
+        for id in ids:
+            password = str(randint(1, 10000000))
+            password = hashlib.md5(password.encode()).hexdigest()
+            sql_update = "UPDATE HOTEL SET PASSWORD = %s WHERE HOTELID = %s"
+            cur.execute(sql_update, [password, id[0]])
+            connection.commit()
+
+
+def fix_hotel_rating():
+
+    with connection.cursor() as cur:
+
+        sql = "ALTER TABLE HOTEL MODIFY RATING NUMBER(3,2)"
+        cur.execute(sql)
+
+        sql = "SELECT HOTELID FROM HOTEL"
+        cur.execute(sql)
+        rows = cur.fetchall()
+
+        for row in rows:
+            hotelid = row[0]
+            rating = round(uniform(2.0, 5.0), 2)
+            print(rating)
+            sql = "UPDATE HOTEL SET RATING = %s WHERE HOTELID = %s"
+            cur.execute(sql, [rating, hotelid])
+            connection.commit()
+
+
+def fix_room_price():
+
+    with connection.cursor() as cur:
+
+        sql = "UPDATE ROOM R SET R.COST_PER_DAY = " \
+              "(SELECT CEIL(AVG(R2.COST_PER_DAY)) FROM ROOM R2 WHERE R2.HOTELID = R.HOTELID " \
+              "AND R2.ROOM_TYPE = R.ROOM_TYPE AND R2.BED_TYPE = R.BED_TYPE), " \
+              "R.DISCOUNT = " \
+              "(SELECT CEIL(AVG(R3.DISCOUNT)) FROM ROOM R3 WHERE R3.HOTELID = R.HOTELID " \
+              "AND R3.ROOM_TYPE = R.ROOM_TYPE AND R3.BED_TYPE = R.BED_TYPE)"
+
+        cur.execute(sql)
+        connection.commit()
+
+
+def user_login(request):
 
     global customer_id
+    customer_id = 0
     v1 = request.POST.get('username')
     v2 = request.POST.get('password')
     v2 = hashlib.md5(v2.encode()).hexdigest()
@@ -303,3 +396,26 @@ def login(request):
         else:
             customer_id = customer[0]
             return redirect('home:index')
+
+
+def admin_login(request):
+
+    global admin_id
+    admin_id = 0
+
+    v1 = request.POST.get('username')
+    v2 = request.POST.get('password')
+    v2 = hashlib.md5(v2.encode()).hexdigest()
+
+    with connection.cursor() as cur:
+
+        sql_auth = "SELECT HOTELID FROM HOTEL WHERE HOTELID = %s AND PASSWORD = %s"
+        cur.execute(sql_auth, [v1, v2])
+
+        hotel = cur.fetchone()
+
+        if hotel is None:
+            return render(request, 'login/index.html', {'alert_flag': True})
+        else:
+            admin_id = hotel[0]
+            return redirect('hotel_admin:index')

@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.db import connection
 import hashlib
 from random import randint
@@ -75,7 +75,7 @@ def sign_up(request):
             cur.execute(sql_add_user, [v0, v1, v2, v3, v4, v5, v6, v7, v8, v9])
             connection.commit()
 
-            return HttpResponse("<h1>CONGRATS</h1>")
+            return redirect('login:index')
 
     return render(request, 'register/index.html', {'alert_flag': True})
 

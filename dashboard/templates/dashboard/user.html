@@ -137,14 +137,14 @@ Coded by www.creative-tim.com
                     <div class="col-md-5">
                       <div class="form-group">
                         <label>Name</label>
-                        <input type="text" class="form-control"  placeholder="name" name="name" required="required" value={{ customer.name }}>
+                        <input type="text" class="form-control"  placeholder="name" name="name" required="required" value="{{ customer.name }}">
 
                       </div>
                     </div>
                   <div class="col-md-5 " >
                       <div class="form-group">
                         <label>Email</label>
-                        <input type="email" class="form-control" placeholder="email" name="email" required="required" value={{ customer.email }}>
+                        <input type="email" class="form-control" placeholder="email" name="email" required="required" value="{{ customer.email }}">
                       </div>
                     </div>
                   </div>
@@ -152,26 +152,14 @@ Coded by www.creative-tim.com
                     <div class="col-md-5">
                       <div class="form-group">
                         <label>Username</label>
-                        <input type="text" class="form-control" placeholder="username" name="username" required="required" value={{ customer.username }}>
+                        <input type="text" class="form-control" placeholder="username" name="username" required="required" value="{{ customer.username }}">
                       </div>
                     </div>
 
                     <div class="col-md-5">
                       <div class="form-group">
-                        <label>Gender</label>
-                        <select name="gender" required="required" class="form-control">
-                            <option selected="selected">{{ customer.gender }}</option>
-                            {% if customer.gender != "Male"%}
-                                <option>Male</option>
-                            {% endif %}
-                            {% if customer.gender != "Female"%}
-                                <option>Female</option>
-                            {% endif %}
-                            {% if customer.gender != "Other"%}
-                                <option>Other</option>
-                            {% endif %}
-
-                        </select>
+                        <label>Phone Number</label>
+                        <input type="text" class="form-control" placeholder="phone number" name="phone" required="required" value="{{ customer.phone }}">
                       <div class="select-dropdown"></div>
                       </div>
                     </div>
@@ -180,13 +168,13 @@ Coded by www.creative-tim.com
                     <div class="col-md-5">
                       <div class="form-group">
                         <label>Street</label>
-                        <input type="text" class="form-control" placeholder="street" name="street" required="required" value={{customer.street}}>
+                        <input type="text" class="form-control" placeholder="street" name="street" required="required" value="{{customer.street}}">
                       </div>
                     </div>
                     <div class="col-md-5">
                       <div class="form-group">
                         <label>Zipcode</label>
-                        <input type="text" class="form-control" placeholder="zipcode" name="zipcode" required="required" value={{customer.zipcode}}>
+                        <input type="text" class="form-control" placeholder="zipcode" name="zipcode" required="required" value="{{customer.zipcode}}">
                       </div>
                     </div>
                   </div>
@@ -194,13 +182,13 @@ Coded by www.creative-tim.com
                     <div class="col-md-5">
                       <div class="form-group">
                         <label>City</label>
-                        <input type="text" class="form-control" placeholder="city" name="city" required="required" value={{customer.city}}>
+                        <input type="text" class="form-control" placeholder="city" name="city" required="required" value="{{customer.city}}">
                       </div>
                     </div>
                       <div class="col-md-5">
                       <div class="form-group">
                         <label>Country</label>
-                        <input type="text" class="form-control" placeholder="country" name="country" required="required" value={{customer.country}}>
+                        <input type="text" class="form-control" placeholder="country" name="country" required="required" value="{{customer.country}}">
                       </div>
                     </div>
                   </div>

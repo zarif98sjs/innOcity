@@ -1,0 +1,323 @@
+{% load static %}
+<!--
+=========================================================
+* Paper hotel_admin 2 - v2.0.1
+=========================================================
+
+* Product Page: https://www.creative-tim.com/product/paper-hotel_admin-2
+* Copyright 2020 Creative Tim (https://www.creative-tim.com)
+
+Coded by www.creative-tim.com
+
+ =========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="apple-touch-icon" sizes="76x76" href="{% static 'hotel_admin/img/apple-icon.png' %}">
+  <link rel="icon" type="image/png" href="{% static 'hotel_admin/img/favicon.png' %}">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>
+    hotel_admin hotel_admin
+  </title>
+  <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+  <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css' %}" rel="stylesheet">
+  <!-- CSS Files -->
+  <link href="{% static 'hotel_admin/css/bootstrap.min.css' %}" rel="stylesheet" />
+  <link href="{% static 'hotel_admin/css/paper-dashboard.css' %}?v=2.0.1" rel="stylesheet" />
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link href="{% static 'hotel_admin/demo/demo.css' %}" rel="stylesheet" />
+</head>
+
+<body class="">
+  <div class="wrapper ">
+    <div class="sidebar" data-color="white" data-active-color="danger" style="width: 350px; padding: 20px">
+      <div class="logo">
+        <a class="simple-text logo-mini">
+          <div class="logo-image-small">
+            <img src="{% static 'hotel_admin/img/logo-small.png' %}">
+          </div>
+          <!-- <p>CT</p> -->
+        </a>
+        <a  class="simple-text logo-normal">
+          hotel_admin
+          <!-- <div class="logo-image-big">
+            <img src="{% static 'hotel_admin/img/logo-small.png' %}">
+          </div> -->
+        </a>
+      </div>
+      <div class="sidebar-wrapper" style="width: 300px">
+        <ul class="nav" style="text-align: center; padding-bottom: 20px">
+            <li>
+                <div class="image">
+                    <img src="{% static 'hotel_admin/img/destination_6.jpg' %}">
+                </div>
+            </li>
+
+          <li style="text-align: center; padding-top: 15px">
+              <h3>{{ hotel.name }}</h3>
+
+          </li>
+
+          <li>
+
+              <p style="font-size: 18px">{{ hotel.street }}, {{ hotel.city }}, {{hotel.country}}</p>
+
+          </li>
+            <li>
+                <p style="font-size: 18px"> User Rating: {{ hotel.rating }}</p>
+            </li>
+        </ul>
+
+        <ul class="nav">
+          <li class="active">
+            <a href="{% url 'hotel_admin:index' %}">
+
+              <p style="color:red;">Rooms</p>
+            </a>
+          </li>
+
+          <li>
+            <a href="{% url 'hotel_admin:service' %}">
+
+              <p style="color: black">Services</p>
+            </a>
+          </li>
+
+          <li >
+            <a href="{% url 'hotel_admin:reservation' %}">
+
+              <p style="color: black">Reservation List</p>
+            </a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+    <div class="main-panel" >
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent" >
+        <div class="container-fluid" >
+          <div class="navbar-wrapper" >
+            <div class="navbar-toggle" >
+              <button type="button" class="navbar-toggler" >
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
+              </button>
+            </div>
+            <a class="navbar-brand" href="{% url 'home:index' %}" style="padding-left: 100px">Innocity</a>
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end" id="navigation">
+
+            <ul class="navbar-nav">
+
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'login:index' %}">
+                  Log Out
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- End Navbar -->
+       <div class="content" style="padding-left: 100px; min-width: 1350px; ">
+        <div class="row">
+
+          <div class="col-md-11" style="padding-left: 50px">
+            <div class="card card-user">
+              <div class="card-header">
+                <h5 class="card-title">Cost Per Night For Rooms</h5>
+              </div>
+              <div class="card-body">
+              <div class="row">
+                  <div class="col">
+                      <label> room type</label>
+                  </div>
+                  <div class="col">
+                      <label> bed type</label>
+                  </div>
+                  <div class="col">
+                      <label> number of rooms</label>
+                  </div>
+                  <div class="col">
+                      <label> cost per day</label>
+                  </div>
+                  <div class="col">
+                      <label> discount</label>
+                  </div>
+                  <div class="col">
+                      <label></label>
+                  </div>
+
+              </div>
+              {% for room in room_list %}
+                <form action="{% url 'hotel_admin:index' %}" method="POST" name="room_types" id="room_types" style="padding-bottom: 20px" >
+                    {% csrf_token %}
+
+                        <div class="row">
+                            <div class="col" >
+                                <div class="form-group">
+                                    <input type="text" class="form-control" style="background-color: white; " name="room_type" readonly value="{{ room.room_type }}" >
+                                </div>
+                            </div>
+                            <div class="col" style="width:300px">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" style="background-color: white" name="bed_type" readonly value="{{ room.bed_type}}" >
+                                </div>
+                            </div>
+                            <div class="col" style="width:300px" >
+                                <div class="form-group">
+                                    <input type="text" class="form-control" style="background-color: white" name="count" readonly value={{ room.count }} >
+                                </div>
+                            </div>
+                            <div class="col" style="width:300px">
+                                <div class="form-group">
+                                    <input type="number" class="form-control" name="cost_per_day" min="0" value={{ room.cost_per_day }} >
+                                </div>
+                            </div>
+                            <div class="col" style="width:300px">
+                                <div class="form-group">
+                                    <input type="number" class="form-control" name="discount" min="0" max="100" value={{ room.discount }} >
+                                </div>
+                            </div>
+                            <div class="col">
+                                <button type="submit" name="submit_cost" value="submit_cost" title="update cost" style="background-color: #1F93A6; color: white; width: 100px; height: 40px; border-radius: 20px;" onclick="return confirm('Confirm changes?');" ><b>Update</b></button>
+                            </div>
+
+                            </div>
+                </form>
+                    {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+               <div class="row">
+
+          <div class="col-md-11" style="padding-left: 50px">
+            <div class="card card-user">
+              <div class="card-header">
+                <h5 class="card-title">Enlist A New Room</h5>
+              </div>
+              <div class="card-body">
+                <form action="{% url 'hotel_admin:index' %}" method="POST" name="new_room" id="new_room">
+                {% csrf_token %}
+                  <div class="row">
+                    <div class="col-md-5">
+                      <div class="form-group">
+                        <label>Room Type</label>
+                          <select name="room_bed" required="required" class="form-control">
+
+                              {% for room in room_list %}
+                                  <option> {{ room.room_type }} - {{ room.bed_type }}</option>
+                              {% endfor %}
+                          </select>
+
+                      </div>
+                    </div>
+
+                    <div class="col-md-5">
+                      <div class="form-group">
+                        <label>Floor Number</label>
+                        <input type="number" class="form-control" placeholder="floor number" name="floor_number" min="0" required="required">
+                      </div>
+                    </div>
+                  </div>
+                    <div class="row">
+                    <div class="col-md-5">
+                      <div class="form-group">
+                        <label>Facilities</label>
+                        <input type="text" class="form-control" placeholder="room facilities" name="room_facilities-1">
+                      </div>
+                    </div>
+                        <div class="col-md-5" style="padding-top: 20px">
+                          <div class="form-group">
+                      <button type="button" id="button-1" value="+"  style="background-color: #1F93A6; color: white; width: 40px; height: 40px; border-radius: 10px;" onclick="createNew()">
+                          <b>+</b>
+                      </button>
+                      </div>
+                        </div>
+                    </div>
+
+                  <div id="mydiv"></div>
+
+
+                  <div class="row">
+                    <div class="update ml-auto mr-auto">
+                      <button type="submit" name="submit_new_room" value="submit_new_room" class="btn btn-primary btn-round" style="background-color: #1F93A6" onclick="return confirm('Confirm changes?');">Add New Room</button>
+                    </div>
+                  </div>
+                </form>
+              <script>
+                  function createNew()
+                  {
+
+                      i++;
+                      $("#mydiv").append('<div class="row"><div class="col-md-5"><div class="form-group"><input type="text" class="form-control" placeholder="room facilities" name="room_facilities-' + i +'" /> ' +
+                          '</div></div><div class="col-md-5"><div class="form-group"><button type="button" id = "button-' + i +'" value="+"  style="background-color: #2fa14f; color: white; width: 40px; height: 40px; border-radius: 10px;" onclick="createNew()"><b>+</b></button><br /></div></div></div>');
+
+                  }
+              </script>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+      <footer class="footer footer-black  footer-white ">
+        <div class="container-fluid">
+          <div class="row">
+
+            <div class="credits ml-auto">
+              <span class="copyright">
+                © <script>
+                  document.write(new Date().getFullYear())
+                </script>, made with <i class="fa fa-heart heart"></i> by Creative Tim
+              </span>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+  <!--   Core JS Files   -->
+
+  <script src="{% static 'hotel_admin/js/core/jquery.min.js' %}"></script>
+  <script src="{% static 'hotel_admin/js/core/popper.min.js' %}"></script>
+  <script src="{% static 'hotel_admin/js/core/bootstrap.min.js' %}"></script>
+  <script src="{% static 'hotel_admin/js/plugins/perfect-scrollbar.jquery.min.js' %}"></script>
+
+  <!-- Chart JS -->
+  <script src="{% static 'hotel_admin/js/plugins/chartjs.min.js' %}"></script>
+  <!--  Notifications Plugin    -->
+  <script src="{% static 'hotel_admin/js/plugins/bootstrap-notify.js' %}"></script>
+  <!-- Control Center for Now Ui hotel_admin: parallax effects, scripts for the example pages etc -->
+  <script src="{% static 'hotel_admin/js/paper-dashboard.min.js' %}?v=2.0.1" type="text/javascript"></script><!-- Paper hotel_admin DEMO methods, don't include it in your project! -->
+  <script src="{% static 'hotel_admin/demo/demo.js' %}"></script>
+  <script>
+      i = 1;
+  </script>
+    {% for message in messages %}
+        <script>
+            alert({{ message }})
+        </script>
+    {% endfor %}
+</body>
+
+</html>

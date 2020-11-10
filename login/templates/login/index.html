@@ -66,6 +66,7 @@
             <div class="card card-3">
                 <div class="card-heading"></div>
                 <div class="card-body">
+
                     <h2 class="title">Login</h2>
                     <form action="{% url 'login:index' %}" method="POST">
                         {% csrf_token %}
@@ -75,10 +76,16 @@
                         <br>
                         <br>
                         <div class="input-group">
-                            <input class="input--style-3" type="text" placeholder="username" name="username">
+                            <input class="input--style-3" type="text" placeholder="user" name="username">
                         </div>
                         <div class="input-group">
                             <input class="input--style-3" type="password" placeholder="password" name="password">
+                        </div>
+                        <div class="input-group">
+                            <select class="input--style-3" name="login_type" required="required" style="width: 500px">
+                                <option class="input--style-3" selected="selected" >Log in as User</option>
+                                <option class="input--style-3" >Log in as Hotel Admin</option>
+                            </select>
                         </div>
                         <br>
                         <br>

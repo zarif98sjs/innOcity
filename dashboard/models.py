@@ -3,7 +3,7 @@
 class Customer:
 
     def __init__(self, customer_id, name=None, email=None, username=None, gender=None,
-                 street=None, zipcode=None, city=None, country=None):
+                 street=None, zipcode=None, city=None, country=None, phone=None):
 
         self.customer_id = customer_id
         self.name = name
@@ -14,6 +14,7 @@ class Customer:
         self.zipcode = zipcode
         self.city = city
         self.country = country
+        self.phone = phone
 
 
 class Reservation:
@@ -31,8 +32,5 @@ class Reservation:
         self.room_type = room_type
         self.services = []
         self.cost = cost * self.stay
-
-
-
 
 

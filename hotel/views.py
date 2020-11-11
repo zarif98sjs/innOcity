@@ -1,16 +1,12 @@
 from datetime import datetime
-
 from django.shortcuts import render, redirect
 from django.http import Http404
-from .models import Hotel, Room , Session
+from .models import Hotel, Room, Service, Session
 from django.views.decorators.csrf import csrf_exempt
 from django.db import connection
 from random import seed
 from random import randint
 from dashboard.models import Customer
-import login.views
-
-# Create your views here.
 
 app_name = 'hotel'
 
@@ -18,6 +14,7 @@ session_id = 0
 sessions = {}
 
 customer = Customer(0)
+
 
 @csrf_exempt
 def available(request):
@@ -33,21 +30,14 @@ def available(request):
 
     session_id = randint(10, 10000)
     sessions[session_id] = Session(session_id, checkin_input, checkout_input)
-    # logged_in = (login.views.customer_id != 0)
-    # # print(request.session['customer_id'])
 
-    if request.session.has_key('customer_id'):
-        logged_in = True
-    else:
-        logged_in = False
-
-    print("Logged In ",logged_in)
+    logged_in = request.session.has_key('customer_id')
 
     available_hotels = []
 
     with connection.cursor() as cur:
 
-        sql = "SELECT H.*," \
+        sql = "SELECT H.HOTELID, H.NAME, H.STREET, H.ZIPCODE, H.CITY, H.COUNTRY, H.RATING, H.RATINGCOUNT, " \
               "(SELECT COUNT(R.ROOMID) FROM ROOM R WHERE R.HOTELID = H.HOTELID)," \
               "(SELECT COUNT(DISTINCT ROOMID) FROM RESERVATION RS WHERE RS.HOTELID = H.HOTELID AND " \
               "(RS.DATE_OF_ARRIVAL <= TO_DATE(%s, 'YYYY-MM-DD') " \
@@ -59,7 +49,7 @@ def available(request):
 
         for row in result:
 
-            total_count = row[9] - row[10]
+            total_count = row[8] - row[9]
 
             if total_count >= int(room_no):
                 hotel = Hotel(hotelId=row[0], name=row[1], street=row[2], zipcode=row[3], city=row[4],
@@ -75,6 +65,7 @@ def available(request):
 def index(request, hotel_id):
     context = get_context(hotel_id)
     return render(request, 'hotel/index.html', context)
+
 
 @csrf_exempt
 def payment(request, hotel_id):
@@ -94,9 +85,7 @@ def payment(request, hotel_id):
         else:
             global customer
             customer = Customer(customer_id=customer_id, name=result[1], email=result[2], username=result[3],
-                                gender=result[5], street=result[6], zipcode=result[7], city=result[8], country=result[9],
-                                card_username=result[11],card_type=result[12],card_number=result[13], mob_banking_phone_number=result[14],
-                                mob_banking_service_provider=result[15], cvc=result[16])
+                                gender=result[5], street=result[6], zipcode=result[7], city=result[8], country=result[9])
 
     context = get_context(hotel_id)
     checkin_input = request.POST.get('checkin')
@@ -131,7 +120,7 @@ def payment(request, hotel_id):
     print(room_cnt[1])
 
     with connection.cursor() as cur:
-        sql = "SELECT ROOM_TYPE , COST_PER_DAY , DISCOUNT FROM ROOM WHERE hotelId= %s"
+        sql = "SELECT ROOMTYPE_NAME , COST_PER_DAY , DISCOUNT FROM ROOM_TYPE WHERE hotelId= %s"
         cur.execute(sql, [hotel_id])
         result = cur.fetchall()
 
@@ -158,9 +147,11 @@ def payment(request, hotel_id):
 
     return render(request, 'hotel/payment.html', context)
 
+
 @csrf_exempt
-def complete_payment(request,hotel_id):
+def complete_payment(request, hotel_id):
     return redirect('dashboard:index')
+
 
 def book(request, hotel_id):
     context = get_context(hotel_id)
@@ -203,10 +194,16 @@ def get_facilities(hotel_id):
 def get_services(hotel_id):
 
     with connection.cursor() as cur:
-        sql = "SELECT SERVICE_TYPE FROM SERVICE WHERE hotelId= %s"
+        sql = "SELECT * FROM SERVICE WHERE hotelId= %s"
         cur.execute(sql, [hotel_id])
         result = cur.fetchall()
-        hotel_services = set([row[0] for row in result])
+        hotel_services = {}
+        for row in result:
+            serve = Service(serviceId=row[0], service_type=row[1], service_subtype=row[2], cost=row[3])
+            if serve.service_type in hotel_services:
+                hotel_services[serve.service_type].append(serve)
+            else:
+                hotel_services[serve.service_type] = [serve]
         return hotel_services
 
 
@@ -221,13 +218,16 @@ def get_rooms(hotel_id):
             checkin_date = sessions[session_id].checkin_date
             checkout_date = sessions[session_id].checkout_date
 
-            sql = "SELECT * FROM ROOM WHERE HOTELID = %s AND " \
-                  "ROOMID NOT IN (SELECT RS.ROOMID FROM RESERVATION RS WHERE HOTELID = %s " \
-                  "AND DATE_OF_ARRIVAL <= TO_DATE(%s, 'YYYY-MM-DD') AND DATE_OF_DEPARTURE >= TO_DATE(%s, 'YYYY-MM-DD'))"
+            sql = "SELECT R.ROOMID, RT.ROOMTYPE_NAME, RT.BED_TYPE, RT.COST_PER_DAY, RT.DISCOUNT " \
+                  "FROM ROOM R, ROOM_TYPE RT WHERE R.HOTELID = %s AND R.ROOMTYPEID = RT.ROOMTYPEID AND " \
+                  "R.ROOMID NOT IN (SELECT RS.ROOMID FROM RESERVATION RS WHERE RS.HOTELID = %s " \
+                  "AND RS.DATE_OF_ARRIVAL <= TO_DATE(%s, 'YYYY-MM-DD') AND " \
+                  "RS.DATE_OF_DEPARTURE >= TO_DATE(%s, 'YYYY-MM-DD'))"
             cur.execute(sql, [hotel_id, hotel_id, checkout_date, checkin_date])
 
         else:
-            sql = "SELECT * FROM ROOM WHERE HOTELID = %s"
+            sql = "SELECT R.ROOMID, RT.ROOMTYPE_NAME, RT.BED_TYPE, RT.COST_PER_DAY, RT.DISCOUNT " \
+                  "FROM ROOM R, ROOM_TYPE RT WHERE R.HOTELID = %s AND R.ROOMTYPEID = RT.ROOMTYPEID"
             cur.execute(sql, [hotel_id])
 
         result = cur.fetchall()
@@ -237,7 +237,7 @@ def get_rooms(hotel_id):
 
             if row[1] not in room_types:
                 room_types.append(row[1])
-                room = Room(roomId=row[0], room_type=row[1], bed_type=row[2], cost=row[4], discount=row[5], special_offer=row[6])
+                room = Room(roomId=row[0], room_type=row[1], bed_type=row[2], cost=row[3], discount=row[4])
                 room.add_facilities(get_room_facilities(row[0]))
                 available_rooms.append(room)
 

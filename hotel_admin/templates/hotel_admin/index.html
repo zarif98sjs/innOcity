@@ -46,7 +46,7 @@ Coded by www.creative-tim.com
           <!-- <p>CT</p> -->
         </a>
         <a  class="simple-text logo-normal">
-          hotel_admin
+          hotel admin
           <!-- <div class="logo-image-big">
             <img src="{% static 'hotel_admin/img/logo-small.png' %}">
           </div> -->
@@ -221,7 +221,7 @@ Coded by www.creative-tim.com
                           <select name="room_bed" required="required" class="form-control">
 
                               {% for room in room_list %}
-                                  <option> {{ room.room_type }} - {{ room.bed_type }}</option>
+                                  <option> {{ room.room_type }} ({{ room.bed_type }})</option>
                               {% endfor %}
                           </select>
 
@@ -266,10 +266,73 @@ Coded by www.creative-tim.com
 
                       i++;
                       $("#mydiv").append('<div class="row"><div class="col-md-5"><div class="form-group"><input type="text" class="form-control" placeholder="room facilities" name="room_facilities-' + i +'" /> ' +
-                          '</div></div><div class="col-md-5"><div class="form-group"><button type="button" id = "button-' + i +'" value="+"  style="background-color: #2fa14f; color: white; width: 40px; height: 40px; border-radius: 10px;" onclick="createNew()"><b>+</b></button><br /></div></div></div>');
+                          '</div></div><div class="col-md-5"><div class="form-group"><button type="button" id = "button-' + i +'" value="+"  style="background-color: #1F93A6; color: white; width: 40px; height: 40px; border-radius: 10px;" onclick="createNew()"><b>+</b></button><br /></div></div></div>');
 
                   }
               </script>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+                      <div class="row">
+
+          <div class="col-md-11" style="padding-left: 50px">
+            <div class="card card-user">
+              <div class="card-header">
+                <h5 class="card-title">Add a New Room Type</h5>
+              </div>
+              <div class="card-body">
+                <form action="{% url 'hotel_admin:index' %}" method="POST" name="new_room_type" id="new_room_type">
+                {% csrf_token %}
+                  <div class="row">
+                    <div class="col-md-5">
+                      <div class="form-group">
+                        <label>Room Type</label>
+                          <input type="text" class="form-control" placeholder="room type" name="room_type" required="required">
+
+
+                      </div>
+                    </div>
+                      <div class="col-md-5">
+                      <div class="form-group">
+                        <label>Bed Type</label>
+                          <input type="text" class="form-control" placeholder="bed type" name="bed_type" required="required">
+
+
+                      </div>
+                    </div>
+                  </div>
+
+                    <div class="row">
+                    <div class="col-md-5">
+                      <div class="form-group">
+                        <label>Cost Per Day</label>
+                          <input type="number" class="form-control" placeholder="cost per day" name="cost_per_day" min="0" required="required">
+
+
+                      </div>
+                    </div>
+                      <div class="col-md-5">
+                      <div class="form-group">
+                        <label>Discount</label>
+                          <input type="number" class="form-control" placeholder="discount" name="discount" min="0" max="100" required="required">
+
+
+                      </div>
+                    </div>
+                  </div>
+
+
+
+                  <div class="row">
+                    <div class="update ml-auto mr-auto">
+                      <button type="submit" name="submit_new_room_type" value="submit_new_room_type" class="btn btn-primary btn-round" style="background-color: #1F93A6" onclick="return confirm('Confirm changes?');">Add New Room Type</button>
+                    </div>
+                  </div>
+                </form>
 
 
               </div>

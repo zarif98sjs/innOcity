@@ -32,26 +32,25 @@ def index(request):
                 cost_per_day = request.POST.get("cost_per_day")
                 discount = request.POST.get("discount")
 
-                sql = "UPDATE ROOM SET COST_PER_DAY = %s, DISCOUNT = %s " \
-                      "WHERE HOTELID = %s AND ROOM_TYPE = %s AND BED_TYPE = %s"
-                cur.execute(sql, [cost_per_day, discount, hotel_id, room_type, bed_type])
+                sql = "UPDATE ROOM_TYPE SET COST_PER_DAY = %s, DISCOUNT = %s " \
+                      "WHERE HOTELID = %s AND ROOMTYPE_NAME = %s AND BED_TYPE = %s"
+                cur.execute(sql, [cost_per_day, discount, hotel.hotelId, room_type, bed_type])
                 connection.commit()
                 messages.add_message(request, messages.INFO, "Room Cost Updated")
 
             elif request.POST.get("submit_new_room"):
 
-                room_type, bed_type = request.POST.get("room_bed").split(" - ")
+                room_type, _ = request.POST.get("room_bed").split(" (")
                 floor_number = request.POST.get("floor_number")
                 room_id = generate_new_id("SELECT ROOMID FROM ROOM")
 
-                sql = "SELECT COST_PER_DAY, DISCOUNT FROM ROOM WHERE HOTELID = %s AND ROOM_TYPE = %s AND BED_TYPE = %s"
-                cur.execute(sql, [hotel_id, room_type, bed_type])
-                cost_per_day, discount = cur.fetchone()
+                sql = "SELECT ROOMTYPEID FROM ROOM_TYPE WHERE HOTELID = %s AND ROOMTYPE_NAME = %s"
+                cur.execute(sql, [hotel.hotelId, room_type])
+                roomtype_id = cur.fetchone()[0]
 
-                sql = "INSERT INTO ROOM(ROOMID, ROOM_TYPE, BED_TYPE, FLOOR_NUMBER, COST_PER_DAY, DISCOUNT, HOTELID) " \
-                      "VALUES(%s, %s, %s, %s, %s, %s, %s)"
-                cur.execute(sql, [room_id, room_type, bed_type, floor_number, cost_per_day,
-                                  discount, hotel_id])
+                sql = "INSERT INTO ROOM(ROOMID, FLOOR_NUMBER, HOTELID, ROOMTYPEID) " \
+                      "VALUES(%s, %s, %s, %s)"
+                cur.execute(sql, [room_id, floor_number, hotel.hotelId, roomtype_id])
                 connection.commit()
 
                 i = 1
@@ -67,6 +66,25 @@ def index(request):
 
                 messages.add_message(request, messages.INFO, "New Room Enlisted")
 
+            elif request.POST.get("submit_new_room_type"):
+
+                room_type = request.POST.get('room_type')
+                bed_type = request.POST.get('bed_type')
+                cost = request.POST.get('cost_per_day')
+                discount = request.POST.get('discount')
+
+                sql = "SELECT * FROM ROOM_TYPE WHERE HOTELID = %s AND UPPER(ROOMTYPE_NAME) = UPPER(%s) "
+                cur.execute(sql, [hotel.hotelId, room_type])
+                row = cur.fetchone()
+
+                if row is None:
+                    roomtype_id = generate_new_id("SELECT ROOMTYPEID FROM ROOM_TYPE")
+                    sql = "INSERT INTO ROOM_TYPE VALUES(%s, INITCAP(%s), INITCAP(%s), %s, %s, %s)"
+                    cur.execute(sql, [roomtype_id, room_type, bed_type, cost, discount, hotel.hotelId])
+                    messages.add_message(request, messages.INFO, "New Room Type Enlisted")
+                else:
+                    messages.add_message(request, messages.INFO, "This Type Already Exists")
+
             return HttpResponseRedirect(reverse('hotel_admin:index'))
 
         global room_list
@@ -79,18 +97,16 @@ def get_room_list(hotel_id):
 
     global room_list
     with connection.cursor() as cur:
-        sql = "SELECT ROOM_TYPE, BED_TYPE, COST_PER_DAY, DISCOUNT, COUNT(*) FROM ROOM " \
-              "WHERE HOTELID = %s GROUP BY ROOM_TYPE, BED_TYPE, COST_PER_DAY, DISCOUNT " \
-              "ORDER BY ROOM_TYPE, BED_TYPE"
+        sql = "SELECT RT.ROOMTYPE_NAME, RT.BED_TYPE, RT.COST_PER_DAY, RT.DISCOUNT, " \
+              "(SELECT COUNT(*) FROM ROOM R WHERE R.ROOMTYPEID = RT.ROOMTYPEID) " \
+              "FROM ROOM_TYPE RT " \
+              "WHERE RT.HOTELID = %s"
 
         cur.execute(sql, [hotel_id])
         rooms = cur.fetchall()
-        room_list = []
-        for row in rooms:
-            room = Room(room_type=row[0], bed_type=row[1], cost_per_day=row[2], discount=row[3], count=row[4])
-
-            hotel.rooms += row[3]
-            room_list.append(room)
+        room_list = [Room(room_type=row[0], bed_type=row[1], cost_per_day=row[2], discount=row[3],
+                          count=row[4]) for row in rooms]
+        return room_list
 
 
 def get_hotel(hotel_id):
@@ -160,12 +176,6 @@ def service(request):
                 cur.execute(sql, [cost, service_id])
                 connection.commit()
 
-            elif request.POST.get("submit_delete_service"):
-
-                service_id = request.POST.get("service_id")
-                sql = "DELETE SERVICE WHERE SERVICEID = %s"
-                cur.execute(sql, [service_id])
-
             elif request.POST.get("submit_new_service_under_service_type"):
 
                 service_type = request.POST.get("service_type")
@@ -215,11 +225,11 @@ def reservation(request):
     with connection.cursor() as cur:
 
         sql = "SELECT RS.DATE_OF_ARRIVAL, RS.DATE_OF_DEPARTURE, C.NAME, R.ROOMID, R.FLOOR_NUMBER, " \
-              "R.ROOM_TYPE, R.BED_TYPE, R.COST_PER_DAY, " \
+              "RT.ROOMTYPE_NAME, RT.BED_TYPE, RT.COST_PER_DAY, " \
               "(SELECT NVL(SUM(RSS.QUANTITY * S.COST),0) FROM RESERVATION_SERVICE RSS, SERVICE S " \
               "WHERE RSS.RESERVATIONID = RS.RESERVATIONID AND RSS.SERVICEID = S.SERVICEID) AS SERVICE_CHARGE " \
-              "FROM RESERVATION RS, CUSTOMER C, ROOM R WHERE RS.HOTELID = %s AND " \
-              "RS.CUSTOMERID = C.CUSTOMERID AND RS.ROOMID = R.ROOMID "
+              "FROM RESERVATION RS, CUSTOMER C, ROOM R, ROOM_TYPE RT WHERE RS.HOTELID = %s AND " \
+              "RS.CUSTOMERID = C.CUSTOMERID AND RS.ROOMID = R.ROOMID AND R.ROOMTYPEID = RT.ROOMTYPEID "
         list_vars = [hotel.hotelId]
 
         if request.method == "POST" and request.POST.get("search"):
@@ -234,9 +244,8 @@ def reservation(request):
 
             if request.POST.get("room_bed") != "all rooms":
                 room_type, bed_type = request.POST.get("room_bed").split(" - ")
-                sql += "AND R.ROOM_TYPE = %s AND R.BED_TYPE = %s "
+                sql += "AND RT.ROOMTYPE_NAME = %s "
                 list_vars.append(room_type)
-                list_vars.append(bed_type)
 
         sql += "ORDER BY R.ROOMID ASC, RS.DATE_OF_ARRIVAL DESC"
 

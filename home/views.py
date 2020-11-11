@@ -5,7 +5,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db import connection
 from hotel.models import Hotel
 
-import login.views
 app_name = 'home'
 
 
@@ -23,42 +22,6 @@ def index(request):
     return render(request, 'home/index.html',
                   {'hotel_ara_best': hotel_ara_best, 'hotel_ara_top_disc': top_discount_ara,
                    'destination': destination, 'logged_in': logged_in})
-
-
-@csrf_exempt
-def payment(request):
-
-    if request.session.has_key('customer_id'):
-        logged_in = True
-    else:
-        logged_in = False
-
-    checkin_input = request.POST.get('checkin')
-    checkin_date_ymd = datetime.strptime(checkin_input, "%Y-%m-%d").date()
-    checkin_date = checkin_date_ymd.strftime('%d %b,%Y')
-    print(checkin_date)
-
-    checkout_input = request.POST.get('checkout')
-    checkout_date_ymd = datetime.strptime(checkout_input, "%Y-%m-%d").date()
-    checkout_date = checkout_date_ymd.strftime('%d %b,%Y')
-    print(checkout_date)
-
-    studio_room_cnt = request.POST.get('Studio')
-    regular_room_cnt = request.POST.get('Regular')
-    presidential_room_cnt = request.POST.get('Presidential Suite')
-    suite_room_cnt = request.POST.get('Suite')
-    villa_room_cnt = request.POST.get('Villa')
-
-    para = request.POST.get('para')
-    print(para)
-
-    print(studio_room_cnt)
-    print(regular_room_cnt)
-
-    # room_types = hotel.views.get_rooms(107)
-    # print(room_types)
-
-    return render(request, 'hotel/payment.html', {'logged_in': logged_in})
 
 
 def get_destination():
@@ -84,7 +47,7 @@ def best_rated():
         for row in result:
 
             h = Hotel(hotelId=row[0], name=row[1], street=row[2], zipcode=row[3], city=row[4],
-                                   country=row[5], rating=row[6], rating_count=row[7])
+                      country=row[5], rating=row[6], rating_count=row[7])
             hotel_ara.append(h)
 
         return hotel_ara
@@ -95,9 +58,11 @@ def top_discount():
     with connection.cursor() as cur:
 
         sql = "SELECT * FROM " \
-              "(SELECT H.*, R.ROOM_TYPE, R.DISCOUNT FROM HOTEL H, ROOM R " \
-              "WHERE R.HOTELID = H.HOTELID " \
-              "ORDER BY R.DISCOUNT DESC) " \
+              "(SELECT H.HOTELID, H.NAME, H.STREET, H.ZIPCODE, H.CITY, H.COUNTRY, H.RATING, H.RATINGCOUNT, " \
+              "RT.ROOMTYPE_NAME, RT.DISCOUNT " \
+              "FROM HOTEL H, ROOM R, ROOM_TYPE RT " \
+              "WHERE R.HOTELID = H.HOTELID AND R.ROOMTYPEID = RT.ROOMTYPEID " \
+              "ORDER BY RT.DISCOUNT DESC) " \
               "WHERE ROWNUM <= 6"
         cur.execute(sql)
         result = cur.fetchall()
@@ -107,7 +72,7 @@ def top_discount():
         for row in result:
             h = Hotel(hotelId=row[0], name=row[1], street=row[2], zipcode=row[3],
                       city=row[4], country=row[5], rating=row[6], rating_count=row[7])
-            hotel_ara.append((h, row[9], row[10]))
+            hotel_ara.append((h, row[8], row[9]))
 
         return hotel_ara
 

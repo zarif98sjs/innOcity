@@ -1,7 +1,6 @@
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponseRedirect
 from django.contrib import messages
-from random import randint
 
 from django.shortcuts import render, redirect
 from django.db import connection
@@ -9,7 +8,6 @@ import hashlib
 from .models import Customer, Reservation
 from hotel.models import Hotel
 import json
-import random
 
 app_name = 'dashboard'
 
@@ -23,7 +21,7 @@ def index(request):
         customer_id = request.session['customer_id']
 
     else:
-        redirect('login:index')
+        return redirect('login:index')
 
     global customer
     get_customer(customer_id)
@@ -57,11 +55,7 @@ def get_customer(customer_id):
             global customer
             customer = Customer(customer_id=customer_id, name=result[1], email=result[2], username=result[3],
                                 gender=result[5], street=result[6], zipcode=result[7], city=result[8],
-                                country=result[9],
-                                phone=result[10], card_username=result[11], card_type=result[12],
-                                card_number=result[13],
-                                mob_banking_phone_number=result[14], mob_banking_service_provider=result[15],
-                                cvc=result[16])
+                                country=result[9], phone=result[10])
 
 
 def wallet(request):
@@ -85,16 +79,9 @@ def wallet(request):
                     card_number = request.POST.get("card_number")
                     cvc = request.POST.get("cvc")
 
-                    # mob_banking_phone_number = request.POST.get("mob_banking_phone_number")
-                    # mob_banking_service_provider = request.POST.get("mob_banking_service_provider")
-
-                    print(card_username)
-                    print(card_type)
-                    print(card_number)
-                    print(customer_id)
-
-                    sql = "UPDATE CUSTOMER SET card_username = %s, card_type = %s, card_number= %s , cvc = %s WHERE customerId = %s"
-                    cur.execute(sql, [card_username, card_type, card_number,cvc, customer_id])
+                    sql = "UPDATE CUSTOMER SET card_username = %s, card_type = %s, card_number= %s , cvc = %s " \
+                          "WHERE customerId = %s"
+                    cur.execute(sql, [card_username, card_type, card_number, cvc, customer_id])
                     connection.commit()
 
                     customer.card_username = card_username
@@ -108,11 +95,8 @@ def wallet(request):
                     mob_banking_phone_number = request.POST.get("mob_banking_phone_number")
                     mob_banking_service_provider = request.POST.get("mob_banking_service_provider")
 
-                    print(mob_banking_phone_number)
-                    print(mob_banking_service_provider)
-                    print(customer_id)
-
-                    sql = "UPDATE CUSTOMER SET mob_banking_phone_number = %s, mob_banking_service_provider = %s WHERE customerId = %s"
+                    sql = "UPDATE CUSTOMER SET mob_banking_phone_number = %s, mob_banking_service_provider = %s " \
+                          "WHERE customerId = %s"
                     cur.execute(sql, [mob_banking_phone_number, mob_banking_service_provider, customer_id])
                     connection.commit()
 
@@ -133,9 +117,10 @@ def maps(request):
         with connection.cursor() as cur:
 
             sql = "SELECT R.RESERVATIONID, R.DATE_OF_ARRIVAL, R.DATE_OF_DEPARTURE, " \
-                  "H.HOTELID, H.NAME, H.CITY, H.COUNTRY, RM.ROOM_TYPE, RM.COST_PER_DAY " \
-                  "FROM RESERVATION R, HOTEL H, ROOM RM " \
+                  "H.HOTELID, H.NAME, H.CITY, H.COUNTRY, RT.ROOMTYPE_NAME, RT.COST_PER_DAY " \
+                  "FROM RESERVATION R, HOTEL H, ROOM RM, ROOM_TYPE RT " \
                   "WHERE R.CUSTOMERID = %s AND R.HOTELID = H.HOTELID AND R.ROOMID = RM.ROOMID " \
+                  "AND RM.ROOMTYPEID = RT.ROOMTYPEID " \
                   "ORDER BY R.DATE_OF_ARRIVAL DESC"
 
             cur.execute(sql, [customer.customer_id])

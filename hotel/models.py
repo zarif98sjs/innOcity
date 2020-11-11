@@ -1,6 +1,3 @@
-from django.db import models
-
-# Create your models here.
 
 
 class Session:
@@ -43,14 +40,13 @@ class Hotel:
 
 class Room:
 
-    def __init__(self, roomId, room_type, bed_type, cost, discount, special_offer):
+    def __init__(self, roomId, room_type, bed_type, cost, discount):
 
         self.roomId = roomId
         self.room_type = room_type
         self.bed_type = bed_type
         self.cost = cost
         self.discount = discount
-        self.special_offer = special_offer
         self.facilities = ""
 
     def add_facilities(self, facility_list):
@@ -64,6 +60,17 @@ class Room:
         return str(self.roomId) + " " + self.room_type
 
 
+class Service:
+
+    def __init__(self, serviceId, service_type, service_subtype, cost):
+        self.serviceId = serviceId
+        self.service_type = service_type
+        self.service_subtype = service_subtype
+        self.cost = cost
+        if service_type == 'Food':
+            self.unit = 'serving'
+        else:
+            self.unit = 'hour'
 
 
 

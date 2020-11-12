@@ -25,7 +25,6 @@ urlpatterns = [
     path('polls/', include(('polls.urls', 'polls'), namespace='polls')),
     path('register/', include(('register.urls', 'register'), namespace='register')),
     path('login/', include(('login.urls', 'login'), namespace='login')),
-    path('home/', include(('home.urls', 'home'), namespace='home')),
     path('hotel/', include(('hotel.urls', 'hotel'), namespace='hotel')),
     path('dashboard/', include(('dashboard.urls', 'dashboard'), namespace='dashboard')),
     path('hotel_admin/', include(('hotel_admin.urls', 'hotel_admin'), namespace='hotel_admin')),

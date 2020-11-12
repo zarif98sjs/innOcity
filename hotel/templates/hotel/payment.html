@@ -39,7 +39,7 @@
                                     <li><a href="{% url 'home:about' %}">About us</a></li>
                                     {% if logged_in %}
                                         <li><a href="{% url 'dashboard:index' %}">Dashboard</a></li>
-                                        <li class="active"><a href="{% url 'home:payment' %}">Payment</a></li>
+                                        <li class="active"><a href="{% url 'hotel:payment' hotel.hotelId %}">Payment</a></li>
                                         <li><a href="{% url 'login:index' %}">Log out</a></li>
                                     {% else %}
                                         <li><a href="{% url 'login:index' %}">Login</a></li>

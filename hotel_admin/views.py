@@ -224,8 +224,8 @@ def reservation(request):
 
     with connection.cursor() as cur:
 
-        sql = "SELECT RS.DATE_OF_ARRIVAL, RS.DATE_OF_DEPARTURE, C.NAME, R.ROOMID, R.FLOOR_NUMBER, " \
-              "RT.ROOMTYPE_NAME, RT.BED_TYPE, RT.COST_PER_DAY, " \
+        sql = "SELECT RS.DATE_OF_ARRIVAL, RS.DATE_OF_DEPARTURE, RS.RESERVATION_CHARGE, C.NAME, R.ROOMID, " \
+              "R.FLOOR_NUMBER, RT.ROOMTYPE_NAME, RT.BED_TYPE, " \
               "(SELECT NVL(SUM(RSS.QUANTITY * S.COST),0) FROM RESERVATION_SERVICE RSS, SERVICE S " \
               "WHERE RSS.RESERVATIONID = RS.RESERVATIONID AND RSS.SERVICEID = S.SERVICEID) AS SERVICE_CHARGE " \
               "FROM RESERVATION RS, CUSTOMER C, ROOM R, ROOM_TYPE RT WHERE RS.HOTELID = %s AND " \
@@ -243,7 +243,7 @@ def reservation(request):
                 list_vars.append(request.POST.get("year"))
 
             if request.POST.get("room_bed") != "all rooms":
-                room_type, bed_type = request.POST.get("room_bed").split(" - ")
+                room_type, bed_type = request.POST.get("room_bed").split(" (")
                 sql += "AND RT.ROOMTYPE_NAME = %s "
                 list_vars.append(room_type)
 
@@ -257,8 +257,8 @@ def reservation(request):
         for row in result:
 
             reserve = Reservation(
-                date_of_arrival=row[0], date_of_departure=row[1], name=row[2], roomId=row[3],
-                floor_num=row[4], room_type=row[5], bed_type=row[6], room_charge=row[7],
+                date_of_arrival=row[0], date_of_departure=row[1], reservation_charge=row[2],
+                name=row[3], roomId=row[4], floor_num=row[5], room_type=row[6], bed_type=row[7],
                 service_charge=row[8]
             )
             total += reserve.total

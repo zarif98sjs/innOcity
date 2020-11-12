@@ -116,8 +116,7 @@ def payment(request, hotel_id):
         else:
             room_cnt[i] = int(room_cnt[i])
 
-    print(room_cnt[0])
-    print(room_cnt[1])
+    print(room_cnt)
 
     with connection.cursor() as cur:
         sql = "SELECT ROOMTYPE_NAME , COST_PER_DAY , DISCOUNT FROM ROOM_TYPE WHERE hotelId= %s"
@@ -128,7 +127,7 @@ def payment(request, hotel_id):
             raise Http404("Invalid hotel")
         else:
             for r in result:
-                context[r[0]] = r[1] * (r[2]/100)
+                context[r[0]] = r[1] * (1 - r[2]/100)
 
         total_cost = 0
         total_cost += room_cnt[0]*context.get('Studio', 0)

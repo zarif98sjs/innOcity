@@ -1,10 +1,9 @@
 from django.shortcuts import render, redirect, reverse
 from django.http import HttpResponseRedirect
 from django.contrib import messages
-
-from django.shortcuts import render, redirect
 from django.db import connection
 import hashlib
+from django.views.decorators.csrf import csrf_exempt
 from .models import Customer, Reservation
 from hotel.models import Hotel
 import json
@@ -116,12 +115,12 @@ def maps(request):
             get_customer(request.session['customer_id'])
         with connection.cursor() as cur:
 
-            sql = "SELECT R.RESERVATIONID, R.DATE_OF_ARRIVAL, R.DATE_OF_DEPARTURE, " \
-                  "H.HOTELID, H.NAME, H.CITY, H.COUNTRY, RT.ROOMTYPE_NAME, RT.COST_PER_DAY " \
-                  "FROM RESERVATION R, HOTEL H, ROOM RM, ROOM_TYPE RT " \
-                  "WHERE R.CUSTOMERID = %s AND R.HOTELID = H.HOTELID AND R.ROOMID = RM.ROOMID " \
+            sql = "SELECT RS.RESERVATIONID, RS.DATE_OF_ARRIVAL, RS.DATE_OF_DEPARTURE, RS.RESERVATION_CHARGE, " \
+                  "H.HOTELID, H.NAME, H.CITY, H.COUNTRY, RT.ROOMTYPE_NAME, RT.BED_TYPE " \
+                  "FROM RESERVATION RS, HOTEL H, ROOM RM, ROOM_TYPE RT " \
+                  "WHERE RS.CUSTOMERID = %s AND RS.HOTELID = H.HOTELID AND RM.ROOMID = RS.ROOMID " \
                   "AND RM.ROOMTYPEID = RT.ROOMTYPEID " \
-                  "ORDER BY R.DATE_OF_ARRIVAL DESC"
+                  "ORDER BY RS.DATE_OF_ARRIVAL DESC"
 
             cur.execute(sql, [customer.customer_id])
             result = cur.fetchall()
@@ -129,8 +128,9 @@ def maps(request):
 
             for row in result:
                 reservation = Reservation(reservation_id=row[0], date_of_arrival=row[1],
-                                          date_of_departure=row[2], hotelId=row[3], hotel_name=row[4], city=row[5],
-                                          country=row[6], room_type=row[7], cost=row[8])
+                                          date_of_departure=row[2], reservation_charge=row[3],
+                                          hotelId=row[4], hotel_name=row[5], city=row[6],
+                                          country=row[7], room_type=row[8], bed_type=row[9])
 
                 sql = "SELECT S.SERVICE_TYPE, S.COST, RS.QUANTITY " \
                       "FROM SERVICE S, RESERVATION_SERVICE RS " \
@@ -141,7 +141,7 @@ def maps(request):
                 for service in all_services:
 
                     reservation.services.append(service[0])
-                    reservation.cost += (service[1] * service[2])
+                    reservation.service_charge += (service[1] * service[2])
 
                 reservation_list.append(reservation)
 
@@ -175,11 +175,11 @@ def user(request):
                     sql = "UPDATE CUSTOMER SET name = %s, email = %s, username= %s, phone_num = %s, street = %s," \
                           "zipcode = %s, city = %s, country = %s WHERE customerId = %s"
                     cur.execute(sql, [name, email, username, phone, street, zipcode, city, country, customer_id])
-                    customer = Customer(customer_id=customer_id, name=name, email=email, username=username, gender=customer.gender,
-                                        street=street, zipcode=zipcode, city=city, country=country, phone=phone)
-
                     connection.commit()
-                    messages.success(request, "Information Updated")
+
+                    customer = Customer(customer_id=customer_id, name=name, email=email, username=username,
+                                        phone=phone, street=street, zipcode=zipcode, city=city,
+                                        country=country)
 
                 elif request.POST.get("submit_password"):
 
@@ -198,10 +198,8 @@ def user(request):
                         sql = "UPDATE CUSTOMER SET password = %s WHERE customerId = %s"
                         cur.execute(sql, [input_new_pass_hash, customer.customer_id])
                         connection.commit()
-                        messages.success(request, "Password Changed")
 
-            return HttpResponseRedirect(reverse('dashboard:user'))
+                        return render(request, 'dashboard/user.html', {'customer': customer,
+                                                                       'password_updated': True})
 
         return render(request, 'dashboard/user.html', {'customer': customer})
-
-

@@ -142,20 +142,27 @@
                                             <p><b>Departure:  </b>   {{ reservation.date_of_departure }}</p>
                                         </div>
                                         <div class="row" style="font-size: 15px; ">
-                                            <p><b>Room type:  </b>   {{ reservation.room_type }} type room</p>
+                                            <p><b>Room type:  </b>   {{ reservation.room_type }}({{ reservation.bed_type }})</p>
+                                        </div>
+                                    <div class="row" style="font-size: 15px; ">
+                                            <p><b>Reservation Charge:  </b>   {{ reservation.reservation_charge }}</p>
                                         </div>
                                         {% if reservation.services %}
                                             <div class="row" style="font-size: 15px; ">
                                                 <p><b>Services included:  </b>
+                                                <ul>
                                                     {% for ser in reservation.services %}
-                                                        <br>{{ser}}
+                                                        <li>{{ser}} </li>
                                                     {% endfor %}
+                                                </ul>
                                                 </p>
                                             </div>
+                                            <div class="row" style="font-size: 15px; ">
+                                            <p><b>Service Charge:  </b>   {{ reservation.service_charge }}</p>
+                                            </div>
                                         {% endif %}
-                                        <div class="row" style="font-size: 15px; ">
-                                            <p><b>Cost:  </b>   {{ reservation.cost }}</p>
-                                        </div>
+
+
 
                                         <div class="row">
                                             <a href="{% url 'hotel:index' reservation.hotelId %}">

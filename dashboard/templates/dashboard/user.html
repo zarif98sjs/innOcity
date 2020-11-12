@@ -3,14 +3,10 @@
 =========================================================
 * Paper Dashboard 2 - v2.0.1
 =========================================================
-
 * Product Page: https://www.creative-tim.com/product/paper-dashboard-2
 * Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
 Coded by www.creative-tim.com
-
  =========================================================
-
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
 <!DOCTYPE html>
@@ -84,78 +80,122 @@ Coded by www.creative-tim.com
 
             </ul>
         </div>
-      </nav>
-      <!-- End Navbar -->
-      <div class="content">
-        <div class="row">
 
-          <div class="col-md-11" style="padding-left: 50px">
-            <div class="card card-user">
-              <div class="card-header">
-                <h5 class="card-title">Update Personal Information</h5>
-              </div>
-              <div class="card-body">
-                <form action="{% url 'dashboard:user' %}" method="POST" name="personal_form" id="personal_form">
-                {% csrf_token %}
-                  <div class="row">
-                    <div class="col-md-5">
-                      <div class="form-group">
-                        <label>Name</label>
-                        <input type="text" class="form-control"  placeholder="name" name="name" required="required" value="{{ customer.name }}">
+    </div>
+    <div class="main-panel" >
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent" >
+            <div class="container-fluid" >
+                <div class="navbar-wrapper" >
+                    <div class="navbar-toggle" >
+                        <button type="button" class="navbar-toggler" >
+                            <span class="navbar-toggler-bar bar1"></span>
+                            <span class="navbar-toggler-bar bar2"></span>
+                            <span class="navbar-toggler-bar bar3"></span>
+                        </button>
+                    </div>
+                    <a class="navbar-brand" href="{% url 'home:index' %}">Innocity</a>
+                </div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-bar navbar-kebab"></span>
+                    <span class="navbar-toggler-bar navbar-kebab"></span>
+                    <span class="navbar-toggler-bar navbar-kebab"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-end" id="navigation">
 
-                      </div>
-                    </div>
-                  <div class="col-md-5 " >
-                      <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" class="form-control" placeholder="email" name="email" required="required" value="{{ customer.email }}">
-                      </div>
-                    </div>
-                  </div>
-                <div class="row">
-                    <div class="col-md-5">
-                      <div class="form-group">
-                        <label>Username</label>
-                        <input type="text" class="form-control" placeholder="username" name="username" required="required" value="{{ customer.username }}">
-                      </div>
-                    </div>
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'home:index' %}">
+                                Home
+                            </a>
+                        </li>
+                        <li class="nav-item ">
+                            <a class="nav-link" href="{% url 'home:about' %}">
+                                About Us
+                            </a>
 
-                    <div class="col-md-5">
-                      <div class="form-group">
-                        <label>Phone Number</label>
-                        <input type="text" class="form-control" placeholder="phone number" name="phone" required="required" value="{{ customer.phone }}">
-                      <div class="select-dropdown"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-5">
-                      <div class="form-group">
-                        <label>Street</label>
-                        <input type="text" class="form-control" placeholder="street" name="street" required="required" value="{{customer.street}}">
-                      </div>
-                    </div>
-                    <div class="col-md-5">
-                      <div class="form-group">
-                        <label>Zipcode</label>
-                        <input type="text" class="form-control" placeholder="zipcode" name="zipcode" required="required" value="{{customer.zipcode}}">
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-5">
-                      <div class="form-group">
-                        <label>City</label>
-                        <input type="text" class="form-control" placeholder="city" name="city" required="required" value="{{customer.city}}">
-                      </div>
-                    </div>
-                      <div class="col-md-5">
-                      <div class="form-group">
-                        <label>Country</label>
-                        <input type="text" class="form-control" placeholder="country" name="country" required="required" value="{{customer.country}}">
-                      </div>
-                    </div>
-                  </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login:index' %}">
+                                Log Out
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- End Navbar -->
+        <div class="content">
+            <div class="row">
+
+                <div class="col-md-11" style="padding-left: 50px">
+                    <div class="card card-user">
+                        <div class="card-header">
+                            <h5 class="card-title">Update Personal Information</h5>
+                        </div>
+                        <div class="card-body">
+                            <form action="{% url 'dashboard:user' %}" method="POST" name="personal_form" id="personal_form">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Name</label>
+                                            <input type="text" class="form-control"  placeholder="name" name="name" required="required" value={{ customer.name }}>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5 " >
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <input type="email" class="form-control" placeholder="email" name="email" required="required" value={{ customer.email }}>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Username</label>
+                                            <input type="text" class="form-control" placeholder="username" name="username" required="required" value={{ customer.username }}>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Phone</label>
+                                            <input type="text" class="form-control" placeholder="phone" name="phone" required="required" value={{customer.phone}}>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Street</label>
+                                            <input type="text" class="form-control" placeholder="street" name="street" required="required" value={{customer.street}}>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Zipcode</label>
+                                            <input type="text" class="form-control" placeholder="zipcode" name="zipcode" required="required" value={{customer.zipcode}}>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>City</label>
+                                            <input type="text" class="form-control" placeholder="city" name="city" required="required" value={{customer.city}}>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Country</label>
+                                            <input type="text" class="form-control" placeholder="country" name="country" required="required" value={{customer.country}}>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="row">
                                     <div class="update ml-auto mr-auto">
                                         <button type="submit" name="submit_personal" value="submit_personal" class="btn btn-primary btn-round">Update</button>

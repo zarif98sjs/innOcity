@@ -70,6 +70,7 @@ def index(request, hotel_id):
 
 @csrf_exempt
 def payment(request, hotel_id):
+
     if request.session.has_key('customer_id'):
         logged_in = True
         customer_id = request.session['customer_id']
@@ -188,6 +189,10 @@ def payment(request, hotel_id):
 
 @csrf_exempt
 def complete_payment(request, hotel_id):
+
+
+    ## check if rooms are available in the given time , update reservation , update payment , send mail
+
     return redirect('dashboard:index')
 
 
@@ -273,7 +278,6 @@ def get_rooms(hotel_id):
         room_types = {}
 
         for row in result:
-
             if row[1] not in room_types:
                 room_types[row[1]] = len(available_rooms)
                 room = Room(room_type=row[1], bed_type=row[2], cost=row[3], discount=row[4])
@@ -284,6 +288,7 @@ def get_rooms(hotel_id):
                 num = room_types[row[1]]
                 available_rooms[num].roomId.append(row[0])
                 available_rooms[num].count += 1
+
         return available_rooms
 
 

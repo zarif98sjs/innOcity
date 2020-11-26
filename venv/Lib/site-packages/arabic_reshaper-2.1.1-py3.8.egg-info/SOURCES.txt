@@ -1,0 +1,17 @@
+LICENSE
+MANIFEST.in
+README.md
+setup.cfg
+setup.py
+arabic_reshaper/__init__.py
+arabic_reshaper/__version__.py
+arabic_reshaper/arabic_reshaper.py
+arabic_reshaper/default-config.ini
+arabic_reshaper/letters.py
+arabic_reshaper/ligatures.py
+arabic_reshaper/reshaper_config.py
+arabic_reshaper.egg-info/PKG-INFO
+arabic_reshaper.egg-info/SOURCES.txt
+arabic_reshaper.egg-info/dependency_links.txt
+arabic_reshaper.egg-info/requires.txt
+arabic_reshaper.egg-info/top_level.txt

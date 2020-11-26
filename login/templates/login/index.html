@@ -33,29 +33,27 @@
 {% if messages %}
 
     {% for message in messages %}
-    <!-- Modal -->
-    <div class="modal show" id="myModal" role="dialog">
-        <div class="modal-dialog">
+        <!-- Modal -->
+        <div class="modal show" id="myModal" role="dialog">
+            <div class="modal-dialog">
 
-            <!-- Modal content-->
-            <div class="modal-content">
-            <div class="modal-header">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
 
+                        <h4 class="modal-title">innOcity</h4>
 
-                    <h4 class="modal-title">Verification</h4>
-
+                    </div>
+                    <div class="modal-body">
+                        <p>{{ message }}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick = "$('.modal').removeClass('show').addClass('fade');">Close</button>
+                    </div>
+                </div>
 
             </div>
-                <div class="modal-body">
-                    <p>{{ message }}</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick = "$('.modal').removeClass('show').addClass('fade');">Close</button>
-                </div>
-            </div>
-
         </div>
-    </div>
 
     {% endfor %}
 

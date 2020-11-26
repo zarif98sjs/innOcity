@@ -134,7 +134,7 @@
                                     <p  style="margin: 0px;text-align: center;font-style: normal;font-weight: normal;font-family: Oswald, sans-serif;font-size: 20px;">
                                         {{ room.room_type }}</p>
                                 </div>
-                                <div class="col"><input class="form-control" name="{{ room.room_type }}" type="number" min="0" value = "0" placeholder="Count"
+                                <div class="col"><input class="form-control" name="{{ room.room_type }}" type="number" min="0" max = "{{ room.count }}" value = "0" placeholder="Count"
                                                         style="font-family: Actor, sans-serif;"></div>
                             </div>
                         {% endfor %}

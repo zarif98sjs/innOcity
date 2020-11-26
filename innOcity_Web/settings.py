@@ -35,6 +35,15 @@ ALLOWED_HOSTS = ['*']
 
 # Application definition
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'innocityweb@gmail.com'
+EMAIL_HOST_PASSWORD = 'innOcityWeb2020'
+
+DEFAULT_FROM_EMAIL = 'noreply<no_reply@domain.com>'
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -49,8 +58,7 @@ INSTALLED_APPS = [
     'hotel',
     'dashboard',
     'hotel_admin',
-
-
+    'verify_email',
 ]
 
 MIDDLEWARE = [

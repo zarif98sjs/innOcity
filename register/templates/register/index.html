@@ -2,12 +2,12 @@
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <!-- Required meta tags-->
     <meta charset="UTF-8" />
     <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+            name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
     <meta name="description" content="Colorlib Templates" />
     <meta name="author" content="Colorlib" />
@@ -18,301 +18,356 @@
 
     <!-- Icons font CSS-->
     <link
-      href="../../static/register/vendor/mdi-font/css/material-design-iconic-font.min.css"
-      rel="stylesheet"
-      media="all"
+            href="../../static/register/vendor/mdi-font/css/material-design-iconic-font.min.css"
+            rel="stylesheet"
+            media="all"
     />
     <link
-      href="../../static/register/vendor/font-awesome-4.7/css/font-awesome.min.css"
-      rel="stylesheet"
-      media="all"
+            href="../../static/register/vendor/font-awesome-4.7/css/font-awesome.min.css"
+            rel="stylesheet"
+            media="all"
     />
     <!-- Font special for pages-->
     <link
-      href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i"
-      rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet"
     />
 
     <!-- Vendor CSS-->
     <link
-      href="../../static/register/vendor/select2/select2.min.css"
-      rel="stylesheet"
-      media="all"
+            href="../../static/register/vendor/select2/select2.min.css"
+            rel="stylesheet"
+            media="all"
     />
     <link
-      href="../../static/register/vendor/datepicker/daterangepicker.css"
-      rel="stylesheet"
-      media="all"
+            href="../../static/register/vendor/datepicker/daterangepicker.css"
+            rel="stylesheet"
+            media="all"
     />
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
 
 
     <!-- Main CSS-->
     <link
-      href="../../static/register/css/main.css"
-      rel="stylesheet"
-      media="all"
+            href="../../static/register/css/main.css"
+            rel="stylesheet"
+            media="all"
     />
 
 
 
 
     <script>
-      function checkForBlank() {
-        if(document.getElementById('name').value ==''){
-            alert("Please enter your name");
-            return false;
+        function checkForBlank() {
+            if(document.getElementById('name').value ==''){
+                alert("Please enter your name");
+                return false;
+            }
         }
-      }
     </script>
-  </head>
 
-  <body>
-  <header class="header">
-		<div class="container">
-			<div class="row">
-				<div class="col">
-					<div class="header_content d-flex flex-row align-items-center justify-content-start">
-						<div class="header_content_inner d-flex flex-row align-items-end justify-content-start">
-							<div class="logo"><a href="{% url 'home:index' %}">innOcity</a></div>
+    <style>
+        #snackbar {
+            visibility: hidden;
+            min-width: 250px;
+            margin-left: -125px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 2px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            bottom: 30px;
+            font-size: 17px;
+        }
 
-								<ul>
-									<li ><a href="{% url 'home:index' %}">Home</a></li>
-									<li><a href="{% url 'home:about' %}">About us</a></li>
-									<li><a href="{% url 'login:index' %}">Login</a></li>
-									<li class="active"><a href="{% url 'register:index' %}">Register</a></li>
+        #snackbar.show {
+            visibility: visible;
+            -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
 
-								</ul>
+        @-webkit-keyframes fadein {
+            from {bottom: 0; opacity: 0;}
+            to {bottom: 30px; opacity: 1;}
+        }
+
+        @keyframes fadein {
+            from {bottom: 0; opacity: 0;}
+            to {bottom: 30px; opacity: 1;}
+        }
+
+        @-webkit-keyframes fadeout {
+            from {bottom: 30px; opacity: 1;}
+            to {bottom: 0; opacity: 0;}
+        }
+
+        @keyframes fadeout {
+            from {bottom: 30px; opacity: 1;}
+            to {bottom: 0; opacity: 0;}
+        }
+    </style>
+</head>
+
+<body>
+<header class="header">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class="header_content d-flex flex-row align-items-center justify-content-start">
+                    <div class="header_content_inner d-flex flex-row align-items-end justify-content-start">
+                        <div class="logo"><a href="{% url 'home:index' %}">innOcity</a></div>
+
+                        <ul>
+                            <li ><a href="{% url 'home:index' %}">Home</a></li>
+                            <li><a href="{% url 'home:about' %}">About us</a></li>
+                            <li><a href="{% url 'login:index' %}">Login</a></li>
+                            <li class="active"><a href="{% url 'register:index' %}">Register</a></li>
+
+                        </ul>
 
 
-							<!-- Hamburger -->
+                        <!-- Hamburger -->
 
-							<div class="hamburger ml-auto">
-								<i class="fa fa-bars" aria-hidden="true"></i>
-							</div>
+                        <div class="hamburger ml-auto">
+                            <i class="fa fa-bars" aria-hidden="true"></i>
+                        </div>
 
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</header>
-
-    <div class="page-wrapper bg-gra-01 p-t-180 p-b-100 font-poppins">
-      <div class="wrapper wrapper--w780">
-        <div class="card card-3">
-          <div class="card-heading"></div>
-          <div class="card-body">
-            <h2 class="title">Create Account</h2>
-            <form
-              action="{% url 'register:index' %}"
-              method="POST"
-              id="registration_form"
-              name="registration_form"
-              onsubmit="return checkForBlank()"
-            >
-              {% csrf_token %}
-              <div class="input-group">
-                <input
-                  class="input--style-3"
-                  type="text"
-                  placeholder="name"
-                  name="name"
-                  id="name"
-                  required = "required"
-                />
-              </div>
-              <div class="input-group">
-                <input
-                  class="input--style-3"
-                  type="email"
-                  placeholder="email"
-                  name="email"
-                  required = "required"
-                />
-              </div>
-              <div class="input-group">
-                <input
-                  class="input--style-3"
-                  type="text"
-                  placeholder="username"
-                  name="username"
-                  required = "required"
-                />
-              </div>
-
-              <div class="input-group">
-                  <select class="input--style-3" name="gender" style="width: 300px;" required = "required"  >
-                    <option class="input--style-3" disabled hidden>Gender</option>
-                    <option class="input--style-3">Male</option>
-                    <option class="input--style-3">Female</option>
-                    <option class="input--style-3">Other</option>
-                  </select>
-                  <div class="select-dropdown input--style-3" ></div>
-              </div>
-              <div class="input-group">
-                <input
-                  class="input--style-3"
-                  type="text"
-                  placeholder="street"
-                  name="street"
-                  required = "required"
-                />
-              </div>
-              <div class="input-group">
-                <input
-                  class="input--style-3"
-                  type="text"
-                  placeholder="zipcode"
-                  name="zipcode"
-                  required = "required"
-                />
-              </div>
-              <div class="input-group">
-                <input
-                  class="input--style-3"
-                  type="text"
-                  placeholder="city"
-                  name="city"
-                  required = "required"
-                />
-              </div>
-              <div class="input-group">
-                <input
-                  class="input--style-3"
-                  type="text"
-                  placeholder="country"
-                  name="country"
-                  required = "required"
-                />
-              </div>
-              <div class="input-group">
-                <input
-                  class="input--style-3"
-                  type="text"
-                  placeholder="phone"
-                  name="phone"
-                  required = "required"
-                />
-              </div>
-              <div class="input-group">
-                <input
-                  class="input--style-3"
-                  type="password"
-                  placeholder="password"
-                  name="password"
-                  id="pass1"
-                  required = "required"
-                />
-              </div>
-              <div class="input-group">
-                <input
-                  class="input--style-3"
-                  type="password"
-                  placeholder="confirm password"
-                  name="confirm password"
-                  id="pass2"
-                  required = "required"
-                />
-              </div>
-              <div class="p-t-10">
-                <button
-                  class="btn btn--pill btn--green"
-                  type="submit"
-                  id="submit"
-                  onclick="validatePassword()"
-                >
-                  Submit
-                </button>
-              </div>
-            </form>
-              <script>
-
-                        function validatePassword(){
-
-                            var new_pass = document.getElementById("pass1");
-                            var confirm_password = document.getElementById("pass2");
-                            confirm_password.setCustomValidity("");
-                            new_pass.setCustomValidity("");
-
-                            if(new_pass.value !== confirm_password.value) {
-
-                                confirm_password.setCustomValidity("Password doesn't match");
-                                confirm_password.value = "";
-
-                            }
-
-                            else {
-
-                                document.forms['registration_form'].submit();
-
-                            }
-                        }
-                    </script>
-          </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
+</header>
 
-    <!-- Jquery JS-->
-    <script src="../../static/register/vendor/jquery/jquery.min.js"></script>
-    <!-- Vendor JS-->
-    <script src="../../static/register/vendor/select2/select2.min.js"></script>
-    <script src="../../static/register/vendor/datepicker/moment.min.js"></script>
-    <script src="../../static/register/vendor/datepicker/daterangepicker.js"></script>
+<div class="page-wrapper bg-gra-01 p-t-180 p-b-100 font-poppins">
+    <div class="wrapper wrapper--w780">
+        <div class="card card-3">
+            <div class="card-heading"></div>
+            <div class="card-body">
+                <h2 class="title">Create Account</h2>
+                <form
+                        action="{% url 'register:index' %}"
+                        method="POST"
+                        id="registration_form"
+                        name="registration_form"
+                        onsubmit="return checkForBlank()"
+                >
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <input
+                                class="input--style-3"
+                                type="text"
+                                placeholder="name"
+                                name="name"
+                                id="name"
+                                required = "required"
+                        />
+                    </div>
+                    <div class="input-group">
+                        <input
+                                class="input--style-3"
+                                type="email"
+                                placeholder="email"
+                                name="email"
+                                required = "required"
+                        />
+                    </div>
+                    <div class="input-group">
+                        <input
+                                class="input--style-3"
+                                type="text"
+                                placeholder="username"
+                                name="username"
+                                required = "required"
+                        />
+                    </div>
 
-    <!-- Main JS-->
-    <script src="../../static/register/js/global.js"></script>
+                    <div class="input-group">
+                        <select class="input--style-3" name="gender" style="width: 300px;" required = "required"  >
+                            <option class="input--style-3" disabled hidden>Gender</option>
+                            <option class="input--style-3">Male</option>
+                            <option class="input--style-3">Female</option>
+                            <option class="input--style-3">Other</option>
+                        </select>
+                        <div class="select-dropdown input--style-3" ></div>
+                    </div>
+                    <div class="input-group">
+                        <input
+                                class="input--style-3"
+                                type="text"
+                                placeholder="street"
+                                name="street"
+                                required = "required"
+                        />
+                    </div>
+                    <div class="input-group">
+                        <input
+                                class="input--style-3"
+                                type="text"
+                                placeholder="zipcode"
+                                name="zipcode"
+                                required = "required"
+                        />
+                    </div>
+                    <div class="input-group">
+                        <input
+                                class="input--style-3"
+                                type="text"
+                                placeholder="city"
+                                name="city"
+                                required = "required"
+                        />
+                    </div>
+                    <div class="input-group">
+                        <input
+                                class="input--style-3"
+                                type="text"
+                                placeholder="country"
+                                name="country"
+                                required = "required"
+                        />
+                    </div>
+                    <div class="input-group">
+                        <input
+                                class="input--style-3"
+                                type="text"
+                                placeholder="phone"
+                                name="phone"
+                                required = "required"
+                        />
+                    </div>
+                    <div class="input-group">
+                        <input
+                                class="input--style-3"
+                                type="password"
+                                placeholder="password"
+                                name="password"
+                                id="pass1"
+                                required = "required"
+                        />
+                    </div>
+                    <div class="input-group">
+                        <input
+                                class="input--style-3"
+                                type="password"
+                                placeholder="confirm password"
+                                name="confirm password"
+                                id="pass2"
+                                required = "required"
+                        />
+                    </div>
+                    <div class="p-t-10">
+                        <button
+                                class="btn btn--pill btn--green"
+                                type="submit"
+                                id="submit"
+                                onclick="validatePassword()"
+                        >
+                            Submit
+                        </button>
+                    </div>
+                </form>
 
-  <script>
-        var didScroll;
-        var lastScrollTop = 0;
-        var delta = 5;
-        var navbarHeight = $('header').outerHeight();
+                <div id="snackbar">Check mail</div>
 
-        $(window).scroll(function(event){
-            didScroll = true;
-        });
+                <script>
+                    function activateSnackbar() {
+                        var x = document.getElementById("snackbar");
+                        x.className = "show";
+                        setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+                    }
+                </script>
 
-        setInterval(function() {
-            if (didScroll) {
-                hasScrolled();
-                didScroll = false;
-            }
-        }, 250);
+                <script>
 
-        function hasScrolled() {
-            var st = $(this).scrollTop();
+                    function validatePassword(){
 
-            // Make sure they scroll more than delta
-            if(Math.abs(lastScrollTop - st) <= delta)
-                return;
+                        var new_pass = document.getElementById("pass1");
+                        var confirm_password = document.getElementById("pass2");
+                        confirm_password.setCustomValidity("");
+                        new_pass.setCustomValidity("");
 
-            // If they scrolled down and are past the navbar, add class .nav-up.
-            // This is necessary so you never see what is "behind" the navbar.
-            if (st > lastScrollTop && st > navbarHeight){
-                // Scroll Down
-                $('header').removeClass('nav-down').addClass('nav-up');
-            } else {
-                // Scroll Up
-                if(st + $(window).height() < $(document).height()) {
-                    $('header').removeClass('nav-up').addClass('nav-down');
-                }
-            }
+                        if(new_pass.value !== confirm_password.value) {
 
-            lastScrollTop = st;
+                            confirm_password.setCustomValidity("Password doesn't match");
+                            confirm_password.value = "";
+
+                        }
+
+                        else {
+
+                            document.forms['registration_form'].submit();
+
+                        }
+                    }
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Jquery JS-->
+<script src="../../static/register/vendor/jquery/jquery.min.js"></script>
+<!-- Vendor JS-->
+<script src="../../static/register/vendor/select2/select2.min.js"></script>
+<script src="../../static/register/vendor/datepicker/moment.min.js"></script>
+<script src="../../static/register/vendor/datepicker/daterangepicker.js"></script>
+
+<!-- Main JS-->
+<script src="../../static/register/js/global.js"></script>
+
+<script>
+    var didScroll;
+    var lastScrollTop = 0;
+    var delta = 5;
+    var navbarHeight = $('header').outerHeight();
+
+    $(window).scroll(function(event){
+        didScroll = true;
+    });
+
+    setInterval(function() {
+        if (didScroll) {
+            hasScrolled();
+            didScroll = false;
         }
-    </script>
+    }, 250);
 
-    {% if alert_flag %}
+    function hasScrolled() {
+        var st = $(this).scrollTop();
+
+        // Make sure they scroll more than delta
+        if(Math.abs(lastScrollTop - st) <= delta)
+            return;
+
+        // If they scrolled down and are past the navbar, add class .nav-up.
+        // This is necessary so you never see what is "behind" the navbar.
+        if (st > lastScrollTop && st > navbarHeight){
+            // Scroll Down
+            $('header').removeClass('nav-down').addClass('nav-up');
+        } else {
+            // Scroll Up
+            if(st + $(window).height() < $(document).height()) {
+                $('header').removeClass('nav-up').addClass('nav-down');
+            }
+        }
+
+        lastScrollTop = st;
+    }
+</script>
+
+{% if alert_flag %}
     <script>
-      alert("Complete the form.");
+        alert("Complete the form.");
     </script>
-    {% elif invalid_username %}
-        <script>
-            alert("This username is already taken")
-        </script>
-    {% endif %}
-  </body>
+{% elif invalid_username %}
+    <script>
+        alert("This username is already taken")
+    </script>
+{% endif %}
+</body>
 </html>
 <!-- end document-->

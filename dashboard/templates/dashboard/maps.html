@@ -19,6 +19,60 @@
     <link href="{% static 'dashboard/css/paper-dashboard.css' %}?v=2.0.1" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="{% static 'dashboard/demo/demo.css' %}" rel="stylesheet" />
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .rate {
+            float: left;
+            height: 46px;
+            padding: 0 10px;
+        }
+        .rate:not(:checked) > input {
+            position:absolute;
+            top:-9999px;
+        }
+        .rate:not(:checked) > label {
+            float:right;
+            width:1em;
+            overflow:hidden;
+            white-space:nowrap;
+            cursor:pointer;
+            font-size:30px;
+            color:#ccc;
+        }
+        .rate:checked + label {
+            content: '★ ';
+        }
+        .checked > label{
+            content: '★ ';
+        }
+        .rate > input:checked ~ label:before{
+            content: '★ ';
+        }
+        .rate:not(:checked) > label:before {
+            content: '★ ';
+        }
+        .rate > input:checked ~ label:before {
+            color: #ffc700;
+        }
+
+        .rate:not(:checked) > label:hover,
+        .rate:not(:checked) > label:hover ~ label {
+            color: #deb217;
+        }
+        .rate > input:checked,
+        .rate > input:checked + label:hover,
+        .rate > input:checked + label:hover ~ label,
+        .rate > input:checked ~ label:hover,
+        .rate > input:checked ~ label:hover ~ label,
+        .rate > label:hover ~ input:checked ~ label {
+            color: #c59b08;
+        }
+
+    </style>
+
 </head>
 
 <body class="">
@@ -119,9 +173,9 @@
 
                     <div class="col-md-11" style="padding-left: 50px">
                         <div class="card card-user">
-                            <div class="card-body">
+                            <div class="card-body" style="padding-bottom: 50px; padding-top: 50px">
                                 <div class="row" >
-                                    <div class="col-md-5">
+                                    <div class="col-md-5" style="padding-top: 10%">
                                         <img src="{% static 'dashboard/img/img_1.jpg' %}">
                                     </div>
                                     <div class="col-md-1">
@@ -149,25 +203,63 @@
                                         </div>
                                         {% if reservation.services %}
                                             <div class="row" style="font-size: 15px; ">
+                                            <p><b>Service Charge:  </b>   {{ reservation.service_charge }}</p>
+                                            </div>
+                                            <div class="row" style="font-size: 15px; ">
                                                 <p><b>Services included:  </b>
-                                                <ul>
+                                                <ul style="padding-left: 30px;">
                                                     {% for ser in reservation.services %}
-                                                        <li>{{ser}} </li>
+                                                        <li style="float: left; margin-right:2em;">{{ser}} </li>
                                                     {% endfor %}
                                                 </ul>
                                                 </p>
                                             </div>
-                                            <div class="row" style="font-size: 15px; ">
-                                            <p><b>Service Charge:  </b>   {{ reservation.service_charge }}</p>
-                                            </div>
+
+
                                         {% endif %}
 
 
+                                        <div class="row" style="font-size: 15px; padding-left: 270px;">
+                                            <p style="padding-left: 50px; padding-top: 20px">Rate</p>
+                                            <form action="{% url 'dashboard:maps' %}" method="POST" id="rating_form" name="rating_form">
+                                            {% csrf_token %}
 
-                                        <div class="row">
+                                              <div class="form-group">
+                                                <input type="text" class="form-control" name="reservation_id" readonly hidden value="{{ reservation.reservation_id }}">
+
+                                              </div><div class="rate">
+                                                <input onchange="this.form.submit()" type="radio" class="form-control" id="star5 {{ reservation.hotelId }}" name="rate" value="5"/>
+                                                <label for="star5 {{ reservation.hotelId }}" title="5 stars">5 stars</label>
+                                                <input onchange="this.form.submit();" type="radio" class="form-control" id="star4 {{ reservation.hotelId }}" name="rate" value="4" />
+                                                <label for="star4 {{ reservation.hotelId }}" title="4 stars">4 stars</label>
+                                                <input onchange="this.form.submit();" type="radio" class="form-control" id="star3 {{ reservation.hotelId }}"  name="rate" value="3" />
+                                                <label for="star3 {{ reservation.hotelId }}" title="3 stars">3 stars</label>
+                                                <input onchange="this.form.submit();" type="radio" class="form-control" id="star2 {{ reservation.hotelId }}" name="rate"  value="2" />
+                                                <label for="star2 {{ reservation.hotelId }}" title="2">2 stars</label>
+                                                <input onchange="this.form.submit();" type="radio" class="form-control" id="star1 {{ reservation.hotelId }}" name="rate"  value="1" />
+                                                <label for="star1 {{ reservation.hotelId }}" title="1">1 star</label>
+                                                </div>
+                                                {% if reservation.rating %}
+                                                    <script>
+                                                        var rbid = "star" + {{ reservation.rating }} + " " + {{ reservation.hotelId }};
+                                                        console.log(rbid);
+                                                        var rb = document.getElementById(rbid);
+                                                        rb.checked = true;
+                                                    </script>
+                                                {% endif %}
+                                                </form>
+
+
+
+
+                                        </div>
+
+
+                                        <div class="row" >
                                             <a href="{% url 'hotel:index' reservation.hotelId %}">
                                                 <button type="submit" name="book_again" value="book_again" class="btn btn-primary btn-round" >Book Again </button>
                                             </a>
+
                                         </div>
 
                                     </div>
@@ -186,8 +278,6 @@
 <script src="{% static 'dashboard/js/core/popper.min.js' %}"></script>
 <script src="{% static 'dashboard/js/core/bootstrap.min.js' %}"></script>
 <script src="{% static 'dashboard/js/plugins/perfect-scrollbar.jquery.min.js' %}"></script>
-<!--  Google Maps Plugin    -->
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
 <!-- Chart JS -->
 <script src="{% static 'dashboard/js/plugins/chartjs.min.js' %}"></script>
 <!--  Notifications Plugin    -->
@@ -201,6 +291,9 @@
         demo.initChartsPages();
     });
 </script>
+
+
+
 </body>
 
 </html>

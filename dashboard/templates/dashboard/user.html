@@ -31,7 +31,7 @@ Coded by www.creative-tim.com
     <link href="{% static 'dashboard/demo/demo.css' %}" rel="stylesheet" />
 </head>
 
-<body class="">
+<body class="" onload="showSnackbar()">
 <div class="wrapper ">
     <div class="sidebar" data-color="white" data-active-color="danger">
         <div class="logo">
@@ -140,14 +140,14 @@ Coded by www.creative-tim.com
                                     <div class="col-md-5">
                                         <div class="form-group">
                                             <label>Name</label>
-                                            <input type="text" class="form-control"  placeholder="name" name="name" required="required" value={{ customer.name }}>
+                                            <input type="text" class="form-control"  placeholder="name" name="name" required="required" value="{{ customer.name }}">
 
                                         </div>
                                     </div>
                                     <div class="col-md-5 " >
                                         <div class="form-group">
                                             <label>Email</label>
-                                            <input type="email" class="form-control" placeholder="email" name="email" required="required" value={{ customer.email }}>
+                                            <input type="email" class="form-control" placeholder="email" name="email" required="required" value="{{ customer.email }}">
                                         </div>
                                     </div>
                                 </div>
@@ -155,14 +155,14 @@ Coded by www.creative-tim.com
                                     <div class="col-md-5">
                                         <div class="form-group">
                                             <label>Username</label>
-                                            <input type="text" class="form-control" placeholder="username" name="username" required="required" value={{ customer.username }}>
+                                            <input type="text" class="form-control" placeholder="username" name="username" required="required" value="{{ customer.username }}">
                                         </div>
                                     </div>
 
                                     <div class="col-md-5">
                                         <div class="form-group">
                                             <label>Phone</label>
-                                            <input type="text" class="form-control" placeholder="phone" name="phone" required="required" value={{customer.phone}}>
+                                            <input type="text" class="form-control" placeholder="phone" name="phone" required="required" value="{{customer.phone}}">
 
                                         </div>
                                     </div>
@@ -171,13 +171,13 @@ Coded by www.creative-tim.com
                                     <div class="col-md-5">
                                         <div class="form-group">
                                             <label>Street</label>
-                                            <input type="text" class="form-control" placeholder="street" name="street" required="required" value={{customer.street}}>
+                                            <input type="text" class="form-control" placeholder="street" name="street" required="required" value="{{customer.street}}">
                                         </div>
                                     </div>
                                     <div class="col-md-5">
                                         <div class="form-group">
                                             <label>Zipcode</label>
-                                            <input type="text" class="form-control" placeholder="zipcode" name="zipcode" required="required" value={{customer.zipcode}}>
+                                            <input type="text" class="form-control" placeholder="zipcode" name="zipcode" required="required" value="{{customer.zipcode}}">
                                         </div>
                                     </div>
                                 </div>
@@ -185,13 +185,13 @@ Coded by www.creative-tim.com
                                     <div class="col-md-5">
                                         <div class="form-group">
                                             <label>City</label>
-                                            <input type="text" class="form-control" placeholder="city" name="city" required="required" value={{customer.city}}>
+                                            <input type="text" class="form-control" placeholder="city" name="city" required="required" value="{{customer.city}}">
                                         </div>
                                     </div>
                                     <div class="col-md-5">
                                         <div class="form-group">
                                             <label>Country</label>
-                                            <input type="text" class="form-control" placeholder="country" name="country" required="required" value={{customer.country}}>
+                                            <input type="text" class="form-control" placeholder="country" name="country" required="required" value="{{customer.country}}">
                                         </div>
                                     </div>
                                 </div>
@@ -313,7 +313,6 @@ Coded by www.creative-tim.com
 <script src="{% static 'dashboard/js/plugins/perfect-scrollbar.jquery.min.js' %}"></script>
 
 <!--  Google Maps Plugin    -->
-<script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
 <!-- Chart JS -->
 <script src="{% static 'dashboard/js/plugins/chartjs.min.js' %}"></script>
 <!--  Notifications Plugin    -->
@@ -321,15 +320,28 @@ Coded by www.creative-tim.com
 <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
 <script src="{% static 'dashboard/js/paper-dashboard.min.js' %}?v=2.0.1" type="text/javascript"></script><!-- Paper Dashboard DEMO methods, don't include it in your project! -->
 <script src="{% static 'dashboard/demo/demo.js' %}"></script>
-{% if wrong_password %}
-    <script>
-        alert("Wrong Password")
-    </script>
-{% elif password_updated %}
-    <script>
-        alert("Password Updated!")
-    </script>
-{% endif %}
+<script>
+      i = 1;
+  </script>
+    {% if messages %}
+        <div id ="snackbar" style="background-color: #333"><p>
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+        </p>
+        </div>
+    {% endif %}
+
+
+<script>
+    function showSnackbar()
+    {
+        var x = document.getElementById("snackbar");
+        x.className = "show";
+        setTimeout(function(){x.className = x.className.replace("show","");}, 3000);
+
+    }
+</script>
 
 </body>
 

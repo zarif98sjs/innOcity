@@ -4,8 +4,6 @@ from django.db import connection
 import hashlib
 
 app_name = 'login'
-customer_id = 0
-admin_id = 0
 
 
 def index(request):
@@ -25,8 +23,6 @@ def index(request):
 
 def user_login(request):
 
-    global customer_id
-    customer_id = 0
     v1 = request.POST.get('username')
     v2 = request.POST.get('password')
     v2 = hashlib.md5(v2.encode()).hexdigest()
@@ -47,9 +43,6 @@ def user_login(request):
 
 
 def admin_login(request):
-
-    global admin_id
-    admin_id = 0
 
     v1 = request.POST.get('username')
     v2 = request.POST.get('password')

@@ -27,7 +27,8 @@ class Customer:
 class Reservation:
 
     def __init__(self, reservation_id, date_of_arrival=None, date_of_departure=None, hotelId=None,
-                 hotel_name=None, city=None, country=None, room_type=None, bed_type=None, reservation_charge=None):
+                 hotel_name=None, city=None, country=None, room_type=None, bed_type=None, reservation_charge=None,
+                 rating=None):
 
         self.reservation_id = reservation_id
         self.date_of_arrival = date_of_arrival.date()
@@ -41,5 +42,6 @@ class Reservation:
         self.services = []
         self.reservation_charge = reservation_charge
         self.service_charge = 0
+        self.rating = rating
 
 

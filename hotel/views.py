@@ -2,6 +2,7 @@ from datetime import datetime
 from django.shortcuts import render, redirect
 from django.http import Http404
 from .models import Hotel, Room, Service, Session
+from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 from django.db import connection
 from random import seed
@@ -69,19 +70,19 @@ def index(request, hotel_id):
 
 @csrf_exempt
 def payment(request, hotel_id):
-
     if request.session.has_key('customer_id'):
         logged_in = True
         customer_id = request.session['customer_id']
     else:
-        logged_in = False
+        messages.success(request, 'you must log in first')
+        return redirect('login:index')
 
     with connection.cursor() as cur:
         cur.execute("SELECT * FROM CUSTOMER WHERE customerId = %s", [customer_id])
         result = cur.fetchone()
 
         if result is None:
-            return redirect('home:index')
+            return redirect('login:index')
         else:
             global customer
             customer = Customer(customer_id=customer_id, name=result[1], email=result[2], username=result[3],
@@ -269,15 +270,20 @@ def get_rooms(hotel_id):
 
         result = cur.fetchall()
         available_rooms = []
-        room_types = []
+        room_types = {}
+
         for row in result:
 
             if row[1] not in room_types:
-                room_types.append(row[1])
-                room = Room(roomId=row[0], room_type=row[1], bed_type=row[2], cost=row[3], discount=row[4])
+                room_types[row[1]] = len(available_rooms)
+                room = Room(room_type=row[1], bed_type=row[2], cost=row[3], discount=row[4])
+                room.roomId.append(row[0])
                 room.add_facilities(get_room_facilities(row[0]))
                 available_rooms.append(room)
-
+            else:
+                num = room_types[row[1]]
+                available_rooms[num].roomId.append(row[0])
+                available_rooms[num].count += 1
         return available_rooms
 
 

@@ -35,7 +35,7 @@ Coded by www.creative-tim.com
   <link href="{% static 'hotel_admin/demo/demo.css' %}" rel="stylesheet" />
 </head>
 
-<body class="">
+<body class="" onload="showSnackbar()">
   <div class="wrapper ">
     <div class="sidebar" data-color="white" data-active-color="danger" style="width: 350px; padding: 20px">
       <div class="logo">
@@ -335,6 +335,7 @@ Coded by www.creative-tim.com
                 </form>
 
 
+
               </div>
             </div>
           </div>
@@ -376,11 +377,27 @@ Coded by www.creative-tim.com
   <script>
       i = 1;
   </script>
-    {% for message in messages %}
-        <script>
-            alert({{ message }})
-        </script>
-    {% endfor %}
+    {% if messages %}
+        <div id ="snackbar" style="background-color: #333"><p>
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+        </p>
+        </div>
+    {% endif %}
+
+
+<script>
+    function showSnackbar()
+    {
+        var x = document.getElementById("snackbar");
+        x.className = "show";
+
+        setTimeout(function(){x.className = x.className.replace("show","");}, 3000);
+
+    }
+</script>
+
 </body>
 
 </html>

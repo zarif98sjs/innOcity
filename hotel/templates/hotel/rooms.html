@@ -34,9 +34,7 @@
           <li class="nav-item"><a href="{% url 'hotel:index' hotel.hotelId %}" class="nav-link">{{hotel.name}}</a></li>
           <li class="nav-item active"><a href="{% url 'hotel:rooms' hotel.hotelId %}" class="nav-link">Rooms</a></li>
           <li class="nav-item"><a href="{% url 'hotel:services' hotel.hotelId %}" class="nav-link">Services</a></li>
-          <li class="nav-item"><a href="{% url 'hotel:about' hotel.hotelId %}" class="nav-link">About Us</a></li>
-          <li class="nav-item"><a href="{% url 'hotel:blog' hotel.hotelId %}" class="nav-link">Blog</a></li>
-          <li class="nav-item"><a href="{% url 'hotel:contact' hotel.hotelId %}" class="nav-link">Contact</a></li>
+          <li class="nav-item"><a href="{% url 'hotel:book' hotel.hotelId %}" class="nav-link">Book</a></li>
         </ul>
       </div>
     </div>
@@ -76,8 +74,11 @@
                               {% if room.special_offer is not null %}
                               <li><strong>Special offers: </strong> {{ room.special_offer }}</li>
                               {% endif %}
+                            {% if room.facilities %}
                               <li><strong>Facilities: </strong>{{ room.facilities }}</li>
+                            {% endif %}
                               <li><strong>Bed Type: </strong> {{ room.bed_type }}</li>
+                                <li><strong>{{ room.count }} rooms of this type available!</strong></li>
                             </ul>
 
                 <p><a href="#" class="btn btn-primary py-3 px-5">Read More</a></p>

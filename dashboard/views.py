@@ -1,9 +1,9 @@
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect
+from django.db import connection
 from django.http import HttpResponseRedirect
 from django.contrib import messages
-from django.db import connection
+from django.urls import reverse
 import hashlib
-from django.views.decorators.csrf import csrf_exempt
 from .models import Customer, Reservation
 from hotel.models import Hotel
 import json
@@ -115,8 +115,17 @@ def maps(request):
             get_customer(request.session['customer_id'])
         with connection.cursor() as cur:
 
+            if request.method == 'POST':
+                reservation_id = request.POST.get("reservation_id")
+                rate = request.POST.get("rate")
+
+                sql = "UPDATE RESERVATION SET RATING = %s WHERE RESERVATIONID = %s"
+                cur.execute(sql, [rate, reservation_id])
+                connection.commit()
+                return HttpResponseRedirect(reverse('dashboard:maps'))
+
             sql = "SELECT RS.RESERVATIONID, RS.DATE_OF_ARRIVAL, RS.DATE_OF_DEPARTURE, RS.RESERVATION_CHARGE, " \
-                  "H.HOTELID, H.NAME, H.CITY, H.COUNTRY, RT.ROOMTYPE_NAME, RT.BED_TYPE " \
+                  "H.HOTELID, H.NAME, H.CITY, H.COUNTRY, RT.ROOMTYPE_NAME, RT.BED_TYPE, RS.RATING " \
                   "FROM RESERVATION RS, HOTEL H, ROOM RM, ROOM_TYPE RT " \
                   "WHERE RS.CUSTOMERID = %s AND RS.HOTELID = H.HOTELID AND RM.ROOMID = RS.ROOMID " \
                   "AND RM.ROOMTYPEID = RT.ROOMTYPEID " \
@@ -130,7 +139,7 @@ def maps(request):
                 reservation = Reservation(reservation_id=row[0], date_of_arrival=row[1],
                                           date_of_departure=row[2], reservation_charge=row[3],
                                           hotelId=row[4], hotel_name=row[5], city=row[6],
-                                          country=row[7], room_type=row[8], bed_type=row[9])
+                                          country=row[7], room_type=row[8], bed_type=row[9], rating=row[10])
 
                 sql = "SELECT S.SERVICE_TYPE, S.COST, RS.QUANTITY " \
                       "FROM SERVICE S, RESERVATION_SERVICE RS " \
@@ -156,9 +165,9 @@ def user(request):
     else:
         if customer.customer_id == 0:
             get_customer(request.session['customer_id'])
-        if request.method == 'POST':
+        with connection.cursor() as cur:
 
-            with connection.cursor() as cur:
+            if request.method == 'POST':
 
                 if request.POST.get("submit_personal"):
 
@@ -176,10 +185,11 @@ def user(request):
                           "zipcode = %s, city = %s, country = %s WHERE customerId = %s"
                     cur.execute(sql, [name, email, username, phone, street, zipcode, city, country, customer_id])
                     connection.commit()
-
                     customer = Customer(customer_id=customer_id, name=name, email=email, username=username,
                                         phone=phone, street=street, zipcode=zipcode, city=city,
                                         country=country)
+
+                    messages.success(request, "Information updated successfully")
 
                 elif request.POST.get("submit_password"):
 
@@ -189,8 +199,7 @@ def user(request):
                     input_old_pass_hash = hashlib.md5(input_old_pass.encode()).hexdigest()
 
                     if input_old_pass_hash != old_pass_hash:
-                        return render(request, 'dashboard/user.html', {'customer': customer,
-                                                                       'wrong_password': True})
+                        messages.success(request, "wrong password")
                     else:
 
                         input_new_pass = request.POST.get("new_password")
@@ -198,8 +207,8 @@ def user(request):
                         sql = "UPDATE CUSTOMER SET password = %s WHERE customerId = %s"
                         cur.execute(sql, [input_new_pass_hash, customer.customer_id])
                         connection.commit()
+                        messages.success(request, "Password updated successfully")
 
-                        return render(request, 'dashboard/user.html', {'customer': customer,
-                                                                       'password_updated': True})
+                return HttpResponseRedirect(reverse('dashboard:user'))
 
         return render(request, 'dashboard/user.html', {'customer': customer})

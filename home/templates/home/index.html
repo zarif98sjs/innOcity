@@ -24,7 +24,27 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Acme">
     <link rel="stylesheet" href="{% static 'home/assets/css/styles.min.css' %}">
 </head>
-<body>
+<body onload="showSnackbar()">
+{% if messages %}
+        <div id ="snackbar" style="background-color: red"><p>
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+        </p>
+        </div>
+    {% endif %}
+
+
+<script>
+    function showSnackbar()
+    {
+
+        var x = document.getElementById("snackbar");
+        x.className = "show";
+        setTimeout(function(){x.className = x.className.replace("show","");}, 3000);
+
+    }
+</script>
 
 <div class="super_container">
 
@@ -659,6 +679,7 @@
     }
 </script>
 
+
 <script type="text/javascript">
 
     var destinationSet = new Set();
@@ -676,6 +697,8 @@
 <script>
     autocomplete(document.getElementById("myInput"), destination);
 </script>
+
+
 
 
 {#<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'%}"></script>#}

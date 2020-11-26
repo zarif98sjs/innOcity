@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     'hotel',
     'dashboard',
     'hotel_admin',
-    'verify_email',
+
 ]
 
 MIDDLEWARE = [

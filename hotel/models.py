@@ -40,14 +40,15 @@ class Hotel:
 
 class Room:
 
-    def __init__(self, roomId, room_type, bed_type, cost, discount):
+    def __init__(self, room_type, bed_type, cost, discount):
 
-        self.roomId = roomId
+        self.roomId = []
         self.room_type = room_type
         self.bed_type = bed_type
         self.cost = cost
         self.discount = discount
         self.facilities = ""
+        self.count = 1
 
     def add_facilities(self, facility_list):
 

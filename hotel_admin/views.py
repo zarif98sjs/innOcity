@@ -1,9 +1,11 @@
-from django.shortcuts import render, redirect, reverse
+from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.db import connection
 from .models import Room, Reservation, Service
 from hotel.models import Hotel
+from django.urls import reverse
+
 import random
 
 app_name = 'hotel_admin'
@@ -36,7 +38,7 @@ def index(request):
                       "WHERE HOTELID = %s AND ROOMTYPE_NAME = %s AND BED_TYPE = %s"
                 cur.execute(sql, [cost_per_day, discount, hotel.hotelId, room_type, bed_type])
                 connection.commit()
-                messages.add_message(request, messages.INFO, "Room Cost Updated")
+                messages.success(request, "Room Cost Updated")
 
             elif request.POST.get("submit_new_room"):
 
@@ -44,14 +46,7 @@ def index(request):
                 floor_number = request.POST.get("floor_number")
                 room_id = generate_new_id("SELECT ROOMID FROM ROOM")
 
-                sql = "SELECT ROOMTYPEID FROM ROOM_TYPE WHERE HOTELID = %s AND ROOMTYPE_NAME = %s"
-                cur.execute(sql, [hotel.hotelId, room_type])
-                roomtype_id = cur.fetchone()[0]
-
-                sql = "INSERT INTO ROOM(ROOMID, FLOOR_NUMBER, HOTELID, ROOMTYPEID) " \
-                      "VALUES(%s, %s, %s, %s)"
-                cur.execute(sql, [room_id, floor_number, hotel.hotelId, roomtype_id])
-                connection.commit()
+                cur.callproc('ADD_NEW_ROOM', [hotel.hotelId, room_type, floor_number, room_id])
 
                 i = 1
                 while True:
@@ -64,7 +59,7 @@ def index(request):
                         connection.commit()
                     i = i + 1
 
-                messages.add_message(request, messages.INFO, "New Room Enlisted")
+                messages.success(request, "New Room Enlisted")
 
             elif request.POST.get("submit_new_room_type"):
 
@@ -73,17 +68,16 @@ def index(request):
                 cost = request.POST.get('cost_per_day')
                 discount = request.POST.get('discount')
 
-                sql = "SELECT * FROM ROOM_TYPE WHERE HOTELID = %s AND UPPER(ROOMTYPE_NAME) = UPPER(%s) "
-                cur.execute(sql, [hotel.hotelId, room_type])
-                row = cur.fetchone()
+                exists = cur.var(int).var
+                roomtype_id = generate_new_id("SELECT ROOMTYPEID FROM ROOM_TYPE")
+                cur.callproc("ADD_NEW_ROOM_TYPE", [roomtype_id, room_type, hotel.hotelId, bed_type,
+                                                   cost, discount, exists])
+                print("exists", exists.getvalue())
 
-                if row is None:
-                    roomtype_id = generate_new_id("SELECT ROOMTYPEID FROM ROOM_TYPE")
-                    sql = "INSERT INTO ROOM_TYPE VALUES(%s, INITCAP(%s), INITCAP(%s), %s, %s, %s)"
-                    cur.execute(sql, [roomtype_id, room_type, bed_type, cost, discount, hotel.hotelId])
-                    messages.add_message(request, messages.INFO, "New Room Type Enlisted")
+                if exists.getvalue() == 0:
+                    messages.success(request, "New room type added")
                 else:
-                    messages.add_message(request, messages.INFO, "This Type Already Exists")
+                    messages.success(request, "Room type already exists")
 
             return HttpResponseRedirect(reverse('hotel_admin:index'))
 
@@ -160,13 +154,14 @@ def service(request):
                 sql = "INSERT INTO HOTEL_FACILITY VALUES(%s, INITCAP(%s))"
                 cur.execute(sql, [hotel.hotelId, new_facility])
                 connection.commit()
-                return HttpResponseRedirect(reverse('hotel_admin:service'))
+                messages.success(request, "New free service added")
 
             elif request.POST.get("submit_delete_facility"):
 
                 delete_facility = request.POST.get("delete_list")
                 sql = "DELETE HOTEL_FACILITY WHERE HOTELID = %s AND LOWER(FACILITIES) = LOWER(%s)"
                 cur.execute(sql, [hotel.hotelId, delete_facility])
+                messages.success(request, "Free service deleted")
 
             elif request.POST.get("submit_cost"):
 
@@ -175,6 +170,7 @@ def service(request):
                 sql = "UPDATE SERVICE SET COST = %s WHERE SERVICEID = %s"
                 cur.execute(sql, [cost, service_id])
                 connection.commit()
+                messages.success(request, "Service charge updated")
 
             elif request.POST.get("submit_new_service_under_service_type"):
 
@@ -185,6 +181,7 @@ def service(request):
                 sql = "INSERT INTO SERVICE VALUES(%s, %s, INITCAP(%s), %s, %s)"
                 cur.execute(sql, [service_id, service_type, service_subtype, cost, hotel.hotelId])
                 connection.commit()
+                messages.success(request, "New paid service added")
 
             return HttpResponseRedirect(reverse('hotel_admin:service'))
 

@@ -46,14 +46,7 @@ def index(request):
                 floor_number = request.POST.get("floor_number")
                 room_id = generate_new_id("SELECT ROOMID FROM ROOM")
 
-                sql = "SELECT ROOMTYPEID FROM ROOM_TYPE WHERE HOTELID = %s AND ROOMTYPE_NAME = %s"
-                cur.execute(sql, [hotel.hotelId, room_type])
-                roomtype_id = cur.fetchone()[0]
-
-                sql = "INSERT INTO ROOM(ROOMID, FLOOR_NUMBER, HOTELID, ROOMTYPEID) " \
-                      "VALUES(%s, %s, %s, %s)"
-                cur.execute(sql, [room_id, floor_number, hotel.hotelId, roomtype_id])
-                connection.commit()
+                cur.callproc('ADD_NEW_ROOM', [hotel.hotelId, room_type, floor_number, room_id])
 
                 i = 1
                 while True:
@@ -75,17 +68,16 @@ def index(request):
                 cost = request.POST.get('cost_per_day')
                 discount = request.POST.get('discount')
 
-                sql = "SELECT * FROM ROOM_TYPE WHERE HOTELID = %s AND UPPER(ROOMTYPE_NAME) = UPPER(%s) "
-                cur.execute(sql, [hotel.hotelId, room_type])
-                row = cur.fetchone()
+                exists = cur.var(int).var
+                roomtype_id = generate_new_id("SELECT ROOMTYPEID FROM ROOM_TYPE")
+                cur.callproc("ADD_NEW_ROOM_TYPE", [roomtype_id, room_type, hotel.hotelId, bed_type,
+                                                   cost, discount, exists])
+                print("exists", exists.getvalue())
 
-                if row is None:
-                    roomtype_id = generate_new_id("SELECT ROOMTYPEID FROM ROOM_TYPE")
-                    sql = "INSERT INTO ROOM_TYPE VALUES(%s, INITCAP(%s), INITCAP(%s), %s, %s, %s)"
-                    cur.execute(sql, [roomtype_id, room_type, bed_type, cost, discount, hotel.hotelId])
-                    messages.success(request, "New Room Type Enlisted")
+                if exists.getvalue() == 0:
+                    messages.success(request, "New room type added")
                 else:
-                    messages.success(request, "This Type Already Exists")
+                    messages.success(request, "Room type already exists")
 
             return HttpResponseRedirect(reverse('hotel_admin:index'))
 

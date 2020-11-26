@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.db import connection
+from django.contrib import messages
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 import hashlib
 
 app_name = 'login'
@@ -29,16 +32,14 @@ def user_login(request):
 
     with connection.cursor() as cur:
 
-        sql_auth = "SELECT customerId FROM CUSTOMER WHERE USERNAME = %s and PASSWORD = %s"
-        cur.execute(sql_auth, [v1, v2])
+        customer = cur.callfunc('LOGIN_CUSTOMER', int, [v1, v2])
 
-        customer = cur.fetchone()
-
-        if customer is None:
-            return render(request, 'login/index.html', {'alert_flag': True})
+        if customer == 0:
+            messages.success(request, "Wrong username or password")
+            return HttpResponseRedirect(reverse('login:index'))
         else:
-            customer_id = customer[0]
-            request.session['customer_id'] = customer_id
+            messages.success(request, 'Welcome!')
+            request.session['customer_id'] = customer
             return redirect('home:index')
 
 
@@ -50,15 +51,14 @@ def admin_login(request):
 
     with connection.cursor() as cur:
 
-        sql_auth = "SELECT HOTELID FROM HOTEL WHERE HOTELID = %s AND PASSWORD = %s"
-        cur.execute(sql_auth, [v1, v2])
+        admin = cur.callfunc('LOGIN_HOTEL', int, [v1, v2])
 
-        hotel = cur.fetchone()
-
-        if hotel is None:
-            return render(request, 'login/index.html', {'alert_flag': True})
+        if admin == 0:
+            messages.success(request, "Wrong username or password")
+            return HttpResponseRedirect(reverse('login:index'))
         else:
-            admin_id = hotel[0]
-            request.session['admin_id'] = admin_id
+
+            request.session['admin_id'] = admin
             return redirect('hotel_admin:index')
+
 

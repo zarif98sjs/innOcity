@@ -106,7 +106,7 @@ def sign_up(request):
             activate_url = 'http://' + current_site.domain + link
 
             email_subject = "Activate your innOcity Account"
-            email_body = 'Hi '+v1 + ', Please the link below to activate your account : '+activate_url
+            email_body = 'Hi '+v1 + ', Please click the link to activate your account : '+activate_url
 
             email = EmailMessage(
                 email_subject,

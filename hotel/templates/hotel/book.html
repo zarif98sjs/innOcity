@@ -144,15 +144,34 @@
                         <h2 class="header">No rooms available</h2>
                     {% endif %}
 
-{#                    <div class="form-row" style="padding: 15px;margin: 0px;">#}
-{#                        <div class="col">#}
-{#                            <p style="margin: 0px;text-align: center;font-style: normal;font-weight: normal;font-family: Oswald, sans-serif;font-size: 20px;">#}
-{#                                TOTAL AMOUNT</p>#}
-{#                        </div>#}
-{#                        <div class="col">#}
-{#                            <p>&nbsp; &nbsp;$</p>#}
-{#                        </div>#}
-{#                    </div>#}
+                    <div class="form-row">
+                        <div class="col">
+                            <p style="text-align: center;margin: 22px;font-size: 26px;font-family: Oswald, sans-serif;color: rgb(117,119,111);font-weight: normal;">
+                                SELECT ADDITIONAL SERVICES</p>
+                        </div>
+                    </div>
+
+                    <!-- Start: Setvice Type -->
+                    {% for service_type, service_list in hotel_services.items %}
+                        <div class="form-row" style="padding: 15px;margin: 0px;">
+                            <div class="col">
+                                <p style="margin: 0px;text-align: center;font-style: normal;font-weight: bold;font-family: Oswald, sans-serif;font-size: 20px;">{{ service_type }}</p>
+                            </div>
+                            <div class="col">
+                                <select name="{{ service_type}}" required="required" class="form-control">
+                                    <option selected="selected"></option>
+                                    {% for serve in service_list %}
+                                        <option>{{ serve.service_subtype }}</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="select-dropdown"></div>
+                            </div>
+                            <div class="col"><input class="form-control" name="{{ service_type}}_cnt" type="number" min="0" value = "0" placeholder="Count"
+                                                    style="font-family: Actor, sans-serif;"></div>
+                        </div>
+                    {% endfor %}
+                    <!-- End: Service Type -->
+
                     <div class="form-row" style="text-align: center;margin: 0px;">
                         <div class="col" style="padding: 15px;margin: 0px;">
                             <button class="btn btn-primary" type="submit" name="submit_payment"

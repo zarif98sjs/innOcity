@@ -88,6 +88,7 @@ def payment(request, hotel_id):
                                 gender=result[5], street=result[6], zipcode=result[7], city=result[8], country=result[9])
 
     context = get_context(hotel_id)
+
     checkin_input = request.POST.get('checkin')
     checkin_date_ymd = datetime.strptime(checkin_input, "%Y-%m-%d").date()
     checkin_date = checkin_date_ymd.strftime('%d %b,%Y')
@@ -110,11 +111,30 @@ def payment(request, hotel_id):
     room_cnt[3] = request.POST.get('Suite')
     room_cnt[4] = request.POST.get('Villa')
 
+    service_sub_type = {}
+    service_sub_type['Business Meeting'] = request.POST.get('Business Meeting')
+    service_sub_type['Food'] = request.POST.get('Food')
+    service_sub_type['Transport'] = request.POST.get('Transport')
+
+    service_sub_type_cnt = {}
+
+    service_sub_type_cnt[0] = request.POST.get('Business Meeting_cnt')
+    service_sub_type_cnt[1] = request.POST.get('Food_cnt')
+    service_sub_type_cnt[2] = request.POST.get('Transport_cnt')
+
+    print(service_sub_type)
+
     for i in range(5):
         if room_cnt[i] == None:
             room_cnt[i] = 0
         else:
             room_cnt[i] = int(room_cnt[i])
+
+    for i in range(3):
+        if service_sub_type_cnt[i] == None:
+            service_sub_type_cnt[i] = 0
+        else:
+            service_sub_type_cnt[i] = int(service_sub_type_cnt[i])
 
     print(room_cnt)
 
@@ -129,6 +149,16 @@ def payment(request, hotel_id):
             for r in result:
                 context[r[0]] = r[1] * (1 - r[2]/100)
 
+        sql = "SELECT SERVICE_SUBTYPE , COST FROM SERVICE WHERE hotelId= %s"
+        cur.execute(sql, [hotel_id])
+        result = cur.fetchall()
+
+        if result is None:
+            raise Http404("Invalid hotel")
+        else:
+            for r in result:
+                context[r[0]] = r[1]
+
         total_cost = 0
         total_cost += room_cnt[0]*context.get('Studio', 0)
         total_cost += room_cnt[1]*context.get('Regular', 0)
@@ -136,6 +166,14 @@ def payment(request, hotel_id):
         total_cost += room_cnt[3]*context.get('Suite', 0)
         total_cost += room_cnt[4]*context.get('Villa', 0)
         total_cost = total_cost*stay
+
+        print("Total cost before : ",total_cost)
+
+        total_cost += service_sub_type_cnt[0]*context.get(service_sub_type['Business Meeting'], 0)
+        total_cost += service_sub_type_cnt[1]*context.get(service_sub_type['Food'], 0)
+        total_cost += service_sub_type_cnt[2]*context.get(service_sub_type['Transport'], 0)
+
+        print("Total cost after : ", total_cost)
 
         context['total_cost'] = total_cost
 

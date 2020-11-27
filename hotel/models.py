@@ -8,6 +8,22 @@ class Session:
         self.checkin_date = checkin_date
         self.checkout_date = checkout_date
 
+class Reservation:
+
+    def __init__(self,reservationid,date_of_arrival= None ,date_of_departure = None ,customerid = None ,paymentid = None ,hotelid = None ,roomid = None ,reservation_charge = None ,rating = None):
+
+        self.reservationid = reservationid
+        self.date_of_arrival = date_of_arrival
+        self.date_of_departure = date_of_departure
+        self.customerid = customerid
+        self.paymentid = paymentid
+        self.hotelid = hotelid
+        self.roomid = roomid
+        self.reservation_charge = reservation_charge
+        self.rating = rating
+
+    def __str__(self) -> str:
+        return str(self.reservationid) + " " + self.date_of_arrival + " " + self.date_of_departure + " " + str(self.customerid) + " " + str(self.paymentid) + " " + str(self.hotelid) + " " + str(self.roomid) + " " + str(self.reservation_charge)
 
 class Hotel:
 

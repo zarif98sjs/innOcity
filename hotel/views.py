@@ -9,6 +9,11 @@ from random import seed
 from random import randint
 from dashboard.models import Customer
 
+from django.core.mail import EmailMultiAlternatives
+from easy_pdf.rendering import render_to_pdf
+
+from django.conf import settings
+
 app_name = 'hotel'
 
 session_id = 0
@@ -241,6 +246,8 @@ def payment(request, hotel_id):
         total_cost += room_cnt[4] * context.get('Villa', 0)
         total_cost = total_cost * stay
 
+        request.session['service_sub_type'] = service_sub_type
+
         total_cost += service_sub_type_cnt[0] * context.get(service_sub_type['Business Meeting'], 0)
         total_cost += service_sub_type_cnt[1] * context.get(service_sub_type['Food'], 0)
         total_cost += service_sub_type_cnt[2] * context.get(service_sub_type['Transport'], 0)
@@ -282,14 +289,17 @@ def complete_payment(request, hotel_id):
         context = get_context(hotel_id)
 
         book_room_id = []
+        booked_rooms = []
         book_cnt = 0
 
         for r in context['room_types']:
-            need_room_cnt = r.count - request.session[r.room_type]
+            need_room_cnt = request.session[r.room_type]
             print("Need : ",need_room_cnt)
             for idx in range(need_room_cnt):
                 book_cnt += 1
                 book_room_id.append(r.roomId[idx])
+                r.singleId = r.roomId[idx]
+                booked_rooms.append(r)
 
         print(book_room_id)
 
@@ -311,6 +321,29 @@ def complete_payment(request, hotel_id):
 
         print(book_reservation_id)
 
+        sql = "SELECT SERVICE_SUBTYPE , COST FROM SERVICE WHERE hotelId= %s"
+        cur.execute(sql, [hotel_id])
+        result = cur.fetchall()
+
+        if result is None:
+            raise Http404("Invalid hotel")
+        else:
+            for r in result:
+                context[r[0]] = r[1]
+
+        booked_services = []
+
+        for service_type in context['hotel_services']:
+            cnt = request.session[service_type]
+            sub = request.session[service_type + " Type"]
+            cost = context.get(request.session['service_sub_type'][service_type], 0)
+            cost *= cnt
+            s = Service(-1,service_type = service_type,service_subtype=sub,cost = cost,count=cnt)
+            booked_services.append(s)
+            print(service_type)
+            print(sub)
+            print(cost)
+
         sql = "SELECT PAYMENTID FROM PAYMENT"
         cur.execute(sql)
         result = cur.fetchall()
@@ -328,6 +361,8 @@ def complete_payment(request, hotel_id):
     context['reservation_id'] = reservation_id
     context['payment_id'] = payment_id
     context['total_cost'] = request.session['total_cost']
+    context['booked_rooms'] = booked_rooms
+    context['booked_services'] = booked_services
 
     reservation_list = []
 
@@ -336,8 +371,24 @@ def complete_payment(request, hotel_id):
         reservation_list.append(resrvation)
         print(resrvation)
 
+    context['reservation_list'] = reservation_list
+
+    send_booking_mail(context)
+
     return redirect('dashboard:index')
 
+def send_booking_mail(context):
+
+    post_pdf = render_to_pdf('hotel/testPDF.html', context)
+
+    email_subject = "innOcity Booking Confirmation"
+    email_body = "Your booking has been successfully completed . Find your booking pass in the attachment. \n Regrads, \n innOcity Team"
+
+    msg = EmailMultiAlternatives(email_subject, email_body, settings.EMAIL_HOST_USER,
+                                 ['zarif98sjs@gmail.com'])
+    msg.attach('booking pass.pdf', post_pdf)
+    msg.send()
+    return
 
 def book(request, hotel_id):
     context = get_context(hotel_id)

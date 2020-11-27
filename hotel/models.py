@@ -56,7 +56,7 @@ class Hotel:
 
 class Room:
 
-    def __init__(self, room_type, bed_type, cost, discount):
+    def __init__(self, room_type, bed_type, cost, discount,singleId = None):
 
         self.roomId = []
         self.room_type = room_type
@@ -65,6 +65,7 @@ class Room:
         self.discount = discount
         self.facilities = ""
         self.count = 1
+        self.singleId = singleId
 
     def add_facilities(self, facility_list):
 
@@ -79,11 +80,12 @@ class Room:
 
 class Service:
 
-    def __init__(self, serviceId, service_type, service_subtype, cost):
+    def __init__(self, serviceId, service_type, service_subtype, cost,count = None):
         self.serviceId = serviceId
         self.service_type = service_type
         self.service_subtype = service_subtype
         self.cost = cost
+        self.count = count
         if service_type == 'Food':
             self.unit = 'serving'
         else:

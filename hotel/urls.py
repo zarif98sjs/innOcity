@@ -12,6 +12,10 @@ urlpatterns = [
     path('<int:hotel_id>/blog-single/', views.blog_single, name='blog_single'),
     path('<int:hotel_id>/services/', views.services, name='services'),
     path('<int:hotel_id>/book/', views.book, name='book'),
+    path('<int:hotel_id>/book2/', views.book2, name='book2'),
     path('<int:hotel_id>/payment/', views.payment, name='payment'),
+    path('<int:hotel_id>/payment_method/', views.payment_method, name='payment_method'),
+    path('<int:hotel_id>/mobile_banking/', views.mobile_banking, name='mobile_banking'),
+    path('<int:hotel_id>/credit_card/', views.credit_card, name='credit_card'),
     path('<int:hotel_id>/complete_payment/', views.complete_payment, name='complete_payment')
 ]

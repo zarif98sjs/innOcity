@@ -19,7 +19,6 @@ customer = Customer(0)
 
 @csrf_exempt
 def available(request):
-
     destination = request.POST.get('destination').upper()
     room_no = request.POST.get('rooms')
     checkin_input = request.POST.get('checkin')
@@ -69,8 +68,71 @@ def index(request, hotel_id):
 
 
 @csrf_exempt
-def payment(request, hotel_id):
+def book2(request, hotel_id):
+    if request.session.has_key('customer_id'):
+        logged_in = True
+        customer_id = request.session['customer_id']
+    else:
+        messages.success(request, 'you must log in first')
+        return redirect('login:index')
 
+    checkin_input = request.POST.get('checkin')
+    checkout_input = request.POST.get('checkout')
+
+    seed(1)
+    global session_id
+    global sessions
+
+    if session_id == 0:
+        session_id = randint(10, 10000)
+        sessions[session_id] = Session(session_id, checkin_input, checkout_input)
+    else:
+        sessions[session_id].checkin_date = checkin_input
+        sessions[session_id].checkout_date = checkout_input
+
+    context = get_context(hotel_id)
+
+    return render(request, 'hotel/book2.html', context)
+
+@csrf_exempt
+def payment_method(request, hotel_id):
+    context = get_context(hotel_id)
+    return render(request, 'hotel/payment_method.html',context)
+
+@csrf_exempt
+def mobile_banking(request, hotel_id):
+
+    if request.session.has_key('customer_id'):
+        logged_in = True
+        customer_id = request.session['customer_id']
+    else:
+        messages.success(request, 'you must log in first')
+        return redirect('login:index')
+
+    context = get_context(hotel_id)
+    context['total_cost'] = request.session['total_cost']
+    context['logged_in'] = logged_in
+
+    return render(request, 'hotel/mobile_banking.html',context)
+
+@csrf_exempt
+def credit_card(request, hotel_id):
+
+    if request.session.has_key('customer_id'):
+        logged_in = True
+        customer_id = request.session['customer_id']
+    else:
+        messages.success(request, 'you must log in first')
+        return redirect('login:index')
+
+    context = get_context(hotel_id)
+    context['total_cost'] = request.session['total_cost']
+    context['logged_in'] = logged_in
+
+    return render(request, 'hotel/credit_card.html',context)
+
+@csrf_exempt
+def payment(request, hotel_id):
     if request.session.has_key('customer_id'):
         logged_in = True
         customer_id = request.session['customer_id']
@@ -87,16 +149,24 @@ def payment(request, hotel_id):
         else:
             global customer
             customer = Customer(customer_id=customer_id, name=result[1], email=result[2], username=result[3],
-                                gender=result[5], street=result[6], zipcode=result[7], city=result[8], country=result[9])
+                                gender=result[5], street=result[6], zipcode=result[7], city=result[8],
+                                country=result[9])
 
     context = get_context(hotel_id)
 
-    checkin_input = request.POST.get('checkin')
+    global session_id
+    global sessions
+
+    print("Session : ",session_id)
+
+    if session_id != 0:
+        checkin_input = sessions[session_id].checkin_date
+        checkout_input = sessions[session_id].checkout_date
+
     checkin_date_ymd = datetime.strptime(checkin_input, "%Y-%m-%d").date()
     checkin_date = checkin_date_ymd.strftime('%d %b,%Y')
     print(checkin_date)
 
-    checkout_input = request.POST.get('checkout')
     checkout_date_ymd = datetime.strptime(checkout_input, "%Y-%m-%d").date()
     checkout_date = checkout_date_ymd.strftime('%d %b,%Y')
     print(checkout_date)
@@ -149,7 +219,7 @@ def payment(request, hotel_id):
             raise Http404("Invalid hotel")
         else:
             for r in result:
-                context[r[0]] = r[1] * (1 - r[2]/100)
+                context[r[0]] = r[1] * (1 - r[2] / 100)
 
         sql = "SELECT SERVICE_SUBTYPE , COST FROM SERVICE WHERE hotelId= %s"
         cur.execute(sql, [hotel_id])
@@ -162,36 +232,37 @@ def payment(request, hotel_id):
                 context[r[0]] = r[1]
 
         total_cost = 0
-        total_cost += room_cnt[0]*context.get('Studio', 0)
-        total_cost += room_cnt[1]*context.get('Regular', 0)
-        total_cost += room_cnt[2]*context.get('Presidential Suite', 0)
-        total_cost += room_cnt[3]*context.get('Suite', 0)
-        total_cost += room_cnt[4]*context.get('Villa', 0)
-        total_cost = total_cost*stay
+        total_cost += room_cnt[0] * context.get('Studio', 0)
+        total_cost += room_cnt[1] * context.get('Regular', 0)
+        total_cost += room_cnt[2] * context.get('Presidential Suite', 0)
+        total_cost += room_cnt[3] * context.get('Suite', 0)
+        total_cost += room_cnt[4] * context.get('Villa', 0)
+        total_cost = total_cost * stay
 
-        print("Total cost before : ",total_cost)
+        print("Total cost before : ", total_cost)
 
-        total_cost += service_sub_type_cnt[0]*context.get(service_sub_type['Business Meeting'], 0)
-        total_cost += service_sub_type_cnt[1]*context.get(service_sub_type['Food'], 0)
-        total_cost += service_sub_type_cnt[2]*context.get(service_sub_type['Transport'], 0)
+        total_cost += service_sub_type_cnt[0] * context.get(service_sub_type['Business Meeting'], 0)
+        total_cost += service_sub_type_cnt[1] * context.get(service_sub_type['Food'], 0)
+        total_cost += service_sub_type_cnt[2] * context.get(service_sub_type['Transport'], 0)
 
         print("Total cost after : ", total_cost)
 
         context['total_cost'] = total_cost
+        request.session['total_cost'] = total_cost
 
         print(context['total_cost'])
         context['logged_in'] = logged_in
 
         context['customer'] = customer
 
-    return render(request, 'hotel/payment.html', context)
+    return render(request, 'hotel/payment_method.html', context)
 
 
 @csrf_exempt
 def complete_payment(request, hotel_id):
-
-
     ## check if rooms are available in the given time , update reservation , update payment , send mail
+
+    context = get_context(hotel_id)
 
     return redirect('dashboard:index')
 
@@ -202,7 +273,6 @@ def book(request, hotel_id):
 
 
 def get_context(hotel_id):
-
     with connection.cursor() as cur:
         sql = "SELECT * FROM HOTEL WHERE hotelId= %s"
         cur.execute(sql, [hotel_id])
@@ -225,7 +295,6 @@ def get_context(hotel_id):
 
 
 def get_facilities(hotel_id):
-
     with connection.cursor() as cur:
         sql = "SELECT facilities FROM HOTEL_FACILITY WHERE hotelId= %s"
         cur.execute(sql, [hotel_id])
@@ -235,7 +304,6 @@ def get_facilities(hotel_id):
 
 
 def get_services(hotel_id):
-
     with connection.cursor() as cur:
         sql = "SELECT * FROM SERVICE WHERE hotelId= %s"
         cur.execute(sql, [hotel_id])
@@ -251,7 +319,6 @@ def get_services(hotel_id):
 
 
 def get_rooms(hotel_id):
-
     global session_id
     global sessions
 
@@ -293,7 +360,6 @@ def get_rooms(hotel_id):
 
 
 def get_room_facilities(room_id):
-
     with connection.cursor() as cur:
         sql = "SELECT facilities FROM ROOM_FACILITY WHERE roomId= %s"
         cur.execute(sql, [room_id])
@@ -327,6 +393,3 @@ def blog_single(request, hotel_id):
 def contact(request, hotel_id):
     context = get_context(hotel_id)
     return render(request, 'hotel/contact.html', context)
-
-
-

@@ -81,11 +81,11 @@
             </thead>
             <tbody>
 
-            {% for room in booked_rooms %}
+            {% for rm in booked_rooms %}
                 <tr>
-                    <td>{{ room.singleId }}</td>
-                    <td>{{ room.room_type }}</td>
-                    <td>{{ room.cost }}$ </td>
+                    <td>{{ rm.singleId }}</td>
+                    <td>{{ rm.room_type }}</td>
+                    <td>{{ rm.cost }}$ </td>
                 </tr>
             {% endfor %}
 

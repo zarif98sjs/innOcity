@@ -298,10 +298,14 @@ def complete_payment(request, hotel_id):
             for idx in range(need_room_cnt):
                 book_cnt += 1
                 book_room_id.append(r.roomId[idx])
-                r.singleId = r.roomId[idx]
-                booked_rooms.append(r)
+                temp = r
+                temp.singleId = r.roomId[idx]
+                booked_rooms.append(temp)
+                print(temp)
 
         print(book_room_id)
+        for b in booked_rooms:
+            print(b)
 
         sql = "SELECT RESERVATIONID FROM RESERVATION"
         cur.execute(sql)
@@ -367,13 +371,13 @@ def complete_payment(request, hotel_id):
     reservation_list = []
 
     for id in range(book_cnt):
-        resrvation = Reservation(reservationid = book_reservation_id[id], date_of_arrival= context['checkin_input'], date_of_departure=context['checkout_input'] , customerid=customer_id,paymentid=payment_id,hotelid = hotel_id,roomid=book_room_id[idx],reservation_charge=context['total_cost'])
+        resrvation = Reservation(reservationid = book_reservation_id[id], date_of_arrival= context['checkin_input'], date_of_departure=context['checkout_input'] , customerid=customer_id,paymentid=payment_id,hotelid = hotel_id,roomid=book_room_id[id],reservation_charge=context['total_cost'])
         reservation_list.append(resrvation)
         print(resrvation)
 
     context['reservation_list'] = reservation_list
 
-    send_booking_mail(context)
+    # send_booking_mail(context)
 
     return redirect('dashboard:index')
 
@@ -386,7 +390,7 @@ def send_booking_mail(context):
 
     msg = EmailMultiAlternatives(email_subject, email_body, settings.EMAIL_HOST_USER,
                                  ['zarif98sjs@gmail.com'])
-    msg.attach('booking pass.pdf', post_pdf)
+    msg.attach('Booking Pass.pdf', post_pdf)
     msg.send()
     return
 

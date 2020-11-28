@@ -75,7 +75,7 @@ class Room:
             self.facilities += facility_list[i]
 
     def __str__(self):
-        return str(self.roomId) + " " + self.room_type
+        return str(self.singleId) + " " + self.room_type
 
 
 class Service:

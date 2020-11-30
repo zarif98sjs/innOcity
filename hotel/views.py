@@ -235,22 +235,21 @@ def complete_payment(request, hotel_id):
 
         context = get_context(hotel_id)
 
-        book_room_id = []
+        booked_room_id = []
         booked_rooms = []
         book_cnt = 0
 
         for r in context['room_types']:
-            need_room_cnt = request.session[r.room_type]
+            need_room_cnt = request.session[r.room_type+"_count"]
             print("Need : ",need_room_cnt)
             for idx in range(need_room_cnt):
                 book_cnt += 1
-                book_room_id.append(r.roomId[idx])
-                temp = r
-                temp.singleId = r.roomId[idx]
+                booked_room_id.append(r.roomId[idx])
+                temp = Room(r.room_type,r.bed_type,r.cost,r.discount,r.roomId[idx])
                 booked_rooms.append(temp)
                 print(temp)
 
-        print(book_room_id)
+        print(booked_room_id)
         for b in booked_rooms:
             print(b)
 
@@ -272,28 +271,18 @@ def complete_payment(request, hotel_id):
 
         print(book_reservation_id)
 
-        sql = "SELECT SERVICE_SUBTYPE , COST FROM SERVICE WHERE hotelId= %s"
-        cur.execute(sql, [hotel_id])
-        result = cur.fetchall()
-
-        if result is None:
-            raise Http404("Invalid hotel")
-        else:
-            for r in result:
-                context[r[0]] = r[1]
-
         booked_services = []
 
         for service_type in context['hotel_services']:
-            cnt = request.session[service_type]
-            sub = request.session[service_type + " Type"]
-            cost = context.get(request.session['service_sub_type'][service_type], 0)
-            cost *= cnt
-            s = Service(-1,service_type = service_type,service_subtype=sub,cost = cost,count=cnt)
-            booked_services.append(s)
-            print(service_type)
-            print(sub)
-            print(cost)
+            print("Service Type , ", service_type)
+            for service_list in context['hotel_services'][service_type]:
+                sub_type = service_list.service_subtype
+                count = request.session[sub_type + "_count"]
+                cost = count * service_list.cost
+                s = Service(-1, service_type=service_type, service_subtype=sub_type, cost=cost, count=count)
+
+                print("Sub ",s.service_subtype," Cost ",s.cost," Count",s.count)
+
 
         sql = "SELECT PAYMENTID FROM PAYMENT"
         cur.execute(sql)
@@ -318,11 +307,28 @@ def complete_payment(request, hotel_id):
     reservation_list = []
 
     for id in range(book_cnt):
-        resrvation = Reservation(reservationid = book_reservation_id[id], date_of_arrival= context['checkin_input'], date_of_departure=context['checkout_input'] , customerid=customer_id,paymentid=payment_id,hotelid = hotel_id,roomid=book_room_id[id],reservation_charge=context['total_cost'])
+        resrvation = Reservation(reservationid = book_reservation_id[id], date_of_arrival= context['checkin_input'], date_of_departure=context['checkout_input'] , customerid=customer_id,paymentid=payment_id,hotelid = hotel_id,roomid=booked_room_id[id],reservation_charge=context['total_cost'])
         reservation_list.append(resrvation)
         print(resrvation)
 
     context['reservation_list'] = reservation_list
+
+    with connection.cursor() as cur:
+
+        sql_add_payment = "INSERT INTO PAYMENT(PAYMENTID)" \
+                          "VALUES (%s)"
+        cur.execute(sql_add_payment, [payment_id])
+        connection.commit()
+
+    for r in reservation_list:
+
+        with connection.cursor() as cur:
+            sql_add_reservation = "INSERT INTO RESERVATION (RESERVATIONID, DATE_OF_ARRIVAL, DATE_OF_DEPARTURE, CUSTOMERID, " \
+                           "PAYMENTID, HOTELID, ROOMID, RESERVATION_CHARGE) " \
+                           "VALUES ( %s, %s, %s , %s , %s , %s , %s , %s )"
+
+            cur.execute(sql_add_reservation, [r.reservationid, r.date_of_arrival, r.date_of_departure, r.customerid, r.paymentid, r.hotelid, r.roomid,r.reservation_charge])
+            connection.commit()
 
     # send_booking_mail(context)
 

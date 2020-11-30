@@ -281,8 +281,10 @@ def complete_payment(request, hotel_id):
                 cost = count * service_list.cost
                 s = Service(-1, service_type=service_type, service_subtype=sub_type, cost=cost, count=count)
 
-                print("Sub ",s.service_subtype," Cost ",s.cost," Count",s.count)
+                if s.count > 0:
+                    booked_services.append(s)
 
+                print("Sub ",s.service_subtype," Cost ",s.cost," Count",s.count)
 
         sql = "SELECT PAYMENTID FROM PAYMENT"
         cur.execute(sql)
@@ -330,7 +332,7 @@ def complete_payment(request, hotel_id):
             cur.execute(sql_add_reservation, [r.reservationid, r.date_of_arrival, r.date_of_departure, r.customerid, r.paymentid, r.hotelid, r.roomid,r.reservation_charge])
             connection.commit()
 
-    # send_booking_mail(context)
+    send_booking_mail(context)
 
     return redirect('dashboard:index')
 

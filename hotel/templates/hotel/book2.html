@@ -113,10 +113,10 @@
                         {% for room in room_types %}
                             <div class="form-row" style="padding: 15px;margin: 0px;">
                                 <div class="col">
-                                    <p  style="margin: 0px;text-align: center;font-style: normal;font-weight: normal;font-family: Oswald, sans-serif;font-size: 20px;">
+                                    <p  style="margin: 0px;text-align: center;font-style: normal;font-weight: normal;font-family: Oswald, sans-serif;font-size: 26px;">
                                         {{ room.room_type }}</p>
                                 </div>
-                                <div class="col"><input class="form-control" name="{{ room.room_type }}" type="number" min="0" max = "{{ room.count }}" value = "0" placeholder="Count"
+                                <div class="col"><input class="form-control" name="{{ room.room_type }}_count" type="number" min="0" max = "{{ room.count }}" value = "0" placeholder="Count"
                                                         style="font-family: Actor, sans-serif;"></div>
                             </div>
                         {% endfor %}
@@ -133,22 +133,45 @@
 
                     <!-- Start: Setvice Type -->
                     {% for service_type, service_list in hotel_services.items %}
-                        <div class="form-row" style="padding: 15px;margin: 0px;">
-                            <div class="col">
-                                <p style="margin: 0px;text-align: center;font-style: normal;font-weight: bold;font-family: Oswald, sans-serif;font-size: 20px;">{{ service_type }}</p>
+
+                        <div class="card-details">
+                            <div class="form-row">
+                                <div class="col">
+                                    <h3 class="title" style="font-weight: normal;font-family: Oswald, sans-serif;text-align: center;margin: 25px;font-size: 26px;">{{ service_type }}</h3>
+                                </div>
+
+                                <div class="col">
+                                {% for serve in service_list %}
+                                    <div class="form-row" style="padding: 12px;">
+                                        <div class="col">
+                                            <h3 class="title" style="font-family: Oswald, sans-serif;text-align: center;margin: 0px;font-size: 22px;">{{ serve.service_subtype }} ({{ serve.unit }})</h3>
+                                        </div>
+                                        <div class="col"><input class="form-control" type="number" min="0" value = "0" name="{{ serve.service_subtype }}_count"></div>
+                                    </div>
+                                 {% endfor %}
+                                </div>
+
                             </div>
-                            <div class="col">
-                                <select name="{{ service_type}}" class="form-control">
-                                    <option selected="selected"></option>
-                                    {% for serve in service_list %}
-                                        <option>{{ serve.service_subtype }}</option>
-                                    {% endfor %}
-                                </select>
-                                <div class="select-dropdown"></div>
-                            </div>
-                            <div class="col"><input class="form-control" name="{{ service_type}}_cnt" type="number" min="0" value = "0" placeholder="Count"
-                                                    style="font-family: Actor, sans-serif;"></div>
                         </div>
+
+
+{#                        <div class="form-row" style="padding: 15px;margin: 0px;">#}
+{#                            <div class="row">#}
+{#                            <div class="col">#}
+{#                                <p style="margin: 0px;text-align: center;font-style: normal;font-weight: bold;font-family: Oswald, sans-serif;font-size: 20px;">{{ service_type }}</p>#}
+{#                            </div>#}
+{#                                 {% for serve in service_list %}#}
+{#                                    <div class="col">#}
+{#                                    <p style="margin: 0px;font-style: normal;font-weight: bold;font-family: Oswald, sans-serif;font-size: 20px;">{{ serve.service_subtype }}</p>#}
+{#                                    </div>#}
+{#                                     <div class="col">#}
+{#                                        <input class="form-control" name="{{ service_type}}_cnt" type="number" min="0" value = "0" placeholder="Count"#}
+{#                                                            style="font-family: Actor, sans-serif;">#}
+{#                                     </div>#}
+{#                                {% endfor %}#}
+{##}
+{#                            </div>#}
+{#                        </div>#}
                     {% endfor %}
                     <!-- End: Service Type -->
 

@@ -168,97 +168,44 @@ def payment(request, hotel_id):
     stay = delta.days
     print(delta.days)
 
-    room_cnt = {}
+    total_cost = 0
 
-    room_cnt[0] = request.POST.get('Studio')
-    room_cnt[1] = request.POST.get('Regular')
-    room_cnt[2] = request.POST.get('Presidential Suite')
-    room_cnt[3] = request.POST.get('Suite')
-    room_cnt[4] = request.POST.get('Villa')
+    room_count = {}
 
-    service_sub_type = {}
-    service_sub_type['Business Meeting'] = request.POST.get('Business Meeting')
-    service_sub_type['Food'] = request.POST.get('Food')
-    service_sub_type['Transport'] = request.POST.get('Transport')
+    for room in context['room_types']:
+        room_count[room.room_type+"_count"] = request.POST.get(room.room_type+"_count")
+        room_count[room.room_type + "_count"] = 0 if room_count[room.room_type + "_count"]==None else int(room_count[room.room_type + "_count"])
+        cost_per_day = room_count[room.room_type + "_count"] * room.cost * (room.discount/100.0)
+        total_cost += cost_per_day*stay
 
-    request.session['Business Meeting Type'] = service_sub_type['Business Meeting']
-    request.session['Food Type'] = service_sub_type['Food']
-    request.session['Transport Type'] = service_sub_type['Transport']
+        request.session[room.room_type + "_count"] = room_count[room.room_type + "_count"]
+        print("Room Types : " , room.room_type , " , Count : ",room_count[room.room_type+"_count"] , ", Cost , ",room.cost , " ,Discount",room.discount , ",Cost Per Day ",cost_per_day)
 
-    service_sub_type_cnt = {}
 
-    service_sub_type_cnt[0] = request.POST.get('Business Meeting_cnt')
-    service_sub_type_cnt[1] = request.POST.get('Food_cnt')
-    service_sub_type_cnt[2] = request.POST.get('Transport_cnt')
+    service_count = {}
 
-    print(service_sub_type)
+    for service_type in context['hotel_services']:
+        print("Service Type , ", service_type)
+        for service_list in context['hotel_services'][service_type]:
+            sub_type = service_list.service_subtype
+            service_count[sub_type+"_count"] = request.POST.get(sub_type+"_count")
+            service_count[sub_type+"_count"] = 0 if service_count[sub_type+"_count"] == None else int(service_count[sub_type+"_count"])
+            cost = service_count[sub_type+"_count"] * service_list.cost
+            total_cost += cost
 
-    for i in range(5):
-        if room_cnt[i] == None:
-            room_cnt[i] = 0
-        else:
-            room_cnt[i] = int(room_cnt[i])
+            request.session[sub_type+"_count"] = service_count[sub_type+"_count"]
+            print("Sub Service",sub_type , "Count ",service_count[sub_type+"_count"] , "Cost ",service_list.cost)
 
-    request.session['Studio'] = room_cnt[0]
-    request.session['Regular'] = room_cnt[1]
-    request.session['Presidential Suite'] = room_cnt[2]
-    request.session['Suite'] = room_cnt[3]
-    request.session['Villa'] = room_cnt[4]
 
-    for i in range(3):
-        if service_sub_type_cnt[i] == None:
-            service_sub_type_cnt[i] = 0
-        else:
-            service_sub_type_cnt[i] = int(service_sub_type_cnt[i])
+    # request.session['service_sub_type'] = service_sub_type
 
-    request.session['Business Meeting'] = service_sub_type_cnt[0]
-    request.session['Food'] = service_sub_type_cnt[1]
-    request.session['Transport'] = service_sub_type_cnt[2]
+    context['total_cost'] = total_cost
+    request.session['total_cost'] = total_cost
 
-    print(room_cnt)
+    print(context['total_cost'])
 
-    with connection.cursor() as cur:
-        sql = "SELECT ROOMTYPE_NAME , COST_PER_DAY , DISCOUNT FROM ROOM_TYPE WHERE hotelId= %s"
-        cur.execute(sql, [hotel_id])
-        result = cur.fetchall()
-
-        if result is None:
-            raise Http404("Invalid hotel")
-        else:
-            for r in result:
-                context[r[0]] = r[1] * (1 - r[2] / 100)
-
-        sql = "SELECT SERVICE_SUBTYPE , COST FROM SERVICE WHERE hotelId= %s"
-        cur.execute(sql, [hotel_id])
-        result = cur.fetchall()
-
-        if result is None:
-            raise Http404("Invalid hotel")
-        else:
-            for r in result:
-                context[r[0]] = r[1]
-
-        total_cost = 0
-        total_cost += room_cnt[0] * context.get('Studio', 0)
-        total_cost += room_cnt[1] * context.get('Regular', 0)
-        total_cost += room_cnt[2] * context.get('Presidential Suite', 0)
-        total_cost += room_cnt[3] * context.get('Suite', 0)
-        total_cost += room_cnt[4] * context.get('Villa', 0)
-        total_cost = total_cost * stay
-
-        request.session['service_sub_type'] = service_sub_type
-
-        total_cost += service_sub_type_cnt[0] * context.get(service_sub_type['Business Meeting'], 0)
-        total_cost += service_sub_type_cnt[1] * context.get(service_sub_type['Food'], 0)
-        total_cost += service_sub_type_cnt[2] * context.get(service_sub_type['Transport'], 0)
-
-        context['total_cost'] = total_cost
-        request.session['total_cost'] = total_cost
-
-        print(context['total_cost'])
-
-        context['logged_in'] = logged_in
-        context['customer'] = customer
+    context['logged_in'] = logged_in
+    context['customer'] = customer
 
     return render(request, 'hotel/payment_method.html', context)
 

@@ -8,6 +8,7 @@ from django.db import connection
 from random import seed
 from random import randint
 from dashboard.models import Customer
+from dashboard import views as dv
 
 from django.core.mail import EmailMultiAlternatives
 from easy_pdf.rendering import render_to_pdf
@@ -104,6 +105,7 @@ def mobile_banking(request, hotel_id):
 
     if request.session.has_key('customer_id'):
         logged_in = True
+        customer_id = request.session['customer_id']
     else:
         messages.success(request, 'you must log in first')
         return redirect('login:index')
@@ -111,6 +113,10 @@ def mobile_banking(request, hotel_id):
     context = get_context(hotel_id)
     context['total_cost'] = request.session['total_cost']
     context['logged_in'] = logged_in
+
+    global customer
+    get_customer_info(customer_id)
+    context['customer'] = customer
 
     return render(request, 'hotel/mobile_banking.html',context)
 
@@ -119,6 +125,7 @@ def credit_card(request, hotel_id):
 
     if request.session.has_key('customer_id'):
         logged_in = True
+        customer_id = request.session['customer_id']
     else:
         messages.success(request, 'you must log in first')
         return redirect('login:index')
@@ -127,7 +134,34 @@ def credit_card(request, hotel_id):
     context['total_cost'] = request.session['total_cost']
     context['logged_in'] = logged_in
 
+    global customer
+    get_customer_info(customer_id)
+    context['customer'] = customer
+
     return render(request, 'hotel/credit_card.html',context)
+
+def get_customer_info(customer_id):
+    with connection.cursor() as cur:
+        cur.execute("SELECT  NAME , EMAIL , USERNAME , GENDER , STREET , ZIPCODE , CITY , COUNTRY , PHONE_NUM , ISVERIFIED FROM CUSTOMER WHERE customerId = %s",[customer_id])
+        result = cur.fetchone()
+        global customer
+        customer = Customer(customer_id=customer_id, name=result[0], email=result[1], username=result[2],
+                                gender=result[3], street=result[4], zipcode=result[5], city=result[6],
+                                country=result[7], phone=result[8], isVerified=result[9])
+
+        cur.execute("SELECT  CARD_NUMBER , CARD_USERNAME , CARD_TYPE , CVC , EXPIRATION  FROM CREDIT_CARD WHERE customerId = %s",[customer_id])
+        result = cur.fetchone()
+
+        customer.card_number = result[0]
+        customer.card_username = result[1]
+        customer.card_type = result[2]
+        customer.cvc = result[3]
+        customer.expiration = result[4]
+
+        cur.execute("SELECT  PHONE_NUMBER , SERVICE_PROVIDER , CUSTOMERID FROM MOBILE_BANKING WHERE customerId = %s",[customer_id])
+        result = cur.fetchone()
+        customer.mob_banking_phone_number = result[0]
+        customer.mob_banking_service_provider = result[1]
 
 @csrf_exempt
 def payment(request, hotel_id):
@@ -139,17 +173,7 @@ def payment(request, hotel_id):
         messages.success(request, 'you must log in first')
         return redirect('login:index')
 
-    with connection.cursor() as cur:
-        cur.execute("SELECT * FROM CUSTOMER WHERE customerId = %s", [customer_id])
-        result = cur.fetchone()
-
-        if result is None:
-            return redirect('login:index')
-        else:
-            global customer
-            customer = Customer(customer_id=customer_id, name=result[1], email=result[2], username=result[3],
-                                gender=result[5], street=result[6], zipcode=result[7], city=result[8],
-                                country=result[9])
+    get_customer_info(customer_id)
 
     context = get_context(hotel_id)
 
@@ -205,6 +229,7 @@ def payment(request, hotel_id):
     print(context['total_cost'])
 
     context['logged_in'] = logged_in
+    global customer
     context['customer'] = customer
 
     return render(request, 'hotel/payment_method.html', context)
@@ -221,17 +246,6 @@ def complete_payment(request, hotel_id):
         messages.success(request, 'you must log in first')
         return redirect('login:index')
 
-    with connection.cursor() as cur:
-        cur.execute("SELECT * FROM CUSTOMER WHERE customerId = %s", [customer_id])
-        result = cur.fetchone()
-
-        if result is None:
-            return redirect('login:index')
-        else:
-            global customer
-            customer = Customer(customer_id=customer_id, name=result[1], email=result[2], username=result[3],
-                                gender=result[5], street=result[6], zipcode=result[7], city=result[8],
-                                country=result[9])
 
         context = get_context(hotel_id)
 

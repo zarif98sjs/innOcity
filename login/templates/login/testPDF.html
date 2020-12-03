@@ -1,0 +1,134 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Sales Report</title>
+    <style type="text/css">
+        @page {
+            size: A4;
+            margin: 1cm;
+        }
+
+        .table {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 5px;
+            background-color: #fff;
+        }
+
+        .table th,
+        .table td {
+            padding: 5px;
+            vertical-align: top;
+            border-top: 1px solid #000;
+            text-align: center;
+        }
+
+        .table thead th {
+            vertical-align: bottom;
+            border-bottom: 2px solid #000;
+        }
+
+        .table tbody + tbody {
+            border-top: 2px solid #000;
+        }
+
+        .table .table {
+            background-color: #fff;
+        }
+
+        .list-group {
+            display: block;
+            width: 100%;
+            list-style: none;
+            margin-top: 15px;
+            margin-bottom: 15px;
+        }
+
+        .list-group p {
+            width: 100%;
+            height: 20px;
+            line-height: 20px;
+            list-style: none;
+            font-size: 1.1em;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h3>Sales Report - {{ today | date:"d/m/Y" }}</h3>
+        </div>
+
+        <div class="list-group">
+            <p>Name: {{ request.user.first_name }} {{ request.user.last_name }}</p>
+        </div>
+
+        {#        <table class="table">#}
+        {#            <thead>#}
+        {#            <tr>#}
+        {#                <th>Raised</th>#}
+        {#                <th>Product</th>#}
+        {#                <th>Quantity</th>#}
+        {#                <th>Price</th>#}
+        {#                <th>Customer</th>#}
+        {#            </tr>#}
+        {#            </thead>#}
+        {#            <tbody>#}
+        {#            {% for sale in sales %}#}
+        {#                <tr>#}
+        {#                    <td>{{ sale.created_at | date:"d/m/Y" }}</td>#}
+        {#                    <td>{{ sale.product.title }}</td>#}
+        {#                    <td>{{ sale.quantity }}</td>#}
+        {#                    <td>&pound;{{ sale.price }}</td>#}
+        {#                    <td>{{ sale.customer.first_name }} {{ sale.customer.last_name }}</td>#}
+        {#                </tr>#}
+        {#            {% endfor %}#}
+        {#            </tbody>#}
+        {#        </table>#}
+
+
+        <table class="table">
+            <tbody class="calibre1"><tr class="calibre2">
+                <td rowspan="2" class="td_"><p class="block_"><span class="text_">Collision Resolution Method</span></p></td>
+                <td colspan="2" class="td_1"><p class="block_"><span class="text_">Hash1</span></p></td>
+                <td colspan="2" class="td_2"><p class="block_"><span class="text_">Hash2</span></p></td>
+            </tr>
+            <tr class="calibre2">
+                <td class="td_3"><p class="block_"><span class="text_">No. of Collisions</span></p></td>
+                <td class="td_4"><p class="block_"><span class="text_">Avg. Probes</span></p></td>
+                <td class="td_5"><p class="block_"><span class="text_">No. of Collisions</span></p></td>
+                <td class="td_6"><p class="block_"><span class="text_">Avg. Probes</span></p></td>
+            </tr>
+            <tr class="calibre2">
+                <td class="td_7"><p class="block_"><span class="text_">Chaining Method</span></p></td>
+                <td class="td_3"><p class="block_"><span class="text_">3632</span></p></td>
+                <td class="td_4"><p class="block_"><span class="text_">1.54</span></p></td>
+                <td class="td_5"><p class="block_"><span class="text_">3648</span></p></td>
+                <td class="td_6"><p class="block_"><span class="text_">1.53</span></p></td>
+            </tr>
+            <tr class="calibre2">
+                <td class="td_7"><p class="block_"><span class="text_">Double Hashing</span></p></td>
+                <td class="td_3"><p class="block_"><span class="text_">63718</span></p></td>
+                <td class="td_4"><p class="block_"><span class="text_">5.61</span></p></td>
+                <td class="td_5"><p class="block_"><span class="text_">57889</span></p></td>
+                <td class="td_6"><p class="block_"><span class="text_">5.57</span></p></td>
+            </tr>
+            <tr class="calibre2">
+                <td class="td_8"><p class="block_"><span class="text_">Custom Probing</span></p></td>
+                <td class="td_9"><p class="block_"><span class="text_">62598</span></p></td>
+                <td class="td_10"><p class="block_"><span class="text_">6.71</span></p></td>
+                <td class="td_11"><p class="block_"><span class="text_">62388</span></p></td>
+                <td class="td_12"><p class="block_"><span class="text_">5.73</span></p></td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+</body>
+</html>

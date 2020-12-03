@@ -26,7 +26,7 @@
 </head>
 <body onload="showSnackbar()">
 {% if messages %}
-        <div id ="snackbar" style="background-color: red"><p>
+        <div id ="snackbar" style="background-color: white"><p>
         {% for message in messages %}
             {{ message }}
         {% endfor %}
@@ -690,7 +690,6 @@
     {% endfor %}
 
     let destination = [...destinationSet];
-    console.log(destination);
 
 </script>
 

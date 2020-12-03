@@ -244,7 +244,7 @@
                                                 {% if reservation.rating %}
                                                     <script>
                                                         var rbid = "star" + {{ reservation.rating }} + " " + {{ reservation.hotelId }};
-                                                        console.log(rbid);
+
                                                         var rb = document.getElementById(rbid);
                                                         rb.checked = true;
                                                     </script>

@@ -24,13 +24,8 @@ def available(request):
     checkin_input = request.POST.get('checkin')
     checkout_input = request.POST.get('checkout')
 
-    seed(1)
-    global session_id
-    global sessions
-
-    session_id = randint(10, 10000)
-    sessions[session_id] = Session(session_id, checkin_input, checkout_input)
-
+    request.session['checkin'] = checkin_input
+    request.session['checkout'] = checkout_input
     logged_in = request.session.has_key('customer_id')
 
     available_hotels = []
@@ -63,7 +58,7 @@ def available(request):
 
 
 def index(request, hotel_id):
-    context = get_context(hotel_id)
+    context = get_context(request,hotel_id)
     return render(request, 'hotel/index.html', context)
 
 
@@ -78,26 +73,20 @@ def book2(request, hotel_id):
 
     checkin_input = request.POST.get('checkin')
     checkout_input = request.POST.get('checkout')
+    
+    request.session['checkin'] = checkin_input
+    request.session['checkout'] = checkout_input
 
-    seed(1)
-    global session_id
-    global sessions
-
-    if session_id == 0:
-        session_id = randint(10, 10000)
-        sessions[session_id] = Session(session_id, checkin_input, checkout_input)
-    else:
-        sessions[session_id].checkin_date = checkin_input
-        sessions[session_id].checkout_date = checkout_input
-
-    context = get_context(hotel_id)
+    context = get_context(request, hotel_id)
 
     return render(request, 'hotel/book2.html', context)
 
+
 @csrf_exempt
 def payment_method(request, hotel_id):
-    context = get_context(hotel_id)
+    context = get_context(request,hotel_id)
     return render(request, 'hotel/payment_method.html',context)
+
 
 @csrf_exempt
 def mobile_banking(request, hotel_id):
@@ -109,11 +98,12 @@ def mobile_banking(request, hotel_id):
         messages.success(request, 'you must log in first')
         return redirect('login:index')
 
-    context = get_context(hotel_id)
+    context = get_context(request,hotel_id)
     context['total_cost'] = request.session['total_cost']
     context['logged_in'] = logged_in
 
-    return render(request, 'hotel/mobile_banking.html',context)
+    return render(request, 'hotel/mobile_banking.html', context)
+
 
 @csrf_exempt
 def credit_card(request, hotel_id):
@@ -125,11 +115,12 @@ def credit_card(request, hotel_id):
         messages.success(request, 'you must log in first')
         return redirect('login:index')
 
-    context = get_context(hotel_id)
+    context = get_context(request,hotel_id)
     context['total_cost'] = request.session['total_cost']
     context['logged_in'] = logged_in
 
-    return render(request, 'hotel/credit_card.html',context)
+    return render(request, 'hotel/credit_card.html', context)
+
 
 @csrf_exempt
 def payment(request, hotel_id):
@@ -152,16 +143,11 @@ def payment(request, hotel_id):
                                 gender=result[5], street=result[6], zipcode=result[7], city=result[8],
                                 country=result[9])
 
-    context = get_context(hotel_id)
+    context = get_context(request,hotel_id)
 
-    global session_id
-    global sessions
-
-    print("Session : ",session_id)
-
-    if session_id != 0:
-        checkin_input = sessions[session_id].checkin_date
-        checkout_input = sessions[session_id].checkout_date
+    if request.session.has_key('checkin'):
+        checkin_input = request.session['checkin']
+        checkout_input = request.session['checkout']
 
     checkin_date_ymd = datetime.strptime(checkin_input, "%Y-%m-%d").date()
     checkin_date = checkin_date_ymd.strftime('%d %b,%Y')
@@ -262,17 +248,17 @@ def payment(request, hotel_id):
 def complete_payment(request, hotel_id):
     ## check if rooms are available in the given time , update reservation , update payment , send mail
 
-    context = get_context(hotel_id)
+    context = get_context(request, hotel_id)
 
-    return redirect('dashboard:index')
+    return redirect('dashboard:maps')
 
 
 def book(request, hotel_id):
-    context = get_context(hotel_id)
+    context = get_context(request, hotel_id)
     return render(request, 'hotel/book.html', context)
 
 
-def get_context(hotel_id):
+def get_context(request, hotel_id):
     with connection.cursor() as cur:
         sql = "SELECT * FROM HOTEL WHERE hotelId= %s"
         cur.execute(sql, [hotel_id])
@@ -285,7 +271,7 @@ def get_context(hotel_id):
                           city=result[4], country=result[5], rating=result[6], rating_count=result[7])
             hotel_facilities = get_facilities(hotel_id)
             hotel_services = get_services(hotel_id)
-            room_types = get_rooms(hotel_id)
+            room_types = get_rooms(request, hotel_id)
             context = {'hotel': hotel, 'hotel_facilities': hotel_facilities, 'hotel_services': hotel_services}
 
             if len(room_types):
@@ -318,15 +304,13 @@ def get_services(hotel_id):
         return hotel_services
 
 
-def get_rooms(hotel_id):
-    global session_id
-    global sessions
+def get_rooms(request, hotel_id):
 
     with connection.cursor() as cur:
         if session_id != 0:
 
-            checkin_date = sessions[session_id].checkin_date
-            checkout_date = sessions[session_id].checkout_date
+            checkin_date = request.session['checkin']
+            checkout_date = request.session['checkout']
 
             sql = "SELECT R.ROOMID, RT.ROOMTYPE_NAME, RT.BED_TYPE, RT.COST_PER_DAY, RT.DISCOUNT " \
                   "FROM ROOM R, ROOM_TYPE RT WHERE R.HOTELID = %s AND R.ROOMTYPEID = RT.ROOMTYPEID AND " \
@@ -369,12 +353,12 @@ def get_room_facilities(room_id):
 
 
 def rooms(request, hotel_id):
-    context = get_context(hotel_id)
+    context = get_context(request,hotel_id)
     return render(request, 'hotel/rooms.html', context)
 
 
 def services(request, hotel_id):
-    context = get_context(hotel_id)
+    context = get_context(request, hotel_id)
     return render(request, 'hotel/services.html', context)
 
 
@@ -391,5 +375,5 @@ def blog_single(request, hotel_id):
 
 
 def contact(request, hotel_id):
-    context = get_context(hotel_id)
+    context = get_context(request,hotel_id)
     return render(request, 'hotel/contact.html', context)

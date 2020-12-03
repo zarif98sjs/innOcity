@@ -41,8 +41,7 @@ def user_login(request):
             messages.success(request, "Wrong username or password")
             return HttpResponseRedirect(reverse('login:index'))
         else:
-            # messages.success(request, 'Welcome!')
-
+            '''
             context = {
                 'example1': 'This is example 1',
                 'some_foo': 'So many of foo function'
@@ -53,7 +52,7 @@ def user_login(request):
             msg = EmailMultiAlternatives('Subject here', 'Here is the message.', settings.EMAIL_HOST_USER, ['zarif98sjs@gmail.com'])
             msg.attach('invoice.pdf', post_pdf)
             msg.send()
-
+            '''
             request.session['customer_id'] = customer
             return redirect('home:index')
 

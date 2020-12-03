@@ -86,7 +86,6 @@ def sign_up(request):
             cur.execute(sql_add_user, [v0, v1, v2, v3, v4, v5, v6, v7, v8, v9])
             connection.commit()
 
-
             customer = Customer(customer_id=v0, name=v1 , isVerified='NO')
 
             print("Before activation , customer id : ", customer.customer_id)
@@ -120,8 +119,6 @@ def sign_up(request):
 
             messages.success(request, "Please check your e-mail and verify your account")
             return redirect('login:index')
-            # return redirect(request, 'login/index.html', {'verification_box': True , 'msg_head':"Verification" , 'msg_body' : 'Please check your e-mail and verify your account'})
-            # return redirect('login:index')
 
     return render(request, 'register/index.html', {'alert_flag': True})
 
@@ -129,7 +126,7 @@ def sign_up(request):
 def activate(request, uidb64, token):
     try:
         id = force_text(urlsafe_base64_decode(uidb64))
-        print("After activation , customer id : ",id)
+        print("After activation , customer id : ", id)
 
         with connection.cursor() as cur:
             cur.execute("SELECT NAME , ISVERIFIED FROM CUSTOMER WHERE customerId = %s", [id])
@@ -139,21 +136,18 @@ def activate(request, uidb64, token):
                 print("None")
                 messages.success(request, "You have not created any account")
                 return redirect('login:index')
-                # return render(request , 'login/index.html', {'verification_box': True, 'msg_head': "Verification", 'msg_body': 'You have not created any account'})
             else:
                 customer = Customer(customer_id=id, name=result[0], isVerified=result[1])
                 if not account_activation_token.check_token(customer, token):
                     print('User already activated')
                     messages.success(request, "Your account is already activated")
                     return redirect('login:index')
-                    # return render(request, 'login/index.html', {'verification_box': True , 'msg_head':"Verification", 'msg_body': 'Your account is already activated'})
 
                 cur.execute("UPDATE CUSTOMER SET ISVERIFIED = 'YES' WHERE customerId = %s", [id])
 
                 print("Account Activated Successfully")
                 messages.success(request, "Account Activated Successfully")
                 return redirect('login:index')
-                # return render(request, 'login/index.html', {'verification_box': True , 'msg_head':"Verification", 'msg_body': 'Account Activated Successfully'})
 
     except Exception as ex:
         print(ex)

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.shortcuts import render, redirect
 from django.db import connection
 from django.http import HttpResponseRedirect
@@ -44,7 +46,7 @@ def index(request):
 def get_customer(customer_id):
 
     with connection.cursor() as cur:
-        cur.execute("SELECT * FROM CUSTOMER WHERE customerId = %s", [customer_id])
+        cur.execute("SELECT  NAME , EMAIL , USERNAME , GENDER , STREET , ZIPCODE , CITY , COUNTRY , PHONE_NUM , ISVERIFIED FROM CUSTOMER WHERE customerId = %s", [customer_id])
         result = cur.fetchone()
 
         if result is None:
@@ -52,9 +54,38 @@ def get_customer(customer_id):
         else:
 
             global customer
-            customer = Customer(customer_id=customer_id, name=result[1], email=result[2], username=result[3],
-                                gender=result[5], street=result[6], zipcode=result[7], city=result[8],
-                                country=result[9], phone=result[10])
+            customer = Customer(customer_id=customer_id, name=result[0], email=result[1], username=result[2],
+                                gender=result[3], street=result[4], zipcode=result[5], city=result[6],
+                                country=result[7], phone=result[8] , isVerified=result[9])
+
+            get_wallet_info(customer_id)
+
+def get_wallet_info(customer_id):
+    with connection.cursor() as cur:
+        cur.execute("SELECT  CARD_NUMBER , CARD_USERNAME , CARD_TYPE , CVC , EXPIRATION  FROM CREDIT_CARD WHERE customerId = %s", [customer_id])
+        result = cur.fetchone()
+
+        if result is None:
+            return redirect('login:index')
+        else:
+
+            global customer
+            customer.card_number = result[0]
+            customer.card_username = result[1]
+            customer.card_type = result[2]
+            customer.cvc = result[3]
+            customer.expiration = result[4]
+
+        cur.execute("SELECT  PHONE_NUMBER , SERVICE_PROVIDER , CUSTOMERID FROM MOBILE_BANKING WHERE customerId = %s",
+            [customer_id])
+        result = cur.fetchone()
+
+        if result is None:
+            return redirect('login:index')
+        else:
+
+            customer.mob_banking_phone_number = result[0]
+            customer.mob_banking_service_provider = result[1]
 
 
 def wallet(request):
@@ -77,16 +108,20 @@ def wallet(request):
                     card_type = request.POST.get("card_type")
                     card_number = request.POST.get("card_number")
                     cvc = request.POST.get("cvc")
+                    expiration = request.POST.get("expiration")
 
-                    sql = "UPDATE CUSTOMER SET card_username = %s, card_type = %s, card_number= %s , cvc = %s " \
-                          "WHERE customerId = %s"
-                    cur.execute(sql, [card_username, card_type, card_number, cvc, customer_id])
+                    sql = "INSERT INTO CREDIT_CARD (card_number, card_username, card_type, cvc, " \
+                                          "expiration, customerid) " \
+                                          "VALUES ( %s, %s, %s , %s , %s , %s )"
+
+                    cur.execute(sql, [card_number, card_username, card_type, cvc, expiration ,customer_id])
                     connection.commit()
 
                     customer.card_username = card_username
                     customer.card_type = card_type
                     customer.card_number = card_number
                     customer.cvc = cvc
+                    customer.expiration = expiration
 
                 elif request.POST.get("submit_mobile_banking"):
 
@@ -94,8 +129,9 @@ def wallet(request):
                     mob_banking_phone_number = request.POST.get("mob_banking_phone_number")
                     mob_banking_service_provider = request.POST.get("mob_banking_service_provider")
 
-                    sql = "UPDATE CUSTOMER SET mob_banking_phone_number = %s, mob_banking_service_provider = %s " \
-                          "WHERE customerId = %s"
+                    sql = "INSERT INTO MOBILE_BANKING (phone_number, service_provider, customerid)" \
+                                          "VALUES ( %s, %s, %s )"
+
                     cur.execute(sql, [mob_banking_phone_number, mob_banking_service_provider, customer_id])
                     connection.commit()
 

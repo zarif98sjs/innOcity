@@ -7,10 +7,11 @@ from django.urls import reverse
 import hashlib
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
+from easy_pdf.rendering import render_to_pdf
 from django.core.mail import EmailMessage
 
 app_name = 'login'
-from easy_pdf.rendering import render_to_pdf
+
 
 def index(request):
 

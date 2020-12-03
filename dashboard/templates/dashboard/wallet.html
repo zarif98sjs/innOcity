@@ -166,11 +166,7 @@ Coded by www.creative-tim.com
                                     <div class="col-md-5">
                                         <div class="form-group"><label style="font-family: Oswald, sans-serif;">Expiration
                                             date</label>
-                                            <div class="input-group expiration-date"><input class="form-control" type="text"
-                                                                                            placeholder="MM"
-                                                                                            style="font-family: Oswald, sans-serif;"><input
-                                                    class="form-control" type="text" placeholder="YY"
-                                                    style="font-family: Oswald, sans-serif;"></div>
+                                            <input class="form-control" type="date" style="font-family: Oswald, sans-serif;" name="expiration" required="required" onautocomplete="updateExpirationDate()">
                                         </div>
                                     </div>
                                     <div class="col-md-5">
@@ -262,6 +258,10 @@ Coded by www.creative-tim.com
         </footer>
     </div>
 </div>
+
+<script>
+    document.getElementByName("expiration").value = {{ customer.expiration }}
+</script>
 <!--   Core JS Files   -->
 
 <script src="{% static 'dashboard/js/core/jquery.min.js' %}"></script>

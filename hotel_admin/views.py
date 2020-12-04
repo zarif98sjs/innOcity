@@ -44,22 +44,24 @@ def index(request):
 
                 room_type, _ = request.POST.get("room_bed").split(" (")
                 floor_number = request.POST.get("floor_number")
-                room_id = generate_new_id("SELECT ROOMID FROM ROOM")
+                room_id = cur.var(int).var
 
                 cur.callproc('ADD_NEW_ROOM', [hotel.hotelId, room_type, floor_number, room_id])
+                room_id = room_id.getvalue()
 
-                i = 1
-                while True:
-                    f = request.POST.get("room_facilities-" + str(i))
-                    if f is None:
-                        break
-                    if f is not "":
-                        sql = "INSERT INTO ROOM_FACILITY VALUES(%s, INITCAP(%s))"
-                        cur.execute(sql, [room_id, f])
-                        connection.commit()
-                    i = i + 1
+                if room_id != 0:
+                    i = 1
+                    while True:
+                        f = request.POST.get("room_facilities-" + str(i))
+                        if f is None:
+                            break
+                        if f is not "":
+                            sql = "INSERT INTO ROOM_FACILITY VALUES(%s, INITCAP(%s))"
+                            cur.execute(sql, [room_id, f])
+                            connection.commit()
+                        i = i + 1
 
-                messages.success(request, "New Room Enlisted")
+                    messages.success(request, "New Room Enlisted")
 
             elif request.POST.get("submit_new_room_type"):
 
@@ -69,10 +71,8 @@ def index(request):
                 discount = request.POST.get('discount')
 
                 exists = cur.var(int).var
-                roomtype_id = generate_new_id("SELECT ROOMTYPEID FROM ROOM_TYPE")
-                cur.callproc("ADD_NEW_ROOM_TYPE", [roomtype_id, room_type, hotel.hotelId, bed_type,
+                cur.callproc("ADD_NEW_ROOM_TYPE", [room_type, hotel.hotelId, bed_type,
                                                    cost, discount, exists])
-                print("exists", exists.getvalue())
 
                 if exists.getvalue() == 0:
                     messages.success(request, "New room type added")
@@ -118,19 +118,6 @@ def get_hotel(hotel_id):
                       city=row[4], country=row[5], rating=row[6], rating_count=row[7])
 
 
-def generate_new_id(sql):
-
-    with connection.cursor() as cur:
-
-        cur.execute(sql)
-        result = cur.fetchall()
-        current_ids = [row[0] for row in result]
-
-        while True:
-            new_id = random.randint(10000000, 99999999)
-            if new_id not in current_ids:
-                return new_id
-
 
 def service(request):
 
@@ -151,10 +138,7 @@ def service(request):
             if request.POST.get("submit_new_facility"):
 
                 new_facility = request.POST.get("facility")
-                sql = "INSERT INTO HOTEL_FACILITY VALUES(%s, INITCAP(%s))"
-                cur.execute(sql, [hotel.hotelId, new_facility])
-                connection.commit()
-                messages.success(request, "New free service added")
+                cur.callproc('ADD_NEW_FREE_SERVICE', [hotel.hotelId, new_facility])
 
             elif request.POST.get("submit_delete_facility"):
 
@@ -177,11 +161,13 @@ def service(request):
                 service_type = request.POST.get("service_type")
                 service_subtype = request.POST.get("service_subtype")
                 cost = request.POST.get("cost")
-                service_id = generate_new_id("SELECT SERVICEID FROM SERVICE")
-                sql = "INSERT INTO SERVICE VALUES(%s, %s, INITCAP(%s), %s, %s)"
-                cur.execute(sql, [service_id, service_type, service_subtype, cost, hotel.hotelId])
-                connection.commit()
-                messages.success(request, "New paid service added")
+                exists = cur.var(int).var
+                cur.callproc("ADD_NEW_PAID_SERVICE", [service_type, service_subtype, cost, hotel.hotelId, exists])
+
+                if exists.getvalue() == 0:
+                    messages.success(request, "New paid service added")
+                else:
+                    messages.success(request, "Service already exists")
 
             return HttpResponseRedirect(reverse('hotel_admin:service'))
 
@@ -221,13 +207,13 @@ def reservation(request):
 
     with connection.cursor() as cur:
 
-        sql = "SELECT RS.DATE_OF_ARRIVAL, RS.DATE_OF_DEPARTURE, RS.RESERVATION_CHARGE, C.NAME, R.ROOMID, " \
-              "R.FLOOR_NUMBER, RT.ROOMTYPE_NAME, RT.BED_TYPE, " \
+        sql = "SELECT RS.RESERVATIONID, RS.DATE_OF_ARRIVAL, RS.DATE_OF_DEPARTURE, RS.RESERVATION_CHARGE, C.NAME, " \
               "(SELECT NVL(SUM(RSS.QUANTITY * S.COST),0) FROM RESERVATION_SERVICE RSS, SERVICE S " \
               "WHERE RSS.RESERVATIONID = RS.RESERVATIONID AND RSS.SERVICEID = S.SERVICEID) AS SERVICE_CHARGE " \
-              "FROM RESERVATION RS, CUSTOMER C, ROOM R, ROOM_TYPE RT WHERE RS.HOTELID = %s AND " \
-              "RS.CUSTOMERID = C.CUSTOMERID AND RS.ROOMID = R.ROOMID AND R.ROOMTYPEID = RT.ROOMTYPEID "
+              "FROM RESERVATION RS, CUSTOMER C WHERE RS.HOTELID = %s AND " \
+              "RS.CUSTOMERID = C.CUSTOMERID "
         list_vars = [hotel.hotelId]
+        selected_room = None
 
         if request.method == "POST" and request.POST.get("search"):
 
@@ -239,12 +225,11 @@ def reservation(request):
                 sql += "AND EXTRACT(YEAR FROM RS.DATE_OF_ARRIVAL) = %s "
                 list_vars.append(request.POST.get("year"))
 
-            if request.POST.get("room_bed") != "all rooms":
-                room_type, bed_type = request.POST.get("room_bed").split(" (")
-                sql += "AND RT.ROOMTYPE_NAME = %s "
-                list_vars.append(room_type)
+            if request.POST.get("room_bed") and request.POST.get("room_bed") != "all rooms":
+                selected_room, _ = request.POST.get("room_bed").split('(')
+                selected_room = selected_room.strip()
 
-        sql += "ORDER BY R.ROOMID ASC, RS.DATE_OF_ARRIVAL DESC"
+        sql += "ORDER BY RS.DATE_OF_ARRIVAL DESC"
 
         cur.execute(sql, list_vars)
         result = cur.fetchall()
@@ -254,11 +239,25 @@ def reservation(request):
         for row in result:
 
             reserve = Reservation(
-                date_of_arrival=row[0], date_of_departure=row[1], reservation_charge=row[2],
-                name=row[3], roomId=row[4], floor_num=row[5], room_type=row[6], bed_type=row[7],
-                service_charge=row[8]
-            )
+                date_of_arrival=row[1], date_of_departure=row[2], reservation_charge=row[3],
+                name=row[4], service_charge=row[5])
+            sql = "SELECT RT.ROOMTYPE_NAME, RT.BED_TYPE FROM ROOM_TYPE RT, ROOM RM, RESERVATION_ROOM RR " \
+                  "WHERE RR.RESERVATIONID = %s AND RM.ROOMID = RR.ROOMID AND RM.ROOMTYPEID = RT.ROOMTYPEID "
+            list_vars = [row[0]]
+
+            if selected_room is not None:
+                sql += " AND RT.ROOMTYPE_NAME = %s"
+                list_vars.append(selected_room)
+
+            cur.execute(sql, list_vars)
+            res = cur.fetchall()
+            if not res:
+                continue
+
+            reserve.room_types = [r[0] + " (" + r[1] + ") " for r in res]
+
             total += reserve.total
+
             reservation_list.append(reserve)
 
         return render(request, 'hotel_admin/reservation.html', {'hotel': hotel, 'room_list': room_list,

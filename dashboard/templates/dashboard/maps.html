@@ -198,7 +198,16 @@
                                             <p><b>Departure:  </b>   {{ reservation.date_of_departure }}</p>
                                         </div>
                                         <div class="row" style="font-size: 15px; ">
-                                            <p><b>Room type:  </b>   {{ reservation.room_type }}({{ reservation.bed_type }})</p>
+                                            <p><b>Room type:  </b></p>
+
+                                            <ul style="padding-left: 20px; ">
+                                                {% for room_bed in reservation.room_types %}
+                                                    <li style="float: left; margin-right:2em;">{{ room_bed }}</li>
+
+
+                                                {% endfor %}
+                                            </ul>
+
                                         </div>
                                     <div class="row" style="font-size: 15px; ">
                                             <p><b>Reservation Charge:  </b>   {{ reservation.reservation_charge }}</p>
@@ -220,7 +229,7 @@
 
                                         {% endif %}
 
-
+                                        {% if reservation.passed %}
                                         <div class="row" style="font-size: 15px; padding-left: 270px;">
                                             <p style="padding-left: 50px; padding-top: 20px">Rate</p>
                                             <form action="{% url 'dashboard:maps' %}" method="POST" id="rating_form" name="rating_form">
@@ -250,11 +259,12 @@
                                                     </script>
                                                 {% endif %}
                                                 </form>
-
-
-
-
                                         </div>
+                                            {% else %}
+                                            <div class="row" style="font-size: 20px; padding-left: 250px;">
+                                            <p style="padding-left: 20px; padding-top: 20px; color: darkred;">PENDING VISIT</p>
+                                            </div>
+                                    {% endif %}
 
 
                                         <div class="row" >

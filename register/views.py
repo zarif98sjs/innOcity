@@ -40,6 +40,7 @@ def sign_up(request):
     v7 = request.POST.get('zipcode')
     v8 = request.POST.get('city')
     v9 = request.POST.get('country')
+    v10 = request.POST.get('phone')
 
     if v1 == "":
         print("No name")
@@ -59,34 +60,18 @@ def sign_up(request):
         print("No city")
     elif v9 == "":
         print("No country")
+    elif v10 == "":
+        print("No phone")
     else:
 
         with connection.cursor() as cur:
 
-            sql_find = "SELECT COUNT(*) FROM CUSTOMER WHERE username = %s"
-            cur.execute(sql_find, [v3])
-            if cur.fetchone()[0] > 0:
+            customer_id = cur.callfunc('REGISTER', int, [v1, v2, v3, v4, v5, v6, v7, v8, v9, v10])
+
+            if customer_id == 0:
                 return render(request, 'register/index.html', {'invalid_username': True})
 
-            sql = "SELECT CUSTOMERID FROM CUSTOMER"
-            cur.execute(sql)
-            result = cur.fetchall()
-            customer_ids = [row[0] for row in result]
-
-            v0 = 0
-            while True:
-                v0 = randint(10000000, 99999999)
-                if v0 not in customer_ids:
-                    break
-
-            sql_add_user = "INSERT INTO CUSTOMER (customerId, name, email, username, password, " \
-                           "gender, street, zipcode, city, country) " \
-                           "VALUES ( %s, %s, %s , %s , %s , %s , %s , %s , %s , %s )"
-
-            cur.execute(sql_add_user, [v0, v1, v2, v3, v4, v5, v6, v7, v8, v9])
-            connection.commit()
-
-            customer = Customer(customer_id=v0, name=v1 , isVerified='NO')
+            customer = Customer(customer_id=customer_id, name=v1, isVerified='NO')
 
             print("Before activation , customer id : ", customer.customer_id)
 

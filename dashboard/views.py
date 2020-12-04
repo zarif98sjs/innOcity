@@ -1,5 +1,4 @@
 from datetime import datetime
-
 from django.shortcuts import render, redirect
 from django.db import connection
 from django.http import HttpResponseRedirect
@@ -22,6 +21,7 @@ def index(request):
         customer_id = request.session['customer_id']
 
     else:
+        messages.success(request, "You must log in first")
         return redirect('login:index')
 
     global customer
@@ -46,27 +46,30 @@ def index(request):
 def get_customer(customer_id):
 
     with connection.cursor() as cur:
-        cur.execute("SELECT  NAME , EMAIL , USERNAME , GENDER , STREET , ZIPCODE , CITY , COUNTRY , PHONE_NUM , ISVERIFIED FROM CUSTOMER WHERE customerId = %s", [customer_id])
+        cur.execute("SELECT  NAME , EMAIL , USERNAME , GENDER , STREET , ZIPCODE , CITY , COUNTRY , PHONE_NUM , "
+                    "ISVERIFIED FROM CUSTOMER WHERE customerId = %s", [customer_id])
         result = cur.fetchone()
 
         if result is None:
-            return redirect('login:index')
+            return
         else:
 
             global customer
             customer = Customer(customer_id=customer_id, name=result[0], email=result[1], username=result[2],
                                 gender=result[3], street=result[4], zipcode=result[5], city=result[6],
-                                country=result[7], phone=result[8] , isVerified=result[9])
+                                country=result[7], phone=result[8], isVerified=result[9])
 
             get_wallet_info(customer_id)
 
+
 def get_wallet_info(customer_id):
     with connection.cursor() as cur:
-        cur.execute("SELECT  CARD_NUMBER , CARD_USERNAME , CARD_TYPE , CVC , EXPIRATION  FROM CREDIT_CARD WHERE customerId = %s", [customer_id])
+        cur.execute("SELECT  CARD_NUMBER , CARD_USERNAME , CARD_TYPE , CVC , EXPIRATION  FROM CREDIT_CARD "
+                    "WHERE customerId = %s", [customer_id])
         result = cur.fetchone()
 
         if result is None:
-            return redirect('login:index')
+            return
         else:
 
             global customer
@@ -76,7 +79,8 @@ def get_wallet_info(customer_id):
             customer.cvc = result[3]
             customer.expiration = result[4]
 
-        cur.execute("SELECT  PHONE_NUMBER , SERVICE_PROVIDER , CUSTOMERID FROM MOBILE_BANKING WHERE customerId = %s",
+        cur.execute("SELECT  PHONE_NUMBER , SERVICE_PROVIDER , CUSTOMERID FROM MOBILE_BANKING "
+                    "WHERE customerId = %s",
             [customer_id])
         result = cur.fetchone()
 
@@ -92,6 +96,7 @@ def wallet(request):
 
     global customer
     if not request.session.has_key('customer_id'):
+        messages.success(request, "You must log in first")
         return redirect('login:index')
     else:
         if customer.customer_id == 0:
@@ -111,8 +116,8 @@ def wallet(request):
                     expiration = request.POST.get("expiration")
 
                     sql = "INSERT INTO CREDIT_CARD (card_number, card_username, card_type, cvc, " \
-                                          "expiration, customerid) " \
-                                          "VALUES ( %s, %s, %s , %s , %s , %s )"
+                            "expiration, customerid) " \
+                            "VALUES ( %s, %s, %s , %s , %s , %s )"
 
                     cur.execute(sql, [card_number, card_username, card_type, cvc, expiration ,customer_id])
                     connection.commit()
@@ -130,7 +135,7 @@ def wallet(request):
                     mob_banking_service_provider = request.POST.get("mob_banking_service_provider")
 
                     sql = "INSERT INTO MOBILE_BANKING (phone_number, service_provider, customerid)" \
-                                          "VALUES ( %s, %s, %s )"
+                            "VALUES ( %s, %s, %s )"
 
                     cur.execute(sql, [mob_banking_phone_number, mob_banking_service_provider, customer_id])
                     connection.commit()
@@ -145,6 +150,7 @@ def maps(request):
 
     global customer
     if not request.session.has_key('customer_id'):
+        messages.success(request, "You must log in first")
         return redirect('login:index')
     else:
         if customer.customer_id == 0:
@@ -161,23 +167,36 @@ def maps(request):
                 return HttpResponseRedirect(reverse('dashboard:maps'))
 
             sql = "SELECT RS.RESERVATIONID, RS.DATE_OF_ARRIVAL, RS.DATE_OF_DEPARTURE, RS.RESERVATION_CHARGE, " \
-                  "H.HOTELID, H.NAME, H.CITY, H.COUNTRY, RT.ROOMTYPE_NAME, RT.BED_TYPE, RS.RATING " \
-                  "FROM RESERVATION RS, HOTEL H, ROOM RM, ROOM_TYPE RT " \
-                  "WHERE RS.CUSTOMERID = %s AND RS.HOTELID = H.HOTELID AND RM.ROOMID = RS.ROOMID " \
-                  "AND RM.ROOMTYPEID = RT.ROOMTYPEID " \
+                  "H.HOTELID, H.NAME, H.CITY, H.COUNTRY, RS.RATING " \
+                  "FROM RESERVATION RS, HOTEL H " \
+                  "WHERE RS.CUSTOMERID = %s AND RS.HOTELID = H.HOTELID " \
                   "ORDER BY RS.DATE_OF_ARRIVAL DESC"
 
             cur.execute(sql, [customer.customer_id])
             result = cur.fetchall()
+            cur.execute("SELECT SYSDATE FROM DUAL")
+            today = cur.fetchone()[0]
+
             reservation_list = []
 
             for row in result:
+
                 reservation = Reservation(reservation_id=row[0], date_of_arrival=row[1],
                                           date_of_departure=row[2], reservation_charge=row[3],
                                           hotelId=row[4], hotel_name=row[5], city=row[6],
-                                          country=row[7], room_type=row[8], bed_type=row[9], rating=row[10])
+                                          country=row[7], rating=row[8])
+                sql = "SELECT RT.ROOMTYPE_NAME " \
+                      "FROM ROOM_TYPE RT, RESERVATION_ROOM RR, ROOM RM " \
+                      "WHERE RR.RESERVATIONID = %s AND RR.ROOMID = RM.ROOMID AND RM.ROOMTYPEID = RT.ROOMTYPEID "
+                cur.execute(sql, [reservation.reservation_id])
+                res = cur.fetchall()
 
-                sql = "SELECT S.SERVICE_TYPE, S.COST, RS.QUANTITY " \
+                reservation.room_types = [r[0] for r in res]
+
+                if reservation.date_of_departure >= datetime.date(today):
+                    reservation.passed = False
+
+                sql = "SELECT S.SERVICE_SUBTYPE, S.COST, RS.QUANTITY " \
                       "FROM SERVICE S, RESERVATION_SERVICE RS " \
                       "WHERE S.SERVICEID = RS.SERVICEID AND RS.RESERVATIONID = %s"
                 cur.execute(sql, [row[0]])

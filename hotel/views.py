@@ -5,10 +5,8 @@ from .models import Hotel, Room, Service, Session , Reservation
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 from django.db import connection
-from random import seed
 from random import randint
 from dashboard.models import Customer
-from dashboard import views as dv
 
 from django.core.mail import EmailMultiAlternatives
 from easy_pdf.rendering import render_to_pdf
@@ -31,7 +29,6 @@ def available(request):
     checkin_input = request.POST.get('checkin')
     checkout_input = request.POST.get('checkout')
 
-
     request.session['checkin_input'] = checkin_input
     request.session['checkout_input'] = checkout_input
 
@@ -43,7 +40,8 @@ def available(request):
 
         sql = "SELECT H.HOTELID, H.NAME, H.STREET, H.ZIPCODE, H.CITY, H.COUNTRY, H.RATING, H.RATINGCOUNT, " \
               "(SELECT COUNT(R.ROOMID) FROM ROOM R WHERE R.HOTELID = H.HOTELID)," \
-              "(SELECT COUNT(DISTINCT ROOMID) FROM RESERVATION RS WHERE RS.HOTELID = H.HOTELID AND " \
+              "(SELECT COUNT(DISTINCT RR.ROOMID) FROM RESERVATION RS, RESERVATION_ROOM RR WHERE " \
+              "RS.HOTELID = H.HOTELID AND RS.RESERVATIONID = RR.RESERVATIONID AND " \
               "(RS.DATE_OF_ARRIVAL <= TO_DATE(%s, 'YYYY-MM-DD') " \
               "AND RS.DATE_OF_DEPARTURE >= TO_DATE(%s, 'YYYY-MM-DD'))) " \
               "FROM HOTEL H " \
@@ -86,11 +84,10 @@ def book2(request, hotel_id):
     request.session['checkin'] = checkin_input
     request.session['checkout'] = checkout_input
 
-
     request.session['checkin_input'] = checkin_input
     request.session['checkout_input'] = checkout_input
 
-    context = get_context(hotel_id)
+    context = get_context(request, hotel_id)
 
     return render(request, 'hotel/book2.html', context)
 
@@ -144,16 +141,22 @@ def credit_card(request, hotel_id):
     return render(request, 'hotel/credit_card.html',context)
 
 def get_customer_info(customer_id):
+
     with connection.cursor() as cur:
-        cur.execute("SELECT  NAME , EMAIL , USERNAME , GENDER , STREET , ZIPCODE , CITY , COUNTRY , PHONE_NUM , ISVERIFIED FROM CUSTOMER WHERE customerId = %s",[customer_id])
+        cur.execute("SELECT  NAME , EMAIL , USERNAME , GENDER , STREET , ZIPCODE , CITY , COUNTRY , "
+                    "PHONE_NUM , ISVERIFIED FROM CUSTOMER WHERE customerId = %s",[customer_id])
         result = cur.fetchone()
         global customer
         customer = Customer(customer_id=customer_id, name=result[0], email=result[1], username=result[2],
                                 gender=result[3], street=result[4], zipcode=result[5], city=result[6],
                                 country=result[7], phone=result[8], isVerified=result[9])
 
-        cur.execute("SELECT  CARD_NUMBER , CARD_USERNAME , CARD_TYPE , CVC , EXPIRATION  FROM CREDIT_CARD WHERE customerId = %s",[customer_id])
+        cur.execute("SELECT  CARD_NUMBER , CARD_USERNAME , CARD_TYPE , CVC , EXPIRATION  FROM CREDIT_CARD "
+                    "WHERE customerId = %s",[customer_id])
         result = cur.fetchone()
+
+        if result is None:
+            return
 
         customer.card_number = result[0]
         customer.card_username = result[1]
@@ -161,7 +164,8 @@ def get_customer_info(customer_id):
         customer.cvc = result[3]
         customer.expiration = result[4]
 
-        cur.execute("SELECT  PHONE_NUMBER , SERVICE_PROVIDER , CUSTOMERID FROM MOBILE_BANKING WHERE customerId = %s",[customer_id])
+        cur.execute("SELECT  PHONE_NUMBER , SERVICE_PROVIDER , CUSTOMERID FROM MOBILE_BANKING "
+                    "WHERE customerId = %s",[customer_id])
         result = cur.fetchone()
         customer.mob_banking_phone_number = result[0]
         customer.mob_banking_service_provider = result[1]
@@ -172,6 +176,7 @@ def payment(request, hotel_id):
     if request.session.has_key('customer_id'):
         logged_in = True
         customer_id = request.session['customer_id']
+        print(customer_id)
     else:
         messages.success(request, 'you must log in first')
         return redirect('login:index')
@@ -180,21 +185,17 @@ def payment(request, hotel_id):
 
     context = get_context(request,hotel_id)
 
-
     checkin_input = request.session['checkin_input']
     checkout_input = request.session['checkout_input']
 
     checkin_date_ymd = datetime.strptime(checkin_input, "%Y-%m-%d").date()
     checkin_date = checkin_date_ymd.strftime('%d %b,%Y')
-    print(checkin_date)
 
     checkout_date_ymd = datetime.strptime(checkout_input, "%Y-%m-%d").date()
     checkout_date = checkout_date_ymd.strftime('%d %b,%Y')
-    print(checkout_date)
 
     delta = checkout_date_ymd - checkin_date_ymd
     stay = delta.days
-    print(delta.days)
 
     total_cost = 0
 
@@ -209,7 +210,6 @@ def payment(request, hotel_id):
         request.session[room.room_type + "_count"] = room_count[room.room_type + "_count"]
         print("Room Types : " , room.room_type , " , Count : ",room_count[room.room_type+"_count"] , ", Cost , ",room.cost , " ,Discount",room.discount , ",Cost Per Day ",cost_per_day)
 
-
     service_count = {}
 
     for service_type in context['hotel_services']:
@@ -223,7 +223,6 @@ def payment(request, hotel_id):
 
             request.session[sub_type+"_count"] = service_count[sub_type+"_count"]
             print("Sub Service",sub_type , "Count ",service_count[sub_type+"_count"] , "Cost ",service_list.cost)
-
 
     # request.session['service_sub_type'] = service_sub_type
 
@@ -250,8 +249,8 @@ def complete_payment(request, hotel_id):
         messages.success(request, 'you must log in first')
         return redirect('login:index')
 
-
-        context = get_context(hotel_id)
+    with connection.cursor() as cur:
+        context = get_context(request, hotel_id)
 
         booked_room_id = []
         booked_rooms = []
@@ -271,23 +270,8 @@ def complete_payment(request, hotel_id):
         for b in booked_rooms:
             print(b)
 
-        sql = "SELECT RESERVATIONID FROM RESERVATION"
-        cur.execute(sql)
-        result = cur.fetchall()
-        reservation_ids = [row[0] for row in result]
-
-        book_reservation_id = []
-
-        for idx in range(book_cnt):
-            reservation_id = 0
-            while True:
-                reservation_id = randint(10000000, 99999999)
-                if reservation_id not in reservation_ids:
-                    book_reservation_id.append(reservation_id)
-                    reservation_ids.append(reservation_id)
-                    break
-
-        print(book_reservation_id)
+        reservation_id = cur.callfunc('GENERATE_ID', int, ['RESERVATION', 'RESERVATIONID'])
+        payment_id = cur.callfunc('GENERATE_ID', int, ['PAYMENT', 'PAYMENTID'])
 
         booked_services = []
 
@@ -297,23 +281,12 @@ def complete_payment(request, hotel_id):
                 sub_type = service_list.service_subtype
                 count = request.session[sub_type + "_count"]
                 cost = count * service_list.cost
-                s = Service(-1, service_type=service_type, service_subtype=sub_type, cost=cost, count=count)
+                s = Service(serviceId=service_list.serviceId, service_type=service_type, service_subtype=sub_type, cost=cost, count=count)
 
                 if s.count > 0:
                     booked_services.append(s)
 
-                print("Sub ",s.service_subtype," Cost ",s.cost," Count",s.count)
-
-        sql = "SELECT PAYMENTID FROM PAYMENT"
-        cur.execute(sql)
-        result = cur.fetchall()
-        payment_ids = [row[0] for row in result]
-
-        payment_id = 0
-        while True:
-            payment_id = randint(10000000, 99999999)
-            if payment_id not in payment_ids:
-                break
+                print(s.serviceId, "Sub ", s.service_subtype," Cost ",s.cost," Count",s.count)
 
     context['checkin_input'] = request.session['checkin_input']
     context['checkout_input'] = request.session['checkout_input']
@@ -324,49 +297,59 @@ def complete_payment(request, hotel_id):
     context['booked_rooms'] = booked_rooms
     context['booked_services'] = booked_services
 
-    reservation_list = []
+    r = Reservation(reservationid=reservation_id, date_of_arrival= context['checkin_input'],
+                    date_of_departure=context['checkout_input'], customerid=customer_id,
+                    paymentid=payment_id, hotelid = hotel_id,
+                    reservation_charge=context['total_cost'])
 
-    for id in range(book_cnt):
-        resrvation = Reservation(reservationid = book_reservation_id[id], date_of_arrival= context['checkin_input'], date_of_departure=context['checkout_input'] , customerid=customer_id,paymentid=payment_id,hotelid = hotel_id,roomid=booked_room_id[id],reservation_charge=context['total_cost'])
-        reservation_list.append(resrvation)
-        print(resrvation)
+    print(r)
 
-    context['reservation_list'] = reservation_list
+    context['reservation_list'] = r
 
+    with connection.cursor() as cur:
+        sql_add_payment = "INSERT INTO PAYMENT " \
+                          "VALUES (%s, SYSDATE)"
+        cur.execute(sql_add_payment, [payment_id])
+        connection.commit()
+        sql_add_reservation = "INSERT INTO RESERVATION (RESERVATIONID, DATE_OF_ARRIVAL, DATE_OF_DEPARTURE, CUSTOMERID, " \
+                              "PAYMENTID, HOTELID, RESERVATION_CHARGE) " \
+                              "VALUES ( %s, %s, %s , %s , %s , %s , %s )"
+        cur.execute(sql_add_reservation,
+                    [r.reservationid, r.date_of_arrival, r.date_of_departure, r.customerid, r.paymentid, r.hotelid,
+                     r.reservation_charge])
+        connection.commit()
 
     with connection.cursor() as cur:
 
-        sql_add_payment = "INSERT INTO PAYMENT(PAYMENTID)" \
-                          "VALUES (%s)"
-        cur.execute(sql_add_payment, [payment_id])
-        connection.commit()
+        for r in booked_room_id:
+            print(r, reservation_id)
+            sql_add_room = "INSERT INTO RESERVATION_ROOM VALUES(%s, %s)"
+            cur.execute(sql_add_room, [reservation_id, r])
+            connection.commit()
 
-    for r in reservation_list:
-
-        with connection.cursor() as cur:
-            sql_add_reservation = "INSERT INTO RESERVATION (RESERVATIONID, DATE_OF_ARRIVAL, DATE_OF_DEPARTURE, CUSTOMERID, " \
-                           "PAYMENTID, HOTELID, ROOMID, RESERVATION_CHARGE) " \
-                           "VALUES ( %s, %s, %s , %s , %s , %s , %s , %s )"
-
-            cur.execute(sql_add_reservation, [r.reservationid, r.date_of_arrival, r.date_of_departure, r.customerid, r.paymentid, r.hotelid, r.roomid,r.reservation_charge])
+        for s in booked_services:
+            cur.execute("INSERT INTO RESERVATION_SERVICE VALUES(%s, %s, %s)", [reservation_id, s.serviceId, s.count])
             connection.commit()
 
     send_booking_mail(context)
 
     return redirect('dashboard:maps')
 
+
 def send_booking_mail(context):
 
     post_pdf = render_to_pdf('hotel/testPDF.html', context)
+    global customer
 
     email_subject = "innOcity Booking Confirmation"
     email_body = "Your booking has been successfully completed . Find your booking pass in the attachment. \n Regrads, \n innOcity Team"
 
     msg = EmailMultiAlternatives(email_subject, email_body, settings.EMAIL_HOST_USER,
-                                 ['zarif98sjs@gmail.com'])
+                                 [customer.email])
     msg.attach('Booking Pass.pdf', post_pdf)
     msg.send()
     return
+
 
 def book(request, hotel_id):
     context = get_context(request, hotel_id)
@@ -422,16 +405,17 @@ def get_services(hotel_id):
 def get_rooms(request, hotel_id):
 
     with connection.cursor() as cur:
-        if session_id != 0:
+        if request.session.has_key('checkin_input'):
 
-            checkin_date = request.session['checkin']
-            checkout_date = request.session['checkout']
+            checkin_date = request.session['checkin_input']
+            checkout_date = request.session['checkout_input']
 
             sql = "SELECT R.ROOMID, RT.ROOMTYPE_NAME, RT.BED_TYPE, RT.COST_PER_DAY, RT.DISCOUNT " \
                   "FROM ROOM R, ROOM_TYPE RT WHERE R.HOTELID = %s AND R.ROOMTYPEID = RT.ROOMTYPEID AND " \
-                  "R.ROOMID NOT IN (SELECT RS.ROOMID FROM RESERVATION RS WHERE RS.HOTELID = %s " \
+                  "R.ROOMID NOT IN (SELECT RR.ROOMID FROM RESERVATION RS, RESERVATION_ROOM RR " \
+                  "WHERE RS.RESERVATIONID = RR.RESERVATIONID AND RS.HOTELID = %s " \
                   "AND RS.DATE_OF_ARRIVAL <= TO_DATE(%s, 'YYYY-MM-DD') AND " \
-                  "RS.DATE_OF_DEPARTURE >= TO_DATE(%s, 'YYYY-MM-DD'))"
+                  "RS.DATE_OF_DEPARTURE >= TO_DATE(%s, 'YYYY-MM-DD')) "
             cur.execute(sql, [hotel_id, hotel_id, checkout_date, checkin_date])
 
         else:

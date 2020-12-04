@@ -229,7 +229,11 @@ Coded by www.creative-tim.com
                                 <td >  {{ reservation.date_of_arrival }} </td>
                                 <td>  {{ reservation.date_of_departure }} </td>
                                 <td>  {{ reservation.name }} </td>
-                                <td>  {{ reservation.room_type }} - {{ reservation.bed_type }} </td>
+                                <td>
+                                    {% for rb in reservation.room_types %}
+                                        {{ rb }} <br>
+                                        {% endfor %}
+                                </td>
                                 <td>  {{ reservation.reservation_charge }} </td>
                                 <td>  {{ reservation.service_charge }} </td>
                                 <td>  {{ reservation.total }} </td>

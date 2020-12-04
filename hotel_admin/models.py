@@ -11,19 +11,16 @@ class Room:
 
 class Reservation:
 
-    def __init__(self, date_of_arrival, date_of_departure, name, roomId, floor_num, room_type, bed_type,
+    def __init__(self, date_of_arrival, date_of_departure, name,
                  reservation_charge, service_charge):
 
         self.date_of_arrival = date_of_arrival.date()
         self.date_of_departure = date_of_departure.date()
         self.name = name
-        self.room_type = room_type
-        self.bed_type = bed_type
+        self.room_types = []
         self.reservation_charge = reservation_charge
         self.service_charge = service_charge
         self.total = reservation_charge + service_charge
-        self.floor_num = floor_num
-        self.roomId = roomId
 
 
 class Service:

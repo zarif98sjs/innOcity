@@ -56,7 +56,7 @@ Coded by www.creative-tim.com
         </style>
 </head>
 
-<body class="">
+<body class="" onload="showfigure">
   <div class="wrapper ">
     <div class="sidebar" data-color="white" data-active-color="danger" style="width: 350px; padding: 20px">
       <div class="logo">
@@ -305,6 +305,14 @@ Coded by www.creative-tim.com
             alert({{ message }})
         </script>
     {% endfor %}
+    <script>
+        function showfigure() {
+
+            var graph = {{ fig_data | safe }};
+            mpld3.draw_figure("fig01", graph);
+
+        }
+    </script>
 </body>
 
 </html>

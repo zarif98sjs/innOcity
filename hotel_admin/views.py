@@ -5,8 +5,9 @@ from django.db import connection
 from .models import Room, Reservation, Service
 from hotel.models import Hotel
 from django.urls import reverse
-
-import random
+from matplotlib import pyplot as plt
+import mpld3
+import json
 
 app_name = 'hotel_admin'
 hotel = Hotel(0)
@@ -116,7 +117,6 @@ def get_hotel(hotel_id):
         global hotel
         hotel = Hotel(hotelId=row[0], name=row[1], street=row[2], zipcode=row[3],
                       city=row[4], country=row[5], rating=row[6], rating_count=row[7])
-
 
 
 def service(request):
@@ -260,6 +260,9 @@ def reservation(request):
 
             reservation_list.append(reserve)
 
+        fig = plt.plot([1,2,3,4], [1,4,9,6])
+        js_data = json.dumps(mpld3.fig_to_dict(fig))
         return render(request, 'hotel_admin/reservation.html', {'hotel': hotel, 'room_list': room_list,
-                                                                'reservation_list': reservation_list, 'total': total})
+                                                                'reservation_list': reservation_list, 'total': total,
+                                                                'fig_data': js_data})
 

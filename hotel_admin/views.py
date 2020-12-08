@@ -257,6 +257,10 @@ def reservation(request):
                 selected_room, _ = request.POST.get("room_bed").split('(')
                 selected_room = selected_room.strip()
 
+        if request.method == "POST" and request.POST.get("file-upload"):
+            print('here')
+            print(request.POST.get("filename"))
+
         sql += "ORDER BY RS.DATE_OF_ARRIVAL DESC"
 
         cur.execute(sql, list_vars)

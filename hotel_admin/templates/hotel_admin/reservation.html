@@ -30,7 +30,8 @@ Coded by www.creative-tim.com
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css' %}" rel="stylesheet">
   <!-- CSS Files -->
   <link href="{% static 'hotel_admin/css/bootstrap.min.css' %}" rel="stylesheet" />
-  <link href="{% static 'hotel_admin/css/paper-dashboard.css' %}?v=2.0.1" rel="stylesheet" />
+  <link href="{% static 'hotel_admin/css/login_main.css' %}" rel="stylesheet" />
+  <link href="{% static 'hotel_admin/css/paper-dashboard.css' %}" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="{% static 'hotel_admin/demo/demo.css' %}" rel="stylesheet" />
     <style>
@@ -56,9 +57,9 @@ Coded by www.creative-tim.com
         </style>
 </head>
 
-<body class="" >
-  <div class="wrapper ">
-    <div class="sidebar" data-color="white" data-active-color="danger" style="width: 350px; padding: 20px">
+<body class="" onload="showSnackbar()">
+  <div class="wrapper " >
+    <div class="sidebar" data-color="#000000" style="width: 350px; padding: 20px; color: white ">
       <div class="logo">
         <a class="simple-text logo-mini">
           <div class="logo-image-small">
@@ -68,31 +69,45 @@ Coded by www.creative-tim.com
         </a>
         <a  class="simple-text logo-normal">
           hotel admin
-          <!-- <div class="logo-image-big">
-            <img src="{% static 'hotel_admin/img/logo-small.png' %}">
-          </div> -->
+
         </a>
       </div>
-              <div class="sidebar-wrapper" style="width: 300px">
+      <div class="sidebar-wrapper" style="width: 300px; ">
         <ul class="nav" style="text-align: center; padding-bottom: 20px">
             <li>
                 <div class="image">
                     <img src="{% static 'hotel_admin/img/destination_6.jpg' %}">
                 </div>
             </li>
+            <li style="padding-bottom: 100px">
+                 <form action="{% url 'hotel_admin:index' %}" method="POST" name="update_picture" id="update_picture">
+                    {% csrf_token %}
 
-          <li style="text-align: center; padding-top: 15px">
-              <h3>{{ hotel.name }}</h3>
+                    <input id="file-upload" type="file"  style="alignment: right; padding-bottom: 40px; color: black;" onchange="submitpicture()"/>
+                     <input id="filename" name="filename" type="text" hidden />
+                 </form>
+                <script>
+                    function submitpicture() {
+                        console.log("picture");
+
+                        document.getElementById("update_picture").submit();
+                    }
+                </script>
+
+            </li>
+          <li style="text-align: center; padding-top: 20px">
+              <p style="font-size: 30px; padding-bottom: 20px; color: #a18cd1">{{ hotel.name }}</p>
 
           </li>
 
           <li>
 
-              <p style="font-size: 18px">{{ hotel.street }}, {{ hotel.city }}, {{hotel.country}}</p>
+              <p style="font-size: 20px;">{{ hotel.street }}, </p>
+              <p style="font-size: 20px">{{ hotel.city }}, {{hotel.country}}</p>
 
           </li>
             <li>
-                <p style="font-size: 18px"> User Rating: {{ hotel.rating }}</p>
+                <p style="font-size: 20px"> User Rating: {{ hotel.rating }}</p>
             </li>
         </ul>
 
@@ -100,30 +115,29 @@ Coded by www.creative-tim.com
           <li >
             <a href="{% url 'hotel_admin:index' %}">
 
-              <p style="color:black;">Rooms</p>
+              <p style="color:white; font-size: 18px">Rooms</p>
             </a>
           </li>
 
-          <li >
+          <li>
             <a href="{% url 'hotel_admin:service' %}">
 
-              <p style="color: black">Services</p>
+              <p style="color: white; font-size: 18px">Services</p>
             </a>
           </li>
 
           <li class="active">
             <a href="{% url 'hotel_admin:reservation' %}">
 
-              <p style="color: red">Reservation List</p>
+              <p style="color: #a18cd1; font-size: 18px">Reservation List</p>
             </a>
           </li>
 
         </ul>
       </div>
-
     </div>
-    <div class="main-panel" >
-      <!-- Navbar -->
+    <div class="main-panel bg-gra-01" >
+    <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent" >
         <div class="container-fluid" >
           <div class="navbar-wrapper" >
@@ -134,7 +148,9 @@ Coded by www.creative-tim.com
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="{% url 'home:index' %}" style="padding-left: 100px">Innocity</a>
+              <div class="logo">
+            <a class="navbar-brand" href="{% url 'home:index' %}" style="padding-left: 100px; font-size: 30px; font-weight: bold; color: black">Innocity</a>
+                  </div>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -145,26 +161,25 @@ Coded by www.creative-tim.com
 
             <ul class="navbar-nav">
 
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'login:index' %}">
+              <li class="nav-item" >
+                <a class="nav-link" style="color: black; font-weight: bold" href="{% url 'login:index' %}">
                   Log Out
                 </a>
               </li>
             </ul>
           </div>
         </div>
-      </nav>
-      <!-- End Navbar -->
+      </nav>      <!-- End Navbar -->
        <div class="content" style="padding-left: 10%; width: 1350px;">
         <div class="row">
 
-          <div class="col-md-11" style="padding-left: 5%;width: 1200px ">
-                        <div class="card card-user">
+          <div class="col-md-11" style="padding-left: 40px; ">
+                        <div class="card card-user" style="width: 1350px;">
 
           <div class="card-header" style="height: 200px">
               <div class="card-header">
 
-                <h5 class="card-title">Reservations Data</h5>
+                <h3 class="card-title">Search</h3>
 
               </div>
 
@@ -175,23 +190,23 @@ Coded by www.creative-tim.com
                     <form action="{% url 'hotel_admin:reservation' %}" method="POST" id="search_form" name="search_form">
                 {% csrf_token %}
                     <div class="row" style="padding-left: 20px;">
-                    <div class="col">
+                    <div class="col" style="width: 350px">
                       <div class="form-group">
 
-                        <input type="number" class="form-control"  placeholder="month" name="month" min="1" max="12">
+                        <input type="number" class="form-control" style="color: black"  placeholder="month" name="month" min="1" max="12">
                       </div>
                     </div>
 
 
-                    <div class="col">
+                    <div class="col" style="width: 350px;">
                       <div class="form-group">
 
-                        <input type="number" class="form-control" placeholder="year" name="year" min="0">
+                        <input type="number" class="form-control" style="color: black" placeholder="year" name="year" min="0">
                       </div>
                     </div>
-                        <div class="col">
+                        <div class="col" style="width: 350px">
                       <div class="form-group">
-                          <select name="room_bed" required="required" class="form-control">
+                          <select name="room_bed" required="required" class="form-control" style="color: black">
 
                           <option selected>all rooms</option>
                               {% for room in room_list %}
@@ -203,19 +218,18 @@ Coded by www.creative-tim.com
                       </div>
                     </div>
                       <div class="col">
-                          <button type="submit" name="search" value="search" title="search" style="background-color: #1F93A6; color: white; width: 100px; height: 40px; border-radius: 20px;" ><b>Search</b></button>
+                          <button type="submit" name="search" value="search" title="search" class="btn btn-primary " style="background-color: #a18cd1; " >Search</button>
                       </div>
                     </div>
-
-
-
                 </form>
+                    <div class="col" style="">
                     <form action="{% url 'hotel_admin:reservation' %}" method="POST" id="show_all_form" name="show_all_form">
                         {% csrf_token %}
-                    <div class="col" style="">
-                          <button type="submit" name="show_all" value="show_all" title="show all" style="background-color: #a8554f; color: white; width: 120px; height: 40px; border-radius: 20px; " onsubmit="{% url 'hotel_admin:reservation' %}" ><b>Show All</b></button>
-                      </div>
+
+                          <button type="submit" name="show_all" value="show_all" title="show all" class="btn btn-primary " style="background-color: #a8554f; " onsubmit="{% url 'hotel_admin:reservation' %}" >Show All</button>
+
                     </form>
+                        </div>
               </div>
 
 
@@ -224,34 +238,34 @@ Coded by www.creative-tim.com
           </div>
             </div>
 
-              <div class="card card-user" style="max-height: 600px">
+              <div class="card card-user" style="max-height: 800px; width: 1350px;">
 
-          <div class="card-header" style="height: 500px">
+          <div class="card-header" >
+              <h3 class="card-title">Income Visualization</h3>
 
-
-              <div class="card-body" style="align-content: center">
+          </div>
+              <div class="card-body" style="align-content: center; padding-left: 120px">
 
                   {% if graph %}
-                      <div style="width:90%;height:50%">
+                      <div style="width:90%;height:50%; padding-bottom: 30px">
                         {{ graph|safe }}
                       </div>
                     {% endif %}
 
 
               </div>
-          </div>
+
             </div>
 
-            <div class="card card-user">
+            <div class="card card-user" style="width: 1350px;">
               <div class="card-header">
 
-                <h5 class="card-title" style="padding-bottom: 40px; padding-top: 40px; padding-left: 20px">List of Reservations</h5>
+                <h2 class="card-title" style="padding-bottom: 40px; padding-top: 40px; padding-left: 20px">List of Reservations</h2>
 
-                  <ul type="none" style="font-size: 15px; text-align: right; ">
-                      <li>Total reservation charge: {{ total_reservation_charge }} $</li>
-                      <li>Total service charge: {{ total_service_charge }} $</li>
-                      <li>Total earned: {{ total }} $</li>
-                  </ul>
+
+                  <h5 class="card-title" style="text-align: right;">Total reservation charge: {{ total_reservation_charge }} $</h5>
+                  <h5 class="card-title" style="text-align: right">Total service charge: {{ total_service_charge }} $</h5>
+                  <h5 class="card-title" style="text-align: right">Total earned: {{ total }} $</h5>
 
               </div>
 

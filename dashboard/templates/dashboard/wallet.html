@@ -30,109 +30,128 @@ Coded by www.creative-tim.com
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css' %}" rel="stylesheet">
     <!-- CSS Files -->
     <link href="{% static 'dashboard/css/bootstrap.min.css' %}" rel="stylesheet" />
-    <link href="{% static 'dashboard/css/paper-dashboard.css' %}?v=2.0.1" rel="stylesheet" />
+      <link href="{% static 'dashboard/css/login_main.css' %}" rel="stylesheet" />
+
+    <link href="{% static 'dashboard/css/paper-dashboard.css' %}" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="{% static 'dashboard/demo/demo.css' %}" rel="stylesheet" />
 </head>
+<body class="" onload="showSnackbar()">
+  <div class="wrapper " >
+    <div class="sidebar" data-color="#000000" style="width: 350px; padding: 20px; color: white ">
+      <div class="logo">
+        <a class="simple-text logo-mini">
+          <div class="logo-image-small">
+            <img src="{% static 'hotel_admin/img/logo-small.png' %}">
+          </div>
+          <!-- <p>CT</p> -->
+        </a>
+        <a  class="simple-text logo-normal">
+          Dashboard
 
-<body class="">
-<div class="wrapper ">
-    <div class="sidebar" data-color="white" data-active-color="danger">
-        <div class="logo">
-            <a href="https://www.creative-tim.com" class="simple-text logo-mini">
-                <div class="logo-image-small">
+        </a>
+      </div>
+      <div class="sidebar-wrapper" style="width: 300px; ">
+        <ul class="nav" style="text-align: center; padding-bottom: 20px">
+            <li>
+                <div class="image">
                     <img src="{% static 'dashboard/img/logo-small.png' %}">
                 </div>
-                <!-- <p>CT</p> -->
+            </li>
+            <li style="padding-bottom: 100px">
+                 <form action="{% url 'dashboard:index' %}" method="POST" name="update_picture" id="update_picture">
+                    {% csrf_token %}
+
+                    <input id="file-upload" type="file"  style="alignment: right; padding-bottom: 40px; color: black;" onchange="submitpicture()"/>
+                     <input id="filename" name="filename" type="text" hidden />
+                 </form>
+                <script>
+                    function submitpicture() {
+                        console.log("picture");
+
+                        document.getElementById("update_picture").submit();
+                    }
+                </script>
+
+            </li>
+          <li style="text-align: center; padding-top: 20px">
+              <p style="font-size: 30px; padding-bottom: 20px; color: #a18cd1">{{ customer.name }}</p>
+
+          </li>
+
+
+        </ul>
+
+        <ul class="nav">
+          <li ">
+            <a href="{% url 'dashboard:index' %}">
+
+              <p style="color:white; font-size: 18px">Maps</p>
             </a>
-            <a href="https://www.creative-tim.com" class="simple-text logo-normal">
-                {{ customer.name }}
-                <!-- <div class="logo-image-big">
-            <img src="{% static 'dashboard/img/logo-small.png' %}">
-          </div> -->
+          </li>
+
+          <li>
+            <a href="{% url 'dashboard:maps' %}">
+
+              <p style="color: white; font-size: 18px">Your Bookings</p>
             </a>
-        </div>
-        <div class="sidebar-wrapper">
-            <ul class="nav">
-                <li >
-                    <a href="{% url 'dashboard:index' %}">
-                        <i class="nc-icon nc-pin-3"></i>
-                        <p>Map</p>
-                    </a>
-                </li>
+          </li>
 
-                <li>
-                    <a href="{% url 'dashboard:maps' %}">
-                        <i class="nc-icon nc-bank"></i>
-                        <p>Your bookings</p>
-                    </a>
-                </li>
+          <li >
+            <a href="{% url 'dashboard:user' %}">
 
-                <li>
-                    <a href="{% url 'dashboard:user' %}">
-                        <i class="nc-icon nc-single-02"></i>
-                        <p>Update Profile</p>
-                    </a>
-                </li>
+              <p style="color:white; font-size: 18px">Update Profile</p>
+            </a>
+          </li>
+            <li class="active">
+            <a href="{% url 'dashboard:wallet' %}">
 
-                <li class="active ">
-                    <a href="{% url 'dashboard:wallet' %}">
-                        <i class="nc-icon nc-single-02"></i>
-                        <p>Wallet</p>
-                    </a>
-                </li>
+              <p style="color: #a18cd1; font-size: 18px">Wallet</p>
+            </a>
+          </li>
 
-            </ul>
-        </div>
-
+        </ul>
+      </div>
     </div>
-    <div class="main-panel" >
-        <!-- Navbar -->
-        <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent" >
-            <div class="container-fluid" >
-                <div class="navbar-wrapper" >
-                    <div class="navbar-toggle" >
-                        <button type="button" class="navbar-toggler" >
-                            <span class="navbar-toggler-bar bar1"></span>
-                            <span class="navbar-toggler-bar bar2"></span>
-                            <span class="navbar-toggler-bar bar3"></span>
-                        </button>
-                    </div>
-                    <a class="navbar-brand" href="{% url 'home:index' %}">Innocity</a>
-                </div>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-bar navbar-kebab"></span>
-                    <span class="navbar-toggler-bar navbar-kebab"></span>
-                    <span class="navbar-toggler-bar navbar-kebab"></span>
-                </button>
-                <div class="collapse navbar-collapse justify-content-end" id="navigation">
-
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'home:index' %}">
-                                Home
-                            </a>
-                        </li>
-                        <li class="nav-item ">
-                            <a class="nav-link" href="{% url 'home:about' %}">
-                                About Us
-                            </a>
-
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'login:index' %}">
-                                Log Out
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+    <div class="main-panel bg-gra-01" >
+    <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent" >
+        <div class="container-fluid" >
+          <div class="navbar-wrapper" >
+            <div class="navbar-toggle" >
+              <button type="button" class="navbar-toggler" >
+                <span class="navbar-toggler-bar bar1"></span>
+                <span class="navbar-toggler-bar bar2"></span>
+                <span class="navbar-toggler-bar bar3"></span>
+              </button>
             </div>
-        </nav>
+              <div class="logo">
+            <a class="navbar-brand" href="{% url 'home:index' %}" style="padding-left: 100px; font-size: 30px; font-weight: bold; color: black">Innocity</a>
+                  </div>
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+            <span class="navbar-toggler-bar navbar-kebab"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end" id="navigation">
+
+            <ul class="navbar-nav">
+
+              <li class="nav-item" >
+                <a class="nav-link" style="color: black; font-weight: bold" href="{% url 'login:index' %}">
+                  Log Out
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
         <!-- End Navbar -->
-        <div class="content">
+        <div class="content" style="padding-left: 100px; min-width: 1350px; min-height: 1000px">
             <div class="row">
 
-                <div class="col-md-11" style="padding-left: 50px">
+                <div class="col-md-11" style="padding-left: 100px">
                     <div class="card card-user">
                         <div class="card-header">
                             <h5 class="card-title">Update Credit Card Details</h5>
@@ -145,10 +164,10 @@ Coded by www.creative-tim.com
                                         <div class="form-group" style="font-family: Oswald, sans-serif;"><label
                                                 for="card-holder">Card Holder</label><input class="form-control" type="text" name="card_username" value= '{{ customer.card_username }}'
                                                                                             placeholder="Card Holder"
-                                                                                            style="font-family: Oswald, sans-serif;">
+                                                                                            style="font-family: Oswald, sans-serif; color: black">
                                         </div>
                                     </div>
-                                    <div class="col-md-5">
+                                    <div class="col-md-5" style="padding-left: 50px">
                                         <div class="form-group">
                                             <label>Card Type</label>
                                             <select name="card_type" required="required" class="form-control">
@@ -166,24 +185,24 @@ Coded by www.creative-tim.com
                                     <div class="col-md-5">
                                         <div class="form-group"><label style="font-family: Oswald, sans-serif;">Expiration
                                             date</label>
-                                            <input class="form-control" type="date" style="font-family: Oswald, sans-serif;" name="expiration" required="required" onautocomplete="updateExpirationDate()">
+                                            <input class="form-control" type="date" style="font-family: Oswald, sans-serif;color: black" name="expiration" required="required" onautocomplete="updateExpirationDate()">
                                         </div>
                                     </div>
-                                    <div class="col-md-5">
+                                    <div class="col-md-5" style="padding-left: 50px">
                                         <div class="form-group" style="font-family: Oswald, sans-serif;"><label
                                                 for="card-number">Card Number</label><input class="form-control" type="text" name="card_number" required="required"
                                                                                             id="card-number" value="{{ customer.card_number }}"
-                                                                                            placeholder="Card Number" style="font-family: Oswald, sans-serif;"></div>
+                                                                                            placeholder="Card Number" style="font-family: Oswald, sans-serif; color: black"></div>
                                     </div>
                                     <div class="col-md-5">
                                         <div class="form-group" style="font-family: Oswald, sans-serif;"><label for="cvc">CVC</label><input
-                                                class="form-control" name="cvc" required="required" value="{{ customer.cvc }}" type="text" id="cvc" placeholder="CVC" style="font-family: Oswald, sans-serif;"></div>
+                                                class="form-control" name="cvc" required="required" value="{{ customer.cvc }}" type="text" id="cvc" placeholder="CVC" style="color: black; font-family: Oswald, sans-serif;"></div>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div class="update ml-auto mr-auto">
-                                        <button type="submit" name="submit_credit_card" value="submit_credit_card" class="btn btn-primary btn-round">Update</button>
+                                        <button type="submit" name="submit_credit_card" value="submit_credit_card" class="btn btn-primary" style="background-color: #a18cd1; color: black">Update</button>
                                     </div>
                                 </div>
                             </form>
@@ -194,7 +213,7 @@ Coded by www.creative-tim.com
 
             <div class="row">
 
-                <div class="col-md-11" style="padding-left: 50px">
+                <div class="col-md-11" style="padding-left: 100px; padding-top: 50px">
                     <div class="card card-user">
                         <div class="card-header">
                             <h5 class="card-title">Update Mobile Banking Details</h5>
@@ -207,13 +226,13 @@ Coded by www.creative-tim.com
                                         <div class="form-group" style="font-family: Oswald, sans-serif;"><label
                                                 for="card-number">Phone Number</label><input class="form-control" required="required" value="{{ customer.mob_banking_phone_number }}"
                                                                                              type="text" id="card-number-1" name="mob_banking_phone_number"
-                                                                                             placeholder="Phone Number">
+                                                                                             placeholder="Phone Number" style="color:black;">
                                         </div>
                                     </div>
-                                    <div class="col-md-5">
+                                    <div class="col-md-5" style="padding-left: 50px">
                                         <div class="form-group">
                                             <label>Service Provider</label>
-                                            <select name="mob_banking_service_provider" required="required" class="form-control">
+                                            <select name="mob_banking_service_provider" required="required" class="form-control" style="color: black">
                                                 <option selected="selected">{{ customer.mob_banking_service_provider }}</option>
                                                 {% if customer.mob_banking_service_provider != "Bkash"%}
                                                     <option>Bkash</option>
@@ -230,9 +249,9 @@ Coded by www.creative-tim.com
                                     </div>
                                 </div>
 
-                                <div class="row">
+                                <div class="row" style="padding-top: 50px">
                                     <div class="update ml-auto mr-auto">
-                                        <button type="submit" name="submit_mobile_banking" value="submit_mobile_banking" class="btn btn-primary btn-round">Update</button>
+                                        <button type="submit" name="submit_mobile_banking" value="submit_mobile_banking" class="btn btn-primary" style="background-color: #a18cd1; color:black;">Update</button>
                                     </div>
                                 </div>
                             </form>

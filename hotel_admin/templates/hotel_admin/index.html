@@ -22,7 +22,7 @@ Coded by www.creative-tim.com
   <link rel="icon" type="image/png" href="{% static 'hotel_admin/img/favicon.png' %}">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    hotel_admin hotel_admin
+    hotel_admin
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -30,13 +30,17 @@ Coded by www.creative-tim.com
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css' %}" rel="stylesheet">
   <!-- CSS Files -->
   <link href="{% static 'hotel_admin/css/bootstrap.min.css' %}" rel="stylesheet" />
-  <link href="{% static 'hotel_admin/css/paper-dashboard.css' %}?v=2.0.1" rel="stylesheet" />
+
+  <link href="{% static 'hotel_admin/css/login_main.css' %}" rel="stylesheet" />
+  <link href="{% static 'hotel_admin/css/paper-dashboard.css' %}" rel="stylesheet" />
+
   <link href="{% static 'hotel_admin/demo/demo.css' %}" rel="stylesheet" />
+
 </head>
 
 <body class="" onload="showSnackbar()">
   <div class="wrapper " >
-    <div class="sidebar" data-color="white" data-active-color="danger" style="width: 350px; padding: 20px; ">
+    <div class="sidebar" data-color="#000000" style="width: 350px; padding: 20px; color: white ">
       <div class="logo">
         <a class="simple-text logo-mini">
           <div class="logo-image-small">
@@ -46,9 +50,7 @@ Coded by www.creative-tim.com
         </a>
         <a  class="simple-text logo-normal">
           hotel admin
-          <!-- <div class="logo-image-big">
-            <img src="{% static 'hotel_admin/img/logo-small.png' %}">
-          </div> -->
+
         </a>
       </div>
       <div class="sidebar-wrapper" style="width: 300px; ">
@@ -58,11 +60,11 @@ Coded by www.creative-tim.com
                     <img src="{% static 'hotel_admin/img/destination_6.jpg' %}">
                 </div>
             </li>
-            <li>
+            <li style="padding-bottom: 100px">
                  <form action="{% url 'hotel_admin:index' %}" method="POST" name="update_picture" id="update_picture">
                     {% csrf_token %}
 
-                    <input id="file-upload" type="file"  style="alignment: right" onchange="submitpicture()"/>
+                    <input id="file-upload" type="file"  style="alignment: right; padding-bottom: 40px;" onchange="submitpicture()"/>
                  </form>
                 <script>
                     function submitpicture() {
@@ -71,18 +73,19 @@ Coded by www.creative-tim.com
                 </script>
 
             </li>
-          <li style="text-align: center; padding-top: 15px">
-              <h3>{{ hotel.name }}</h3>
+          <li style="text-align: center; padding-top: 20px">
+              <p style="font-size: 30px; padding-bottom: 20px; color: #a18cd1">{{ hotel.name }}</p>
 
           </li>
 
           <li>
 
-              <p style="font-size: 18px">{{ hotel.street }}, {{ hotel.city }}, {{hotel.country}}</p>
+              <p style="font-size: 20px;">{{ hotel.street }}, </p>
+              <p style="font-size: 20px">{{ hotel.city }}, {{hotel.country}}</p>
 
           </li>
             <li>
-                <p style="font-size: 18px"> User Rating: {{ hotel.rating }}</p>
+                <p style="font-size: 20px"> User Rating: {{ hotel.rating }}</p>
             </li>
         </ul>
 
@@ -90,29 +93,29 @@ Coded by www.creative-tim.com
           <li class="active">
             <a href="{% url 'hotel_admin:index' %}">
 
-              <p style="color:red;">Rooms</p>
+              <p style="color:#a18cd1; font-size: 18px">Rooms</p>
             </a>
           </li>
 
           <li>
             <a href="{% url 'hotel_admin:service' %}">
 
-              <p style="color: black">Services</p>
+              <p style="color: white; font-size: 18px">Services</p>
             </a>
           </li>
 
           <li >
             <a href="{% url 'hotel_admin:reservation' %}">
 
-              <p style="color: black">Reservation List</p>
+              <p style="color: white; font-size: 18px">Reservation List</p>
             </a>
           </li>
 
         </ul>
       </div>
     </div>
-    <div class="main-panel" >
-      <!-- Navbar -->
+    <div class="main-panel bg-gra-01" >
+    <!-- Navbar -->
       <nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent" >
         <div class="container-fluid" >
           <div class="navbar-wrapper" >
@@ -123,7 +126,9 @@ Coded by www.creative-tim.com
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
-            <a class="navbar-brand" href="{% url 'home:index' %}" style="padding-left: 100px">Innocity</a>
+              <div class="logo">
+            <a class="navbar-brand" href="{% url 'home:index' %}" style="padding-left: 100px; font-size: 30px; font-weight: bold; color: black">Innocity</a>
+                  </div>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -134,8 +139,8 @@ Coded by www.creative-tim.com
 
             <ul class="navbar-nav">
 
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'login:index' %}">
+              <li class="nav-item" >
+                <a class="nav-link" style="color: black; font-weight: bold" href="{% url 'login:index' %}">
                   Log Out
                 </a>
               </li>
@@ -147,7 +152,7 @@ Coded by www.creative-tim.com
        <div class="content" style="padding-left: 100px; min-width: 1350px; ">
         <div class="row">
 
-          <div class="col-md-11" style="padding-left: 50px">
+          <div class="col-md-11" style="padding-left: 100px">
             <div class="card card-user">
               <div class="card-header">
                 <h5 class="card-title">Cost Per Night For Rooms</h5>
@@ -186,26 +191,27 @@ Coded by www.creative-tim.com
                             </div>
                             <div class="col" style="width:300px">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" style="background-color: white" name="bed_type" readonly value="{{ room.bed_type}}" >
+                                    <input type="text" class="form-control" style="background-color:white" name="bed_type" readonly value="{{ room.bed_type}}" >
                                 </div>
                             </div>
                             <div class="col" style="width:300px" >
                                 <div class="form-group">
-                                    <input type="text" class="form-control" style="background-color: white" name="count" readonly value={{ room.count }} >
+                                    <input type="text" class="form-control" style="background-color:white" name="count" readonly value={{ room.count }} >
                                 </div>
                             </div>
                             <div class="col" style="width:300px">
                                 <div class="form-group">
-                                    <input type="number" class="form-control" name="cost_per_day" min="0" value={{ room.cost_per_day }} >
+                                    <input type="number" class="form-control" style="background-color:white" name="cost_per_day" min="0" value={{ room.cost_per_day }} >
                                 </div>
                             </div>
                             <div class="col" style="width:300px">
                                 <div class="form-group">
-                                    <input type="number" class="form-control" name="discount" min="0" max="100" value={{ room.discount }} >
+                                    <input type="number" class="form-control" style="background-color:white" name="discount" min="0" max="100" value={{ room.discount }} >
                                 </div>
                             </div>
                             <div class="col">
-                                <button type="submit" name="submit_cost" value="submit_cost" title="update cost" style="background-color: #1F93A6; color: white; width: 100px; height: 40px; border-radius: 20px;" onclick="return confirm('Confirm changes?');" ><b>Update</b></button>
+                                <button type="submit" name="submit_cost" value="submit_cost" title="update cost" class="btn btn-primary " style="background-color: #a18cd1; " onclick="return confirm('Confirm changes?');" >Update</button>
+
                             </div>
 
                             </div>
@@ -217,7 +223,7 @@ Coded by www.creative-tim.com
         </div>
                <div class="row">
 
-          <div class="col-md-11" style="padding-left: 50px">
+          <div class="col-md-11" style="padding-left: 100px">
             <div class="card card-user">
               <div class="card-header">
                 <h5 class="card-title">Enlist A New Room</h5>
@@ -229,7 +235,7 @@ Coded by www.creative-tim.com
                     <div class="col-md-5">
                       <div class="form-group">
                         <label>Room Type</label>
-                          <select name="room_bed" required="required" class="form-control">
+                          <select name="room_bed" required="required" class="form-control" style="background-color:white; color: black">
 
                               {% for room in room_list %}
                                   <option> {{ room.room_type }} ({{ room.bed_type }})</option>
@@ -242,7 +248,7 @@ Coded by www.creative-tim.com
                     <div class="col-md-5">
                       <div class="form-group">
                         <label>Floor Number</label>
-                        <input type="number" class="form-control" placeholder="floor number" name="floor_number" min="0" required="required">
+                        <input type="number" class="form-control" style="background-color:white; color: black" placeholder="floor number" name="floor_number" min="0" required="required">
                       </div>
                     </div>
                   </div>
@@ -250,12 +256,12 @@ Coded by www.creative-tim.com
                     <div class="col-md-5">
                       <div class="form-group">
                         <label>Facilities</label>
-                        <input type="text" class="form-control" placeholder="room facilities" name="room_facilities-1">
+                        <input type="text" class="form-control" style="background-color:white; color: black" placeholder="room facilities" name="room_facilities-1">
                       </div>
                     </div>
                         <div class="col-md-5" style="padding-top: 20px">
                           <div class="form-group">
-                      <button type="button" id="button-1" value="+"  style="background-color: #1F93A6; color: white; width: 40px; height: 40px; border-radius: 10px;" onclick="createNew()">
+                      <button type="button" id="button-1" value="+"  style="background-color:#a18cd1; color: black; width: 40px; height: 40px; border-radius: 10px;" onclick="createNew()">
                           <b>+</b>
                       </button>
                       </div>
@@ -267,7 +273,7 @@ Coded by www.creative-tim.com
 
                   <div class="row">
                     <div class="update ml-auto mr-auto">
-                      <button type="submit" name="submit_new_room" value="submit_new_room" class="btn btn-primary btn-round" style="background-color: #1F93A6" onclick="return confirm('Confirm changes?');">Add New Room</button>
+                      <button type="submit" name="submit_new_room" value="submit_new_room" class="btn btn-primary " style="background-color:#57b846" onclick="return confirm('Confirm changes?');">Add New Room</button>
                     </div>
                   </div>
                 </form>
@@ -276,8 +282,8 @@ Coded by www.creative-tim.com
                   {
 
                       i++;
-                      $("#mydiv").append('<div class="row"><div class="col-md-5"><div class="form-group"><input type="text" class="form-control" placeholder="room facilities" name="room_facilities-' + i +'" /> ' +
-                          '</div></div><div class="col-md-5"><div class="form-group"><button type="button" id = "button-' + i +'" value="+"  style="background-color: #1F93A6; color: white; width: 40px; height: 40px; border-radius: 10px;" onclick="createNew()"><b>+</b></button><br /></div></div></div>');
+                      $("#mydiv").append('<div class="row"><div class="col-md-5"><div class="form-group"><input type="text" class="form-control" style="background-color:white; color: black" placeholder="room facilities" name="room_facilities-' + i +'" /> ' +
+                          '</div></div><div class="col-md-5"><div class="form-group"><button type="button" id = "button-' + i +'" value="+"  style="background-color:#a18cd1; color: black; width: 40px; height: 40px; border-radius: 10px;" onclick="createNew()"><b>+</b></button><br /></div></div></div>');
 
                   }
               </script>
@@ -290,7 +296,7 @@ Coded by www.creative-tim.com
 
                       <div class="row">
 
-          <div class="col-md-11" style="padding-left: 50px">
+          <div class="col-md-11" style="padding-left: 100px">
             <div class="card card-user">
               <div class="card-header">
                 <h5 class="card-title">Add a New Room Type</h5>
@@ -302,7 +308,7 @@ Coded by www.creative-tim.com
                     <div class="col-md-5">
                       <div class="form-group">
                         <label>Room Type</label>
-                          <input type="text" class="form-control" placeholder="room type" name="room_type" required="required">
+                          <input type="text" class="form-control" style="background-color:white; color: black" placeholder="room type" name="room_type" required="required">
 
 
                       </div>
@@ -310,7 +316,7 @@ Coded by www.creative-tim.com
                       <div class="col-md-5">
                       <div class="form-group">
                         <label>Bed Type</label>
-                          <input type="text" class="form-control" placeholder="bed type" name="bed_type" required="required">
+                          <input type="text" class="form-control" style="background-color:white; color: black" placeholder="bed type" name="bed_type" required="required">
 
 
                       </div>
@@ -321,7 +327,7 @@ Coded by www.creative-tim.com
                     <div class="col-md-5">
                       <div class="form-group">
                         <label>Cost Per Day</label>
-                          <input type="number" class="form-control" placeholder="cost per day" name="cost_per_day" min="0" required="required">
+                          <input type="number" class="form-control" style="background-color:white; color: black" placeholder="cost per day" name="cost_per_day" min="0" required="required">
 
 
                       </div>
@@ -329,7 +335,7 @@ Coded by www.creative-tim.com
                       <div class="col-md-5">
                       <div class="form-group">
                         <label>Discount</label>
-                          <input type="number" class="form-control" placeholder="discount" name="discount" min="0" max="100" required="required">
+                          <input type="number" class="form-control" style="background-color:white; color: black" placeholder="discount" name="discount" min="0" max="100" required="required">
 
 
                       </div>
@@ -340,7 +346,7 @@ Coded by www.creative-tim.com
 
                   <div class="row">
                     <div class="update ml-auto mr-auto">
-                      <button type="submit" name="submit_new_room_type" value="submit_new_room_type" class="btn btn-primary btn-round" style="background-color: #1F93A6" onclick="return confirm('Confirm changes?');">Add New Room Type</button>
+                      <button type="submit" name="submit_new_room_type" value="submit_new_room_type" class="btn btn-primary" style="background-color:#57b846; color: black" onclick="return confirm('Confirm changes?');">Add New Room Type</button>
                     </div>
                   </div>
                 </form>

@@ -56,7 +56,7 @@ Coded by www.creative-tim.com
         </style>
 </head>
 
-<body class="" onload="showfigure">
+<body class="" >
   <div class="wrapper ">
     <div class="sidebar" data-color="white" data-active-color="danger" style="width: 350px; padding: 20px">
       <div class="logo">
@@ -67,13 +67,13 @@ Coded by www.creative-tim.com
           <!-- <p>CT</p> -->
         </a>
         <a  class="simple-text logo-normal">
-          hotel_admin
+          hotel admin
           <!-- <div class="logo-image-big">
             <img src="{% static 'hotel_admin/img/logo-small.png' %}">
           </div> -->
         </a>
       </div>
-      <div class="sidebar-wrapper" style="width: 300px">
+              <div class="sidebar-wrapper" style="width: 300px">
         <ul class="nav" style="text-align: center; padding-bottom: 20px">
             <li>
                 <div class="image">
@@ -97,14 +97,14 @@ Coded by www.creative-tim.com
         </ul>
 
         <ul class="nav">
-          <li>
+          <li >
             <a href="{% url 'hotel_admin:index' %}">
 
               <p style="color:black;">Rooms</p>
             </a>
           </li>
 
-          <li>
+          <li >
             <a href="{% url 'hotel_admin:service' %}">
 
               <p style="color: black">Services</p>
@@ -120,6 +120,7 @@ Coded by www.creative-tim.com
 
         </ul>
       </div>
+
     </div>
     <div class="main-panel" >
       <!-- Navbar -->
@@ -154,21 +155,23 @@ Coded by www.creative-tim.com
         </div>
       </nav>
       <!-- End Navbar -->
-       <div class="content" style="padding-left: 100px; width: 1350px; min-height: 500px">
+       <div class="content" style="padding-left: 10%; width: 1350px;">
         <div class="row">
 
-          <div class="col-md-11" style="padding-left: 50px; ">
-            <div class="card card-user" style="overflow-y: scroll; max-height: 1000px">
+          <div class="col-md-11" style="padding-left: 5%;width: 1200px ">
+                        <div class="card card-user">
+
+          <div class="card-header" style="height: 200px">
               <div class="card-header">
 
-                <h5 class="card-title">List of Reservations</h5>
+                <h5 class="card-title">Reservations Data</h5>
 
               </div>
 
 
-              <div class="card-body" style="padding-bottom: 200px;">
+              <div class="card-body" >
 
-                <div class="row" style="padding-bottom: 50px">
+                  <div class="row" style="padding-bottom: 50px">
                     <form action="{% url 'hotel_admin:reservation' %}" method="POST" id="search_form" name="search_form">
                 {% csrf_token %}
                     <div class="row" style="padding-left: 20px;">
@@ -210,11 +213,53 @@ Coded by www.creative-tim.com
                     <form action="{% url 'hotel_admin:reservation' %}" method="POST" id="show_all_form" name="show_all_form">
                         {% csrf_token %}
                     <div class="col" style="">
-                          <button type="submit" name="show_all" value="show_all" title="show all" style="background-color: #a8554f; color: white; width: 150px; height: 40px; border-radius: 20px; " onsubmit="{% url 'hotel_admin:reservation' %}" ><b>Show All</b></button>
+                          <button type="submit" name="show_all" value="show_all" title="show all" style="background-color: #a8554f; color: white; width: 120px; height: 40px; border-radius: 20px; " onsubmit="{% url 'hotel_admin:reservation' %}" ><b>Show All</b></button>
                       </div>
                     </form>
               </div>
-                    <table >
+
+
+
+              </div>
+          </div>
+            </div>
+
+              <div class="card card-user" style="max-height: 600px">
+
+          <div class="card-header" style="height: 500px">
+
+
+              <div class="card-body" style="align-content: center">
+
+                  {% if graph %}
+                      <div style="width:90%;height:50%">
+                        {{ graph|safe }}
+                      </div>
+                    {% endif %}
+
+
+              </div>
+          </div>
+            </div>
+
+            <div class="card card-user">
+              <div class="card-header">
+
+                <h5 class="card-title" style="padding-bottom: 40px; padding-top: 40px; padding-left: 20px">List of Reservations</h5>
+
+                  <ul type="none" style="font-size: 15px; text-align: right; ">
+                      <li>Total reservation charge: {{ total_reservation_charge }} $</li>
+                      <li>Total service charge: {{ total_service_charge }} $</li>
+                      <li>Total earned: {{ total }} $</li>
+                  </ul>
+
+              </div>
+
+
+              <div class="card-body" style="padding-bottom: 200px;">
+
+
+                    <table style="padding-top: 20px; table-layout: fixed;">
                       <tr>
                           <th >  Arrival </th>
                           <th>  Departure </th>
@@ -256,7 +301,6 @@ Coded by www.creative-tim.com
 
 
                         </table>
-
 
 
               </div>
@@ -305,14 +349,7 @@ Coded by www.creative-tim.com
             alert({{ message }})
         </script>
     {% endfor %}
-    <script>
-        function showfigure() {
 
-            var graph = {{ fig_data | safe }};
-            mpld3.draw_figure("fig01", graph);
-
-        }
-    </script>
 </body>
 
 </html>

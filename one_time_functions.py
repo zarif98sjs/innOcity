@@ -334,3 +334,81 @@ def fix_room_price():
 
         cur.execute(sql)
         connection.commit()
+
+
+def check(start_date, inter, rid, stay):
+
+    with connection.cursor() as cur:
+        sql = "SELECT COUNT(*) FROM RESERVATION R, RESERVATION_ROOM RR WHERE R.RESERVATIONID = RR.RESERVATIONID " \
+              " AND RR.ROOMID = %s AND R.DATE_OF_DEPARTURE > (TO_DATE(%s, 'DD-MM-YYYY') + INTERVAL '" + str(inter) + "' DAY) " \
+              " AND R.DATE_OF_ARRIVAL < (TO_DATE(%s, 'DD-MM-YYYY') + INTERVAL '" + str(inter + stay) + "' DAY)"
+        print(sql)
+        cur.execute(sql, [rid, start_date, start_date])
+        if cur.fetchone()[0] == 0:
+            return True
+        else:
+            return False
+
+
+def insert_into_reservation():
+
+    hotelid = 49833330
+    with connection.cursor() as cur:
+        cur.execute('SELECT CUSTOMERID FROM CUSTOMER')
+        res = cur.fetchall()
+        all_customers = [r[0] for r in res]
+        cur.execute('SELECT ROOMID FROM ROOM WHERE HOTELID = %s', [hotelid])
+        res = cur.fetchall()
+        all_rooms = [r[0] for r in res]
+        start_date = '20-12-2020'
+
+        for i in range(10):
+            total = random.choice([1, 2, 3, 4, 5, 6, 7, 8])
+            random.shuffle(all_rooms)
+            random.shuffle(all_customers)
+            booked = 0
+            print('day ', i, 'total', total)
+            for j in range(total):
+                cid = all_customers[j]
+                rn = random.randint(1, 100)
+                if rn % 5 == 0:
+                    rooms = 2
+                elif rn % 10 == 0:
+                    rooms = 2
+                else:
+                    rooms = 1
+                st = random.randint(1, 100) % 3 + 1
+                print('stay: ', st, 'rooms:', rooms)
+
+                reservation_id = cur.callfunc('GENERATE_ID', int, ['RESERVATION', 'RESERVATIONID'])
+                payment_id = cur.callfunc('GENERATE_ID', int, ['PAYMENT', 'PAYMENTID'])
+                room_list = []
+                for r in range(rooms):
+                    if booked == 12:
+                        break
+                    rid = all_rooms[booked]
+                    booked += 1
+                    if check(start_date, i, rid, st):
+                        room_list.append(rid)
+                    else:
+                        r -= 1
+                if len(room_list) > 0:
+                    reservation_charge = 0
+                    for room in room_list:
+                        cur.execute("SELECT RT.COST_PER_DAY FROM ROOM_TYPE RT, ROOM R WHERE RT.ROOMTYPEID = "
+                                    "R.ROOMTYPEID AND R.ROOMID = %s", [room])
+                        reservation_charge += cur.fetchone()[0] * st
+                    cur.execute("INSERT INTO PAYMENT VALUES(%s, SYSDATE)", [payment_id])
+                    connection.commit()
+                    sql = "INSERT INTO RESERVATION(RESERVATIONID, DATE_OF_ARRIVAL, DATE_OF_DEPARTURE, CUSTOMERID, PAYMENTID, " \
+                          "HOTELID, RESERVATION_CHARGE) VALUES (%s, (TO_DATE(%s, 'DD-MM-YYYY') + INTERVAL '" + str(i) +"' DAY), " \
+                            "(TO_DATE(%s, 'DD-MM-YYYY') + INTERVAL '"+ str(i+st) +"' DAY), %s, %s, %s, %s)"
+                    cur.execute(sql, [reservation_id, start_date, start_date, cid, payment_id, hotelid, reservation_charge])
+                    connection.commit()
+
+                    for room in room_list:
+                        cur.execute("INSERT INTO RESERVATION_ROOM VALUES(%s, %s)", [reservation_id, room])
+                        connection.commit()
+
+
+

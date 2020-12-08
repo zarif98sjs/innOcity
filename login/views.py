@@ -23,6 +23,7 @@ def index(request):
     else:
         try:
             del request.session['customer_id']
+            del request.session['admin_id']
         except:
             pass
         return render(request, 'login/index.html', {'alert_flag': False})

@@ -5,9 +5,16 @@ from django.db import connection
 from .models import Room, Reservation, Service
 from hotel.models import Hotel
 from django.urls import reverse
-# from matplotlib import pyplot as plt
-# import mpld3
+import numpy as np
+import matplotlib.pyplot as plt
+import mpld3
+import plotly.offline as opy
+import plotly.graph_objs as go
+from django.views.generic import TemplateView
+
+
 import json
+
 
 app_name = 'hotel_admin'
 hotel = Hotel(0)
@@ -16,10 +23,12 @@ room_list = []
 
 def index(request):
 
-    if not request.session.has_key('admin_id'):
-        return redirect('login:index')
-    else:
+    if request.session.has_key('admin_id'):
         hotel_id = request.session['admin_id']
+
+    else:
+        messages.success(request, "You must log in first")
+        return redirect('login:index')
 
     global hotel
     get_hotel(hotel_id)
@@ -192,6 +201,25 @@ def service(request):
                                                             'service_list': services_list})
 
 
+class Graph(TemplateView):
+
+    def set_reservations(self, reservation_list):
+
+        self.reservation_list = reservation_list
+        self.reservation_dates = [res.date_of_arrival for res in reservation_list]
+        self.reservation_costs = [res.total for res in reservation_list]
+
+    def get_context_data(self, **kwargs):
+
+        xy = {'x': self.reservation_dates, 'y': self.reservation_costs}
+        data = go.Bar(xy, x=xy['x'], y=xy['y'])
+        layout = go.Layout(xaxis={'title': 'date', 'type': 'date'},
+                           yaxis={'title':'cost'})
+        figure = go.Figure(data=data, layout=layout)
+        div = opy.plot(figure, auto_open=False, output_type='div')
+        return div
+
+
 def reservation(request):
 
     global hotel
@@ -235,6 +263,8 @@ def reservation(request):
         result = cur.fetchall()
 
         total = 0
+        total_reservation_charge = 0
+        total_service_charge = 0
         reservation_list = []
         for row in result:
 
@@ -255,14 +285,18 @@ def reservation(request):
                 continue
 
             reserve.room_types = [r[0] + " (" + r[1] + ") " for r in res]
-
+            total_reservation_charge += reserve.reservation_charge
+            total_service_charge += reserve.service_charge
             total += reserve.total
-
             reservation_list.append(reserve)
 
-        fig = plt.plot([1,2,3,4], [1,4,9,6])
-        js_data = json.dumps(mpld3.fig_to_dict(fig))
-        return render(request, 'hotel_admin/reservation.html', {'hotel': hotel, 'room_list': room_list,
-                                                                'reservation_list': reservation_list, 'total': total,
-                                                                'fig_data': js_data})
+        context = {'hotel': hotel, 'room_list': room_list, 'reservation_list': reservation_list, 'total': total,
+                   'total_reservation_charge': total_reservation_charge, 'total_service_charge': total_service_charge}
+        g = Graph()
+        g.set_reservations(reservation_list)
+        con = g.get_context_data()
+
+        context['graph'] = con
+
+        return render(request, 'hotel_admin/reservation.html', context=context)
 

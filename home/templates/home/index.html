@@ -60,7 +60,6 @@
                             <nav class="main_nav">
                                 <ul class="d-flex flex-row align-items-start justify-content-start">
                                     <li class="active"><a href="{% url 'home:index' %}">Home</a></li>
-                                    <li><a href="{% url 'home:about' %}">About us</a></li>
                                     {% if logged_in %}
                                         <li><a href="{% url 'dashboard:index' %}">Dashboard</a></li>
                                         <li><a href="{% url 'login:index' %}">Log out</a></li>
@@ -178,9 +177,8 @@
 
             <div class="home_page_nav">
                 <ul class="d-flex flex-column align-items-end justify-content-end">
-                    <li><a href="#" data-scroll-to="#bestrated">Best Rated<span>01</span></a></li>
-                    <li><a href="#" data-scroll-to="#topdiscount">Top Discount<span>02</span></a></li>
-                    <li><a href="#" data-scroll-to="#news">Latest<span>03</span></a></li>
+                    <li><a href="#" data-scroll-to="#bestrated">Best Rated<span></span></a></li>
+                    <li><a href="#" data-scroll-to="#topdiscount">Top Discount<span></span></a></li>
                 </ul>
             </div>
         </div>
@@ -244,7 +242,7 @@
                                     </div>
                                     <div class="intro_content">
                                         <div class="intro_title">Top Destinations</div>
-                                        <div class="intro_subtitle"><p>Nulla pretium tincidunt felis, nec.</p></div>
+                                        <div class="intro_subtitle"><p>All the places you want to visit</p></div>
                                     </div>
                                 </div>
                             </div>
@@ -256,7 +254,7 @@
                                     </div>
                                     <div class="intro_content">
                                         <div class="intro_title">The Best Prices</div>
-                                        <div class="intro_subtitle"><p>Sollicitudin mauris lobortis in.</p></div>
+                                        <div class="intro_subtitle"><p>All the best offers</p></div>
                                     </div>
                                 </div>
                             </div>
@@ -268,7 +266,7 @@
                                     </div>
                                     <div class="intro_content">
                                         <div class="intro_title">Amazing Services</div>
-                                        <div class="intro_subtitle"><p>Nulla pretium tincidunt felis, nec.</p></div>
+                                        <div class="intro_subtitle"><p>Services curated for your need</p></div>
                                     </div>
                                 </div>
                             </div>
@@ -361,142 +359,12 @@
     </div>
 
 
-    <!-- News -->
-
-    <div class="news" id="news">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-8">
-                    <div class="news_container">
-
-                        <!-- News Post -->
-                        <div class="news_post d-flex flex-md-row flex-column align-items-start justify-content-start">
-                            <div class="news_post_image"><img src="{% static 'home/images/news_1.jpg' %}" alt=""></div>
-                            <div class="news_post_content">
-                                <div class="news_post_date d-flex flex-row align-items-end justify-content-start">
-                                    <div>02</div>
-                                    <div>june</div>
-                                </div>
-                                <div class="news_post_title"><a href="#">Best tips to travel light</a></div>
-                                <div class="news_post_category">
-                                    <ul>
-                                        <li><a href="#">lifestyle & travel</a></li>
-                                    </ul>
-                                </div>
-                                <div class="news_post_text">
-                                    <p>Pellentesque sit amet elementum ccumsan sit amet mattis eget, tristique at leo.
-                                        Vivamus massa.Tempor massa et laoreet.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- News Post -->
-                        <div class="news_post d-flex flex-md-row flex-column align-items-start justify-content-start">
-                            <div class="news_post_image"><img src="{% static 'home/images/news_2.jpg' %}" alt=""></div>
-                            <div class="news_post_content">
-                                <div class="news_post_date d-flex flex-row align-items-end justify-content-start">
-                                    <div>01</div>
-                                    <div>june</div>
-                                </div>
-                                <div class="news_post_title"><a href="#">Best tips to travel light</a></div>
-                                <div class="news_post_category">
-                                    <ul>
-                                        <li><a href="#">lifestyle & travel</a></li>
-                                    </ul>
-                                </div>
-                                <div class="news_post_text">
-                                    <p>Tempor massa et laoreet malesuada. Pellentesque sit amet elementum ccumsan sit
-                                        amet mattis eget, tristique at leo.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- News Post -->
-                        <div class="news_post d-flex flex-md-row flex-column align-items-start justify-content-start">
-                            <div class="news_post_image"><img src="{% static 'home/images/news_3.jpg' %}" alt=""></div>
-                            <div class="news_post_content">
-                                <div class="news_post_date d-flex flex-row align-items-end justify-content-start">
-                                    <div>29</div>
-                                    <div>may</div>
-                                </div>
-                                <div class="news_post_title"><a href="#">Best tips to travel light</a></div>
-                                <div class="news_post_category">
-                                    <ul>
-                                        <li><a href="#">lifestyle & travel</a></li>
-                                    </ul>
-                                </div>
-                                <div class="news_post_text">
-                                    <p>Vivamus massa.Tempor massa et laoreet malesuada. Aliquam nulla nisl, accumsan sit
-                                        amet mattis.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <!-- News Sidebar -->
-                <div class="col-xl-4">
-                    <div class="travello">
-                        <div class="background_image"
-                             style="background-image:url({% static 'home/images/travello.jpg' %})"></div>
-                        <div class="travello_content">
-                            <div class="travello_content_inner">
-                                <div></div>
-                                <div></div>
-                            </div>
-                        </div>
-                        <div class="travello_container">
-                            <a href="#">
-                                <div class="d-flex flex-column align-items-center justify-content-end">
-                                    <span class="travello_title">Get a 20% Discount</span>
-                                    <span class="travello_subtitle">Buy Your Vacation Online Now</span>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Footer -->
 
     <footer class="footer">
         <div class="parallax_background parallax-window" data-parallax="scroll"
-             data-image-src="{% static 'home/images/footer_1.jpg' %}" data-speed="0.8"></div>
+             data-image-src="{% static 'home/images/home_down.jpg' %}" data-speed="0.8"></div>
         <div class="container">
-            <div class="row">
-                <div class="col">
-                    <div class="newsletter">
-                        <div class="newsletter_title_container text-center">
-                            <div class="newsletter_title">Subscribe to our newsletter to get the latest trends & news
-                            </div>
-                            <div class="newsletter_subtitle">Join our database NOW!</div>
-                        </div>
-                        <div class="newsletter_form_container">
-                            <form action="#"
-                                  class="newsletter_form d-flex flex-md-row flex-column align-items-start justify-content-between"
-                                  id="newsletter_form">
-                                <div class="d-flex flex-md-row flex-column align-items-start justify-content-between">
-                                    <div><input type="text" class="newsletter_input newsletter_input_name"
-                                                id="newsletter_input_name" placeholder="Name" required="required">
-                                        <div class="input_border"></div>
-                                    </div>
-                                    <div><input type="email" class="newsletter_input newsletter_input_email"
-                                                id="newsletter_input_email" placeholder="Your e-mail"
-                                                required="required">
-                                        <div class="input_border"></div>
-                                    </div>
-                                </div>
-                                <div>
-                                    <button class="newsletter_button">subscribe</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class="row footer_contact_row">
                 <div class="col-xl-10 offset-xl-1">
                     <div class="row">
@@ -506,11 +374,10 @@
                             <div class="footer_contact_item d-flex flex-column align-items-center justify-content-start text-center">
                                 <div class="footer_contact_icon"><img src="{% static 'home/images/sign.svg' %}" alt="">
                                 </div>
-                                <div class="footer_contact_title">give us a call</div>
+                                <div class="footer_contact_title"> <b> give us a call </b> </div>
                                 <div class="footer_contact_list">
                                     <ul>
-                                        <li>Office Landline: +44 5567 32 664 567</li>
-                                        <li>Mobile: +44 5567 89 3322 332</li>
+                                        <li> <b> Office Mobile : +880 191 123 1234 </b></li>
                                     </ul>
                                 </div>
                             </div>
@@ -521,10 +388,10 @@
                             <div class="footer_contact_item d-flex flex-column align-items-center justify-content-start text-center">
                                 <div class="footer_contact_icon"><img src="{% static 'home/images/trekking.svg' %}"
                                                                       alt=""></div>
-                                <div class="footer_contact_title">come & drop by</div>
+                                <div class="footer_contact_title"> <b> come & drop by </b></div>
                                 <div class="footer_contact_list">
                                     <ul style="max-width:190px">
-                                        <li>4124 Barnes Street, Sanford, FL 32771</li>
+                                        <li> <b> West Palashi , Dhaka </b></li>
                                     </ul>
                                 </div>
                             </div>
@@ -535,11 +402,10 @@
                             <div class="footer_contact_item d-flex flex-column align-items-center justify-content-start text-center">
                                 <div class="footer_contact_icon"><img src="{% static 'home/images/around.svg' %}"
                                                                       alt=""></div>
-                                <div class="footer_contact_title">send us a message</div>
+                                <div class="footer_contact_title"> <b> send us a message </b> </div>
                                 <div class="footer_contact_list">
                                     <ul>
-                                        <li>youremail@gmail.com</li>
-                                        <li>Office@yourbusinessname.com</li>
+                                        <li> <b>innocityweb@gmail.com </b></li>
                                     </ul>
                                 </div>
                             </div>

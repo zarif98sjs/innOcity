@@ -31,13 +31,12 @@ Coded by www.creative-tim.com
   <!-- CSS Files -->
   <link href="{% static 'hotel_admin/css/bootstrap.min.css' %}" rel="stylesheet" />
   <link href="{% static 'hotel_admin/css/paper-dashboard.css' %}?v=2.0.1" rel="stylesheet" />
-  <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="{% static 'hotel_admin/demo/demo.css' %}" rel="stylesheet" />
 </head>
 
 <body class="" onload="showSnackbar()">
-  <div class="wrapper ">
-    <div class="sidebar" data-color="white" data-active-color="danger" style="width: 350px; padding: 20px">
+  <div class="wrapper " >
+    <div class="sidebar" data-color="white" data-active-color="danger" style="width: 350px; padding: 20px; ">
       <div class="logo">
         <a class="simple-text logo-mini">
           <div class="logo-image-small">
@@ -52,14 +51,26 @@ Coded by www.creative-tim.com
           </div> -->
         </a>
       </div>
-      <div class="sidebar-wrapper" style="width: 300px">
+      <div class="sidebar-wrapper" style="width: 300px; ">
         <ul class="nav" style="text-align: center; padding-bottom: 20px">
             <li>
                 <div class="image">
                     <img src="{% static 'hotel_admin/img/destination_6.jpg' %}">
                 </div>
             </li>
+            <li>
+                 <form action="{% url 'hotel_admin:index' %}" method="POST" name="update_picture" id="update_picture">
+                    {% csrf_token %}
 
+                    <input id="file-upload" type="file"  style="alignment: right" onchange="submitpicture()"/>
+                 </form>
+                <script>
+                    function submitpicture() {
+                        document.getElementById("update_picture").submit();
+                    }
+                </script>
+
+            </li>
           <li style="text-align: center; padding-top: 15px">
               <h3>{{ hotel.name }}</h3>
 

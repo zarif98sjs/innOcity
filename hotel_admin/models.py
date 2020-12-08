@@ -18,9 +18,9 @@ class Reservation:
         self.date_of_departure = date_of_departure.date()
         self.name = name
         self.room_types = []
-        self.reservation_charge = reservation_charge
-        self.service_charge = service_charge
-        self.total = reservation_charge + service_charge
+        self.reservation_charge = int(reservation_charge)
+        self.service_charge = int(service_charge)
+        self.total = int(reservation_charge + service_charge)
 
 
 class Service:

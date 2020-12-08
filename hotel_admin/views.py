@@ -5,8 +5,8 @@ from django.db import connection
 from .models import Room, Reservation, Service
 from hotel.models import Hotel
 from django.urls import reverse
-from matplotlib import pyplot as plt
-import mpld3
+# from matplotlib import pyplot as plt
+# import mpld3
 import json
 
 app_name = 'hotel_admin'

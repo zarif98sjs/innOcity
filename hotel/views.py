@@ -12,6 +12,7 @@ from django.core.mail import EmailMultiAlternatives
 from easy_pdf.rendering import render_to_pdf
 
 from django.conf import settings
+import math
 
 app_name = 'hotel'
 
@@ -262,8 +263,8 @@ def payment(request, hotel_id):
 
     # request.session['service_sub_type'] = service_sub_type
 
-    context['total_cost'] = total_cost
-    request.session['total_cost'] = total_cost
+    context['total_cost'] = math.ceil(total_cost)
+    request.session['total_cost'] = context['total_cost']
 
     print(context['total_cost'])
 

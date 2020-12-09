@@ -82,7 +82,7 @@
                                 CHECK IN</p>
                         </div>
                         <div class="col"><input class="form-control" type="date"
-                                                style="text-align: center;font-family: Oswald, sans-serif;" name="checkin" required="">
+                                                style="text-align: center;font-family: Oswald, sans-serif;" name="checkin" required="required" value="{{ checkin }}">
                         </div>
                     </div>
                     <div class="form-row" style="padding: 15px;margin: 0px;">
@@ -92,7 +92,7 @@
                         </div>
                         <div class="col"><input class="form-control" type="date"
                                                 style="text-align: center;font-family: Oswald , sans-serif;"
-                                                name="checkout" onclick="updatecheckoutDate()" required=""></div>
+                                                name="checkout" onclick="updatecheckoutDate()" required="required" value="{{ checkout }}"></div>
                     </div>
 
                     <div class="form-row" style="text-align: center;margin: 0px;">

@@ -390,6 +390,8 @@ def send_booking_mail(context):
 
 def book(request, hotel_id):
     context = get_context(request, hotel_id)
+    context['checkin'] = request.session['checkin_input']
+    context['checkout'] = request.session['checkout_input']
     return render(request, 'hotel/book.html', context)
 
 

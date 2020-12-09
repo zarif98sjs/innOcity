@@ -152,9 +152,8 @@
                                         </div>
                                     </div>
                                     <div class="col-md-5">
-                                        <div class="form-group"><label>Expiration
-                                            date</label>
-                                            <input class="form-control" type="date" style="color: black" name="expiration" required="required" onautocomplete="updateExpirationDate()">
+                                        <div class="form-group"><label>Expiration Date</label>
+                                            <input class="form-control" type="date" style="color: black" name="expiration" id = "expiration" required="required" value="{{ customer.expiration }}">
                                         </div>
                                     </div>
                                     <div class="col-md-5" style="padding-left: 50px">
@@ -235,6 +234,7 @@
 <script>
     document.getElementByName("expiration").value = {{ customer.expiration }}
 </script>
+
 <!--   Core JS Files   -->
 
 <script src="{% static 'dashboard/js/core/jquery.min.js' %}"></script>

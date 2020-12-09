@@ -77,7 +77,8 @@ def get_wallet_info(customer_id):
             customer.card_username = result[1]
             customer.card_type = result[2]
             customer.cvc = result[3]
-            customer.expiration = result[4]
+            customer.expiration = str(result[4].date())
+            print("Expiration ",customer.expiration)
 
         cur.execute("SELECT  PHONE_NUMBER , SERVICE_PROVIDER , CUSTOMERID FROM MOBILE_BANKING "
                     "WHERE customerId = %s",

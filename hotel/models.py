@@ -39,6 +39,7 @@ class Hotel:
         self.rating_count = rating_count
         self.rooms = 0
         self.facilities = ""
+        self.image_location = ""
 
     def set_rooms(self, rooms):
         self.rooms = rooms

@@ -192,7 +192,6 @@ def get_customer_info(customer_id):
         result = cur.fetchone()
 
         if result:
-            print('here')
 
             customer.card_number = result[0]
             customer.card_username = result[1]
@@ -204,7 +203,6 @@ def get_customer_info(customer_id):
                         "WHERE customerId = %s",[customer_id])
         result = cur.fetchone()
         if result:
-            print('here again')
             customer.mob_banking_phone_number = result[0]
             customer.mob_banking_service_provider = result[1]
 

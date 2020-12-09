@@ -87,7 +87,7 @@
 
 </head>
 
-<body class="" onload="showSnackbar()">
+<body class="" onload="loadimages()">
   <div class="wrapper " >
     <div class="sidebar" data-color="#000000" style="width: 350px; padding: 20px; color: white ">
       <div class="logo">
@@ -181,8 +181,8 @@
                         <div class="card card-user" style="background-color: #1714147d">
                             <div class="card-body" style="padding-bottom: 50px; padding-top: 50px; min-height: 600px;">
                                 <div class="row" >
-                                    <div class="col-md-5" style="padding-top: 100px;padding-left: 60px;">
-                                        <img src="{% static 'dashboard/img/img_1.jpg' %}" style="alignment: center">
+                                    <div class="col-md-5" style="padding-top: 50px;padding-left: 60px;">
+                                        <img src="{% static 'dashboard/img/img_1.jpg' %}" style="alignment: center" height="500" width="500" id="{{ reservation.hotelId }}">
                                     </div>
                                     <div class="col-md-1">
 
@@ -306,7 +306,21 @@
         demo.initChartsPages();
     });
 </script>
+<script>
+    function loadimages()
+    {
+        var all_images = document.getElementsByTagName("img");
+        for(var i=1;i<all_images.length;i++)
+        {
 
+            var rid = all_images[i].id % 12 + 1;
+            console.log(rid);
+            var srcname = "..\\..\\static\\dashboard\\img\\best_" + (rid) + ".jpg";
+            console.log(srcname);
+            all_images[i].src = srcname;
+        }
+    }
+</script>
 
 
 </body>

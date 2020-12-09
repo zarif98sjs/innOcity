@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="{% static 'hotel/css/icomoon.css' %}">
     <link rel="stylesheet" href="{% static 'hotel/css/style.css' %}">
   </head>
-  <body>
+  <body onload="loadimages()">
 
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
@@ -62,7 +62,7 @@
             {% for room in room_types %}
           <div class="col-md-12 mb-5">
             <div class="block-3 d-md-flex">
-              <div class="image" style="background-image: url({% static 'hotel/images/img_1.jpg'%}); "></div>
+            <img src="../../../static/hotel/images/img_1.jpg" height="550" width="500" alt="" id="{{ room.room_type }}">
               <div class="text">
 
                 <h2 class="heading">{{ room.room_type }}</h2>
@@ -181,6 +181,21 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="{% static 'hotel/js/google-map.js' %}"></script>
   <script src="{% static 'hotel/js/main.js' %}"></script>
+  <script>
+      function loadimages()
+    {
+        var ls = ["Villa", "Studio", "Suite", "Penthouse", "Regular", "Presidential Suite" ];
+        for(var i=0;i<ls.length;i++)
+        {
+            var srcname = "..\\..\\..\\static\\hotel\\images\\" + ls[i] + ".jpg";
+            console.log(ls[i]);
+            if(document.getElementById(ls[i])) {
+                document.getElementById(ls[i]).src = srcname;
+            }
+        }
+
+    }
+  </script>
 
 
   </body>

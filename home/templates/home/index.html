@@ -38,6 +38,8 @@
 <script>
     function showSnackbar()
     {
+        setbestimages();
+        settopimages();
 
         var x = document.getElementById("snackbar");
         x.className = "show";
@@ -297,8 +299,9 @@
                         {% for hotel in hotel_ara_best %}
 
                             <div class="destination item">
-                                <div class="destination_image">
-                                    <img src="{% static 'home/images/destination_1.jpg' %}" alt="">
+                                <div class="destination_image" >
+                                    <img src="{% static 'home/images/best_1.jpg' %}" height="260" width="360" alt="" id={{ hotel.image_location }}>
+
                                     <div class="spec_offer text-center"><a href="#">Best</a></div>
                                 </div>
                                 <div class="destination_content">
@@ -336,9 +339,9 @@
 
                         {% for hotel,room_type,disc in hotel_ara_top_disc %}
 
-                            <div class="destination item">
-                                <div class="destination_image">
-                                    <img src="{% static 'home/images/destination_2.jpg' %}" alt="">
+                            <div class="destination item" >
+                                <div class="destination_image" >
+                                    <img src="{% static 'home/images/top_1.jpg' %}" height="260" width="360" alt="" id={{ hotel.image_location }}>
                                     <div class="spec_offer text-center"><a href="#">Special Offer</a></div>
                                 </div>
                                 <div class="destination_content">
@@ -563,7 +566,33 @@
 <script>
     autocomplete(document.getElementById("myInput"), destination);
 </script>
+<script>
+    function setbestimages()
+    {
+        var image_list = {{ hotel_ara_best_locations | safe }};
+        for(var i=0;i<image_list.length;i++)
+        {
+            console.log(image_list[i]);
+            var src_name = "..\\static\\" + image_list[i];
+            document.getElementById(image_list[i]).src = src_name;
+        }
 
+
+    }
+    function settopimages()
+    {
+        var image_list = {{ top_discount_ara_locations | safe }};
+        for(var i=0;i<image_list.length;i++)
+        {
+            console.log(image_list[i]);
+            var src_name = "..\\static\\" + image_list[i];
+            document.getElementById(image_list[i]).src = src_name;
+        }
+
+
+    }
+
+</script>
 
 
 

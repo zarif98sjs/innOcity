@@ -81,15 +81,8 @@
   <div class="wrapper " >
     <div class="sidebar" data-color="#000000" style="width: 350px; padding: 20px; color: white ">
       <div class="logo">
-        <a class="simple-text logo-mini">
-          <div class="logo-image-small">
-            <img src="{% static 'hotel_admin/img/logo-small.png' %}">
-          </div>
-          <!-- <p>CT</p> -->
-        </a>
         <a  class="simple-text logo-normal">
           Dashboard
-
         </a>
       </div>
       <div class="sidebar-wrapper" style="width: 300px; ">
@@ -98,22 +91,6 @@
                 <div class="image">
                     <img src="{% static 'dashboard/img/logo-small.png' %}">
                 </div>
-            </li>
-            <li style="padding-bottom: 100px">
-                 <form action="{% url 'dashboard:index' %}" method="POST" name="update_picture" id="update_picture">
-                    {% csrf_token %}
-
-                    <input id="file-upload" type="file"  style="alignment: right; padding-bottom: 40px; color: black;" onchange="submitpicture()"/>
-                     <input id="filename" name="filename" type="text" hidden />
-                 </form>
-                <script>
-                    function submitpicture() {
-                        console.log("picture");
-
-                        document.getElementById("update_picture").submit();
-                    }
-                </script>
-
             </li>
           <li style="text-align: center; padding-top: 20px">
               <p style="font-size: 30px; padding-bottom: 20px; color: #a18cd1">{{ customer.name }}</p>
@@ -192,7 +169,7 @@
 
 
         <div class="content" style="padding-left: 100px; min-width: 1350px; min-height: 1000px">
-            <h3 class="card-title" style="padding-left: 20px">Your bookings</h3>
+            <h3 class="card-title" style="padding-left: 20px;color: whitesmoke">Your bookings</h3>
             <br>
 
             {% for reservation in reservation_list %}
@@ -203,7 +180,7 @@
                         <div class="card card-user">
                             <div class="card-body" style="padding-bottom: 50px; padding-top: 50px; min-height: 600px;">
                                 <div class="row" >
-                                    <div class="col-md-5" style="padding-top: 100px">
+                                    <div class="col-md-5" style="padding-top: 100px;padding-left: 60px;">
                                         <img src="{% static 'dashboard/img/img_1.jpg' %}" style="alignment: center">
                                     </div>
                                     <div class="col-md-1">

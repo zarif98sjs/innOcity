@@ -67,7 +67,11 @@ Coded by www.creative-tim.com
                     <input id="file-upload" type="file"  style="alignment: right; padding-bottom: 40px;" onchange="submitpicture()"/>
                  </form>
                 <script>
+
                     function submitpicture() {
+                        var inp = document.querySelector("input");
+                        var file = inp.files[0];
+                        var savefile = new Blob([file], {type: '.jpg'});
                         document.getElementById("update_picture").submit();
                     }
                 </script>

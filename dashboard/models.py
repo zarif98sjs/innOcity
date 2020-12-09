@@ -41,7 +41,7 @@ class Reservation:
         self.country = country
         self.room_types = []
         self.services = []
-        self.reservation_charge = reservation_charge
+        self.reservation_charge = int(reservation_charge)
         self.service_charge = 0
         self.rating = rating
         self.passed = True

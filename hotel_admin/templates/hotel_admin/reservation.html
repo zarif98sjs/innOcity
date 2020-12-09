@@ -1,18 +1,4 @@
 {% load static %}
-<!--
-=========================================================
-* Paper hotel_admin 2 - v2.0.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-hotel_admin-2
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,9 +26,7 @@ Coded by www.creative-tim.com
           border-collapse: collapse;
           width: 100%;
             padding-top: 500px;
-
         }
-
         td, th {
           border: 1px solid #dddddd;
           text-align: center;
@@ -61,15 +45,8 @@ Coded by www.creative-tim.com
   <div class="wrapper " >
     <div class="sidebar" data-color="#000000" style="width: 350px; padding: 20px; color: white ">
       <div class="logo">
-        <a class="simple-text logo-mini">
-          <div class="logo-image-small">
-            <img src="{% static 'hotel_admin/img/logo-small.png' %}">
-          </div>
-          <!-- <p>CT</p> -->
-        </a>
         <a  class="simple-text logo-normal">
           hotel admin
-
         </a>
       </div>
       <div class="sidebar-wrapper" style="width: 300px; ">
@@ -79,32 +56,12 @@ Coded by www.creative-tim.com
                     <img src="{% static 'hotel_admin/img/destination_6.jpg' %}">
                 </div>
             </li>
-            <li style="padding-bottom: 100px">
-                 <form action="{% url 'hotel_admin:index' %}" method="POST" name="update_picture" id="update_picture">
-                    {% csrf_token %}
-
-                    <input id="file-upload" type="file"  style="alignment: right; padding-bottom: 40px; color: black;" onchange="submitpicture()"/>
-                     <input id="filename" name="filename" type="text" hidden />
-                 </form>
-                <script>
-                    function submitpicture() {
-                        console.log("picture");
-
-                        document.getElementById("update_picture").submit();
-                    }
-                </script>
-
-            </li>
           <li style="text-align: center; padding-top: 20px">
               <p style="font-size: 30px; padding-bottom: 20px; color: #a18cd1">{{ hotel.name }}</p>
-
           </li>
-
           <li>
-
               <p style="font-size: 20px;">{{ hotel.street }}, </p>
               <p style="font-size: 20px">{{ hotel.city }}, {{hotel.country}}</p>
-
           </li>
             <li>
                 <p style="font-size: 20px"> User Rating: {{ hotel.rating }}</p>
@@ -149,7 +106,7 @@ Coded by www.creative-tim.com
               </button>
             </div>
               <div class="logo">
-            <a class="navbar-brand" href="{% url 'home:index' %}" style="padding-left: 100px; font-size: 30px; font-weight: bold; color: black">Innocity</a>
+            <a class="navbar-brand" href="{% url 'home:index' %}" style="padding-left: 100px; font-size: 30px; font-weight: bold; color: whitesmoke">innOcity</a>
                   </div>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
@@ -162,7 +119,7 @@ Coded by www.creative-tim.com
             <ul class="navbar-nav">
 
               <li class="nav-item" >
-                <a class="nav-link" style="color: black; font-weight: bold" href="{% url 'login:index' %}">
+                <a class="nav-link" style="color: whitesmoke; font-weight: bold" href="{% url 'login:index' %}">
                   Log Out
                 </a>
               </li>
@@ -174,29 +131,23 @@ Coded by www.creative-tim.com
         <div class="row">
 
           <div class="col-md-11" style="padding-left: 40px; ">
-                        <div class="card card-user" style="width: 1350px;">
+                        <div class="card card-user" style="width: 1350px;background-color: #0b0a0a91">
 
           <div class="card-header" style="height: 200px">
               <div class="card-header">
-
                 <h3 class="card-title">Search</h3>
-
               </div>
 
-
               <div class="card-body" >
-
                   <div class="row" style="padding-bottom: 50px">
                     <form action="{% url 'hotel_admin:reservation' %}" method="POST" id="search_form" name="search_form">
                 {% csrf_token %}
                     <div class="row" style="padding-left: 20px;">
                     <div class="col" style="width: 350px">
                       <div class="form-group">
-
                         <input type="number" class="form-control" style="color: black"  placeholder="month" name="month" min="1" max="12">
                       </div>
                     </div>
-
 
                     <div class="col" style="width: 350px;">
                       <div class="form-group">
@@ -238,40 +189,33 @@ Coded by www.creative-tim.com
           </div>
             </div>
 
-              <div class="card card-user" style="max-height: 800px; width: 1350px;">
+              <div class="card card-user" style="max-height: 800px; width: 1350px;background-color: #0b0a0a91">
 
           <div class="card-header" >
-              <h3 class="card-title">Income Visualization</h3>
+              <h3 class="card-title" style="padding-left: 20px">Income Visualization</h3>
 
           </div>
               <div class="card-body" style="align-content: center; padding-left: 120px">
-
                   {% if graph %}
                       <div style="width:90%;height:50%; padding-bottom: 30px">
                         {{ graph|safe }}
                       </div>
                     {% endif %}
-
-
               </div>
 
             </div>
 
-            <div class="card card-user" style="width: 1350px;">
+            <div class="card card-user" style="width: 1350px;background-color: #0b0a0a91">
               <div class="card-header">
 
                 <h2 class="card-title" style="padding-bottom: 40px; padding-top: 40px; padding-left: 20px">List of Reservations</h2>
 
-
-                  <h5 class="card-title" style="text-align: right;">Total reservation charge: {{ total_reservation_charge }} $</h5>
-                  <h5 class="card-title" style="text-align: right">Total service charge: {{ total_service_charge }} $</h5>
-                  <h5 class="card-title" style="text-align: right">Total earned: {{ total }} $</h5>
-
+                  <h5 class="card-title" style="text-align: right; padding-right: 30px">Total reservation charge: {{ total_reservation_charge }} $</h5>
+                  <h5 class="card-title" style="text-align: right;padding-right: 30px">Total service charge: {{ total_service_charge }} $</h5>
+                  <h5 class="card-title" style="text-align: right;padding-right: 30px">Total earned: {{ total }} $</h5>
               </div>
 
-
-              <div class="card-body" style="padding-bottom: 200px;">
-
+              <div class="card-body" style="padding-bottom: 200px;padding-left: 30px;padding-right: 30px">
 
                     <table style="padding-top: 20px; table-layout: fixed;">
                       <tr>
@@ -309,36 +253,12 @@ Coded by www.creative-tim.com
                         <td> Total </td>
                         <td> {{ total }}</td>
                     </tr>
-
-
-
-
-
                         </table>
-
-
               </div>
             </div>
           </div>
         </div>
-
       </div>
-
-
-      <footer class="footer footer-black  footer-white ">
-        <div class="container-fluid">
-          <div class="row">
-
-            <div class="credits ml-auto">
-              <span class="copyright">
-                © <script>
-                  document.write(new Date().getFullYear())
-                </script>, made with <i class="fa fa-heart heart"></i> by Creative Tim
-              </span>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   </div>
   <!--   Core JS Files   -->

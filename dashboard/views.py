@@ -115,12 +115,20 @@ def wallet(request):
                     cvc = request.POST.get("cvc")
                     expiration = request.POST.get("expiration")
 
-                    sql = "INSERT INTO CREDIT_CARD (card_number, card_username, card_type, cvc, " \
-                            "expiration, customerid) " \
-                            "VALUES ( %s, %s, %s , %s , %s , %s )"
+                    sql_before = "SELECT CARD_NUMBER FROM CREDIT_CARD WHERE CUSTOMERID = %s"
+                    cur.execute(sql_before, [customer_id])
+                    result = cur.fetchone()
 
-                    cur.execute(sql, [card_number, card_username, card_type, cvc, expiration ,customer_id])
-                    connection.commit()
+                    if result is None:
+                        sql = "INSERT INTO CREDIT_CARD (card_number, card_username, card_type, cvc, " \
+                                "expiration, customerid) " \
+                                "VALUES ( %s, %s, %s , %s , %s , %s )"
+                        cur.execute(sql, [card_number, card_username, card_type, cvc, expiration, customer_id])
+                        connection.commit()
+                    else:
+                        sql = "UPDATE CREDIT_CARD SET card_number = %s,card_username = %s,card_type=%s,cvc=%s,expiration=%s WHERE customerid = %s";
+                        cur.execute(sql, [card_number, card_username, card_type, cvc, expiration, customer_id])
+                        connection.commit()
 
                     customer.card_username = card_username
                     customer.card_type = card_type
@@ -134,11 +142,19 @@ def wallet(request):
                     mob_banking_phone_number = request.POST.get("mob_banking_phone_number")
                     mob_banking_service_provider = request.POST.get("mob_banking_service_provider")
 
-                    sql = "INSERT INTO MOBILE_BANKING (phone_number, service_provider, customerid)" \
-                            "VALUES ( %s, %s, %s )"
+                    sql_before = "SELECT PHONE_NUMBER FROM MOBILE_BANKING WHERE CUSTOMERID = %s"
+                    cur.execute(sql_before, [customer_id])
+                    result = cur.fetchone()
 
-                    cur.execute(sql, [mob_banking_phone_number, mob_banking_service_provider, customer_id])
-                    connection.commit()
+                    if result is None:
+                        sql = "INSERT INTO MOBILE_BANKING (phone_number, service_provider, customerid)" \
+                              "VALUES ( %s, %s, %s )"
+                        cur.execute(sql, [mob_banking_phone_number, mob_banking_service_provider, customer_id])
+                        connection.commit()
+                    else:
+                        sql = "UPDATE MOBILE_BANKING SET phone_number = %s,service_provider = %s WHERE customerid = %s"
+                        cur.execute(sql, [mob_banking_phone_number, mob_banking_service_provider, customer_id])
+                        connection.commit()
 
                     customer.mob_banking_phone_number = mob_banking_phone_number
                     customer.mob_banking_service_provider = mob_banking_service_provider

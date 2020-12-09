@@ -459,11 +459,11 @@ h6 {
 }
 
 .btn--green {
-  background: #57b846;
+  background-color: #ffffff;
 }
 
 .btn--green:hover {
-  background: #4dae3c;
+  color:  #cb3838;
 }
 
 /* ==========================================================================

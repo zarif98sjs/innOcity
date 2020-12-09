@@ -1735,7 +1735,7 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
   color: inherit; }
 
 .card-user form .form-group {
-  background-color: black;
+  background-color: transparent;
   margin-bottom: 20px; }
 
 .from-check,

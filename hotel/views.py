@@ -128,6 +128,7 @@ def mobile_banking_fetch(request, hotel_id):
     context = get_context(request,hotel_id)
     context['total_cost'] = request.session['total_cost']
     context['logged_in'] = logged_in
+    print('fetching...')
 
 
     global customer
@@ -190,20 +191,22 @@ def get_customer_info(customer_id):
                     "WHERE customerId = %s",[customer_id])
         result = cur.fetchone()
 
-        if result is None:
-            return
+        if result:
+            print('here')
 
-        customer.card_number = result[0]
-        customer.card_username = result[1]
-        customer.card_type = result[2]
-        customer.cvc = result[3]
-        customer.expiration = result[4]
+            customer.card_number = result[0]
+            customer.card_username = result[1]
+            customer.card_type = result[2]
+            customer.cvc = result[3]
+            customer.expiration = result[4]
 
         cur.execute("SELECT  PHONE_NUMBER , SERVICE_PROVIDER , CUSTOMERID FROM MOBILE_BANKING "
-                    "WHERE customerId = %s",[customer_id])
+                        "WHERE customerId = %s",[customer_id])
         result = cur.fetchone()
-        customer.mob_banking_phone_number = result[0]
-        customer.mob_banking_service_provider = result[1]
+        if result:
+            print('here again')
+            customer.mob_banking_phone_number = result[0]
+            customer.mob_banking_service_provider = result[1]
 
 @csrf_exempt
 def payment(request, hotel_id):

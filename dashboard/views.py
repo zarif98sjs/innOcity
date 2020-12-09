@@ -119,16 +119,19 @@ def wallet(request):
                     cur.execute(sql_before, [customer_id])
                     result = cur.fetchone()
 
-                    if result is None:
-                        sql = "INSERT INTO CREDIT_CARD (card_number, card_username, card_type, cvc, " \
-                                "expiration, customerid) " \
-                                "VALUES ( %s, %s, %s , %s , %s , %s )"
-                        cur.execute(sql, [card_number, card_username, card_type, cvc, expiration, customer_id])
-                        connection.commit()
-                    else:
+                    if result:
+
                         sql = "UPDATE CREDIT_CARD SET card_number = %s,card_username = %s,card_type=%s,cvc=%s,expiration=%s WHERE customerid = %s";
                         cur.execute(sql, [card_number, card_username, card_type, cvc, expiration, customer_id])
                         connection.commit()
+
+                    else:
+                        sql = "INSERT INTO CREDIT_CARD (card_number, card_username, card_type, cvc, " \
+                              "expiration, customerid) " \
+                              "VALUES ( %s, %s, %s , %s , %s , %s )"
+                        cur.execute(sql, [card_number, card_username, card_type, cvc, expiration, customer_id])
+                        connection.commit()
+
 
                     customer.card_username = card_username
                     customer.card_type = card_type
@@ -146,13 +149,15 @@ def wallet(request):
                     cur.execute(sql_before, [customer_id])
                     result = cur.fetchone()
 
-                    if result is None:
-                        sql = "INSERT INTO MOBILE_BANKING (phone_number, service_provider, customerid)" \
-                              "VALUES ( %s, %s, %s )"
+                    if result:
+                        sql = "UPDATE MOBILE_BANKING SET phone_number = %s,service_provider = %s WHERE customerid = %s"
                         cur.execute(sql, [mob_banking_phone_number, mob_banking_service_provider, customer_id])
                         connection.commit()
+
                     else:
-                        sql = "UPDATE MOBILE_BANKING SET phone_number = %s,service_provider = %s WHERE customerid = %s"
+
+                        sql = "INSERT INTO MOBILE_BANKING (phone_number, service_provider, customerid)" \
+                              "VALUES ( %s, %s, %s )"
                         cur.execute(sql, [mob_banking_phone_number, mob_banking_service_provider, customer_id])
                         connection.commit()
 

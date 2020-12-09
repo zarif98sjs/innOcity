@@ -1,25 +1,10 @@
 {% load static %}
-<!--
-=========================================================
-* Paper hotel_admin 2 - v2.0.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-hotel_admin-2
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8" />
   <link rel="apple-touch-icon" sizes="76x76" href="{% static 'hotel_admin/img/apple-icon.png' %}">
-  <link rel="icon" type="image/png" href="{% static 'hotel_admin/img/favicon.png' %}">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
     Services
@@ -41,15 +26,8 @@ Coded by www.creative-tim.com
   <div class="wrapper " >
     <div class="sidebar" data-color="#000000" style="width: 350px; padding: 20px; color: white ">
       <div class="logo">
-        <a class="simple-text logo-mini">
-          <div class="logo-image-small">
-            <img src="{% static 'hotel_admin/img/logo-small.png' %}">
-          </div>
-          <!-- <p>CT</p> -->
-        </a>
         <a  class="simple-text logo-normal">
           hotel admin
-
         </a>
       </div>
       <div class="sidebar-wrapper" style="width: 300px; ">
@@ -58,19 +36,6 @@ Coded by www.creative-tim.com
                 <div class="image">
                     <img src="{% static 'hotel_admin/img/destination_6.jpg' %}">
                 </div>
-            </li>
-            <li style="padding-bottom: 100px">
-                 <form action="{% url 'hotel_admin:index' %}" method="POST" name="update_picture" id="update_picture">
-                    {% csrf_token %}
-
-                    <input id="file-upload" type="file"  style="alignment: right; padding-bottom: 40px;" onchange="submitpicture()"/>
-                 </form>
-                <script>
-                    function submitpicture() {
-                        document.getElementById("update_picture").submit();
-                    }
-                </script>
-
             </li>
           <li style="text-align: center; padding-top: 20px">
               <p style="font-size: 30px; padding-bottom: 20px; color: #a18cd1">{{ hotel.name }}</p>
@@ -126,7 +91,7 @@ Coded by www.creative-tim.com
               </button>
             </div>
               <div class="logo">
-            <a class="navbar-brand" href="{% url 'home:index' %}" style="padding-left: 100px; font-size: 30px; font-weight: bold; color: black">Innocity</a>
+            <a class="navbar-brand" href="{% url 'home:index' %}" style="padding-left: 100px; font-size: 30px; font-weight: bold; color: whitesmoke">innOcity</a>
                   </div>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
@@ -139,7 +104,7 @@ Coded by www.creative-tim.com
             <ul class="navbar-nav">
 
               <li class="nav-item" >
-                <a class="nav-link" style="color: black; font-weight: bold" href="{% url 'login:index' %}">
+                <a class="nav-link" style="color: whitesmoke; font-weight: bold" href="{% url 'login:index' %}">
                   Log Out
                 </a>
               </li>
@@ -154,16 +119,15 @@ Coded by www.creative-tim.com
         <div class="row">
 
           <div class="col-md-11" style="padding-left: 100px">
-            <div class="card card-user" style="width: 1350px;">
+            <div class="card card-user" style="width: 1350px;background-color: #0b0a0a91">
               <div class="card-header">
-                <h5 class="card-title" style="padding-left: 30px; font-size: 30px; ">Your Free Services</h5>
+                <h5 class="card-title" style="padding-left: 20px; font-size: 30px; ">Your Free Services</h5>
               </div>
             <hr>
               <div class="card-body">
 
-
                   {% for facility in hotel_facilities %}
-                    <div class="row" style="padding-left: 40px">
+                    <div class="row" style="padding-left: 60px">
                       <form action="{% url 'hotel_admin:service' %}" method="POST" name="delete_facility" id="delete_facility">
                 {% csrf_token %}
                   <div class="row">
@@ -174,7 +138,6 @@ Coded by www.creative-tim.com
                       </div>
                     </div>
 
-
                     <div class="col-md-5">
 
                         <button type="submit" name="submit_delete_facility" id="submit_delete_facility" title="delete this service" value="submit_delete_facility"  style="background-color: #a8554f; color: white; width: 40px; height: 35px; border-radius: 5px;" onclick="return confirm('Confirm changes?');" >X</button>
@@ -182,42 +145,33 @@ Coded by www.creative-tim.com
                         </div>
                     </div>
 
-
-
                 </form>
                     </div>
 
                     {% endfor %}
 
-
-
-              <div class="row" style="padding-left: 10px; padding-bottom: 20px">
+              <div class="row" style="padding-left: 20px; padding-bottom: 20px">
                   <div class="col-md-5">
                       <div class="card-header"><h5>Add New Free Service</h5></div>
                   </div>
 
-
               </div>
-              <div class="row" style="padding-left: 20px">
+              <div class="row" style="padding-left: 60px">
                   <form action="{% url 'hotel_admin:service' %}" method="POST" name="new_facility" id="new_facility">
                 {% csrf_token %}
                   <div class="row">
                     <div class="col-md-7" style="width: 500px; padding-left: 30px">
                       <div class="form-group">
                         <input type="text" class="form-control" style="background-color:white; color: black" placeholder="new service" name="facility" required="required">
-
                       </div>
                     </div>
 
-
                     <div class="col-md-5" style="padding-left: 20px; padding-bottom: 10px">
                       <div class="update ml-auto mr-auto">
-                          <button type="submit" name="submit_new_facility" value="submit_new_facility"  class="btn btn-primary " style="background-color: #57b846;  " >Add New </button>
+                          <button type="submit" name="submit_new_facility" value="submit_new_facility"  class="btn btn-primary " style="background-color: #a18cd1;  " >Add New </button>
                     </div>
                         </div>
                     </div>
-
-
 
                 </form>
 
@@ -230,9 +184,9 @@ Coded by www.creative-tim.com
                <div class="row">
 
           <div class="col-md-11" style="padding-left: 100px">
-            <div class="card card-user" style="width: 1350px;">
+            <div class="card card-user" style="width: 1350px;background-color: #0b0a0a91">
               <div class="card-header">
-                <h2 class="card-title" style="padding-left: 30px; font-size: 30px;">Your Paid Services</h2>
+                <h2 class="card-title" style="padding-left: 20px; font-size: 30px;">Your Paid Services</h2>
               </div>
             <hr>
             {% for service_type, service_subtypes in service_list.items %}
@@ -244,9 +198,8 @@ Coded by www.creative-tim.com
                       <div class="card-header" style="font-size: 16px; font-weight: 500;"><h5>{{ service_type }}</h5></div>
                   </div>
 
-
               </div>
-              <div class="row" style="padding-left: 10px">
+              <div class="row" style="padding-left: 60px">
                   {% for ser in service_subtypes %}
               <div class="row" style="padding-left: 30px">
 
@@ -268,7 +221,7 @@ Coded by www.creative-tim.com
                             </div>
 
                             <div class="col" style="padding-left: 40px" >
-                                <button type="submit" name="submit_cost" value="submit_cost" title="update cost" class="btn btn-primary " style="background-color: #a18cd1; " onclick="return confirm('Confirm changes?');" >Update</button>
+                                <button type="submit" name="submit_cost" value="submit_cost" title="update cost" class="btn btn-primary " style="background-color: #2b1b7b; color: whitesmoke " onclick="return confirm('Confirm changes?');" >Update</button>
 
                             </div>
 
@@ -285,7 +238,6 @@ Coded by www.creative-tim.com
                 {% csrf_token %}
                   <div class="row">
                       <div class="col-md-7" style="width: 500px; ">
-
                           <div class="card-header" style="font-size: 12px; font-weight: 200;"><h5>Add a New Entry Under {{ service_type }}</h5></div>
                       </div>
                       <div class="row" style="padding-left: 30px">
@@ -295,14 +247,14 @@ Coded by www.creative-tim.com
                                     <input type="text" class="form-control" style="background-color:white; color: black; width: 300px " name="service_subtype" placeholder="add new" >
                                 </div>
                             </div>
-                            <div class="col" style="width:600px; padding-left: 130px">
+                            <div class="col" style="width:600px; padding-left: 80px">
                                 <div class="form-group">
                                     <input type="number" class="form-control" style="background-color:white; color: black; width: 300px;" name="cost" min="0" value="0" placeholder="cost"  >
                                 </div>
                             </div>
                     <div class="col">
                       <div class="update ml-auto mr-auto">
-                          <button type="submit" name="submit_new_service_under_service_type" value="new_service_under_service_type" class="btn btn-primary " style="background-color: #57b846;"   onclick="return confirm('Confirm update?');"> Add New</button>
+                          <button type="submit" name="submit_new_service_under_service_type" value="new_service_under_service_type" class="btn btn-primary " style="background-color: #a18cd1;"   onclick="return confirm('Confirm update?');"> Add New</button>
                     </div>
                         </div>
                       </div>

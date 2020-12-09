@@ -28,12 +28,6 @@
   <div class="wrapper " >
     <div class="sidebar" data-color="#000000" style="width: 350px; padding: 20px; color: white ">
       <div class="logo">
-        <a class="simple-text logo-mini">
-          <div class="logo-image-small">
-            <img src="{% static 'hotel_admin/img/logo-small.png' %}">
-          </div>
-          <!-- <p>CT</p> -->
-        </a>
         <a  class="simple-text logo-normal">
           Hotel Admin
         </a>
@@ -45,33 +39,13 @@
                     <img src="{% static 'hotel_admin/img/destination_6.jpg' %}">
                 </div>
             </li>
-            <li style="padding-bottom: 100px">
-                 <form action="{% url 'hotel_admin:index' %}" method="POST" name="update_picture" id="update_picture">
-                    {% csrf_token %}
 
-                    <input id="file-upload" type="file"  style="alignment: right; padding-bottom: 40px;" onchange="submitpicture()"/>
-                 </form>
-                <script>
-
-                    function submitpicture() {
-                        var inp = document.querySelector("input");
-                        var file = inp.files[0];
-                        var savefile = new Blob([file], {type: '.jpg'});
-                        document.getElementById("update_picture").submit();
-                    }
-                </script>
-
-            </li>
           <li style="text-align: center; padding-top: 20px">
               <p style="font-size: 30px; padding-bottom: 20px; color: #a18cd1">{{ hotel.name }}</p>
-
           </li>
-
           <li>
-
               <p style="font-size: 20px;">{{ hotel.street }}, </p>
               <p style="font-size: 20px">{{ hotel.city }}, {{hotel.country}}</p>
-
           </li>
             <li>
                 <p style="font-size: 20px"> User Rating: {{ hotel.rating }}</p>
@@ -142,11 +116,11 @@
         <div class="row">
 
           <div class="col-md-11" style="padding-left: 100px">
-            <div class="card card-user">
+            <div class="card card-user" style="background-color: #0b0a0a91">
               <div class="card-header">
-                <h5 class="card-title">Cost Per Night For Rooms</h5>
+                <h5 class="card-title" style="padding-left: 20px">Cost Per Night For Rooms</h5>
               </div>
-              <div class="card-body">
+              <div class="card-body" style="padding-left: 60px">
               <div class="row">
                   <div class="col">
                       <label> room type</label>
@@ -213,11 +187,11 @@
                <div class="row">
 
           <div class="col-md-11" style="padding-left: 100px">
-            <div class="card card-user">
+            <div class="card card-user" style="background-color: #0b0a0a91">
               <div class="card-header">
-                <h5 class="card-title">Enlist A New Room</h5>
+                <h5 class="card-title" style="padding-left: 20px">Enlist A New Room</h5>
               </div>
-              <div class="card-body">
+              <div class="card-body" style="padding-left: 60px">
                 <form action="{% url 'hotel_admin:index' %}" method="POST" name="new_room" id="new_room">
                 {% csrf_token %}
                   <div class="row">
@@ -262,7 +236,7 @@
 
                   <div class="row">
                     <div class="update ml-auto mr-auto">
-                      <button type="submit" name="submit_new_room" value="submit_new_room" class="btn btn-primary " style="background-color: #2b1b7b ; color: whitesmoke" onclick="return confirm('Confirm changes?');">Add New Room</button>
+                      <button type="submit" name="submit_new_room" value="submit_new_room" class="btn btn-primary " style="background-color: #a18cd1 ; color: black" onclick="return confirm('Confirm changes?');">Add New Room</button>
                     </div>
                   </div>
                 </form>
@@ -286,11 +260,11 @@
                       <div class="row">
 
           <div class="col-md-11" style="padding-left: 100px">
-            <div class="card card-user">
+            <div class="card card-user" style="background-color: #0b0a0a91">
               <div class="card-header">
-                <h5 class="card-title">Add a New Room Type</h5>
+                <h5 class="card-title" style="padding-left: 20px">Add a New Room Type</h5>
               </div>
-              <div class="card-body">
+              <div class="card-body" style="padding-left: 60px">
                 <form action="{% url 'hotel_admin:index' %}" method="POST" name="new_room_type" id="new_room_type">
                 {% csrf_token %}
                   <div class="row">
@@ -334,7 +308,7 @@
 
                   <div class="row">
                     <div class="update ml-auto mr-auto">
-                      <button type="submit" name="submit_new_room_type" value="submit_new_room_type" class="btn btn-primary" style="background-color: #2b1b7b ; color: whitesmoke;" onclick="return confirm('Confirm changes?');">Add New Room Type</button>
+                      <button type="submit" name="submit_new_room_type" value="submit_new_room_type" class="btn btn-primary" style="background-color: #a18cd1 ; color: black;" onclick="return confirm('Confirm changes?');">Add New Room Type</button>
                     </div>
                   </div>
                 </form>

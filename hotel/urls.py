@@ -16,6 +16,8 @@ urlpatterns = [
     path('<int:hotel_id>/payment/', views.payment, name='payment'),
     path('<int:hotel_id>/payment_method/', views.payment_method, name='payment_method'),
     path('<int:hotel_id>/mobile_banking/', views.mobile_banking, name='mobile_banking'),
+    path('<int:hotel_id>/mobile_banking_fetch/', views.mobile_banking_fetch, name='mobile_banking_fetch'),
     path('<int:hotel_id>/credit_card/', views.credit_card, name='credit_card'),
+    path('<int:hotel_id>/credit_card_fetched/', views.credit_card_fetch, name='credit_card_fetch'),
     path('<int:hotel_id>/complete_payment/', views.complete_payment, name='complete_payment')
 ]

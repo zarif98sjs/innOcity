@@ -4,7 +4,7 @@
    #FONT
    ========================================================================== */
 .font-robo {
-  font-family: "Roboto", "Arial", "Helvetica Neue", sans-serif;
+  font-family: "Roboto", "Arial", "Helvetica Neue", sans-serif , "Oswald" ,SansSerif;
 }
 
 .font-poppins {
@@ -366,13 +366,22 @@ h6 {
   background: #fa4251;
 }
 
+/*.bg-gra-01 {*/
+/*  background: -webkit-gradient(linear, left bottom, left top, from(#fbc2eb), to(#a18cd1));*/
+/*  background: -webkit-linear-gradient(bottom, #fbc2eb 0%, #a18cd1 100%);*/
+/*  background: -moz-linear-gradient(bottom, #fbc2eb 0%, #a18cd1 100%);*/
+/*  background: -o-linear-gradient(bottom, #fbc2eb 0%, #a18cd1 100%);*/
+/*  background: linear-gradient(to top, #fbc2eb 0%, #a18cd1 100%);*/
+/*}*/
+
 .bg-gra-01 {
   background: -webkit-gradient(linear, left bottom, left top, from(#fbc2eb), to(#a18cd1));
   background: -webkit-linear-gradient(bottom, #fbc2eb 0%, #a18cd1 100%);
   background: -moz-linear-gradient(bottom, #fbc2eb 0%, #a18cd1 100%);
   background: -o-linear-gradient(bottom, #fbc2eb 0%, #a18cd1 100%);
-  background: linear-gradient(to top, #fbc2eb 0%, #a18cd1 100%);
+  background: linear-gradient(to top, #a76c93 0%, #2d145d 100%);
 }
+
 
 /* ==========================================================================
    #SPACING
@@ -450,11 +459,11 @@ h6 {
 }
 
 .btn--green {
-  background: #57b846;
+  background-color: #ffffff;
 }
 
 .btn--green:hover {
-  background: #4dae3c;
+  color:  #cb3838;
 }
 
 /* ==========================================================================

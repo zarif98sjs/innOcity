@@ -1,25 +1,10 @@
 {% load static %}
-<!--
-=========================================================
-* Paper Dashboard 2 - v2.0.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-dashboard-2
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8" />
     <link rel="apple-touch-icon" sizes="76x76" href="{% static 'dashboard/img/apple-icon.png' %}">
-    <link rel="icon" type="image/png" href="{% static 'dashboard/img/favicon.png' %}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <title>
         Update Profile
@@ -28,6 +13,13 @@ Coded by www.creative-tim.com
     <!--     Fonts and icons     -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css' %}" rel="stylesheet">
+
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300&display=swap" rel="stylesheet">
+
     <!-- CSS Files -->
     <link href="{% static 'dashboard/css/bootstrap.min.css' %}" rel="stylesheet" />
       <link href="{% static 'dashboard/css/login_main.css' %}" rel="stylesheet" />
@@ -38,17 +30,10 @@ Coded by www.creative-tim.com
 </head>
 <body class="" onload="showSnackbar()">
   <div class="wrapper " >
-    <div class="sidebar" data-color="#000000" style="width: 350px; padding: 20px; color: white ">
+    <div class="sidebar" data-color="#000000" style="width: 350px; padding: 20px; color: white;font-family: 'JetBrains Mono', monospace;  ">
       <div class="logo">
-        <a class="simple-text logo-mini">
-          <div class="logo-image-small">
-            <img src="{% static 'hotel_admin/img/logo-small.png' %}">
-          </div>
-          <!-- <p>CT</p> -->
-        </a>
         <a  class="simple-text logo-normal">
           Dashboard
-
         </a>
       </div>
       <div class="sidebar-wrapper" style="width: 300px; ">
@@ -57,22 +42,6 @@ Coded by www.creative-tim.com
                 <div class="image">
                     <img src="{% static 'dashboard/img/logo-small.png' %}">
                 </div>
-            </li>
-            <li style="padding-bottom: 100px">
-                 <form action="{% url 'dashboard:index' %}" method="POST" name="update_picture" id="update_picture">
-                    {% csrf_token %}
-
-                    <input id="file-upload" type="file"  style="alignment: right; padding-bottom: 40px; color: black;" onchange="submitpicture()"/>
-                     <input id="filename" name="filename" type="text" hidden />
-                 </form>
-                <script>
-                    function submitpicture() {
-                        console.log("picture");
-
-                        document.getElementById("update_picture").submit();
-                    }
-                </script>
-
             </li>
           <li style="text-align: center; padding-top: 20px">
               <p style="font-size: 30px; padding-bottom: 20px; color: #a18cd1">{{ customer.name }}</p>
@@ -126,7 +95,7 @@ Coded by www.creative-tim.com
               </button>
             </div>
               <div class="logo">
-            <a class="navbar-brand" href="{% url 'home:index' %}" style="padding-left: 100px; font-size: 30px; font-weight: bold; color: black">Innocity</a>
+            <a class="navbar-brand" href="{% url 'home:index' %}" style="padding-left: 100px; font-size: 30px; font-weight: bold; color: whitesmoke">innOcity</a>
                   </div>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
@@ -139,7 +108,7 @@ Coded by www.creative-tim.com
             <ul class="navbar-nav">
 
               <li class="nav-item" >
-                <a class="nav-link" style="color: black; font-weight: bold" href="{% url 'login:index' %}">
+                <a class="nav-link" style="color: whitesmoke; font-weight: bold" href="{% url 'login:index' %}">
                   Log Out
                 </a>
               </li>
@@ -152,19 +121,19 @@ Coded by www.creative-tim.com
             <div class="row">
 
                 <div class="col-md-11" style="padding-left: 100px">
-                    <div class="card card-user">
+                    <div class="card card-user" style="background-color: #0d07077d">
                         <div class="card-header">
-                            <h5 class="card-title">Update Credit Card Details</h5>
+                            <h5 class="card-title" style="font-family: 'JetBrains Mono', monospace; padding-left: 20px;">Update Credit Card Details</h5>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" style="padding-left: 60px;font-family: 'Montserrat'">
                             <form action="{% url 'dashboard:wallet' %}" method="POST" name="card_form" id="card_form">
                                 {% csrf_token %}
                                 <div class="form-row">
                                     <div class="col-md-5">
-                                        <div class="form-group" style="font-family: Oswald, sans-serif;"><label
+                                        <div class="form-group"><label
                                                 for="card-holder">Card Holder</label><input class="form-control" type="text" name="card_username" value= '{{ customer.card_username }}'
                                                                                             placeholder="Card Holder"
-                                                                                            style="font-family: Oswald, sans-serif; color: black">
+                                                                                            style="color: black">
                                         </div>
                                     </div>
                                     <div class="col-md-5" style="padding-left: 50px">
@@ -183,19 +152,19 @@ Coded by www.creative-tim.com
                                         </div>
                                     </div>
                                     <div class="col-md-5">
-                                        <div class="form-group"><label style="font-family: Oswald, sans-serif;">Expiration
+                                        <div class="form-group"><label>Expiration
                                             date</label>
-                                            <input class="form-control" type="date" style="font-family: Oswald, sans-serif;color: black" name="expiration" required="required" onautocomplete="updateExpirationDate()">
+                                            <input class="form-control" type="date" style="color: black" name="expiration" required="required" onautocomplete="updateExpirationDate()">
                                         </div>
                                     </div>
                                     <div class="col-md-5" style="padding-left: 50px">
-                                        <div class="form-group" style="font-family: Oswald, sans-serif;"><label
+                                        <div class="form-group"><label
                                                 for="card-number">Card Number</label><input class="form-control" type="text" name="card_number" required="required"
                                                                                             id="card-number" value="{{ customer.card_number }}"
-                                                                                            placeholder="Card Number" style="font-family: Oswald, sans-serif; color: black"></div>
+                                                                                            placeholder="Card Number" style="color: black"></div>
                                     </div>
                                     <div class="col-md-5">
-                                        <div class="form-group" style="font-family: Oswald, sans-serif;"><label for="cvc">CVC</label><input
+                                        <div class="form-group"><label for="cvc">CVC</label><input
                                                 class="form-control" name="cvc" required="required" value="{{ customer.cvc }}" type="text" id="cvc" placeholder="CVC" style="color: black; font-family: Oswald, sans-serif;"></div>
                                     </div>
                                 </div>
@@ -214,16 +183,16 @@ Coded by www.creative-tim.com
             <div class="row">
 
                 <div class="col-md-11" style="padding-left: 100px; padding-top: 50px">
-                    <div class="card card-user">
+                    <div class="card card-user" style="background-color: #0d07077d">
                         <div class="card-header">
-                            <h5 class="card-title">Update Mobile Banking Details</h5>
+                            <h5 class="card-title" style="font-family: 'JetBrains Mono', monospace; padding-left: 20px;">Update Mobile Banking Details</h5>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" style="padding-left: 60px;font-family: 'Montserrat'">
                             <form action="{% url 'dashboard:wallet' %}" method="POST" name="mobile_banking_form" id="mobile_banking_form">
                                 {% csrf_token %}
                                 <div class="form-row">
                                     <div class="col-md-5">
-                                        <div class="form-group" style="font-family: Oswald, sans-serif;"><label
+                                        <div class="form-group"><label
                                                 for="card-number">Phone Number</label><input class="form-control" required="required" value="{{ customer.mob_banking_phone_number }}"
                                                                                              type="text" id="card-number-1" name="mob_banking_phone_number"
                                                                                              placeholder="Phone Number" style="color:black;">
@@ -260,21 +229,6 @@ Coded by www.creative-tim.com
                 </div>
             </div>
         </div>
-
-        <footer class="footer footer-black  footer-white ">
-            <div class="container-fluid">
-                <div class="row">
-
-                    <div class="credits ml-auto">
-              <span class="copyright">
-                © <script>
-                  document.write(new Date().getFullYear())
-                </script>, made with <i class="fa fa-heart heart"></i> by Creative Tim
-              </span>
-                    </div>
-                </div>
-            </div>
-        </footer>
     </div>
 </div>
 

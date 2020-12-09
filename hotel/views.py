@@ -95,12 +95,29 @@ def book2(request, hotel_id):
 @csrf_exempt
 def payment_method(request, hotel_id):
     context = get_context(request,hotel_id)
+    context['message'] = "Choose Payment Method"
     return render(request, 'hotel/payment_method.html',context)
 
 
 @csrf_exempt
 def mobile_banking(request, hotel_id):
 
+    if request.session.has_key('customer_id'):
+        logged_in = True
+        customer_id = request.session['customer_id']
+    else:
+        messages.success(request, 'you must log in first')
+        return redirect('login:index')
+
+    context = get_context(request,hotel_id)
+    context['total_cost'] = request.session['total_cost']
+    context['logged_in'] = logged_in
+
+    context['message'] = "Do you want to fetch info from wallet ?"
+    return render(request, 'hotel/mobile_banking.html',context)
+
+@csrf_exempt
+def mobile_banking_fetch(request, hotel_id):
     if request.session.has_key('customer_id'):
         logged_in = True
         customer_id = request.session['customer_id']
@@ -133,12 +150,30 @@ def credit_card(request, hotel_id):
     context['total_cost'] = request.session['total_cost']
     context['logged_in'] = logged_in
 
+    context['message'] = "Do you want to fetch info from wallet ?"
+    return render(request, 'hotel/credit_card.html',context)
+
+@csrf_exempt
+def credit_card_fetch(request, hotel_id):
+
+    if request.session.has_key('customer_id'):
+        logged_in = True
+        customer_id = request.session['customer_id']
+    else:
+        messages.success(request, 'you must log in first')
+        return redirect('login:index')
+
+    context = get_context(request,hotel_id)
+    context['total_cost'] = request.session['total_cost']
+    context['logged_in'] = logged_in
+
 
     global customer
     get_customer_info(customer_id)
     context['customer'] = customer
 
     return render(request, 'hotel/credit_card.html',context)
+
 
 def get_customer_info(customer_id):
 

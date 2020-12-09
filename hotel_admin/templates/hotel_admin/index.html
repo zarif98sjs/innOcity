@@ -1,28 +1,14 @@
 {% load static %}
-<!--
-=========================================================
-* Paper hotel_admin 2 - v2.0.1
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-hotel_admin-2
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="utf-8" />
   <link rel="apple-touch-icon" sizes="76x76" href="{% static 'hotel_admin/img/apple-icon.png' %}">
-  <link rel="icon" type="image/png" href="{% static 'hotel_admin/img/favicon.png' %}">
+{#  <link rel="icon" type="image/png" href="{% static 'hotel_admin/img/favicon.png' %}">#}
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <title>
-    hotel_admin
+    Hotel Admin
   </title>
   <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
   <!--     Fonts and icons     -->
@@ -49,8 +35,7 @@ Coded by www.creative-tim.com
           <!-- <p>CT</p> -->
         </a>
         <a  class="simple-text logo-normal">
-          hotel admin
-
+          Hotel Admin
         </a>
       </div>
       <div class="sidebar-wrapper" style="width: 300px; ">
@@ -131,7 +116,7 @@ Coded by www.creative-tim.com
               </button>
             </div>
               <div class="logo">
-            <a class="navbar-brand" href="{% url 'home:index' %}" style="padding-left: 100px; font-size: 30px; font-weight: bold; color: black">Innocity</a>
+            <a class="navbar-brand" href="{% url 'home:index' %}" style="padding-left: 100px; font-size: 30px; font-weight: bold; color: ghostwhite">innOcity</a>
                   </div>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
@@ -144,7 +129,7 @@ Coded by www.creative-tim.com
             <ul class="navbar-nav">
 
               <li class="nav-item" >
-                <a class="nav-link" style="color: black; font-weight: bold" href="{% url 'login:index' %}">
+                <a class="nav-link" style="color: black; font-weight: bold; color: whitesmoke" href="{% url 'login:index' %}">
                   Log Out
                 </a>
               </li>
@@ -214,7 +199,7 @@ Coded by www.creative-tim.com
                                 </div>
                             </div>
                             <div class="col">
-                                <button type="submit" name="submit_cost" value="submit_cost" title="update cost" class="btn btn-primary " style="background-color: #a18cd1; " onclick="return confirm('Confirm changes?');" >Update</button>
+                                <button type="submit" name="submit_cost" value="submit_cost" title="update cost" class="btn btn-primary " style="background-color: #2b1b7b ; color: whitesmoke " onclick="return confirm('Confirm changes?');" >Update</button>
 
                             </div>
 
@@ -277,7 +262,7 @@ Coded by www.creative-tim.com
 
                   <div class="row">
                     <div class="update ml-auto mr-auto">
-                      <button type="submit" name="submit_new_room" value="submit_new_room" class="btn btn-primary " style="background-color:#57b846" onclick="return confirm('Confirm changes?');">Add New Room</button>
+                      <button type="submit" name="submit_new_room" value="submit_new_room" class="btn btn-primary " style="background-color: #2b1b7b ; color: whitesmoke" onclick="return confirm('Confirm changes?');">Add New Room</button>
                     </div>
                   </div>
                 </form>
@@ -322,7 +307,6 @@ Coded by www.creative-tim.com
                         <label>Bed Type</label>
                           <input type="text" class="form-control" style="background-color:white; color: black" placeholder="bed type" name="bed_type" required="required">
 
-
                       </div>
                     </div>
                   </div>
@@ -350,7 +334,7 @@ Coded by www.creative-tim.com
 
                   <div class="row">
                     <div class="update ml-auto mr-auto">
-                      <button type="submit" name="submit_new_room_type" value="submit_new_room_type" class="btn btn-primary" style="background-color:#57b846; color: black" onclick="return confirm('Confirm changes?');">Add New Room Type</button>
+                      <button type="submit" name="submit_new_room_type" value="submit_new_room_type" class="btn btn-primary" style="background-color: #2b1b7b ; color: whitesmoke;" onclick="return confirm('Confirm changes?');">Add New Room Type</button>
                     </div>
                   </div>
                 </form>
@@ -363,22 +347,6 @@ Coded by www.creative-tim.com
         </div>
 
       </div>
-
-
-      <footer class="footer footer-black  footer-white ">
-        <div class="container-fluid">
-          <div class="row">
-
-            <div class="credits ml-auto">
-              <span class="copyright">
-                © <script>
-                  document.write(new Date().getFullYear())
-                </script>, made with <i class="fa fa-heart heart"></i> by Creative Tim
-              </span>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   </div>
   <!--   Core JS Files   -->

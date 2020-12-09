@@ -75,10 +75,6 @@
                             <li><a href="{% url 'register:index' %}">Register</a></li>
                         </ul>
 
-                        {#							<div class="header_phone ml-auto">Call us: +880-1915123445</div>#}
-
-                        <!-- Hamburger -->
-
                         <div class="hamburger ml-auto">
                             <i class="fa fa-bars" aria-hidden="true"></i>
                         </div>
@@ -112,9 +108,9 @@
                         <input class="input--style-3" type="password" placeholder="password" name="password">
                     </div>
                     <div class="input-group">
-                        <select class="input--style-3" name="login_type" required="required" style="width: 500px">
-                            <option class="input--style-3" selected="selected" >Log in as User</option>
-                            <option class="input--style-3" >Log in as Hotel Admin</option>
+                        <select class="input--style-3" name="login_type" required="required" style="width: 500px;color : whitesmoke">
+                            <option class="input--style-3" selected="selected" style="background-color: #0b0b0b; color : whitesmoke;" >Log in as User</option>
+                            <option class="input--style-3" style="background-color: #0b0b0b;color : whitesmoke;" >Log in as Hotel Admin</option>
                         </select>
                     </div>
                     <br>
@@ -123,7 +119,7 @@
                     <br>
                     <br>
                     <div class="p-t-10">
-                        <button class="btn btn--pill btn--green" type="submit">Submit</button>
+                        <button class="btn--green" type="submit" style="color:whitesmoke;border-radius:3px;background-color: #2b1b7b;font-weight: 600;font-size: 0.8571em;line-height: 1.35em;margin: 10px 1px;padding: 11px 22px;">Submit</button>
                     </div>
                     <br>
                     <br>
@@ -194,9 +190,6 @@
     </script>
 {% endif %}
 
-
-</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
-
+</body>
 </html>
-<!-- end document-->
 

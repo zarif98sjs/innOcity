@@ -1735,7 +1735,7 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
   color: inherit; }
 
 .card-user form .form-group {
-  background-color: black;
+  background-color: transparent;
   margin-bottom: 20px; }
 
 .from-check,
@@ -1980,7 +1980,7 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
     border-radius: 50%;
     border: 1px solid transparent; }
   .navbar .navbar-brand {
-    text-transform: capitalize;
+    text-transform: unset;
     font-size: 20px;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
@@ -2001,7 +2001,7 @@ a[data-toggle="collapse"][aria-expanded="true"] .caret,
   .navbar.navbar-transparent {
     background-color: transparent !important;
     box-shadow: none;
-    border-bottom: 1px solid #ddd; }
+    border-bottom: 0px solid #ddd; }
     .navbar.navbar-transparent a:not(.dropdown-item):not(.btn) {
       color: #a18cd1; }
       .navbar.navbar-transparent a:not(.dropdown-item):not(.btn).disabled {
@@ -3107,7 +3107,7 @@ License - nucleoapp.com/license/
   width: 260px;
   left: 0;
   z-index: 1030;
-  border-right: 1px solid #ddd; }
+  border-right: 0px solid #ddd; }
   .sidebar .sidebar-wrapper,
   .off-canvas-sidebar .sidebar-wrapper {
     position: relative;

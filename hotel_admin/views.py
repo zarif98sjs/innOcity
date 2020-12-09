@@ -5,9 +5,6 @@ from django.db import connection
 from .models import Room, Reservation, Service
 from hotel.models import Hotel
 from django.urls import reverse
-import numpy as np
-import matplotlib.pyplot as plt
-import mpld3
 import plotly.offline as opy
 import plotly.graph_objs as go
 from django.views.generic import TemplateView
@@ -65,7 +62,7 @@ def index(request):
                         f = request.POST.get("room_facilities-" + str(i))
                         if f is None:
                             break
-                        if f is not "":
+                        if f != "":
                             sql = "INSERT INTO ROOM_FACILITY VALUES(%s, INITCAP(%s))"
                             cur.execute(sql, [room_id, f])
                             connection.commit()

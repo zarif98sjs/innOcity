@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="{% static 'hotel/css/icomoon.css' %}">
     <link rel="stylesheet" href="{% static 'hotel/css/style.css' %}">
   </head>
-  <body>
+  <body onload="loadimages()">
 
   <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
     <div class="container">
@@ -60,16 +60,17 @@
             <div class="col-md-12 mb-5">
 
                 <div class="block-3 d-md-flex">
-                  <div class="image" style="background-image: url('{% static 'hotel/images/img_1.jpg' %}'); "></div>
+{#                  <div class="image" style="background-image: url('{% static 'hotel/images/img_1.jpg' %}'); "></div>#}
+                    <img src="..\\..\\static\\hotel\\images\\best_1.jpg" alt="" height="600" width="500" id={{ hotel.hotelId}}>
                   <div class="text" >
 
                     <h2 class="heading">{{ hotel.name }}</h2>
                       <h5 class="subheading-sm">{{ hotel.street }}, {{ hotel.city }}, {{ hotel.country }}</h5>
                     <ul class="specs mb-5">
-                       <li><strong>{{ hotel.rooms }} Rooms Available! </strong></li>
-                        <li><strong>Special Facilities:</strong> {{ hotel.facilities }}</li>
-                      <li><strong>Rating:</strong> {{hotel.rating}}/5</li>
-                      <li>Rated by {{ hotel.rating_count }} users</li>
+                      <li style="padding-top: 20px; font-size: 20px"><strong>Rating: {{hotel.rating}}/5.00 </strong></li>
+                        <li style="color: black">Rated by {{ hotel.rating_count }} users</li>
+                        <li style="font-size: 18px; padding-top: 10px; color: black">Hotel Facilities: {{ hotel.facilities }}</li>
+                       <li style="font-size: 20px"><strong>{{ hotel.rooms }} Room(s) Available! </strong></li>
 
 
                     </ul>
@@ -105,6 +106,21 @@
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="{% static 'hotel/js/google-map.js' %}"></script>
   <script src="{% static 'hotel/js/main.js' %}"></script>
+
+  <script>
+      function loadimages()
+    {
+        var all_images = document.getElementsByTagName("img");
+        for(var i=0;i<all_images.length;i++)
+        {
+            var rid = all_images[i].id % 12 + 1;
+            console.log(rid);
+            var srcname = "..\\..\\static\\hotel\\images\\best_" + (rid) + ".jpg";
+            console.log(srcname);
+            all_images[i].src = srcname;
+        }
+    }
+  </script>
 
 
 

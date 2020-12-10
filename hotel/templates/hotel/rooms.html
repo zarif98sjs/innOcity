@@ -66,20 +66,22 @@
               <div class="text">
 
                 <h2 class="heading">{{ room.room_type }}</h2>
-                            <div class="price"><sup>$</sup><span class="number">{{room.cost}}</span><sub>/per night</sub></div>
+
                             <ul class="specs">
-                              <li><strong>Discount: </strong> {{ room.discount }} % off!</li>
-                              {% if room.special_offer is not null %}
-                              <li><strong>Special offers: </strong> {{ room.special_offer }}</li>
-                              {% endif %}
+                            <div class="price"><sup>$</sup><span class="number">{{room.cost}}</span><sub>/per night</sub></div>
+                                <li style="font-size: 30px; padding-top: 10px; color: #fc3c3c"><b>{{ room.discount }} % off!</b> </li>
+
+
+
+
+                            <li><strong>Bed Type:  {{ room.bed_type }}</strong></li>
                             {% if room.facilities %}
-                              <li><strong>Facilities: </strong>{{ room.facilities }}</li>
+                              <li><strong>Facilities: {{ room.facilities }} </strong></li>
                             {% endif %}
-                              <li><strong>Bed Type: </strong> {{ room.bed_type }}</li>
-                                <li><strong>{{ room.count }} rooms of this type available!</strong></li>
+                                <li style="font-size: 20px; "><strong>{{ room.count }} room(s) like this available!</strong></li>
+
                             </ul>
 
-                <p><a href="#" class="btn btn-primary py-3 px-5">Read More</a></p>
 
               </div>
             </div>
@@ -178,7 +180,6 @@
 
   <script src="{% static 'hotel/js/aos.js' %}"></script>
   <script src="{% static 'hotel/js/jquery.animateNumber.min.js' %}"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
   <script src="{% static 'hotel/js/google-map.js' %}"></script>
   <script src="{% static 'hotel/js/main.js' %}"></script>
   <script>

@@ -45,9 +45,9 @@
 </nav>
 <!-- END nav -->
 
-<div class="block-31" style="position: relative;">
+<div class="block-31" style="position: relative; ">
     <div class="owl-carousel loop-block-31 ">
-        <div class="block-30 item" style="background-image: url('../../static/hotel/images/bg_2.jpg');"
+        <div class="block-30 block-30-sm item" style="background-image: url('../../static/hotel/images/bg_2.jpg'); "
              data-stellar-background-ratio="0.5">
             <div class="container">
                 <div class="row align-items-center">
@@ -58,7 +58,7 @@
                 </div>
             </div>
         </div>
-        <div class="block-30 item" style="background-image: url('../../static/hotel/images/bg_1.jpg');"
+        <div class="block-30 block-30-sm item" style="background-image: url('../../static/hotel/images/bg_1.jpg');"
              data-stellar-background-ratio="0.5">
             <div class="container">
                 <div class="row align-items-center">
@@ -69,7 +69,7 @@
                 </div>
             </div>
         </div>
-        <div class="block-30 item" style="background-image: url('../../static/hotel/images/bg_3.jpg');"
+        <div class="block-30 block-30-sm item" style="background-image: url('../../static/hotel/images/bg_3.jpg');"
              data-stellar-background-ratio="0.5">
             <div class="container">
                 <div class="row align-items-center">
@@ -85,6 +85,7 @@
 
 <div class="site-section block-13 bg-light">
     <div class="container">
+
         <div class="row mb-5">
             <div class="col-md-7 section-heading">
                 <span class="subheading-sm">Featured Rooms</span>
@@ -109,15 +110,8 @@
                                         <div class="price"><sup>$</sup><span class="number">{{ room.cost }}</span><sub>/per
                                             night</sub></div>
                                         <ul class="specs">
-                                            <li><strong>Discount: </strong> {{ room.discount }} % off!</li>
-                                            {% if room.special_offer is not null %}
-                                                <li><strong>Special offers: </strong> {{ room.special_offer }}</li>
-                                            {% endif %}
-                                            {% if room.facilities %}
-                                                <li><strong>Facilities: </strong>{{ room.facilities }}</li>
-                                            {% endif %}
-                                            <li><strong>Bed Type: </strong> {{ room.bed_type }}</li>
-                                            <li><strong>{{ room.count }} rooms of this type available!</strong></li>
+                                            <li style="color:  #fc3c3c; font-size: 20px">Discount:  {{ room.discount }} % off!</li>
+
                                         </ul>
                                     </div>
                                 </div>
@@ -293,7 +287,6 @@
 
 <script src="../../static/hotel/js/aos.js"></script>
 <script src="../../static/hotel/js/jquery.animateNumber.min.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
 <script src="../../static/hotel/js/google-map.js"></script>
 <script src="../../static/hotel/js/main.js"></script>
 <script>

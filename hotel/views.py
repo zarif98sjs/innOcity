@@ -12,6 +12,7 @@ from django.core.mail import EmailMultiAlternatives
 from easy_pdf.rendering import render_to_pdf
 
 from django.conf import settings
+import math
 
 app_name = 'hotel'
 
@@ -262,8 +263,8 @@ def payment(request, hotel_id):
 
     # request.session['service_sub_type'] = service_sub_type
 
-    context['total_cost'] = total_cost
-    request.session['total_cost'] = total_cost
+    context['total_cost'] = math.ceil(total_cost)
+    request.session['total_cost'] = context['total_cost']
 
     print(context['total_cost'])
 
@@ -342,30 +343,30 @@ def complete_payment(request, hotel_id):
 
     context['reservation_list'] = r
 
-    with connection.cursor() as cur:
-        sql_add_payment = "INSERT INTO PAYMENT " \
-                          "VALUES (%s, SYSDATE)"
-        cur.execute(sql_add_payment, [payment_id])
-        connection.commit()
-        sql_add_reservation = "INSERT INTO RESERVATION (RESERVATIONID, DATE_OF_ARRIVAL, DATE_OF_DEPARTURE, CUSTOMERID, " \
-                              "PAYMENTID, HOTELID, RESERVATION_CHARGE) " \
-                              "VALUES ( %s, %s, %s , %s , %s , %s , %s )"
-        cur.execute(sql_add_reservation,
-                    [r.reservationid, r.date_of_arrival, r.date_of_departure, r.customerid, r.paymentid, r.hotelid,
-                     r.reservation_charge])
-        connection.commit()
-
-    with connection.cursor() as cur:
-
-        for r in booked_room_id:
-            print(r, reservation_id)
-            sql_add_room = "INSERT INTO RESERVATION_ROOM VALUES(%s, %s)"
-            cur.execute(sql_add_room, [reservation_id, r])
-            connection.commit()
-
-        for s in booked_services:
-            cur.execute("INSERT INTO RESERVATION_SERVICE VALUES(%s, %s, %s)", [reservation_id, s.serviceId, s.count])
-            connection.commit()
+    # with connection.cursor() as cur:
+    #     sql_add_payment = "INSERT INTO PAYMENT " \
+    #                       "VALUES (%s, SYSDATE)"
+    #     cur.execute(sql_add_payment, [payment_id])
+    #     connection.commit()
+    #     sql_add_reservation = "INSERT INTO RESERVATION (RESERVATIONID, DATE_OF_ARRIVAL, DATE_OF_DEPARTURE, CUSTOMERID, " \
+    #                           "PAYMENTID, HOTELID, RESERVATION_CHARGE) " \
+    #                           "VALUES ( %s, %s, %s , %s , %s , %s , %s )"
+    #     cur.execute(sql_add_reservation,
+    #                 [r.reservationid, r.date_of_arrival, r.date_of_departure, r.customerid, r.paymentid, r.hotelid,
+    #                  r.reservation_charge])
+    #     connection.commit()
+    #
+    # with connection.cursor() as cur:
+    #
+    #     for r in booked_room_id:
+    #         print(r, reservation_id)
+    #         sql_add_room = "INSERT INTO RESERVATION_ROOM VALUES(%s, %s)"
+    #         cur.execute(sql_add_room, [reservation_id, r])
+    #         connection.commit()
+    #
+    #     for s in booked_services:
+    #         cur.execute("INSERT INTO RESERVATION_SERVICE VALUES(%s, %s, %s)", [reservation_id, s.serviceId, s.count])
+    #         connection.commit()
 
     send_booking_mail(context)
 
@@ -389,6 +390,8 @@ def send_booking_mail(context):
 
 def book(request, hotel_id):
     context = get_context(request, hotel_id)
+    context['checkin'] = request.session['checkin_input']
+    context['checkout'] = request.session['checkout_input']
     return render(request, 'hotel/book.html', context)
 
 

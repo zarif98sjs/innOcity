@@ -51,8 +51,6 @@ def random_ratings():
                 cur.execute("INSERT INTO RESERVATION_SERVICE VALUES(%s, %s, %s)", [all_rs[i], ss, qq])
                 connection.commit()
 
-
-
 def user_login(request):
 
     v1 = request.POST.get('username')

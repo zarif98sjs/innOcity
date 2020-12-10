@@ -4,13 +4,12 @@
     <meta charset="utf-8">
     <title>innOcity Booking Confirmation</title>
     <style type="text/css">
+
         body{
             font-family: Consolas, sans-serif;
-            font-size: 12px
-        }
-        @page {
-            size: A4;
-            margin: 1cm;
+            font-size: 12px;
+        {#border: 5px solid #79269d;#}
+        {#padding: 70px;#}
         }
 
         .table {
@@ -24,17 +23,18 @@
         .table td {
             padding: 5px;
             vertical-align: top;
-            border-top: 1px solid #cc7a2d;
+            border-top: 1px solid #322dcc;
+            border-bottom: 1px solid #322dcc;
             text-align: center;
         }
 
         .table thead th {
             vertical-align: bottom;
-            border-bottom: 2px solid #cc7a2d;
+            border-bottom: 2px solid #322dcc;
         }
 
         .table tbody + tbody {
-            border-top: 2px solid #cc7a2d;
+            border-top: 2px solid #322dcc;
         }
 
         .table .table {
@@ -68,13 +68,13 @@
             <h1 align="center"> <u> innOcity </u> </h1>
         </div>
 
-        <h2  align="center" style="color: #690015;"> {{ hotel.name }} , {{ hotel.city }} , {{ hotel.country }} </h2>
+        <h2  align="center" style="color: #2b086e;"> {{ hotel.name }} , {{ hotel.city }} , {{ hotel.country }} </h2>
         <p align="center" > Hi , {{ customer.name }} . Enjoy your visit . Here is your booking summary . </p>
 
-        <h2 align="center">  Rooms  </h2>
-        <table class="table">
+        <h2 align="center" style="padding-top: 25px;">  Rooms  </h2>
+        <table class="table" style="padding-left: 90px;padding-right: 90px;padding-top: 30px;">
             <thead>
-            <tr>
+            <tr style="background-color: #5a2e83;color: whitesmoke">
                 <th>Room ID</th>
                 <th>Room Type</th>
                 <th>Price</th>
@@ -95,11 +95,10 @@
 
         &nbsp;
 
-        &nbsp;
         <h2 align="center">  Services  </h2>
-        <table class="table">
+        <table class="table" style="padding-left: 90px;padding-right: 90px;padding-bottom: 50px;">
             <thead>
-            <tr>
+            <tr style="background-color: #223085;color: whitesmoke">
                 <th>Service</th>
                 <th>Quantity</th>
                 <th>Price</th>
@@ -115,6 +114,17 @@
                 </tr>
             {% endfor %}
 
+            </tbody>
+        </table>
+
+            &nbsp;
+
+        <h2 align="center" style="padding-top: 50px;"> </h2>
+        <table class="table" style="padding-left: 350px;padding-right: 350px;border:3px;">
+            <tbody>
+            <tr style="font-size: 13px;"><td style="background-color: #641d83;color: whitesmoke">Checkin Date  </td> <td>{{ checkin_input }}</td></tr>
+            <tr style="font-size: 13px;"><td style="background-color: #641d83;color: whitesmoke">Checkout Date  </td> <td>{{ checkout_input }}</td></tr>
+            <tr style="font-size: 13px;"><td style="background-color: #231764;color: whitesmoke">Amount Paid  </td> <td>{{ total_cost }}$</td></tr>
             </tbody>
         </table>
 

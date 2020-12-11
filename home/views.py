@@ -87,9 +87,3 @@ def top_discount():
         return hotel_ara, image_locations
 
 
-def about(request):
-    return render(request, 'home/about.html')
-
-
-def contacts(request):
-    return render(request, 'home/payment.html')

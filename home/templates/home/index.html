@@ -100,7 +100,6 @@
         <div class="menu_content">
             <ul>
                 <li><a href="{% url 'home:index' %}">Home</a></li>
-                <li><a href="{% url 'home:about' %}">About us</a></li>
                 {% if logged_in %}
                     <li><a href="{% url 'dashboard:index' %}">Dashboard</a></li>
                     <li><a href="{% url 'login:index' %}">Log out</a></li>

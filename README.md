@@ -61,7 +61,7 @@ Hotel data can be updated by logging in as hotel admin
     - view the details of all the reservations
     - Search by year/ month / room types
     
- [](Miscellaneous/ReadMe%20Files/admin.gif)
+ ![](Miscellaneous/ReadMe%20Files/admin.gif)
 
 # Project Team
 

@@ -3,7 +3,7 @@
 ![](/Miscellaneous/ReadMe%20Files/home2.png)
 
 # Project Overview
-Innocity is a hotel booking platform designed using Oracle database and django framework. This website was built as our Database course project.
+innOcity is a hotel booking platform designed using Oracle database and django framework. This website was built as our Database course project.
 
 # Programming Language 
 

@@ -46,7 +46,7 @@ def available(request):
               "(RS.DATE_OF_ARRIVAL <= TO_DATE(%s, 'YYYY-MM-DD') " \
               "AND RS.DATE_OF_DEPARTURE >= TO_DATE(%s, 'YYYY-MM-DD'))) " \
               "FROM HOTEL H " \
-              "WHERE UPPER(CITY) = %s OR UPPER(COUNTRY) = %s"
+              "WHERE UPPER(CITY) = %s OR UPPER(COUNTRY) = %s ORDER BY H.RATING DESC"
         cur.execute(sql, [checkout_input, checkin_input, destination, destination])
         result = cur.fetchall()
 

@@ -107,7 +107,7 @@
                             <h3 class="heading">{{ service_type }}</h3>
                             <ul>
                                 {% for serve in service_list %}
-                                    <li>{{ serve.service_subtype }} : {{ serve.cost }}$ per {{ serve.unit }}</li>
+                                    <li style="font-size: 20px">{{ serve.service_subtype }} : {{ serve.cost }}$ per {{ serve.unit }}</li>
                                 {% endfor %}
                             </ul>
                         </div>
@@ -237,7 +237,6 @@
 
 <script src="{% static 'hotel/js/aos.js'%}"></script>
 <script src="{% static 'hotel/js/jquery.animateNumber.min.js'%}"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
 <script src="{% static 'hotel/js/google-map.js'%}"></script>
 <script src="{% static 'hotel/js/main.js'%}"></script>
 

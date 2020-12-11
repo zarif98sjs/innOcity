@@ -144,7 +144,12 @@ def service(request):
             if request.POST.get("submit_new_facility"):
 
                 new_facility = request.POST.get("facility")
-                cur.callproc('ADD_NEW_FREE_SERVICE', [hotel.hotelId, new_facility])
+                exists = cur.var(int).var
+                cur.callproc('ADD_NEW_FREE_SERVICE', [hotel.hotelId, new_facility, exists])
+                if exists.getvalue() == 0:
+                    messages.success(request, "New free service added")
+                else:
+                    messages.success(request, "Service already exists")
 
             elif request.POST.get("submit_delete_facility"):
 
@@ -243,8 +248,15 @@ def reservation(request):
         if request.method == "POST" and request.POST.get("search"):
 
             if request.POST.get("month"):
+                months = ["January","February","March","April","May","June","July","August","September","October","November","December"]
+                month_name = request.POST.get("month")
+                for i in range(12):
+                    if month_name == months[i]:
+                        month = i+1
+                        break
+
                 sql += "AND EXTRACT(MONTH FROM RS.DATE_OF_ARRIVAL) = %s "
-                list_vars.append(request.POST.get("month"))
+                list_vars.append(month)
 
             if request.POST.get("year"):
                 sql += "AND EXTRACT(YEAR FROM RS.DATE_OF_ARRIVAL) = %s "

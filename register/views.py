@@ -69,7 +69,8 @@ def sign_up(request):
             customer_id = cur.callfunc('REGISTER', int, [v1, v2, v3, v4, v5, v6, v7, v8, v9, v10])
 
             if customer_id == 0:
-                return render(request, 'register/index.html', {'invalid_username': True})
+                alert_message = "This username is already taken"
+                return render(request, 'register/index.html', {'invalid_username': True,'alert_message':alert_message})
 
             customer = Customer(customer_id=customer_id, name=v1, isVerified='NO')
 
@@ -105,7 +106,8 @@ def sign_up(request):
             messages.success(request, "Please check your e-mail and verify your account")
             return redirect('login:index')
 
-    return render(request, 'register/index.html', {'alert_flag': True})
+    alert_message = "Complete the form"
+    return render(request, 'register/index.html', {'alert_flag': True,'alert_message':alert_message})
 
 
 def activate(request, uidb64, token):

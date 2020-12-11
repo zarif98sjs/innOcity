@@ -110,6 +110,32 @@
 </head>
 
 <body>
+
+{% if alert_flag or invalid_username%}
+
+    <!-- Modal -->
+    <div class="modal show" id="myModal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #7729a5;color: whitesmoke">
+
+                    <h4 class="modal-title">innOcity</h4>
+
+                </div>
+                <div class="modal-body">
+                    <p style="text-align: center">{{ alert_message }}</p>
+                </div>
+                <div class="modal-footer" >
+                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick = "$('.modal').removeClass('show').addClass('fade');">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endif %}
+
+
 <header class="header">
     <div class="container">
         <div class="row">
@@ -357,15 +383,17 @@
     }
 </script>
 
-{% if alert_flag %}
-    <script>
-        alert("Complete the form.");
-    </script>
-{% elif invalid_username %}
-    <script>
-        alert("This username is already taken")
-    </script>
-{% endif %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+{#{% if alert_flag %}#}
+{#    <script>#}
+{#        alert("Complete the form.");#}
+{#    </script>#}
+{#{% elif invalid_username %}#}
+{#    <script>#}
+{#        alert("This username is already taken")#}
+{#    </script>#}
+{#{% endif %}#}
 </body>
 </html>
 <!-- end document-->

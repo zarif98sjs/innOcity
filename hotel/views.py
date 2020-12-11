@@ -197,7 +197,7 @@ def get_customer_info(customer_id):
             customer.card_username = result[1]
             customer.card_type = result[2]
             customer.cvc = result[3]
-            customer.expiration = result[4]
+            customer.expiration = str(result[4].date())
 
         cur.execute("SELECT  PHONE_NUMBER , SERVICE_PROVIDER , CUSTOMERID FROM MOBILE_BANKING "
                         "WHERE customerId = %s",[customer_id])
@@ -322,6 +322,31 @@ def complete_payment(request, hotel_id):
                     reservation_charge=context['total_cost'])
 
     context['reservation_list'] = r
+
+    with connection.cursor() as cur:
+        sql_add_payment = "INSERT INTO PAYMENT " \
+                          "VALUES (%s, SYSDATE)"
+        cur.execute(sql_add_payment, [payment_id])
+        connection.commit()
+        sql_add_reservation = "INSERT INTO RESERVATION (RESERVATIONID, DATE_OF_ARRIVAL, DATE_OF_DEPARTURE, CUSTOMERID, " \
+                              "PAYMENTID, HOTELID, RESERVATION_CHARGE) " \
+                              "VALUES ( %s, %s, %s , %s , %s , %s , %s )"
+        cur.execute(sql_add_reservation,
+                    [r.reservationid, r.date_of_arrival, r.date_of_departure, r.customerid, r.paymentid, r.hotelid,
+                     r.reservation_charge])
+        connection.commit()
+
+    with connection.cursor() as cur:
+
+        for r in booked_room_id:
+            sql_add_room = "INSERT INTO RESERVATION_ROOM VALUES(%s, %s)"
+            cur.execute(sql_add_room, [reservation_id, r])
+            connection.commit()
+
+        for s in booked_services:
+            cur.execute("INSERT INTO RESERVATION_SERVICE VALUES(%s, %s, %s)", [reservation_id, s.serviceId, s.count])
+            connection.commit()
+
     send_booking_mail(context)
 
     return redirect('dashboard:maps')

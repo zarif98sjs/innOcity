@@ -25,6 +25,15 @@ Upon registration the user will be sent a verification mail . Using the link , t
 ![](/Miscellaneous/ReadMe%20Files/register_gif.gif)
 ![](/Miscellaneous/ReadMe%20Files/activation_gif.gif)
 
+## `Hotels`
+Available hotels based on search location and dates will be returned.
+User can visit the hotel pages and check out the rooms and services
+Rooms and services can be booked in the booking sections
+Payment can be done by credit card or mobile banking. Information saved in users wallet can be used her.
+
+![](/Miscellaneous/ReadMe%20Files/hotel.gif)
+
+
 ## `Dashboard`
 - Past Visits in Map  
   - All the past visits can be viewed from here .
@@ -36,6 +45,23 @@ Upon registration the user will be sent a verification mail . Using the link , t
   - And in the wallet section , payment information can be updated , both the credit card info and mobile banking info which can be used for later payment
 
 ![](Miscellaneous/ReadMe%20Files/dashboard_gif.gif)
+
+## `Admin Dashboard`
+Hotel data can be updated by logging in as hotel admin
+- Rooms 
+    - Update room charges and discounts
+    - Add new room
+    - Add new room type
+ - Services
+    - Add new free/ paid service
+    - Update cost for paid service
+    - Delete a free service
+ - Reservations
+    - View hotel income in a plot
+    - view the details of all the reservations
+    - Search by year/ month / room types
+    
+ [](Miscellaneous/ReadMe%20Files/admin.gif)
 
 # Project Team
 

@@ -140,7 +140,7 @@
 
                     <div class="col-md-5">
 
-                        <button type="submit" name="submit_delete_facility" id="submit_delete_facility" title="delete this service" value="submit_delete_facility"  style="background-color: #a8554f; color: white; width: 40px; height: 35px; border-radius: 5px;" onclick="return confirm('Confirm changes?');" >X</button>
+                        <button type="submit" name="submit_delete_facility" id="submit_delete_facility" title="delete this service" value="submit_delete_facility"  style="background-color: #a8554f; color: white; width: 40px; height: 35px; border-radius: 5px;"  >X</button>
 
                         </div>
                     </div>
@@ -221,7 +221,7 @@
                             </div>
 
                             <div class="col" style="padding-left: 40px" >
-                                <button type="submit" name="submit_cost" value="submit_cost" title="update cost" class="btn btn-primary " style="background-color: #2b1b7b; color: whitesmoke " onclick="return confirm('Confirm changes?');" >Update</button>
+                                <button type="submit" name="submit_cost" value="submit_cost" title="update cost" class="btn btn-primary " style="background-color: #2b1b7b; color: whitesmoke "  >Update</button>
 
                             </div>
 
@@ -254,7 +254,7 @@
                             </div>
                     <div class="col">
                       <div class="update ml-auto mr-auto">
-                          <button type="submit" name="submit_new_service_under_service_type" value="new_service_under_service_type" class="btn btn-primary " style="background-color: #a18cd1;"   onclick="return confirm('Confirm update?');"> Add New</button>
+                          <button type="submit" name="submit_new_service_under_service_type" value="new_service_under_service_type" class="btn btn-primary " style="background-color: #a18cd1;"   > Add New</button>
                     </div>
                         </div>
                       </div>
@@ -313,7 +313,7 @@
       i = 1;
   </script>
     {% if messages %}
-        <div id ="snackbar" style="background-color: #333"><p>
+        <div id ="snackbar" style="background-color: white; color: black"><p>
         {% for message in messages %}
             {{ message }}
         {% endfor %}

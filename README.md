@@ -3,7 +3,7 @@
 ![](/Miscellaneous/ReadMe%20Files/home2.png)
 
 # Project Overview
-innOcity is a hotel booking platform designed using Oracle database and django framework. This website was built as our Database course project.
+innOcity is a hotel booking platform designed using Oracle database and django framework. This website was built as our Database course project CSE-216 
 
 # Programming Language 
 
@@ -12,6 +12,9 @@ innOcity is a hotel booking platform designed using Oracle database and django f
 
 # Framework
 * **`django`**
+  
+# ERD
+![](/Miscellaneous/ReadMe%20Files/erd.PNG)
 
 # Features
 
@@ -24,6 +27,7 @@ Best rated hotels and tp discounts are available here . User can also search for
 Upon registration the user will be sent a verification mail . Using the link , the user will be able to verify his account . Otherwise , the user won't be able to login .
 
 ![](/Miscellaneous/ReadMe%20Files/register_gif.gif)
+
 ![](/Miscellaneous/ReadMe%20Files/activation_gif.gif)
 
 ## `Hotels`

@@ -10,9 +10,6 @@ import plotly.graph_objs as go
 from django.views.generic import TemplateView
 
 
-import json
-
-
 app_name = 'hotel_admin'
 hotel = Hotel(0)
 room_list = []
@@ -266,10 +263,6 @@ def reservation(request):
                 selected_room, _ = request.POST.get("room_bed").split('(')
                 selected_room = selected_room.strip()
 
-        if request.method == "POST" and request.POST.get("file-upload"):
-            print('here')
-            print(request.POST.get("filename"))
-
         sql += "ORDER BY RS.DATE_OF_ARRIVAL DESC"
 
         cur.execute(sql, list_vars)
@@ -303,7 +296,7 @@ def reservation(request):
             total += reserve.total
             reservation_list.append(reserve)
 
-        context = {'hotel': hotel, 'room_list': room_list, 'reservation_list': reservation_list, 'total': total,
+        context = {'hotel': hotel, 'room_list': room_list, 'reservation_list': reservation_list[:200], 'total': total,
                    'total_reservation_charge': total_reservation_charge, 'total_service_charge': total_service_charge}
         g = Graph()
         g.set_reservations(reservation_list)

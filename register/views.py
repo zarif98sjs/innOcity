@@ -1,10 +1,6 @@
 from django.shortcuts import render, redirect
 from django.db import connection
 import hashlib
-from random import randint
-
-
-from django.http import HttpResponse
 
 app_name = 'register'
 
@@ -74,7 +70,6 @@ def sign_up(request):
 
             customer = Customer(customer_id=customer_id, name=v1, isVerified='NO')
 
-            print("Before activation , customer id : ", customer.customer_id)
 
             current_site = get_current_site(request)
 
@@ -113,31 +108,26 @@ def sign_up(request):
 def activate(request, uidb64, token):
     try:
         id = force_text(urlsafe_base64_decode(uidb64))
-        print("After activation , customer id : ", id)
 
         with connection.cursor() as cur:
             cur.execute("SELECT NAME , ISVERIFIED FROM CUSTOMER WHERE customerId = %s", [id])
             result = cur.fetchone()
 
             if result is None:
-                print("None")
                 messages.success(request, "You have not created any account")
                 return redirect('login:index')
             else:
                 customer = Customer(customer_id=id, name=result[0], isVerified=result[1])
                 if not account_activation_token.check_token(customer, token):
-                    print('User already activated')
                     messages.success(request, "Your account is already activated")
                     return redirect('login:index')
 
                 cur.execute("UPDATE CUSTOMER SET ISVERIFIED = 'YES' WHERE customerId = %s", [id])
 
-                print("Account Activated Successfully")
                 messages.success(request, "Account Activated Successfully")
                 return redirect('login:index')
 
     except Exception as ex:
-        print(ex)
         pass
 
     return redirect('login:index')

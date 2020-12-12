@@ -5,7 +5,6 @@ from .models import Hotel, Room, Service, Session , Reservation
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 from django.db import connection
-from random import randint
 from dashboard.models import Customer
 
 from django.core.mail import EmailMultiAlternatives
@@ -117,6 +116,7 @@ def mobile_banking(request, hotel_id):
     context['message'] = "Do you want to fetch info from wallet ?"
     return render(request, 'hotel/mobile_banking.html',context)
 
+
 @csrf_exempt
 def mobile_banking_fetch(request, hotel_id):
     if request.session.has_key('customer_id'):
@@ -129,14 +129,13 @@ def mobile_banking_fetch(request, hotel_id):
     context = get_context(request,hotel_id)
     context['total_cost'] = request.session['total_cost']
     context['logged_in'] = logged_in
-    print('fetching...')
-
 
     global customer
     get_customer_info(customer_id)
     context['customer'] = customer
 
     return render(request, 'hotel/mobile_banking.html',context)
+
 
 @csrf_exempt
 def credit_card(request, hotel_id):
@@ -155,6 +154,7 @@ def credit_card(request, hotel_id):
     context['message'] = "Do you want to fetch info from wallet ?"
     return render(request, 'hotel/credit_card.html',context)
 
+
 @csrf_exempt
 def credit_card_fetch(request, hotel_id):
 
@@ -168,7 +168,6 @@ def credit_card_fetch(request, hotel_id):
     context = get_context(request,hotel_id)
     context['total_cost'] = request.session['total_cost']
     context['logged_in'] = logged_in
-
 
     global customer
     get_customer_info(customer_id)
@@ -207,13 +206,13 @@ def get_customer_info(customer_id):
             customer.mob_banking_phone_number = result[0]
             customer.mob_banking_service_provider = result[1]
 
+
 @csrf_exempt
 def payment(request, hotel_id):
 
     if request.session.has_key('customer_id'):
         logged_in = True
         customer_id = request.session['customer_id']
-        print(customer_id)
     else:
         messages.success(request, 'you must log in first')
         return redirect('login:index')
@@ -245,12 +244,10 @@ def payment(request, hotel_id):
         total_cost += cost_per_day*stay
 
         request.session[room.room_type + "_count"] = room_count[room.room_type + "_count"]
-        print("Room Types : " , room.room_type , " , Count : ",room_count[room.room_type+"_count"] , ", Cost , ",room.cost , " ,Discount",room.discount , ",Cost Per Day ",cost_per_day)
 
     service_count = {}
 
     for service_type in context['hotel_services']:
-        print("Service Type , ", service_type)
         for service_list in context['hotel_services'][service_type]:
             sub_type = service_list.service_subtype
             service_count[sub_type+"_count"] = request.POST.get(sub_type+"_count")
@@ -259,14 +256,9 @@ def payment(request, hotel_id):
             total_cost += cost
 
             request.session[sub_type+"_count"] = service_count[sub_type+"_count"]
-            print("Sub Service",sub_type , "Count ",service_count[sub_type+"_count"] , "Cost ",service_list.cost)
-
-    # request.session['service_sub_type'] = service_sub_type
 
     context['total_cost'] = math.ceil(total_cost)
     request.session['total_cost'] = context['total_cost']
-
-    print(context['total_cost'])
 
     context['logged_in'] = logged_in
     global customer
@@ -277,7 +269,6 @@ def payment(request, hotel_id):
 
 @csrf_exempt
 def complete_payment(request, hotel_id):
-    ## check if rooms are available in the given time , update reservation , update payment , send mail
 
     if request.session.has_key('customer_id'):
         logged_in = True
@@ -295,17 +286,11 @@ def complete_payment(request, hotel_id):
 
         for r in context['room_types']:
             need_room_cnt = request.session[r.room_type+"_count"]
-            print("Need : ",need_room_cnt)
             for idx in range(need_room_cnt):
                 book_cnt += 1
                 booked_room_id.append(r.roomId[idx])
                 temp = Room(r.room_type,r.bed_type,r.cost,r.discount,r.roomId[idx])
                 booked_rooms.append(temp)
-                print(temp)
-
-        print(booked_room_id)
-        for b in booked_rooms:
-            print(b)
 
         reservation_id = cur.callfunc('GENERATE_ID', int, ['RESERVATION', 'RESERVATIONID'])
         payment_id = cur.callfunc('GENERATE_ID', int, ['PAYMENT', 'PAYMENTID'])
@@ -313,7 +298,6 @@ def complete_payment(request, hotel_id):
         booked_services = []
 
         for service_type in context['hotel_services']:
-            print("Service Type , ", service_type)
             for service_list in context['hotel_services'][service_type]:
                 sub_type = service_list.service_subtype
                 count = request.session[sub_type + "_count"]
@@ -322,8 +306,6 @@ def complete_payment(request, hotel_id):
 
                 if s.count > 0:
                     booked_services.append(s)
-
-                print(s.serviceId, "Sub ", s.service_subtype," Cost ",s.cost," Count",s.count)
 
     context['checkin_input'] = request.session['checkin_input']
     context['checkout_input'] = request.session['checkout_input']
@@ -338,8 +320,6 @@ def complete_payment(request, hotel_id):
                     date_of_departure=context['checkout_input'], customerid=customer_id,
                     paymentid=payment_id, hotelid = hotel_id,
                     reservation_charge=context['total_cost'])
-
-    print(r)
 
     context['reservation_list'] = r
 
@@ -359,7 +339,6 @@ def complete_payment(request, hotel_id):
     with connection.cursor() as cur:
 
         for r in booked_room_id:
-            print(r, reservation_id)
             sql_add_room = "INSERT INTO RESERVATION_ROOM VALUES(%s, %s)"
             cur.execute(sql_add_room, [reservation_id, r])
             connection.commit()
@@ -500,18 +479,3 @@ def services(request, hotel_id):
     return render(request, 'hotel/services.html', context)
 
 
-def about(request, hotel_id):
-    return render(request, 'hotel/about.html')
-
-
-def blog(request, hotel_id):
-    return render(request, 'hotel/blog.html')
-
-
-def blog_single(request, hotel_id):
-    return render(request, 'hotel/blog-single.html')
-
-
-def contact(request, hotel_id):
-    context = get_context(request,hotel_id)
-    return render(request, 'hotel/contact.html', context)

@@ -1,0 +1,13 @@
+drop table Reservation_service;
+drop table Reservation_room;
+drop table Reservation;
+drop table Mobile_Banking;
+drop table Credit_Card;
+drop table Payment;
+drop table Service;
+drop table Room_facility;
+drop table Room;
+drop table Room_type;
+drop table Hotel_facility;
+drop table Hotel;
+drop table Customer;

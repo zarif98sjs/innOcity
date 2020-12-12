@@ -8,8 +8,7 @@ v2 = hashlib.md5(v2.encode()).hexdigest()
 
 with connection.cursor() as cur:
 
-    sql_auth = "SELECT customerId FROM CUSTOMER WHERE USERNAME = %s and PASSWORD = %s"
-    cur.execute(sql_auth, [v1, v2])
+    customer = cur.callfunc('LOGIN_CUSTOMER', int, [v1, v2])
 ```
 
 `admin_login`
@@ -20,8 +19,7 @@ v2 = hashlib.md5(v2.encode()).hexdigest()
 
 with connection.cursor() as cur:
 
-    sql_auth = "SELECT HOTELID FROM HOTEL WHERE HOTELID = %s AND PASSWORD = %s"
-    cur.execute(sql_auth, [v1, v2])
+    admin = cur.callfunc('LOGIN_HOTEL', int, [v1, v2])
 
     hotel = cur.fetchone()
 ```
@@ -43,19 +41,7 @@ v9 = request.POST.get('country')
 
 with connection.cursor() as cur:
 
-    sql_find = "SELECT COUNT(*) FROM CUSTOMER WHERE username = %s"
-    cur.execute(sql_find, [v3])
-
-    sql = "SELECT CUSTOMERID FROM CUSTOMER"
-    cur.execute(sql)
-    result = cur.fetchall()
-
-    sql_add_user = "INSERT INTO CUSTOMER (customerId, name, email, username, password, " \
-                    "gender, street, zipcode, city, country) " \
-                    "VALUES ( %s, %s, %s , %s , %s , %s , %s , %s , %s , %s )"
-
-    cur.execute(sql_add_user, [v0, v1, v2, v3, v4, v5, v6, v7, v8, v9])
-    connection.commit()
+    customer_id = cur.callfunc('REGISTER', int, [v1, v2, v3, v4, v5, v6, v7, v8, v9, v10])
 ```
 
 # **Home**
@@ -340,16 +326,9 @@ with connection.cursor() as cur:
 
             room_type, _ = request.POST.get("room_bed").split(" (")
             floor_number = request.POST.get("floor_number")
-            room_id = generate_new_id("SELECT ROOMID FROM ROOM")
+            room_id = cur.var(int).var
 
-            sql = "SELECT ROOMTYPEID FROM ROOM_TYPE WHERE HOTELID = %s AND ROOMTYPE_NAME = %s"
-            cur.execute(sql, [hotel.hotelId, room_type])
-            roomtype_id = cur.fetchone()[0]
-
-            sql = "INSERT INTO ROOM(ROOMID, FLOOR_NUMBER, HOTELID, ROOMTYPEID) " \
-                    "VALUES(%s, %s, %s, %s)"
-            cur.execute(sql, [room_id, floor_number, hotel.hotelId, roomtype_id])
-            connection.commit()
+            cur.callproc('ADD_NEW_ROOM', [hotel.hotelId, room_type, floor_number, room_id])
 
             i = 1
             while True:
@@ -362,7 +341,7 @@ with connection.cursor() as cur:
                     connection.commit()
                 i = i + 1
 
-            messages.add_message(request, messages.INFO, "New Room Enlisted")
+          
 
         elif request.POST.get("submit_new_room_type"):
 
@@ -371,17 +350,10 @@ with connection.cursor() as cur:
             cost = request.POST.get('cost_per_day')
             discount = request.POST.get('discount')
 
-            sql = "SELECT * FROM ROOM_TYPE WHERE HOTELID = %s AND UPPER(ROOMTYPE_NAME) = UPPER(%s) "
-            cur.execute(sql, [hotel.hotelId, room_type])
-            row = cur.fetchone()
+            exists = cur.var(int).var
+            cur.callproc("ADD_NEW_ROOM_TYPE", [room_type, hotel.hotelId, bed_type,
+                                                   cost, discount, exists])
 
-            if row is None:
-                roomtype_id = generate_new_id("SELECT ROOMTYPEID FROM ROOM_TYPE")
-                sql = "INSERT INTO ROOM_TYPE VALUES(%s, INITCAP(%s), INITCAP(%s), %s, %s, %s)"
-                cur.execute(sql, [roomtype_id, room_type, bed_type, cost, discount, hotel.hotelId])
-                messages.add_message(request, messages.INFO, "New Room Type Enlisted")
-            else:
-                messages.add_message(request, messages.INFO, "This Type Already Exists")
 ```
 
 `get_room_list`
@@ -414,10 +386,8 @@ with connection.cursor() as cur:
         if request.POST.get("submit_new_facility"):
 
             new_facility = request.POST.get("facility")
-            sql = "INSERT INTO HOTEL_FACILITY VALUES(%s, INITCAP(%s))"
-            cur.execute(sql, [hotel.hotelId, new_facility])
-            connection.commit()
-            return HttpResponseRedirect(reverse('hotel_admin:service'))
+            exists = cur.var(int).var
+            cur.callproc('ADD_NEW_FREE_SERVICE', [hotel.hotelId, new_facility, exists])
 
         elif request.POST.get("submit_delete_facility"):
 
@@ -438,12 +408,8 @@ with connection.cursor() as cur:
             service_type = request.POST.get("service_type")
             service_subtype = request.POST.get("service_subtype")
             cost = request.POST.get("cost")
-            service_id = generate_new_id("SELECT SERVICEID FROM SERVICE")
-            sql = "INSERT INTO SERVICE VALUES(%s, %s, INITCAP(%s), %s, %s)"
-            cur.execute(sql, [service_id, service_type, service_subtype, cost, hotel.hotelId])
-            connection.commit()
-
-        return HttpResponseRedirect(reverse('hotel_admin:service'))
+            exists = cur.var(int).var
+            cur.callproc("ADD_NEW_PAID_SERVICE", [service_type, service_subtype, cost, hotel.hotelId, exists])
 
     sql = "SELECT DISTINCT FACILITIES FROM HOTEL_FACILITY WHERE HOTELID = %s"
     cur.execute(sql, [hotel.hotelId])
